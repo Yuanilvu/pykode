@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""E2E test PyKode — pakai urllib + cookie jar, tanpa dependensi."""
+"""E2E test PyKode — pakai urllib + cookie jar, tanpa dependensi.
+
+⚠️ Butuh DATABASE BERSIH: stop server dulu, hapus data/pykode.db,
+start server lagi, baru jalankan test ini. (Script ini menciptakan
+user kancil/tikus; kalau sudah ada, sebagian test akan gagal.)
+"""
 import http.cookiejar
 import json
 import urllib.parse
@@ -48,6 +53,10 @@ st, body = c.get("/")
 check("GET / tanpa login -> halaman login", st == 200 and "Masuk" in body and "Nama pengguna" in body)
 st, body = c.post_form("/register", {"username": "kancil", "password": "1234"})
 check("register kancil -> flash sukses", st == 200 and "Akun berhasil dibuat" in body)
+if "Akun berhasil dibuat" not in body:
+    print("\n⚠️  User kancil SUDAH ADA — DB tidak fresh. Reset dulu:")
+    print("   1. stop server   2. rm data/pykode.db   3. start server   4. ulangi")
+    exit(2)
 st, body = c.post_form("/register", {"username": "tikus", "password": "1234"})
 check("register tikus -> flash sukses", st == 200 and "Akun berhasil dibuat" in body)
 st, body = c.post_form("/register", {"username": "kancil", "password": "1234"})
