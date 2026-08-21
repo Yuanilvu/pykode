@@ -1,18 +1,26 @@
 {% extends "base.html" %}
-{% block title %}{{ drill.judul }} — PyKode{% endblock %}
+{% block title %}{{ bug.judul }} — PyKode{% endblock %}
 {% block content %}
 
 <div class="breadcrumb">
-  <a href="{{ url_for('drills') }}">🧠 Drill</a> › {{ drill.tema }}
+  <a href="{{ url_for('bugs') }}">🐛 Perbaiki Kode</a> › Bab {{ bug.bab }}
 </div>
 
 <div class="card">
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-    <h1 class="lesson-title" style="margin:0">{{ drill.emoji or '🧩' }} {{ drill.judul }}</h1>
-    {% if done %}<span style="color:var(--success);font-weight:800">✅ Selesai (+40 XP)</span>{% endif %}
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+    <h1 class="lesson-title" style="margin:0">{{ bug.emoji or '🐛' }} {{ bug.judul }}</h1>
+    {% if state.solved %}<span style="color:var(--success);font-weight:800">✅ Diperbaiki (+{{ bug.xp }} XP)</span>{% endif %}
   </div>
-  <div class="soal-cerita">{{ render_markdown(drill.cerita) | safe }}</div>
-  {% for c in drill.contoh %}
+  <div class="lesson-meta">Bab {{ bug.bab }} · ⏱️ ±{{ bug.menit }} menit · 🔧 +{{ bug.xp }} XP</div>
+
+  <div class="materi">{{ render_markdown(bug.cerita) | safe }}</div>
+
+  <div class="io-box" style="background:#fef2f2;border-color:#fecaca">
+    <div class="io-label" style="color:#b91c1c">⚠️ Ada bug di kode ini. Perbaiki!</div>
+    <pre style="font-family:ui-monospace,Consolas,monospace;font-size:.9rem">{{ bug.kode_rusak }}</pre>
+  </div>
+
+  {% for c in bug.contoh %}
   <div class="io-box">
     <div class="io-label">Contoh {{ loop.index }}</div>
     <pre><strong>Masukan:</strong>
@@ -21,23 +29,33 @@
 {{ c.output }}</pre>
   </div>
   {% endfor %}
+
+  {% if bug.petunjuk %}
+  <button class="btn btn-ghost btn-sm" id="btn-hint">💡 Lihat Petunjuk</button>
+  <div class="hint-box" id="hint-box">
+    {% for h in bug.petunjuk %}<div>• {{ h }}</div>{% endfor %}
+  </div>
+  {% endif %}
 </div>
 
 <div class="card">
   <div class="editor-wrap short">
-    <div class="editor-head"><span>🐍 Python</span><span>Python 3</span></div>
-    <textarea id="code-editor" class="cm-editor"># Tulis kode kamu di sini 👇</textarea>
+    <div class="editor-head"><span>🐍 Perbaiki kodenya di sini</span><span>Python 3</span></div>
+    <textarea id="code-editor" class="cm-editor">{{ bug.kode_rusak }}</textarea>
   </div>
+
   <div style="margin-top:10px">
     <label class="inline-label" for="stdin-input">Ketikan buat dicoba (opsional):</label>
     <textarea id="stdin-input" class="stdin" placeholder="Tulis di sini (satu angka per baris)"></textarea>
   </div>
+
   <div class="editor-foot">
     <button class="btn btn-outline" id="btn-run">▶ Jalankan</button>
-    <button class="btn btn-success" id="btn-submit">✅ Kirim Jawaban</button>
+    <button class="btn btn-success" id="btn-submit">✅ Kirim Perbaikan</button>
     <span class="spacer"></span>
     <span id="run-info" style="color:var(--muted);font-size:.85rem"></span>
   </div>
+
   <div id="run-output"></div>
   <div id="submit-results"></div>
 </div>
@@ -46,7 +64,7 @@
 {% block scripts %}
 <script>
 (function () {
-  var drillId = {{ drill.id | tojson }};
+  var bugId = {{ bug.id | tojson }};
   var editor = initEditor(document.getElementById('code-editor'));
   var outBox = document.getElementById('run-output');
   var resBox = document.getElementById('submit-results');
@@ -62,7 +80,7 @@
     }).then(r => r.json()).then(d => {
       btn.disabled = false;
       if (d.status === 'ok') {
-        outBox.innerHTML = '<div class="output-box ok">' + esc(d.stdout || '(tidak ada output)') + '</div>';
+        outBox.innerHTML = '<div class="output-box ok">' + esc(d.stdout || '(tidak ada hasil)') + '</div>';
         maybeFirstRun();
       } else {
         outBox.innerHTML = '<div class="output-box err">' + esc(d.stderr || 'Error') + '</div>';
@@ -73,23 +91,23 @@
 
   document.getElementById('btn-submit').addEventListener('click', function () {
     var btn = this;
-    resBox.innerHTML = '<div class="output-box">⏳ Menguji jawaban...</div>';
+    resBox.innerHTML = '<div class="output-box">⏳ Menguji perbaikan...</div>';
     btn.disabled = true;
-    fetch('/api/drill-submit', {
+    fetch('/api/bug-submit', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({drill_id: drillId, code: editor.getValue()})
+      body: JSON.stringify({bug_id: bugId, code: editor.getValue()})
     }).then(r => r.json()).then(d => {
       btn.disabled = false;
       var html = '';
       if (d.verdict === 'AC') {
-        html += '<div class="verdict-banner verdict-AC">🧠 MANTAP! ' + d.passed + '/' + d.total + ' tes rahasia lolos' +
+        html += '<div class="verdict-banner verdict-AC">🔧 BERHASIL DIPERBAIKI! ' + d.passed + '/' + d.total + ' tes rahasia lolos' +
                 (d.xp_added ? ' — +' + d.xp_added + ' XP!' : '') + '</div>';
         confetti();
-        if (d.penjelasan) html += '<div class="io-box"><div class="io-label">💡 Penjelasan</div><pre>' + esc(d.penjelasan) + '</pre></div>';
-        if (d.new_badges && d.new_badges.length) d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama, 'good'));
+        if (d.new_badges && d.new_badges.length) d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
+        html += '<div style="margin-top:12px"><a class="btn btn-primary" href="{{ url_for("bugs") }}">🐛 Kembali ke Perbaiki Kode</a></div>';
       } else {
-        html += '<div class="verdict-banner verdict-WA">😅 Belum benar — ' + d.passed + '/' + d.total + ' tes rahasia lolos. Coba lagi!</div>';
+        html += '<div class="verdict-banner verdict-WA">😅 Belum benar — ' + d.passed + '/' + d.total + ' tes rahasia lolos. Cari terus bug-nya!</div>';
         if (d.deteksi && d.deteksi.ada) {
           html += '<div class="verdict-banner" style="background:#eff6ff;color:#1e40af">🕵️ <strong>Detektif Kesalahan:</strong><br>' +
                   esc(d.deteksi.pesan).replace(/\n/g, '<br>') + '<br>💡 ' + esc(d.deteksi.saran) + '</div>';

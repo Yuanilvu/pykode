@@ -205,6 +205,44 @@ def main():
                     if err:
                         fail(f"{dpath} contoh[{ci}]: solusi {err}")
 
+        elif "bug" in data:
+            for bi, b in enumerate(data["bug"] or []):
+                bpath = f"{fn} bug[{bi}] ({b.get('id', '?')})"
+                if not validate_structure(b, bpath, ["id", "judul", "emoji", "bab", "menit",
+                                                     "xp", "cerita", "kode_rusak", "contoh",
+                                                     "tes", "solusi", "petunjuk"]):
+                    continue
+                if b["id"] in seen_ids:
+                    fail(f"{bpath}: id '{b['id']}' duplikat (sudah di {seen_ids[b['id']]})")
+                seen_ids[b["id"]] = fn
+                bab_n = int(b.get("bab", 0))
+                if not (1 <= bab_n <= 12):
+                    fail(f"{bpath}: bab harus 1-12, dapat {bab_n}")
+                for bad in banned_for(bab_n):
+                    if bad in b["solusi"]:
+                        warn(f"{bpath}: solusi mengandung '{bad}' (fitur bab {bab_n})")
+                for ti, t in enumerate(b["tes"]):
+                    err = check_code_runs("bug_tes", b["solusi"], t.get("input", ""),
+                                          t.get("output", ""))
+                    if err:
+                        fail(f"{bpath} tes[{ti}]: solusi {err}")
+                for ci, c in enumerate(b["contoh"]):
+                    err = check_code_runs("bug_tes", b["solusi"], c.get("input", ""),
+                                          c.get("output", ""))
+                    if err:
+                        fail(f"{bpath} contoh[{ci}]: solusi {err}")
+                # Kode rusak harus BENAR-BENAR rusak: minimal 1 tes gagal
+                broken_ok = 0
+                for t in b["tes"]:
+                    r = run_code(b["kode_rusak"], t.get("input", ""))
+                    if r["status"] == "ok" and normalize_output(r["stdout"]) == \
+                            normalize_output(t.get("output", "")):
+                        broken_ok += 1
+                if broken_ok == len(b["tes"]):
+                    fail(f"{bpath}: kode_rusak LOLOS semua tes — bug-nya tidak ada! "
+                         f"Perbaiki kode_rusak-nya.")
+                CHECKED["bug_rusak"] = CHECKED.get("bug_rusak", 0) + 1
+
         elif "proyek" in data:
             proyek = data["proyek"]
             if not validate_structure(proyek, fn, ["judul", "emoji", "warna",

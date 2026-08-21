@@ -11,6 +11,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 import curriculum
 import db
+import detective
 from judge import judge, run_code
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -66,6 +67,12 @@ BADGES = {
                        "desc": "Selesaikan misi pertama Proyek Besar"},
     "arsitek":        {"nama": "Arsitek Sekolah", "emoji": "🏛️", "xp": 300,
                        "desc": "Selesaikan SEMUA misi Proyek Besar"},
+    "montir":         {"nama": "Montir Kode",     "emoji": "🔧", "xp": 20,
+                       "desc": "Perbaiki kode rusak pertamamu"},
+    "montir_hebat":   {"nama": "Montir Hebat",    "emoji": "🛠️", "xp": 50,
+                       "desc": "Perbaiki 10 kode rusak"},
+    "penjelajah":     {"nama": "Penjelajah Kode", "emoji": "🧪", "xp": 10,
+                       "desc": "Simpan karya pertamamu di Rumah Kode"},
 }
 
 
@@ -339,6 +346,7 @@ def api_submit():
     db.record_submission(g.user["id"], problem_id, status)
 
     xp_added, new_badges, first_solve = 0, [], False
+    deteksi = {}
     if status == "AC":
         state = db.problem_state(g.user["id"], problem_id)
         first_solve = not state["solved"]
@@ -347,8 +355,11 @@ def api_submit():
             xp_added = PROBLEM_XP.get(soal.get("sulit"), 50)
             db.add_xp(g.user["id"], xp_added)
         new_badges = _check_badges(g.user["id"])
+    else:
+        deteksi = detective.analyze(code, soal.get("tes") or [], result["results"])
     return jsonify({**result, "status": status, "xp_added": xp_added,
-                    "first_solve": first_solve, "new_badges": new_badges})
+                    "first_solve": first_solve, "new_badges": new_badges,
+                    "deteksi": deteksi})
 
 
 @app.route("/api/drill-submit", methods=["POST"])
@@ -363,13 +374,17 @@ def api_drill_submit():
     result = judge(code, d.get("tes") or [])
     status = "AC" if result["verdict"] == "AC" else "WA"
     xp_added, new_badges = 0, []
+    deteksi = {}
     if status == "AC" and not db.drill_done(g.user["id"], drill_id):
         db.mark_drill_done(g.user["id"], drill_id)
         db.add_xp(g.user["id"], DRILL_XP)
         xp_added = DRILL_XP
         new_badges = _check_badges(g.user["id"])
+    else:
+        deteksi = detective.analyze(code, d.get("tes") or [], result["results"])
     return jsonify({**result, "status": status, "xp_added": xp_added,
-                    "new_badges": new_badges, "penjelasan": d.get("penjelasan", "")})
+                    "new_badges": new_badges, "penjelasan": d.get("penjelasan", ""),
+                    "deteksi": deteksi})
 
 
 def _milestone_unlocked(user_id, misi):
@@ -444,6 +459,7 @@ def api_project_submit():
     result = judge(code, m.get("tes") or [])
     status = "AC" if result["verdict"] == "AC" else "WA"
     xp_added, new_badges, first_done = 0, [], False
+    deteksi = {}
     if status == "AC":
         first_done = not db.milestone_done(g.user["id"], milestone_id)
         db.save_project_code(g.user["id"], code)
@@ -452,9 +468,132 @@ def api_project_submit():
             xp_added = int(m.get("xp", 80))
             db.add_xp(g.user["id"], xp_added)
         new_badges = _check_badges(g.user["id"])
+    else:
+        deteksi = detective.analyze(code, m.get("tes") or [], result["results"])
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_done": first_done, "new_badges": new_badges,
-                    "solusi": m.get("solusi", "") if status == "AC" else ""})
+                    "solusi": m.get("solusi", "") if status == "AC" else "",
+                    "deteksi": deteksi})
+
+
+# ---------- Perbaiki Kode (bug) ----------
+def _bug_unlocked(user_id, bug):
+    """Bug terbuka kalau semua pelajaran bab-nya selesai."""
+    bab = curriculum.get_bab(bug.get("bab", 1))
+    if not bab:
+        return False
+    done_lessons = db.lessons_done_ids(user_id)
+    lessons = bab.get("pelajaran") or []
+    return bool(lessons) and all(l["id"] in done_lessons for l in lessons)
+
+
+@app.route("/bugs")
+@login_required
+def bugs():
+    solved = db.solved_bug_ids(g.user["id"])
+    items = []
+    for b in curriculum.get_bugs():
+        items.append({
+            "data": b,
+            "done": b["id"] in solved,
+            "unlocked": _bug_unlocked(g.user["id"], b),
+        })
+    n_done = len(solved)
+    total = len(items)
+    return render_template("bugs.html", bugs=items, n_done=n_done, total=total,
+                           pct=round(100 * n_done / total) if total else 0)
+
+
+@app.route("/bug/<bug_id>")
+@login_required
+def bug(bug_id):
+    b = curriculum.get_bug(bug_id)
+    if not b:
+        flash("Kode rusak tidak ditemukan.", "danger")
+        return redirect(url_for("bugs"))
+    if not _bug_unlocked(g.user["id"], b):
+        flash("🔒 Bab ini belum selesai. Selesaikan pelajarannya dulu!", "info")
+        return redirect(url_for("bugs"))
+    state = db.bug_state(g.user["id"], bug_id)
+    return render_template("bug.html", bug=b, state=state)
+
+
+@app.route("/api/bug-submit", methods=["POST"])
+@login_required
+def api_bug_submit():
+    body = request.get_json(silent=True) or {}
+    bug_id = body.get("bug_id", "")
+    code = (body.get("code") or "")[:20000]
+    b = curriculum.get_bug(bug_id)
+    if not b:
+        return jsonify({"ok": False, "error": "Kode rusak tidak ditemukan"}), 404
+    if not _bug_unlocked(g.user["id"], b):
+        return jsonify({"ok": False, "error": "Belum terbuka"}), 403
+    result = judge(code, b.get("tes") or [])
+    status = "AC" if result["verdict"] == "AC" else "WA"
+    db.record_bug_attempt(g.user["id"], bug_id)
+    xp_added, new_badges, first_fix = 0, [], False
+    deteksi = {}
+    if status == "AC":
+        state = db.bug_state(g.user["id"], bug_id)
+        first_fix = not state["solved"]
+        if first_fix:
+            db.mark_bug_solved(g.user["id"], bug_id)
+            xp_added = int(b.get("xp", 40))
+            db.add_xp(g.user["id"], xp_added)
+        new_badges = _check_badges(g.user["id"])
+    else:
+        deteksi = detective.analyze(code, b.get("tes") or [], result["results"])
+    return jsonify({**result, "status": status, "xp_added": xp_added,
+                    "first_fix": first_fix, "new_badges": new_badges,
+                    "deteksi": deteksi})
+
+
+# ---------- Rumah Kode (playground) ----------
+@app.route("/playground")
+@login_required
+def playground():
+    works = db.list_playground(g.user["id"])
+    return render_template("playground.html", works=works)
+
+
+@app.route("/api/playground-save", methods=["POST"])
+@login_required
+def api_playground_save():
+    body = request.get_json(silent=True) or {}
+    judul = (body.get("judul") or "Karya Tanpa Judul")[:60]
+    code = (body.get("code") or "")[:20000]
+    work_id = body.get("work_id")
+    new_id = db.save_playground_work(g.user["id"], judul, code, work_id)
+    new_badges = _check_badges(g.user["id"])
+    return jsonify({"ok": True, "work_id": new_id, "new_badges": new_badges})
+
+
+@app.route("/api/playground-load", methods=["POST"])
+@login_required
+def api_playground_load():
+    body = request.get_json(silent=True) or {}
+    work = db.get_playground_work(g.user["id"], int(body.get("work_id", 0)))
+    if not work:
+        return jsonify({"ok": False, "error": "Karya tidak ditemukan"}), 404
+    return jsonify({"ok": True, "judul": work["judul"], "code": work["code"]})
+
+
+@app.route("/api/playground-delete", methods=["POST"])
+@login_required
+def api_playground_delete():
+    body = request.get_json(silent=True) or {}
+    db.delete_playground_work(g.user["id"], int(body.get("work_id", 0)))
+    return jsonify({"ok": True})
+
+
+# ---------- Monitor ----------
+@app.route("/monitor")
+@login_required
+def monitor():
+    data = db.monitor_data()
+    stats = curriculum.stats()
+    return render_template("monitor.html", users=data, stats=stats)
 
 
 # ---------- Badges ----------
@@ -505,6 +644,9 @@ def _check_badges(user_id):
         "bintang": xp >= 1000,
         "pembangun": len(db.milestones_done_ids(user_id)) >= 1,
         "arsitek": _all_milestones_done(user_id),
+        "montir": len(db.solved_bug_ids(user_id)) >= 1,
+        "montir_hebat": len(db.solved_bug_ids(user_id)) >= 10,
+        "penjelajah": len(db.list_playground(user_id)) >= 1,
     }
     new_badges = []
     for bid, cond in conditions.items():

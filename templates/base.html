@@ -14,8 +14,11 @@
   <div class="navlinks">
     <a href="{{ url_for('index') }}">Belajar</a>
     <a href="{{ url_for('project') }}">Proyek 🏗️</a>
+    <a href="{{ url_for('bugs') }}">Bug 🐛</a>
+    <a href="{{ url_for('playground') }}">Kode 🏠</a>
     <a href="{{ url_for('drills') }}">Drill 🧠</a>
     <a href="{{ url_for('leaderboard') }}">Papan Skor</a>
+    <a href="{{ url_for('monitor') }}">Monitor 📊</a>
   </div>
   {% if g_user %}
   <div class="navuser">

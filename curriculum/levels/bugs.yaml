@@ -1,0 +1,996 @@
+bug:
+  - id: "b1-1"
+    judul: "Sapaan yang Nyasar"
+    emoji: "🐛"
+    bab: 1
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil bikin program sapaan. Seharusnya mencetak tiga baris:
+      Halo, lalu nama, lalu semangat. Tapi urutannya kacau!
+      Cari kesalahannya dan perbaiki. Output harus persis:
+      Halo
+      Budi
+      Ayo belajar Python!
+    kode_rusak: |
+      print('Ayo belajar Python!')
+      print('Halo')
+      print('Budi')
+    contoh:
+      - input: ""
+        output: "Halo\nBudi\nAyo belajar Python!"
+    tes:
+      - input: ""
+        output: "Halo\nBudi\nAyo belajar Python!"
+      - input: ""
+        output: "Halo\nBudi\nAyo belajar Python!"
+    solusi: |
+      print('Halo')
+      print('Budi')
+      print('Ayo belajar Python!')
+    petunjuk:
+      - "Bandingkan urutan print() dengan output yang diminta."
+      - "Baris 'Halo' harus dicetak paling pertama."
+      - "Cukup pindah urutan barisnya saja."
+
+  - id: "b1-2"
+    judul: "Komentar yang Nakal"
+    emoji: "🐛"
+    bab: 1
+    menit: 8
+    xp: 40
+    cerita: |
+      Kancil mau menulis catatan rahasia di kodenya. Tapi dia salah!
+      Catatannya malah tercetak di layar. Padahal komentar tidak boleh muncul.
+      Perbaiki agar hanya dua baris ini yang tercetak:
+      Aku suka Python
+      Python itu seru
+    kode_rusak: |
+      print('Aku suka Python')
+      print('# Ini catatan rahasia')
+      print('Python itu seru')
+    contoh:
+      - input: ""
+        output: "Aku suka Python\nPython itu seru"
+    tes:
+      - input: ""
+        output: "Aku suka Python\nPython itu seru"
+      - input: ""
+        output: "Aku suka Python\nPython itu seru"
+    solusi: |
+      print('Aku suka Python')
+      print('Python itu seru')
+    petunjuk:
+      - "Komentar ditulis dengan tanda # di LUAR tanda kutip."
+      - "Di dalam tanda kutip, # hanyalah teks biasa."
+      - "Ubah print('# ...') menjadi komentar # biasa, atau hapus baris itu."
+
+  - id: "b2-1"
+    judul: "Angka yang Mengulang"
+    emoji: "🐛"
+    bab: 2
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil minta ketikan angka. Lalu angka itu dikali 3.
+      Ketikan 5 harusnya jadi 15. Tapi hasilnya 555. Aneh sekali!
+      Angka dari ketikan itu masih teks. Teks dikali 3 artinya diulang tiga kali.
+      Ubah dulu jadi angka. Perbaiki kodenya!
+    kode_rusak: |
+      n = input()
+      print(n * 3)
+    contoh:
+      - input: "5"
+        output: "15"
+      - input: "7"
+        output: "21"
+    tes:
+      - input: "5"
+        output: "15"
+      - input: "7"
+        output: "21"
+      - input: "0"
+        output: "0"
+      - input: "100"
+        output: "300"
+    solusi: |
+      n = input()
+      n = int(n)
+      print(n * 3)
+    petunjuk:
+      - "Hasil dari input() selalu berbentuk teks."
+      - "Teks '5' dikali 3 jadi '555', bukan 15."
+      - "Ubah teks jadi angka dengan int() sebelum dikali."
+
+  - id: "b2-2"
+    judul: "Luas yang Mengecil"
+    emoji: "🐛"
+    bab: 2
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil menghitung luas persegi. Luas itu sisi dikali sisi.
+      Sisi 5 harusnya luas 25. Tapi hasilnya 10. Hanya 5 ditambah 5.
+      Tanda hitungnya salah. Cari tanda yang keliru. Lalu perbaiki kodenya!
+    kode_rusak: |
+      sisi = input()
+      sisi = int(sisi)
+      print(sisi + sisi)
+    contoh:
+      - input: "5"
+        output: "25"
+      - input: "3"
+        output: "9"
+    tes:
+      - input: "5"
+        output: "25"
+      - input: "3"
+        output: "9"
+      - input: "1"
+        output: "1"
+      - input: "10"
+        output: "100"
+    solusi: |
+      sisi = input()
+      sisi = int(sisi)
+      print(sisi * sisi)
+    petunjuk:
+      - "Luas persegi itu sisi dikali sisi."
+      - "Cek tanda hitung di baris print."
+      - "Ganti tanda + menjadi tanda *."
+
+  - id: "b3-1"
+    judul: "Huruf Pertama"
+    emoji: "🐛"
+    bab: 3
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil membuat program huruf pertama. Nama Budi harusnya
+      huruf pertamanya B. Tapi program mencetak u. Padahal huruf
+      pertama ada di posisi 0. Bukan posisi 1. Ingat, hitungan
+      mulai dari nol. Perbaiki nomor posisinya!
+    kode_rusak: |
+      nama = input()
+      print(nama[1])
+    contoh:
+      - input: "Budi"
+        output: "B"
+      - input: "Sari"
+        output: "S"
+    tes:
+      - input: "Budi"
+        output: "B"
+      - input: "Sari"
+        output: "S"
+      - input: "Kancil"
+        output: "K"
+      - input: "Ayu"
+        output: "A"
+    solusi: |
+      nama = input()
+      print(nama[0])
+    petunjuk:
+      - "Posisi huruf di teks mulai dari angka 0."
+      - "Huruf pertama ada di posisi 0."
+      - "Ganti angka di dalam kurung siku menjadi 0."
+
+  - id: "b3-2"
+    judul: "Teriak Besar"
+    emoji: "🐛"
+    bab: 3
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil mau menyapa dengan teriakan. Nama kecil harus jadi
+      huruf besar semua. Ketikan budi harus jadi HALO BUDI!
+      Tapi program lupa membuat huruf besarnya. Hasilnya HALO budi!.
+      Ada metode yang membuat huruf besar. Pakai metode itu di nama!
+    kode_rusak: |
+      nama = input()
+      print('HALO ' + nama + '!')
+    contoh:
+      - input: "budi"
+        output: "HALO BUDI!"
+      - input: "sari"
+        output: "HALO SARI!"
+    tes:
+      - input: "budi"
+        output: "HALO BUDI!"
+      - input: "sari"
+        output: "HALO SARI!"
+      - input: "kancil"
+        output: "HALO KANCIL!"
+      - input: "putri"
+        output: "HALO PUTRI!"
+    solusi: |
+      nama = input()
+      print('HALO ' + nama.upper() + '!')
+    petunjuk:
+      - "Ada cara membuat semua huruf jadi besar."
+      - "Metodenya bernama .upper()."
+      - "Pasang .upper() di belakang nama."
+
+  - id: "b4-1"
+    judul: "Pintu Bioskop"
+    emoji: "🐛"
+    bab: 4
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil jaga pintu bioskop. Anak umur 17 tahun boleh masuk.
+      Umur 16 belum boleh. Tapi program menolak anak umur 17.
+      Katanya belum boleh. Padahal 17 itu pas umurnya.
+      Tanda perbandingannya kurang tepat. Perbaiki!
+    kode_rusak: |
+      umur = int(input())
+      if umur > 17:
+          print('Boleh masuk')
+      else:
+          print('Belum boleh')
+    contoh:
+      - input: "17"
+        output: "Boleh masuk"
+      - input: "16"
+        output: "Belum boleh"
+    tes:
+      - input: "17"
+        output: "Boleh masuk"
+      - input: "16"
+        output: "Belum boleh"
+      - input: "20"
+        output: "Boleh masuk"
+      - input: "10"
+        output: "Belum boleh"
+    solusi: |
+      umur = int(input())
+      if umur >= 17:
+          print('Boleh masuk')
+      else:
+          print('Belum boleh')
+    petunjuk:
+      - "Umur 17 harusnya boleh masuk."
+      - "Pakai tanda >= artinya lebih dari atau sama dengan."
+      - "Ganti tanda > menjadi >=."
+
+  - id: "b4-2"
+    judul: "Diskon Spesial"
+    emoji: "🐛"
+    bab: 4
+    menit: 9
+    xp: 40
+    cerita: |
+      Toko Si Kancil kasih diskon. Anak kecil di bawah 12 dapat diskon.
+      Kakek di atas 60 juga dapat. Tapi program memakai kata dan.
+      Jadi tidak ada yang dapat diskon. Padahal cukup salah satu saja.
+      Ganti kata penghubungnya!
+    kode_rusak: |
+      umur = int(input())
+      if umur < 12 and umur > 60:
+          print('Dapat diskon')
+      else:
+          print('Tidak dapat diskon')
+    contoh:
+      - input: "8"
+        output: "Dapat diskon"
+      - input: "70"
+        output: "Dapat diskon"
+    tes:
+      - input: "8"
+        output: "Dapat diskon"
+      - input: "70"
+        output: "Dapat diskon"
+      - input: "30"
+        output: "Tidak dapat diskon"
+      - input: "12"
+        output: "Tidak dapat diskon"
+    solusi: |
+      umur = int(input())
+      if umur < 12 or umur > 60:
+          print('Dapat diskon')
+      else:
+          print('Tidak dapat diskon')
+    petunjuk:
+      - "Diskon untuk anak kecil ATAU kakek."
+      - "Kata dan artinya harus dua-duanya benar."
+      - "Ganti and menjadi or."
+
+  - id: "b5-1"
+    judul: "Hitung Sampai Akhir"
+    emoji: "🐛"
+    bab: 5
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil minta angka 5. Program harus mencetak 1 sampai 5.
+      Tapi angka 5 tidak pernah muncul. Hanya sampai 4.
+      Angka terakhir hilang. Coba lihat range-nya.
+      Ada yang kurang satu. Perbaiki!
+    kode_rusak: |
+      n = int(input())
+      for i in range(1, n):
+          print(i)
+    contoh:
+      - input: "3"
+        output: "1\n2\n3"
+      - input: "5"
+        output: "1\n2\n3\n4\n5"
+    tes:
+      - input: "3"
+        output: "1\n2\n3"
+      - input: "5"
+        output: "1\n2\n3\n4\n5"
+      - input: "1"
+        output: "1"
+      - input: "4"
+        output: "1\n2\n3\n4"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print(i)
+    petunjuk:
+      - "range(1, n) berhenti sebelum n."
+      - "Biar sampai n, tulis n + 1."
+      - "Ganti n menjadi n + 1 di dalam range."
+
+  - id: "b5-2"
+    judul: "Tabungan Harian"
+    emoji: "🐛"
+    bab: 5
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil menabung seribu rupiah setiap hari. Setelah 3 hari
+      totalnya 3000. Tapi program mencetak total di setiap hari.
+      Hasilnya 1000, 2000, 3000. Padahal Kancil cuma mau total
+      akhir saja. Pindahkan cetaknya!
+    kode_rusak: |
+      hari = int(input())
+      total = 0
+      for i in range(hari):
+          total = total + 1000
+          print(total)
+    contoh:
+      - input: "3"
+        output: "3000"
+      - input: "2"
+        output: "2000"
+    tes:
+      - input: "3"
+        output: "3000"
+      - input: "2"
+        output: "2000"
+      - input: "1"
+        output: "1000"
+      - input: "5"
+        output: "5000"
+    solusi: |
+      hari = int(input())
+      total = 0
+      for i in range(hari):
+          total = total + 1000
+      print(total)
+    petunjuk:
+      - "Kancil cuma mau total akhir, bukan tiap hari."
+      - "Baris print(total) harus di luar loop."
+      - "Pindahkan print(total) ke kiri, sejajar dengan for."
+
+  - id: "b6-1"
+    judul: "Kotak Mainan"
+    emoji: "🐛"
+    bab: 6
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil mengetik tiga nama mainan. Semua harus masuk ke
+      kotak list. Tapi kotaknya cuma berisi mainan terakhir.
+      Mainan pertama hilang. Coba cek baris append.
+      Mungkin ada di luar perulangan. Perbaiki!
+    kode_rusak: |
+      daftar = []
+      for i in range(3):
+          mainan = input()
+      daftar.append(mainan)
+      print(daftar)
+    contoh:
+      - input: "boneka\nbola\nmobil"
+        output: "['boneka', 'bola', 'mobil']"
+      - input: "buku\npensil\npenggaris"
+        output: "['buku', 'pensil', 'penggaris']"
+    tes:
+      - input: "boneka\nbola\nmobil"
+        output: "['boneka', 'bola', 'mobil']"
+      - input: "buku\npensil\npenggaris"
+        output: "['buku', 'pensil', 'penggaris']"
+      - input: "a\nb\nc"
+        output: "['a', 'b', 'c']"
+      - input: "x\ny\nz"
+        output: "['x', 'y', 'z']"
+    solusi: |
+      daftar = []
+      for i in range(3):
+          mainan = input()
+          daftar.append(mainan)
+      print(daftar)
+    petunjuk:
+      - "append harus dipanggil setiap putaran."
+      - "Cek indentasi baris append."
+      - "Masukkan daftar.append(mainan) ke dalam loop."
+
+  - id: "b6-2"
+    judul: "Nilai Terbaik"
+    emoji: "🐛"
+    bab: 6
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil mengumpulkan nilai ulangan. Dia mau nilai terbesar.
+      Nilainya 80, 90, 70. Harusnya 90. Tapi program mencetak 70.
+      Itu nilai terkecil. Ada fungsi yang mengambil terbesar.
+      Ganti fungsinya!
+    kode_rusak: |
+      nilai = []
+      for i in range(3):
+          nilai.append(int(input()))
+      print(min(nilai))
+    contoh:
+      - input: "80\n90\n70"
+        output: "90"
+      - input: "50\n60\n40"
+        output: "60"
+    tes:
+      - input: "80\n90\n70"
+        output: "90"
+      - input: "50\n60\n40"
+        output: "60"
+      - input: "100\n10\n50"
+        output: "100"
+      - input: "7\n7\n7"
+        output: "7"
+    solusi: |
+      nilai = []
+      for i in range(3):
+          nilai.append(int(input()))
+      print(max(nilai))
+    petunjuk:
+      - "Kancil mau nilai TERBESAR."
+      - "max() mengambil terbesar. min() mengambil terkecil."
+      - "Ganti min menjadi max."
+
+  - id: "b7-1"
+    judul: "Kartu Pelajar"
+    emoji: "🐛"
+    bab: 7
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil membuat kartu pelajar. Ada nama dan umur teman.
+      Dia mau mencetak umurnya. Tapi program mencetak nama.
+      Kunci kamusnya salah. Umur disimpan di kunci umur.
+      Cek kunci di dalam kurung siku. Perbaiki!
+    kode_rusak: |
+      data = {}
+      data['nama'] = input()
+      data['umur'] = input()
+      print(data['nama'])
+    contoh:
+      - input: "Budi\n12"
+        output: "12"
+      - input: "Sari\n13"
+        output: "13"
+    tes:
+      - input: "Budi\n12"
+        output: "12"
+      - input: "Sari\n13"
+        output: "13"
+      - input: "Kancil\n10"
+        output: "10"
+      - input: "Ayu\n15"
+        output: "15"
+    solusi: |
+      data = {}
+      data['nama'] = input()
+      data['umur'] = input()
+      print(data['umur'])
+    petunjuk:
+      - "Umur disimpan di kunci 'umur'."
+      - "Cek kunci di dalam kurung siku pada print."
+      - "Ganti 'nama' menjadi 'umur'."
+
+  - id: "b7-2"
+    judul: "Mainan Kembar"
+    emoji: "🐛"
+    bab: 7
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil punya mainan kembar. Dia mau hitung mainan yang
+      unik saja. Mainan sama cuma dihitung sekali. Tapi program
+      menghitung semua. Mainan kembar dihitung dua kali.
+      Set bisa membuang yang kembar. Tapi kodenya memakai list.
+      Perbaiki!
+    kode_rusak: |
+      mainan = []
+      for i in range(4):
+          mainan.append(input())
+      print(len(mainan))
+    contoh:
+      - input: "bola\nbola\nmobil\nmobil"
+        output: "2"
+      - input: "a\nb\na\nc"
+        output: "3"
+    tes:
+      - input: "bola\nbola\nmobil\nmobil"
+        output: "2"
+      - input: "a\nb\na\nc"
+        output: "3"
+      - input: "x\nx\nx\nx"
+        output: "1"
+      - input: "a\nb\nc\nd"
+        output: "4"
+    solusi: |
+      mainan = set()
+      for i in range(4):
+          mainan.add(input())
+      print(len(mainan))
+    petunjuk:
+      - "Set otomatis membuang mainan yang kembar."
+      - "List menyimpan semua, termasuk yang kembar."
+      - "Ganti list [] menjadi set() dan append menjadi add."
+
+  - id: "b8-1"
+    judul: "Mesin Kali"
+    emoji: "🐛"
+    bab: 8
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil membuat mesin kali. Mesinnya harus mengembalikan
+      hasil. Lalu hasilnya dicetak di luar. Tapi mesinnya malah
+      mencetak sendiri. Hasilnya jadi dua baris. Ada kata None
+      di baris kedua. Fungsi harus pakai return. Perbaiki!
+    kode_rusak: |
+      def kali(a, b):
+          print(a * b)
+
+      a = int(input())
+      b = int(input())
+      print(kali(a, b))
+    contoh:
+      - input: "3\n4"
+        output: "12"
+      - input: "5\n2"
+        output: "10"
+    tes:
+      - input: "3\n4"
+        output: "12"
+      - input: "5\n2"
+        output: "10"
+      - input: "7\n1"
+        output: "7"
+      - input: "0\n9"
+        output: "0"
+    solusi: |
+      def kali(a, b):
+          return a * b
+
+      a = int(input())
+      b = int(input())
+      print(kali(a, b))
+    petunjuk:
+      - "Fungsi harus memberi hasil, bukan mencetak."
+      - "return mengirim hasil ke pemanggil."
+      - "Ganti print di dalam fungsi menjadi return."
+
+  - id: "b8-2"
+    judul: "Bagi Kue"
+    emoji: "🐛"
+    bab: 8
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil membagi kue dengan adil. Sepuluh kue dibagi dua
+      teman. Masing-masing dapat lima. Tapi program membagi dua
+      dengan sepuluh. Hasilnya 0.2. Itu salah besar.
+      Urutan angka di return terbalik. Perbaiki kodenya!
+    kode_rusak: |
+      def bagi(a, b):
+          return b / a
+
+      a = int(input())
+      b = int(input())
+      print(bagi(a, b))
+    contoh:
+      - input: "10\n2"
+        output: "5.0"
+      - input: "9\n3"
+        output: "3.0"
+    tes:
+      - input: "10\n2"
+        output: "5.0"
+      - input: "9\n3"
+        output: "3.0"
+      - input: "8\n4"
+        output: "2.0"
+      - input: "12\n3"
+        output: "4.0"
+    solusi: |
+      def bagi(a, b):
+          return a / b
+
+      a = int(input())
+      b = int(input())
+      print(bagi(a, b))
+    petunjuk:
+      - "a adalah kue. b adalah teman."
+      - "Kue dibagi teman: a dibagi b."
+      - "Cek urutan a dan b di baris return."
+
+  - id: "b9-1"
+    judul: "Ketikan Ajaib"
+    emoji: "🐛"
+    bab: 9
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil minta ketikan angka. Kalau anak mengetik huruf,
+      program harus tetap tenang. Harusnya mencetak Salah ketik!.
+      Tapi program langsung mogok. Ada error besar.
+      Padahal ada cara menangkap kegagalan. Pakai try dan except.
+      Perbaiki!
+    kode_rusak: |
+      n = int(input())
+      print(n * 2)
+    contoh:
+      - input: "5"
+        output: "10"
+      - input: "abc"
+        output: "Salah ketik!"
+    tes:
+      - input: "5"
+        output: "10"
+      - input: "abc"
+        output: "Salah ketik!"
+      - input: "7"
+        output: "14"
+      - input: "xyz"
+        output: "Salah ketik!"
+    solusi: |
+      try:
+          n = int(input())
+          print(n * 2)
+      except:
+          print('Salah ketik!')
+    petunjuk:
+      - "int() bisa gagal kalau ketikannya bukan angka."
+      - "try/except menangkap kegagalan itu."
+      - "Taruh int(input()) di dalam try, pesan di except."
+
+  - id: "b9-2"
+    judul: "Harga Kantin"
+    emoji: "🐛"
+    bab: 9
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil jaga kantin. Harga makanan diketik anak-anak.
+      Kalau ada yang mengetik huruf, cetak Harga harus angka.
+      Tapi program menangkap kesalahan yang salah.
+      Ketikan huruf tetap bikin error. Jenis errornya kurang pas.
+      Ganti jenisnya!
+    kode_rusak: |
+      try:
+          harga = int(input())
+          print(harga * 2)
+      except ZeroDivisionError:
+          print('Harga harus angka')
+    contoh:
+      - input: "5"
+        output: "10"
+      - input: "lima"
+        output: "Harga harus angka"
+    tes:
+      - input: "5"
+        output: "10"
+      - input: "lima"
+        output: "Harga harus angka"
+      - input: "3"
+        output: "6"
+      - input: "abc"
+        output: "Harga harus angka"
+    solusi: |
+      try:
+          harga = int(input())
+          print(harga * 2)
+      except ValueError:
+          print('Harga harus angka')
+    petunjuk:
+      - "Ketikan huruf membuat ValueError."
+      - "except hanya menangkap jenis error yang tertulis."
+      - "Ganti ZeroDivisionError menjadi ValueError."
+
+  - id: "b10-1"
+    judul: "Peta Duduk"
+    emoji: "🐛"
+    bab: 10
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil membuat peta duduk kelas. Ada 2 baris. Tiap baris
+      ada 3 kursi. Harusnya tiap baris: 1 2 3. Tapi program
+      mencetak 1 1 1. Itu nomor baris, bukan nomor kursi.
+      Variabelnya tertukar di print. Perbaiki!
+    kode_rusak: |
+      baris = int(input())
+      kursi = int(input())
+      for i in range(baris):
+          for j in range(kursi):
+              print(i + 1, end=' ')
+          print()
+    contoh:
+      - input: "2\n3"
+        output: "1 2 3\n1 2 3"
+      - input: "3\n2"
+        output: "1 2\n1 2\n1 2"
+    tes:
+      - input: "2\n3"
+        output: "1 2 3\n1 2 3"
+      - input: "3\n2"
+        output: "1 2\n1 2\n1 2"
+      - input: "1\n4"
+        output: "1 2 3 4"
+      - input: "2\n2"
+        output: "1 2\n1 2"
+    solusi: |
+      baris = int(input())
+      kursi = int(input())
+      for i in range(baris):
+          for j in range(kursi):
+              print(j + 1, end=' ')
+          print()
+    petunjuk:
+      - "i adalah nomor baris. j adalah nomor kursi."
+      - "Nomor kursi dihitung dengan j."
+      - "Ganti i menjadi j di dalam print."
+
+  - id: "b10-2"
+    judul: "Kelereng Berantakan"
+    emoji: "🐛"
+    bab: 10
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil punya kelereng bernomor. Dia mau urut dari kecil
+      ke besar. Tapi program mengurutkan dari besar ke kecil.
+      Kelerengnya jadi terbalik. Perbandingannya dibalik.
+      Cek tanda di dalam if. Perbaiki!
+    kode_rusak: |
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      for i in range(n):
+          for j in range(n - 1):
+              if angka[j] < angka[j + 1]:
+                  simpan = angka[j]
+                  angka[j] = angka[j + 1]
+                  angka[j + 1] = simpan
+      print(angka)
+    contoh:
+      - input: "3\n5\n1\n3"
+        output: "[1, 3, 5]"
+      - input: "2\n9\n4"
+        output: "[4, 9]"
+    tes:
+      - input: "3\n5\n1\n3"
+        output: "[1, 3, 5]"
+      - input: "2\n9\n4"
+        output: "[4, 9]"
+      - input: "4\n7\n2\n9\n1"
+        output: "[1, 2, 7, 9]"
+      - input: "1\n5"
+        output: "[5]"
+    solusi: |
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      for i in range(n):
+          for j in range(n - 1):
+              if angka[j] > angka[j + 1]:
+                  simpan = angka[j]
+                  angka[j] = angka[j + 1]
+                  angka[j + 1] = simpan
+      print(angka)
+    petunjuk:
+      - "Urut kecil ke besar artinya yang kecil pindah ke depan."
+      - "Tukar kalau angka kiri lebih BESAR dari angka kanan."
+      - "Ganti tanda < menjadi > di dalam if."
+
+  - id: "b11-1"
+    judul: "Kucing Manis"
+    emoji: "🐛"
+    bab: 11
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil membuat kelas Kucing. Setiap kucing punya nama
+      dan suara. Suara kucing itu Meong. Tapi program mencetak
+      nama kucingnya. Itu salah. Suara di dalam kelas tertukar.
+      Cek atribut di __init__. Perbaiki kodenya!
+    kode_rusak: |
+      class Kucing:
+          def __init__(self, nama):
+              self.nama = nama
+              self.suara = nama
+
+      k = Kucing(input())
+      print(k.suara)
+    contoh:
+      - input: "Manis"
+        output: "Meong"
+      - input: "Comel"
+        output: "Meong"
+    tes:
+      - input: "Manis"
+        output: "Meong"
+      - input: "Comel"
+        output: "Meong"
+      - input: "Putih"
+        output: "Meong"
+      - input: "Hitam"
+        output: "Meong"
+    solusi: |
+      class Kucing:
+          def __init__(self, nama):
+              self.nama = nama
+              self.suara = 'Meong'
+
+      k = Kucing(input())
+      print(k.suara)
+    petunjuk:
+      - "Suara kucing disimpan di self.suara."
+      - "Di __init__, self.suara harus berisi 'Meong'."
+      - "Ganti self.suara = nama menjadi self.suara = 'Meong'."
+
+  - id: "b11-2"
+    judul: "Toko Buku"
+    emoji: "🐛"
+    bab: 11
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil punya toko buku. Harga buku 5000. Ada method
+      untuk menaikkan harga. Ditambah 1000 harusnya jadi 6000.
+      Tapi harganya malah jadi 1000. Methodnya mengganti harga.
+      Padahal harusnya menambah. Perbaiki!
+    kode_rusak: |
+      class Buku:
+          def __init__(self, judul, harga):
+              self.judul = judul
+              self.harga = harga
+
+          def naik(self, tambah):
+              self.harga = tambah
+
+      b = Buku('Dongeng', int(input()))
+      b.naik(1000)
+      print(b.harga)
+    contoh:
+      - input: "5000"
+        output: "6000"
+      - input: "3000"
+        output: "4000"
+    tes:
+      - input: "5000"
+        output: "6000"
+      - input: "3000"
+        output: "4000"
+      - input: "2000"
+        output: "3000"
+      - input: "0"
+        output: "1000"
+    solusi: |
+      class Buku:
+          def __init__(self, judul, harga):
+              self.judul = judul
+              self.harga = harga
+
+          def naik(self, tambah):
+              self.harga += tambah
+
+      b = Buku('Dongeng', int(input()))
+      b.naik(1000)
+      print(b.harga)
+    petunjuk:
+      - "Naik artinya harga lama DITAMBAH."
+      - "+= menambah nilai ke harga lama."
+      - "Ganti tanda = menjadi += di method naik."
+
+  - id: "b12-1"
+    judul: "Bilangan Genap"
+    emoji: "🐛"
+    bab: 12
+    menit: 8
+    xp: 40
+    cerita: |
+      Si Kancil punya daftar angka. Dia mau ambil yang genap saja.
+      Angka 1, 2, 3, 4 harusnya jadi 2, 4. Tapi program mengambil
+      1, 3. Itu bilangan ganjil. Syaratnya terbalik. Bilangan
+      genap sisa baginya nol. Perbaiki!
+    kode_rusak: |
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      genap = [x for x in angka if x % 2 == 1]
+      print(genap)
+    contoh:
+      - input: "4\n1\n2\n3\n4"
+        output: "[2, 4]"
+      - input: "3\n5\n6\n7"
+        output: "[6]"
+    tes:
+      - input: "4\n1\n2\n3\n4"
+        output: "[2, 4]"
+      - input: "3\n5\n6\n7"
+        output: "[6]"
+      - input: "2\n8\n9"
+        output: "[8]"
+      - input: "1\n3"
+        output: "[]"
+    solusi: |
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      genap = [x for x in angka if x % 2 == 0]
+      print(genap)
+    petunjuk:
+      - "Bilangan genap habis dibagi 2."
+      - "x % 2 == 0 artinya sisa baginya nol."
+      - "Ganti == 1 menjadi == 0 di syaratnya."
+
+  - id: "b12-2"
+    judul: "Skor Tertinggi"
+    emoji: "🐛"
+    bab: 12
+    menit: 9
+    xp: 40
+    cerita: |
+      Si Kancil mengumpulkan skor mainan. Dia mau urut dari yang
+      terbesar. Skor 5, 9, 2 harusnya 9, 5, 2. Tapi program
+      mencetak 2, 5, 9. Urutannya terbalik. Kunci lambda-nya
+      kurang tepat. Perbaiki kodenya!
+    kode_rusak: |
+      n = int(input())
+      skor = []
+      for i in range(n):
+          skor.append(int(input()))
+      urut = sorted(skor, key=lambda x: x)
+      print(urut)
+    contoh:
+      - input: "3\n5\n9\n2"
+        output: "[9, 5, 2]"
+      - input: "2\n4\n7"
+        output: "[7, 4]"
+    tes:
+      - input: "3\n5\n9\n2"
+        output: "[9, 5, 2]"
+      - input: "2\n4\n7"
+        output: "[7, 4]"
+      - input: "4\n1\n8\n3\n6"
+        output: "[8, 6, 3, 1]"
+      - input: "1\n5"
+        output: "[5]"
+    solusi: |
+      n = int(input())
+      skor = []
+      for i in range(n):
+          skor.append(int(input()))
+      urut = sorted(skor, key=lambda x: -x)
+      print(urut)
+    petunjuk:
+      - "Kancil mau skor besar muncul duluan."
+      - "key=lambda x: -x membalik urutan naik."
+      - "Tambahkan tanda minus di depan x."

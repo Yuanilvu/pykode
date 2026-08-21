@@ -109,6 +109,10 @@
         html += '<div style="margin-top:12px"><a class="btn btn-primary" href="{{ url_for("project") }}">🏗️ Kembali ke Proyek</a></div>';
       } else {
         html += '<div class="verdict-banner verdict-WA">😅 Belum benar — ' + d.passed + '/' + d.total + ' tes rahasia lolos. Cek lagi, kamu pasti bisa!</div>';
+        if (d.deteksi && d.deteksi.ada) {
+          html += '<div class="verdict-banner" style="background:#eff6ff;color:#1e40af">🕵️ <strong>Detektif Kesalahan:</strong><br>' +
+                  esc(d.deteksi.pesan).replace(/\n/g, '<br>') + '<br>💡 ' + esc(d.deteksi.saran) + '</div>';
+        }
         d.results.forEach(function (r) {
           if (r.status === 'salah') {
             html += '<div class="result-row fail"><span class="tag">❌ Hasil salah</span><pre><strong>Masukan:</strong> ' + esc(r.input) + '\n<strong>Harusnya:</strong> ' + esc(r.expected) + '\n<strong>Kode kamu:</strong> ' + esc(r.got) + '</pre></div>';

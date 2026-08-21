@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Monitor — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#334155,#0f172a)">
+  <div>
+    <h1>📊 Monitor Belajar</h1>
+    <p>Pantauan progres semua orang yang belajar di PyKode. Tanda ⚠️ = ada yang butuh bantuan.</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big">{{ users|length }}</div>
+    <div>pengguna</div>
+  </div>
+</div>
+
+{% for u in users %}
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <h2 style="margin:0;font-size:1.15rem">👤 {{ u.username }} <span style="color:var(--muted);font-weight:600;font-size:.85rem">(terakhir aktif: {{ u.last_active or '—' }})</span></h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="pill pill-xp">⭐ {{ u.xp }}</span>
+      <span class="pill pill-streak">🔥 {{ u.streak }}</span>
+      {% if u.wrong_24h >= 5 %}<span class="pill" style="background:#fee2e2;color:#991b1b">⚠️ {{ u.wrong_24h }} gagal 24 jam</span>{% endif %}
+    </div>
+  </div>
+  <div class="stat-row" style="margin-top:12px">
+    <div class="stat-box" style="background:#eef2ff"><span class="num">{{ u.lessons }}/{{ stats.pelajaran }}</span><span class="lbl">Pelajaran</span></div>
+    <div class="stat-box" style="background:#ecfdf5"><span class="num">{{ u.solved }}/{{ stats.soal }}</span><span class="lbl">Soal</span></div>
+    <div class="stat-box" style="background:#fffbeb"><span class="num">{{ u.drills }}/{{ stats.drill }}</span><span class="lbl">Drill</span></div>
+    <div class="stat-box" style="background:#f0f9ff"><span class="num">{{ u.milestones }}/{{ stats.babs }}</span><span class="lbl">Misi proyek</span></div>
+    <div class="stat-box" style="background:#fef2f2"><span class="num">{{ u.bugs }}</span><span class="lbl">Bug diperbaiki</span></div>
+    <div class="stat-box" style="background:#f5f3ff"><span class="num">{{ u.works }}</span><span class="lbl">Karya kode</span></div>
+    <div class="stat-box"><span class="num">{{ u.week_sub }}</span><span class="lbl">Aktivitas 7 hari</span></div>
+  </div>
+  {% if u.stuck %}
+  <div style="margin-top:12px;background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:10px 14px;font-size:.9rem">
+    <strong>⚠️ Mungkin butuh bantuan:</strong>
+    {% for s in u.stuck %}
+    <div>• Soal <strong>{{ s.problem_id }}</strong> — sudah dicoba <strong>{{ s.attempts }}x</strong> belum berhasil</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% else %}
+<div class="flash flash-info">Belum ada pengguna lain. Ajak adekmu bikin akun! 🎉</div>
+{% endfor %}
+
+<div class="card" style="text-align:center;color:var(--muted);font-size:.9rem">
+  📲 Kakak bisa dapat notifikasi HP: digesek tiap hari pukul 18:00 + ringkasan mingguan tiap Minggu — alert otomatis kalau ada yang gagal &gt;5x dalam sehari.
+</div>
+
+{% endblock %}

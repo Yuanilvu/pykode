@@ -130,5 +130,36 @@ print("== LEADERBOARD ==")
 st, body = c.get("/leaderboard")
 check("kancil di leaderboard", "kancil" in body)
 
+print("== DETEKTIF ==")
+st, body = c.post_json("/api/submit", {"problem_id": "s1-2", "code": "print('Baris pertama')\nprint('Baris dua')\nprint('Baris ketiga')"})
+d = json.loads(body)
+check("submit salah -> deteksi muncul", d["verdict"] == "WA" and d.get("deteksi", {}).get("ada") is True)
+check("deteksi sebut baris ke-2", "Baris ke-2" in d["deteksi"]["pesan"])
+
+print("== PERBAIKI KODE ==")
+# Bug bab 1 butuh SEMUA pelajaran bab 1 selesai (1-2 & 1-3 belum)
+for lid in ("1-2", "1-3"):
+    c.post_json("/api/lesson-done", {"lesson_id": lid})
+st, body = c.post_json("/api/bug-submit", {"bug_id": "b1-1", "code": "print('Halo')\nprint('Budi')\nprint('Ayo belajar Python!')"})
+d = json.loads(body)
+check("bug b1-1 benar -> AC +40 XP + badge montir", d["verdict"] == "AC" and d["xp_added"] == 40
+      and any(b["id"] == "montir" for b in d["new_badges"]))
+st, body = c.post_json("/api/bug-submit", {"bug_id": "b1-2", "code": "print('Aku suka Python')\nprint('Python itu seru')"})
+d = json.loads(body)
+check("bug b1-2 benar -> AC", d["verdict"] == "AC")
+
+print("== RUMAH KODE ==")
+st, body = c.post_json("/api/playground-save", {"judul": "Karya Pertama", "code": "print('halo')"})
+d = json.loads(body)
+check("playground save -> id + badge penjelajah", d["ok"] and d["work_id"] > 0
+      and any(b["id"] == "penjelajah" for b in d["new_badges"]))
+st, body = c.post_json("/api/playground-load", {"work_id": d["work_id"]})
+d = json.loads(body)
+check("playground load -> judul & kode sama", d["ok"] and d["judul"] == "Karya Pertama" and d["code"] == "print('halo')")
+
+print("== MONITOR ==")
+st, body = c.get("/monitor")
+check("monitor page -> 200 & ada user", st == 200 and "kancil" in body)
+
 print(f"\nRESULT: {PASS} pass, {FAIL} fail")
 exit(1 if FAIL else 0)

@@ -66,6 +66,21 @@ CREATE TABLE IF NOT EXISTS project_code (
     user_id INTEGER PRIMARY KEY,
     code TEXT NOT NULL DEFAULT ''
 );
+CREATE TABLE IF NOT EXISTS bug_progress (
+    user_id INTEGER NOT NULL,
+    bug_id TEXT NOT NULL,
+    attempts INTEGER NOT NULL DEFAULT 0,
+    solved INTEGER NOT NULL DEFAULT 0,
+    solved_at TEXT,
+    PRIMARY KEY (user_id, bug_id)
+);
+CREATE TABLE IF NOT EXISTS playground_works (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    judul TEXT NOT NULL DEFAULT 'Karya Tanpa Judul',
+    code TEXT NOT NULL DEFAULT '',
+    updated_at TEXT DEFAULT (datetime('now'))
+);
 """
 
 
@@ -275,7 +290,6 @@ def leaderboard(limit=10):
 
 
 # ---------- proyek besar ----------
-
 def milestone_done(user_id, milestone_id):
     with get_conn() as conn:
         return conn.execute(
@@ -308,3 +322,120 @@ def save_project_code(user_id, code):
             "INSERT INTO project_code (user_id, code) VALUES (?, ?) "
             "ON CONFLICT(user_id) DO UPDATE SET code = excluded.code",
             (user_id, code))
+
+
+# ---------- perbaiki kode (bug) ----------
+
+def bug_state(user_id, bug_id):
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT attempts, solved FROM bug_progress WHERE user_id = ? AND bug_id = ?",
+            (user_id, bug_id)).fetchone()
+        return {"attempts": row["attempts"] if row else 0,
+                "solved": bool(row and row["solved"])}
+
+
+def record_bug_attempt(user_id, bug_id):
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT INTO bug_progress (user_id, bug_id, attempts) VALUES (?, ?, 1) "
+            "ON CONFLICT(user_id, bug_id) DO UPDATE SET attempts = attempts + 1",
+            (user_id, bug_id))
+
+
+def mark_bug_solved(user_id, bug_id):
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE bug_progress SET solved = 1, solved_at = datetime('now') "
+            "WHERE user_id = ? AND bug_id = ?", (user_id, bug_id))
+
+
+def solved_bug_ids(user_id):
+    with get_conn() as conn:
+        return {r["bug_id"] for r in conn.execute(
+            "SELECT bug_id FROM bug_progress WHERE user_id = ? AND solved = 1",
+            (user_id,))}
+
+
+# ---------- rumah kode (playground) ----------
+
+def list_playground(user_id):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT id, judul, updated_at FROM playground_works WHERE user_id = ? "
+            "ORDER BY updated_at DESC", (user_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_playground_work(user_id, work_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT * FROM playground_works WHERE user_id = ? AND id = ?",
+            (user_id, work_id)).fetchone()
+
+
+def save_playground_work(user_id, judul, code, work_id=None):
+    with get_conn() as conn:
+        if work_id:
+            conn.execute(
+                "UPDATE playground_works SET judul = ?, code = ?, "
+                "updated_at = datetime('now') WHERE user_id = ? AND id = ?",
+                (judul, code, user_id, work_id))
+            return work_id
+        cur = conn.execute(
+            "INSERT INTO playground_works (user_id, judul, code) VALUES (?, ?, ?)",
+            (user_id, judul, code))
+        return cur.lastrowid
+
+
+def delete_playground_work(user_id, work_id):
+    with get_conn() as conn:
+        conn.execute("DELETE FROM playground_works WHERE user_id = ? AND id = ?",
+                     (user_id, work_id))
+
+
+# ---------- monitor (pantauan kakak) ----------
+
+def monitor_data():
+    """Data progres semua user untuk halaman Monitor & script ntfy."""
+    with get_conn() as conn:
+        users = conn.execute(
+            "SELECT id, username, xp, streak, last_active FROM users ORDER BY xp DESC"
+        ).fetchall()
+        result = []
+        for u in users:
+            uid = u["id"]
+            lessons = conn.execute(
+                "SELECT COUNT(*) c FROM lessons_done WHERE user_id=?", (uid,)).fetchone()["c"]
+            solved = conn.execute(
+                "SELECT COUNT(*) c FROM problems_solved WHERE user_id=? AND solved=1",
+                (uid,)).fetchone()["c"]
+            drills = conn.execute(
+                "SELECT COUNT(*) c FROM drills_done WHERE user_id=?", (uid,)).fetchone()["c"]
+            milestones = conn.execute(
+                "SELECT COUNT(*) c FROM project_progress WHERE user_id=?",
+                (uid,)).fetchone()["c"]
+            bugs = conn.execute(
+                "SELECT COUNT(*) c FROM bug_progress WHERE user_id=? AND solved=1",
+                (uid,)).fetchone()["c"]
+            works = conn.execute(
+                "SELECT COUNT(*) c FROM playground_works WHERE user_id=?",
+                (uid,)).fetchone()["c"]
+            week_sub = conn.execute(
+                "SELECT COUNT(*) c FROM submissions WHERE user_id=? "
+                "AND created_at >= datetime('now','-7 days')", (uid,)).fetchone()["c"]
+            wrong_24h = conn.execute(
+                "SELECT COUNT(*) c FROM submissions WHERE user_id=? AND status!='AC' "
+                "AND created_at >= datetime('now','-1 day')", (uid,)).fetchone()["c"]
+            stuck = [dict(r) for r in conn.execute(
+                "SELECT problem_id, attempts FROM problems_solved "
+                "WHERE user_id=? AND solved=0 AND attempts>=5 ORDER BY attempts DESC",
+                (uid,)).fetchall()]
+            result.append({
+                "username": u["username"], "xp": u["xp"], "streak": u["streak"],
+                "last_active": u["last_active"], "lessons": lessons, "solved": solved,
+                "drills": drills, "milestones": milestones, "bugs": bugs,
+                "works": works, "week_sub": week_sub, "wrong_24h": wrong_24h,
+                "stuck": stuck,
+            })
+        return result

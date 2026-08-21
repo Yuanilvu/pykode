@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}Rumah Kode — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#10b981,#0ea5e9)">
+  <div>
+    <h1>🏠 Rumah Kode</h1>
+    <p>Tempat bebas mencoba Python! Tidak ada tes, tidak ada benar-salah. Tulis apa saja, jalankan, simpan karyamu.</p>
+  </div>
+  <div style="font-size:2.6rem">🧪</div>
+</div>
+
+<div class="card">
+  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+    <input id="work-title" type="text" placeholder="Judul karya (mis. Kode Lucu)" style="flex:1;min-width:180px;padding:10px 14px;border:2px solid var(--border);border-radius:12px;font-size:1rem;font-family:inherit">
+    <select id="work-list" style="padding:10px 14px;border:2px solid var(--border);border-radius:12px;font-size:.95rem;font-family:inherit;background:#fff">
+      <option value="">— Karyaku —</option>
+      {% for w in works %}
+      <option value="{{ w.id }}">{{ w.judul }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="editor-wrap">
+    <div class="editor-head"><span>🐍 Python bebas</span><span>Python 3</span></div>
+    <textarea id="code-editor" class="cm-editor"># Rumah Kode: tulis apa saja di sini 👇
+print('Halo dari Rumah Kode!')</textarea>
+  </div>
+
+  <div style="margin-top:10px">
+    <label class="inline-label" for="stdin-input">Ketikan buat dicoba (opsional):</label>
+    <textarea id="stdin-input" class="stdin" placeholder="Tulis di sini (satu angka per baris)"></textarea>
+  </div>
+
+  <div class="editor-foot">
+    <button class="btn btn-primary" id="btn-run">▶ Jalankan</button>
+    <button class="btn btn-success" id="btn-save">💾 Simpan</button>
+    <button class="btn btn-outline" id="btn-delete" {% if not works %}style="display:none"{% endif %}>🗑️ Hapus</button>
+    <span class="spacer"></span>
+    <span id="run-info" style="color:var(--muted);font-size:.85rem"></span>
+  </div>
+
+  <div id="run-output"></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var editor = initEditor(document.getElementById('code-editor'));
+  var outBox = document.getElementById('run-output');
+  var titleInput = document.getElementById('work-title');
+  var workList = document.getElementById('work-list');
+  var btnDelete = document.getElementById('btn-delete');
+  var currentWorkId = null;
+
+  document.getElementById('btn-run').addEventListener('click', function () {
+    var btn = this;
+    outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
+    btn.disabled = true;
+    fetch('/api/run', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({code: editor.getValue(), stdin: document.getElementById('stdin-input').value})
+    }).then(r => r.json()).then(d => {
+      btn.disabled = false;
+      if (d.status === 'ok') {
+        outBox.innerHTML = '<div class="output-box ok">' + esc(d.stdout || '(tidak ada hasil)') + '</div>';
+        maybeFirstRun();
+      } else {
+        outBox.innerHTML = '<div class="output-box err">' + esc(d.stderr || 'Error') + '</div>';
+      }
+      document.getElementById('run-info').textContent = '⏱ ' + d.time_ms + ' ms';
+    }).catch(() => { btn.disabled = false; outBox.innerHTML = '<div class="output-box err">Gagal terhubung ke server.</div>'; });
+  });
+
+  document.getElementById('btn-save').addEventListener('click', function () {
+    var judul = titleInput.value.trim() || 'Karya Tanpa Judul';
+    fetch('/api/playground-save', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({judul: judul, code: editor.getValue(), work_id: currentWorkId})
+    }).then(r => r.json()).then(d => {
+      if (d.ok) {
+        currentWorkId = d.work_id;
+        toast('Tersimpan! 💾', 'good');
+        if (d.new_badges && d.new_badges.length) d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
+        // refresh list
+        fetch('/playground').then(r => r.text()).then(html => {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(html, 'text/html');
+          var newList = doc.getElementById('work-list');
+          if (newList) workList.innerHTML = newList.innerHTML;
+        });
+        btnDelete.style.display = '';
+      }
+    });
+  });
+
+  workList.addEventListener('change', function () {
+    var id = this.value;
+    if (!id) { currentWorkId = null; return; }
+    fetch('/api/playground-load', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({work_id: parseInt(id, 10)})
+    }).then(r => r.json()).then(d => {
+      if (d.ok) {
+        currentWorkId = parseInt(id, 10);
+        titleInput.value = d.judul;
+        editor.setValue(d.code);
+        toast('Karya dimuat 📂', 'good');
+      }
+    });
+  });
+
+  btnDelete.addEventListener('click', function () {
+    if (!currentWorkId) return;
+    if (!confirm('Hapus karya ini?')) return;
+    fetch('/api/playground-delete', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({work_id: currentWorkId})
+    }).then(r => r.json()).then(d => {
+      if (d.ok) {
+        currentWorkId = null;
+        titleInput.value = '';
+        editor.setValue("# Rumah Kode: tulis apa saja di sini 👇\nprint('Halo dari Rumah Kode!')");
+        workList.value = '';
+        btnDelete.style.display = 'none';
+        toast('Karya dihapus 🗑️', 'bad');
+      }
+    });
+  });
+})();
+</script>
+{% endblock %}

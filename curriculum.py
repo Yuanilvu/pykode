@@ -12,16 +12,19 @@ _by_lesson = None
 _by_problem = None
 _drills = None
 _project = None
+_bugs = None
+_bug_by_id = None
 
 
 def _load_all():
-    global _babs, _by_lesson, _by_problem, _drills, _project
+    global _babs, _by_lesson, _by_problem, _drills, _project, _bugs, _bug_by_id
     if _babs is not None:
         return
     babs = []
     by_lesson, by_problem = {}, {}
     drills = []
     project = None
+    bugs, bug_by_id = [], {}
     for fn in sorted(os.listdir(CURRICULUM_DIR)):
         if not fn.endswith(".yaml"):
             continue
@@ -37,11 +40,17 @@ def _load_all():
             drills = data["drill"] or []
         elif "proyek" in data:
             project = data["proyek"]
+        elif "bug" in data:
+            bugs = data["bug"] or []
+            for b in bugs:
+                bug_by_id[b["id"]] = b
     babs.sort(key=lambda b: b.get("bab", 999))
     if project:
         misi = sorted(project.get("misi") or [], key=lambda m: m.get("bab", 999))
         project["misi"] = misi
+    bugs.sort(key=lambda b: (b.get("bab", 99), b["id"]))
     _babs, _by_lesson, _by_problem, _drills, _project = babs, by_lesson, by_problem, drills, project
+    _bugs, _bug_by_id = bugs, bug_by_id
 
 
 def get_project():
@@ -57,6 +66,16 @@ def get_milestone(milestone_id):
         if m["id"] == milestone_id:
             return m
     return None
+
+
+def get_bugs():
+    _load_all()
+    return _bugs
+
+
+def get_bug(bug_id):
+    _load_all()
+    return _bug_by_id.get(bug_id)
 
 
 def get_babs():

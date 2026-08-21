@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Perbaiki Kode — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#f43f5e,#f59e0b)">
+  <div>
+    <h1>🐛 Perbaiki Kode</h1>
+    <p>Kode di bawah ini rusak! Temukan bug-nya dan perbaiki sampai tes rahasia lolos. Sudah {{ n_done }}/{{ total }} diperbaiki.</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big">{{ n_done }}/{{ total }}</div>
+    <div>kode diperbaiki</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="progress" style="height:14px"><i style="width:{{ pct }}%; background:#f43f5e"></i></div>
+  <p style="color:var(--muted);font-size:.9rem;margin-bottom:0">
+    🔧 Montir sejati bisa menemukan kesalahan di kode orang lain. Tiap bab punya 2 kode rusak — buka setelah pelajaran bab selesai.
+  </p>
+</div>
+
+<div class="drill-grid" style="display:grid;gap:12px">
+  {% for b in bugs %}
+  <a class="card drill-card {% if b.done %}done{% endif %}" href="{{ url_for('bug', bug_id=b.data.id) if b.unlocked else '#' }}" style="text-decoration:none;color:inherit;{% if not b.unlocked %}cursor:not-allowed;opacity:.75{% endif %}">
+    <span class="d-emoji">{{ b.data.emoji or '🐛' }}</span>
+    <div class="d-info">
+      <div class="d-title">
+        {% if b.done %}✅ {% elif b.unlocked %}🔧 {% else %}🔒 {% endif %}
+        Bab {{ b.data.bab }}: {{ b.data.judul }}
+      </div>
+      <div class="d-meta">{{ b.data.menit }} menit · +{{ b.data.xp }} XP{% if b.done %} · selesai!{% endif %}</div>
+    </div>
+    {% if b.unlocked and not b.done %}<span class="btn btn-sm btn-primary" style="pointer-events:none">Perbaiki</span>{% endif %}
+    {% if b.done %}<span class="btn btn-sm btn-outline" style="pointer-events:none">Ulangi 🔁</span>{% endif %}
+  </a>
+  {% endfor %}
+</div>
+
+{% endblock %}
