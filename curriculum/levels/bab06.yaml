@@ -1,0 +1,388 @@
+bab: 6
+judul: "List & Tuple: Kumpulan Data"
+emoji: "📦"
+warna: "#10b981"
+deskripsi: "Simpan banyak nilai: list, tuple, index, slicing, metode list."
+
+pelajaran:
+  - id: "6-1"
+    judul: "List: Rak Penyimpanan"
+    menit: 6
+    materi: |
+      Bayangkan loker sekolah dengan banyak slot bernomor. Slot pertama
+      nomor 0, slot kedua nomor 1, dan seterusnya. Di Python, loker
+      seperti itu disebut **list**, ditulis dengan tanda kurung siku
+      `[...]`.
+
+      List bisa menyimpan banyak nilai sekaligus:
+      `nilai = [8, 9, 7]`. Untuk mengambil satu nilai, sebut nomor
+      slotnya (disebut **index**): `nilai[0]` mengambil 8.
+
+      ## Aturan index
+
+      - Index mulai dari **0**, bukan 1! Ini aturan yang paling sering
+        membuat bingung.
+      - `nilai[0]` = nilai pertama
+      - `nilai[1]` = nilai kedua
+      - `nilai[2]` = nilai ketiga
+
+      ## List bisa diubah
+
+      Bedanya list dengan sekadar beberapa variabel: isinya bisa
+      ditambah, diubah, dan diurutkan. Kamu juga bisa membuat list
+      kosong: `kosong = []`.
+
+      List itu seperti tas ransel: bisa diisi banyak barang, dan kamu
+      bisa mengambil barang dari slot tertentu tanpa membongkar
+      semuanya. Coba perhatikan contoh di bawah — hitung sendiri
+      indexnya sebelum menjalankan!
+
+      Kamu juga bisa membuat list berisi campuran: [1, 'dua', 3.5].
+      Tapi untuk sekarang, list angka dan list teks saja sudah cukup.
+    contoh:
+      - kode: |
+          nilai = [8, 9, 7]
+          print(nilai)
+          print(nilai[0])
+          print(nilai[2])
+        penjelasan: "nilai[0] adalah 8 (elemen pertama), nilai[2] adalah 7 (elemen ketiga)."
+      - kode: |
+          hobi = ['membaca', 'main game', 'renang']
+          print(hobi[1])
+        penjelasan: "Mencetak 'main game' — index 1 adalah elemen kedua."
+    kuis:
+      - soal: "Index elemen PERTAMA sebuah list adalah..."
+        pilihan:
+          - "1"
+          - "0"
+          - "-1"
+          - "2"
+        jawaban: 1
+        penjelasan: "Index selalu mulai dari 0, jadi elemen pertama ada di index 0."
+      - soal: "Dari list buah = ['apel', 'mangga', 'jeruk'], buah[2] berisi..."
+        pilihan:
+          - "apel"
+          - "mangga"
+          - "jeruk"
+          - "error"
+        jawaban: 2
+        penjelasan: "Index 0 = apel, index 1 = mangga, index 2 = jeruk."
+
+  - id: "6-2"
+    judul: "Index Negatif dan Slicing"
+    menit: 7
+    materi: |
+      Kadang kita ingin mengambil isi list dari belakang. Python punya
+      trik keren: **index negatif**. `angka[-1]` mengambil elemen
+      TERAKHIR, `angka[-2]` mengambil satu sebelum terakhir, dan
+      seterusnya. Tidak perlu menghitung panjang list!
+
+      ## Slicing: potong list
+
+      Kalau ingin mengambil beberapa elemen berurutan, pakai
+      **slicing**: `list[a:b]`. Hasilnya elemen dari index a sampai
+      **sebelum** index b. Sama seperti range: angka b tidak ikut!
+
+      Contoh, dari `angka = [10, 20, 30, 40, 50]`:
+
+      - `angka[1:3]` → [20, 30] (index 1 sampai sebelum 3)
+      - `angka[:2]` → [10, 20] (dari awal sampai sebelum 2)
+      - `angka[2:]` → [30, 40, 50] (dari index 2 sampai akhir)
+
+      Slicing itu seperti memotong kue: kamu menentukan potongan mulai
+      dari mana dan berhenti di mana. Potongan selalu berhenti sebelum
+      index yang disebut terakhir — jangan sampai memotong kelebihan!
+
+      Ingat: `[a:b]` artinya "mulai a, berhenti sebelum b". Kalau b
+      lebih besar dari panjang list, Python tetap aman — dia hanya
+      memberi sampai akhir.
+    contoh:
+      - kode: |
+          angka = [10, 20, 30, 40, 50]
+          print(angka[-1])
+          print(angka[-2])
+        penjelasan: "Mencetak 50 (terakhir) dan 40 (sebelum terakhir)."
+      - kode: |
+          angka = [10, 20, 30, 40, 50]
+          print(angka[1:4])
+          print(angka[:3])
+        penjelasan: "angka[1:4] = [20, 30, 40]; angka[:3] = [10, 20, 30]."
+    kuis:
+      - soal: "Dari list x = [5, 10, 15, 20], x[-1] berisi..."
+        pilihan:
+          - "5"
+          - "10"
+          - "20"
+          - "15"
+        jawaban: 2
+        penjelasan: "Index -1 selalu elemen terakhir, yaitu 20."
+      - soal: "x[1:3] dari x = [5, 10, 15, 20] menghasilkan..."
+        pilihan:
+          - "[5, 10]"
+          - "[10, 15]"
+          - "[10, 15, 20]"
+          - "[15, 20]"
+        jawaban: 1
+        penjelasan: "Mulai index 1 (10), berhenti sebelum index 3, jadi [10, 15]."
+
+  - id: "6-3"
+    judul: "Metode List: Tumbuhkan dan Urutkan"
+    menit: 7
+    materi: |
+      List punya jurus-jurus sakti yang disebut **metode** — tinggal
+      panggil dengan titik. Jurus yang paling sering dipakai:
+
+      - `append(x)` — menambahkan x ke akhir list. Seperti memasukkan
+        barang ke ujung tas.
+      - `len(list)` — menghitung berapa isi list.
+      - `min(list)` / `max(list)` — nilai terkecil / terbesar.
+      - `sum(list)` — jumlah semua isi (kalau isinya angka).
+      - `sort()` — mengurutkan dari kecil ke besar.
+
+      ## Pola penting: list dari input
+
+      Kamu sering perlu mengisi list angka dari ketikan user. Polanya
+      selalu sama:
+
+      1. buat list kosong
+      2. loop sebanyak n kali
+      3. di dalam loop, `append` angka yang dibaca
+
+      `len()` sangat berguna untuk tahu berapa banyak data — misalnya
+      untuk menghitung rata-rata: `sum(nilai) / len(nilai)`.
+
+      Metode-metode ini membuatmu tidak perlu menulis ulang logika
+      yang sudah ada — Python sudah menyediakannya. Kamu tinggal
+      memanggil, seperti menekan tombol di mesin cuci.
+
+      Jangan lupa: sort() mengubah list aslinya langsung. Setelah
+      dipanggil, urutannya sudah berubah — urutkan lagi kalau mau
+      kembali.
+    contoh:
+      - kode: |
+          nilai = []
+          nilai.append(8)
+          nilai.append(9)
+          nilai.append(7)
+          print(len(nilai))
+          print(sum(nilai))
+        penjelasan: "len(nilai) = 3 (tiga isi), sum(nilai) = 24."
+      - kode: |
+          angka = [5, 2, 8, 1]
+          angka.sort()
+          print(angka)
+          print(min(angka))
+          print(max(angka))
+        penjelasan: "Setelah sort, list jadi [1, 2, 5, 8]; min = 1, max = 8."
+    kuis:
+      - soal: "Metode untuk menambahkan nilai di akhir list adalah..."
+        pilihan:
+          - "add()"
+          - "append()"
+          - "insert()"
+          - "push()"
+        jawaban: 1
+        penjelasan: "append(x) menambahkan x ke akhir list."
+      - soal: "Fungsi untuk menghitung banyak isi list adalah..."
+        pilihan:
+          - "size()"
+          - "count()"
+          - "len()"
+          - "length()"
+        jawaban: 2
+        penjelasan: "len(list) mengembalikan jumlah elemen di list."
+      - soal: "Apa outputnya?\n\nx = [3, 1, 2]\nx.sort()\nprint(x)"
+        pilihan:
+          - "[1, 2, 3]"
+          - "[3, 1, 2]"
+          - "[3, 2, 1]"
+          - "error"
+        jawaban: 0
+        penjelasan: "sort() mengurutkan dari kecil ke besar, jadi hasilnya [1, 2, 3]."
+
+  - id: "6-4"
+    judul: "Tuple dan Jelajah List"
+    menit: 7
+    materi: |
+      Pernah lihat kartu pelajar? Datanya tetap: nama, kelas, nomor
+      absen — tidak boleh diubah seenaknya. Di Python, data tetap
+      seperti itu disebut **tuple**, ditulis dengan kurung biasa:
+      `data = ('Budi', '7A', 12)`.
+
+      Tuple hampir sama dengan list, tapi **tidak bisa diubah** setelah
+      dibuat. Tidak ada append, tidak ada sort. Kalau dicoba, Python
+      protes. Gunakan list untuk data yang berubah-ubah, dan tuple
+      untuk data yang tetap — seperti koordinat titik di peta.
+
+      ## Menjelajah list dengan for
+
+      Kabar gembira: `for` bisa langsung berjalan di atas list! Setiap
+      putaran, variabel loop berisi satu elemen secara berurutan.
+      Tidak perlu menghitung index.
+
+      ```
+      for x in angka:
+          print(x)
+      ```
+
+      Itu mencetak semua isi angka satu per satu. Pola ini dipakai
+      terus-menerus: menghitung total, mencari nilai, mencetak daftar.
+      Loop + list adalah pasangan terbaik di Python — begitu kamu
+      menguasainya, banyak soal terasa jauh lebih mudah!
+
+      Tuple juga bisa dijelajah dengan for, sama seperti list.
+      Bedanya hanya pada kemampuan mengubah isi — dan itulah yang
+      membuat tuple aman untuk data tetap.
+    contoh:
+      - kode: |
+          nilai = [8, 9, 7]
+          for x in nilai:
+              print(x)
+        penjelasan: "Mencetak 8, 9, 7 — satu per satu, tanpa menghitung index."
+      - kode: |
+          posisi = (3, 5)
+          print(posisi[0])
+          print(posisi[1])
+        penjelasan: "Isi tuple bisa diambil dengan index, tapi tidak bisa diubah."
+    kuis:
+      - soal: "Perbedaan utama tuple dan list adalah..."
+        pilihan:
+          - "tuple bisa diubah, list tidak"
+          - "list bisa diubah, tuple tidak"
+          - "tidak ada bedanya"
+          - "tuple selalu lebih panjang"
+        jawaban: 1
+        penjelasan: "List bisa diubah (append, sort), sedangkan tuple tidak bisa diubah."
+      - soal: "for x in [4, 7, 9]: print(x) mencetak..."
+        pilihan:
+          - "4, 7, 9"
+          - "0, 1, 2"
+          - "9, 7, 4"
+          - "error"
+        jawaban: 0
+        penjelasan: "for mengambil setiap elemen list secara berurutan: 4, lalu 7, lalu 9."
+
+soal:
+  - id: "s6-1"
+    judul: "Total Belanja Kantin"
+    sulit: "mudah"
+    cerita: |
+      Raka membantu menjaga kantin sekolah. Setiap kali ada yang
+      membeli jajanan, ia mencatat harganya di buku. Di akhir hari,
+      Bu Kantin bertanya: "Berapa total uang yang masuk hari ini?"
+
+      Bantu Raka: baca N (banyak jajanan yang terjual), lalu N harga
+      jajanan, lalu cetak total seluruh harga.
+    input: "Baris 1: N (banyak jajanan). N baris berikutnya: harga tiap jajanan."
+    output: "Satu angka: total seluruh harga."
+    contoh:
+      - input: "3\n10\n20\n30"
+        output: "60"
+      - input: "2\n500\n1500"
+        output: "2000"
+    tes:
+      - input: "3\n10\n20\n30"
+        output: "60"
+      - input: "2\n500\n1500"
+        output: "2000"
+      - input: "1\n7"
+        output: "7"
+      - input: "4\n1000\n2000\n3000\n4000"
+        output: "10000"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "15"
+    solusi: |
+      n = int(input())
+      harga = []
+      for i in range(n):
+          harga.append(int(input()))
+      print(sum(harga))
+    petunjuk:
+      - "Buat list kosong, lalu isi dengan append di dalam loop."
+      - "Ulangi sebanyak n kali dan baca satu angka tiap putaran."
+      - "Jumlahkan semua isi list dengan sum()."
+
+  - id: "s6-2"
+    judul: "Lompatan Jauh"
+    sulit: "sedang"
+    cerita: |
+      Lomba lompat jauh antar kelas sedang berlangsung! Panitia
+      mencatat jarak lompatan setiap peserta. Sekarang mereka ingin
+      tahu lompatan terjauh dan terpendek dari seorang peserta yang
+      melompat N kali.
+
+      Bantu panitia: baca N, lalu N jarak lompatan, lalu cetak jarak
+      terjauh di baris pertama dan jarak terpendek di baris kedua.
+    input: "Baris 1: N (banyak lompatan). N baris berikutnya: jarak tiap lompatan."
+    output: "Baris 1: jarak terjauh. Baris 2: jarak terpendek."
+    contoh:
+      - input: "4\n3\n9\n5\n7"
+        output: "9\n3"
+      - input: "3\n120\n95\n110"
+        output: "120\n95"
+    tes:
+      - input: "4\n3\n9\n5\n7"
+        output: "9\n3"
+      - input: "3\n120\n95\n110"
+        output: "120\n95"
+      - input: "1\n50"
+        output: "50\n50"
+      - input: "5\n10\n10\n10\n10\n10"
+        output: "10\n10"
+      - input: "2\n100\n1"
+        output: "100\n1"
+    solusi: |
+      n = int(input())
+      lompat = []
+      for i in range(n):
+          lompat.append(int(input()))
+      print(max(lompat))
+      print(min(lompat))
+    petunjuk:
+      - "Simpan semua lompatan di dalam list dengan append."
+      - "Gunakan max() untuk terjauh dan min() untuk terpendek."
+      - "Cetak max dulu (baris pertama), lalu min (baris kedua)."
+
+  - id: "s6-3"
+    judul: "Podium Juara Game"
+    sulit: "sulit"
+    cerita: |
+      Turnamen game kelas 7 seru banget! Skor tiap pemain dicatat oleh
+      panitia. Tiga skor tertinggi berhak naik podium: juara 1, 2,
+      dan 3.
+
+      Bantu panitia menentukan podium: baca N (jumlah pemain, minimal
+      3), lalu N skor, lalu cetak tiga skor terbesar secara urut —
+      terbesar dulu, lalu yang kedua, lalu yang ketiga. Setiap skor di
+      baris sendiri.
+    input: "Baris 1: N (banyak pemain). N baris berikutnya: skor tiap pemain."
+    output: "Tiga baris: skor terbesar pertama, kedua, dan ketiga."
+    contoh:
+      - input: "5\n80\n50\n90\n70\n60"
+        output: "90\n80\n70"
+      - input: "4\n100\n1\n50\n25"
+        output: "100\n50\n25"
+    tes:
+      - input: "5\n80\n50\n90\n70\n60"
+        output: "90\n80\n70"
+      - input: "4\n100\n1\n50\n25"
+        output: "100\n50\n25"
+      - input: "3\n5\n5\n5"
+        output: "5\n5\n5"
+      - input: "6\n30\n60\n10\n40\n20\n50"
+        output: "60\n50\n40"
+      - input: "3\n7\n9\n8"
+        output: "9\n8\n7"
+    solusi: |
+      n = int(input())
+      skor = []
+      for i in range(n):
+          skor.append(int(input()))
+      skor.sort()
+      print(skor[-1])
+      print(skor[-2])
+      print(skor[-3])
+    petunjuk:
+      - "Urutkan list dengan sort() dulu — yang terbesar ada di belakang."
+      - "Elemen terakhir ada di index -1, satu sebelumnya di -2, dan seterusnya."
+      - "Cetak skor[-1], skor[-2], skor[-3] masing-masing di baris sendiri."

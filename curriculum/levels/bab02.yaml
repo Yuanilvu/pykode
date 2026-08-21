@@ -1,0 +1,400 @@
+bab: 2
+judul: "Variabel & Tipe Data"
+emoji: "📦"
+warna: "#10b981"
+deskripsi: "Simpan nilai di kotak bernama: variabel & tipe data."
+
+pelajaran:
+  - id: "2-1"
+    judul: "Kotak Penyimpan Ajaib"
+    menit: 7
+    materi: |
+      Bayangkan kamu punya rak sepatu di rumah. Setiap kotak di rak itu ada
+      namanya — "sepatu sekolah", "sepatu bola", "sandal". Kamu tinggal taruh
+      barangnya di kotak yang tepat, dan nanti tinggal ambil lagi pakai nama
+      kotaknya.
+
+      Variabel di Python persis seperti kotak itu: tempat menyimpan nilai
+      yang punya nama. Bedanya, kotak ini tidak terlihat — dia hidup di dalam
+      memori komputer.
+
+      ## Membuat variabel
+
+      Tulis nama variabel, tanda sama dengan, lalu nilainya:
+
+      `nama = 'Budi'`
+
+      Tanda `=` di sini artinya "isi kotak dengan", BUKAN "sama dengan"
+      seperti di pelajaran matematika! Setelah diisi, kamu bisa memakai
+      isinya kapan saja lewat namanya.
+
+      ## Aturan nama variabel
+
+      - Pakai huruf kecil dan tanpa spasi
+      - Kalau dua kata, sambung dengan garis bawah: `nama_lengkap`
+      - Buat nama yang jelas: `uang_jajan` lebih baik daripada `x` kalau
+        isinya memang uang jajan
+
+      Kabar bagus: `print()` bisa mencetak banyak nilai sekaligus, cukup
+      pisahkan dengan koma. Python otomatis menaruh satu spasi di antara
+      nilainya. Coba dua contoh di bawah ini!
+    contoh:
+      - kode: |
+          nama = 'Budi'
+          print(nama)
+        penjelasan: "Kotak bernama nama diisi teks 'Budi', lalu isinya dicetak ke layar."
+      - kode: |
+          uang = 5000
+          print('Uang jajanku:', uang)
+        penjelasan: "print dengan koma mencetak teks lalu isi variabel, dengan satu spasi otomatis di antaranya."
+    kuis:
+      - soal: "Apa arti tanda = di Python?"
+        pilihan:
+          - "sama dengan seperti matematika"
+          - "mengisi kotak variabel dengan nilai"
+          - "membandingkan dua nilai"
+          - "menghapus isi variabel"
+        jawaban: 1
+        penjelasan: "Tanda = di Python artinya mengisi variabel. Kalau mau membandingkan, pakai tanda == (dua tanda)."
+      - soal: "Manakah nama variabel yang benar?"
+        pilihan:
+          - "uang jajan"
+          - "uang_jajan"
+          - "2uang"
+          - "uang-jajan"
+        jawaban: 1
+        penjelasan: "Nama variabel tidak boleh ada spasi; kalau dua kata, sambung dengan garis bawah. Tidak boleh diawali angka atau memakai tanda minus."
+      - soal: "Apa output dari kode ini?\n\nx = 7\nprint('Nilai:', x)"
+        pilihan:
+          - "Nilai: x"
+          - "7"
+          - "Nilai: 7"
+          - "x: 7"
+        jawaban: 2
+        penjelasan: "print dengan koma mencetak teks 'Nilai:' lalu isi variabel x, yaitu 7."
+
+  - id: "2-2"
+    judul: "Jenis-Jenis Isi Kotak"
+    menit: 8
+    materi: |
+      Setiap kotak variabel menyimpan satu jenis isi. Python menyebutnya
+      tipe data — seperti label yang menempel di kotak. Ada empat tipe
+      dasar yang penting kamu kenal:
+
+      ## Empat tipe dasar
+
+      - **int** — bilangan bulat, contoh: 5, -3, 0. Tidak ada komanya.
+      - **float** — bilangan desimal, contoh: 3.5, 0.75. Pakai titik,
+        bukan koma!
+      - **str** — teks (string), contoh: 'Halo', 'Python'. Selalu
+        dibungkus tanda kutip.
+      - **bool** — hanya dua nilai: True atau False. Dipakai untuk
+        jawaban ya/tidak.
+
+      Kamu tidak perlu memberi tahu Python isinya tipe apa — Python
+      menebaknya sendiri dari cara kamu menulis nilainya. Angka tanpa
+      kutip jadi int atau float, teks dengan kutip jadi str.
+
+      Kenapa penting tahu tipenya? Karena nanti ada perintah yang hanya
+      mau menerima tipe tertentu. Contohnya, kita tidak bisa langsung
+      mencampur teks dan angka seenaknya — di Bab 3 kamu akan lihat cara
+      mengatasinya.
+
+      Yang sering bikin bingung: `'123'` itu teks (str), sedangkan `123`
+      itu angka (int). Walaupun terlihat sama, isinya beda jenis!
+    contoh:
+      - kode: |
+          umur = 13
+          tinggi = 158.5
+          nama = 'Budi'
+          lulus = True
+          print(umur, tinggi, nama, lulus)
+        penjelasan: "Empat variabel dengan empat tipe berbeda: int, float, str, dan bool, dicetak sekaligus."
+      - kode: |
+          pi = 3.14
+          print('Nilai pi:', pi)
+        penjelasan: "pi adalah float karena ada titik desimalnya."
+    kuis:
+      - soal: "Manakah yang termasuk bilangan bulat (int)?"
+        pilihan:
+          - "3.5"
+          - "7"
+          - "'7'"
+          - "True"
+        jawaban: 1
+        penjelasan: "7 tidak pakai koma dan tidak pakai kutip, jadi int. 3.5 itu float, '7' itu teks, True itu bool."
+      - soal: "Tipe data apa yang isinya cuma True atau False?"
+        pilihan:
+          - "int"
+          - "float"
+          - "str"
+          - "bool"
+        jawaban: 3
+        penjelasan: "bool (boolean) hanya punya dua nilai: True dan False."
+      - soal: "Manakah yang merupakan teks (str)?"
+        pilihan:
+          - "123"
+          - "'123'"
+          - "12.3"
+          - "-5"
+        jawaban: 1
+        penjelasan: "Yang dibungkus tanda kutip adalah teks, walau isinya angka."
+
+  - id: "2-3"
+    judul: "Bertanya ke User: input()"
+    menit: 8
+    materi: |
+      Program yang seru harus bisa bertanya! Perintah `input()` membuat
+      program berhenti sejenak dan menunggu kamu mengetik sesuatu, lalu
+      menekan Enter. Apa pun yang kamu ketik akan disimpan ke variabel.
+
+      Perhatikan contoh ini:
+
+      `nama = input()`
+
+      Saat program sampai di baris ini, dia menunggu. Setelah kamu
+      mengetik "Budi" dan menekan Enter, variabel `nama` berisi teks 'Budi'.
+
+      ## Jebakan kecil: input() selalu memberi teks
+
+      Ini penting! Apa pun yang kamu ketik — angka sekalipun — `input()`
+      selalu memberikannya sebagai teks (str). Jadi kalau kamu mengetik
+      `5`, isinya bukan angka 5, melainkan teks '5'.
+
+      Supaya menjadi angka sungguhan, bungkus dengan `int()` atau
+      `float()`:
+
+      `umur = int(input())`
+      `tinggi = float(input())`
+
+      `int()` mengubah teks jadi bilangan bulat, `float()` mengubah teks
+      jadi bilangan desimal. Keduanya dipelajari lebih dalam di pelajaran
+      berikutnya. Kalau kamu lupa membungkusnya, Python akan menganggap
+      angkamu sekadar teks — dan itu sering bikin error di Bab 3 nanti!
+
+      Kamu juga bisa menaruh kalimat tanya di dalam tanda kurung
+      `input()`, misalnya `input('Siapa namamu? ')`. Kalimat itu muncul
+      di layar sebelum program menunggu ketikanmu — seperti petugas
+      loket yang bertanya dulu sebelum memberi tiket.
+    contoh:
+      - kode: |
+          harga = '5000'
+          print(harga)
+        penjelasan: "harga diisi teks '5000' (ada tanda kutipnya), jadi isinya masih berupa teks walau terlihat seperti angka."
+      - kode: |
+          harga = int('5000')
+          print('Harga dalam bentuk angka:', harga)
+        penjelasan: "int() mengubah teks '5000' menjadi angka 5000. Ini yang terjadi di balik int(input())."
+    kuis:
+      - soal: "Apa yang dilakukan input()?"
+        pilihan:
+          - "mencetak teks ke layar"
+          - "menunggu user mengetik lalu menyimpannya"
+          - "menghitung angka"
+          - "menutup program"
+        jawaban: 1
+        penjelasan: "input() membuat program berhenti sejenak dan menunggu ketikan user, lalu menyimpannya ke variabel."
+      - soal: "Apa tipe hasil dari input() walau user mengetik angka 5?"
+        pilihan:
+          - "int"
+          - "float"
+          - "str"
+          - "bool"
+        jawaban: 2
+        penjelasan: "input() selalu memberi teks (str). Supaya jadi angka, bungkus dengan int() atau float()."
+      - soal: "Bagaimana cara membaca umur sebagai angka bulat?"
+        pilihan:
+          - "input(umur)"
+          - "int(input())"
+          - "umur = int"
+          - "float(umur)"
+        jawaban: 1
+        penjelasan: "int(input()) mengubah hasil input yang berupa teks menjadi bilangan bulat."
+
+  - id: "2-4"
+    judul: "Mengubah Tipe: int() & float()"
+    menit: 7
+    materi: |
+      Di pelajaran sebelumnya kamu melihat `int()` dan `float()` dipakai
+      untuk mengubah hasil `input()` menjadi angka. Ternyata kedua
+      perintah itu juga bisa dipakai untuk mengubah angka lain!
+
+      ## Mengubah float menjadi int
+
+      `int()` membuang bagian desimal — bukan membulatkan, tapi
+      memotong. Jadi:
+
+      - `int(7.9)` hasilnya 7
+      - `int(3.14)` hasilnya 3
+      - `int(158.7)` hasilnya 158
+
+      ## Mengubah int menjadi float
+
+      `float()` menambahkan titik nol di belakangnya:
+
+      - `float(7)` hasilnya 7.0
+
+      ## Mengubah teks menjadi angka
+
+      Selama teksnya memang berisi angka, `int('12')` hasilnya 12 dan
+      `float('2.5')` hasilnya 2.5. Tapi hati-hati: `int('abc')` akan
+      error, karena 'abc' bukan angka. Begitu juga `int('3.7')` — teks
+      dengan titik harus lewat `float()` dulu.
+
+      Kenapa harus bisa mengubah-ubah tipe? Karena di dunia nyata, data
+      datang dalam bentuk bermacam-macam: harga dari kalkulator bisa
+      2500.75, umur dari form pendaftaran bisa '13' (teks). Programmer
+      yang jago tahu kapan harus mengubah tipe supaya semuanya cocok.
+
+      Oh iya, hati-hati: `int()` itu memotong, bukan membulatkan.
+      `int(7.9)` tetap 7, bukan 8. Kalau suatu hari kamu butuh
+      pembulatan sungguhan, ada cara lain — kita akan temukan bersama
+      di bab-bab berikutnya!
+    contoh:
+      - kode: |
+          tinggi = 158.7
+          print('Tinggi dibulatkan ke bawah:', int(tinggi))
+        penjelasan: "int(tinggi) membuang bagian desimal, jadi 158.7 menjadi 158."
+      - kode: |
+          angka = '12'
+          print(float(angka))
+        penjelasan: "float('12') mengubah teks '12' menjadi bilangan desimal 12.0."
+    kuis:
+      - soal: "Berapa hasil int(7.9)?"
+        pilihan:
+          - "7"
+          - "8"
+          - "7.9"
+          - "error"
+        jawaban: 0
+        penjelasan: "int() membuang bagian desimal, jadi 7.9 menjadi 7 (bukan membulatkan ke 8)."
+      - soal: "Berapa hasil int('12')?"
+        pilihan:
+          - "'12'"
+          - "12"
+          - "error"
+          - "12.0"
+        jawaban: 1
+        penjelasan: "int('12') mengubah teks '12' menjadi angka 12."
+      - soal: "Mengapa int('3.7') error?"
+        pilihan:
+          - "karena 3.7 terlalu besar"
+          - "karena teks berisi titik harus lewat float() dulu"
+          - "karena 3.7 bukan angka"
+          - "karena int() cuma bisa dipakai di input()"
+        jawaban: 1
+        penjelasan: "Teks '3.7' punya titik desimal; pakai float('3.7') dulu, baru boleh diubah lagi."
+
+soal:
+  - id: "s2-1"
+    judul: "Sapaan Si Kancil"
+    sulit: "mudah"
+    cerita: |
+      Si Kancil baru kenal Python dan sangat semangat. Dia ingin membuat
+      program yang menyapa teman-temannya di kelas. Programnya membaca
+      satu nama dari keyboard, lalu mencetak sapaan. Kalau Budi yang
+      mengetik, program harus mencetak 'Halo Budi'. Bantuin Kancil: baca
+      nama, lalu cetak kata Halo diikuti nama itu. Output harus persis:
+      kata Halo, satu spasi, lalu nama.
+    input: "Satu baris: nama (teks)."
+    output: "Satu baris: Halo diikuti spasi dan nama."
+    contoh:
+      - input: "Budi"
+        output: "Halo Budi"
+      - input: "Siti"
+        output: "Halo Siti"
+    tes:
+      - input: "Budi"
+        output: "Halo Budi"
+      - input: "Siti"
+        output: "Halo Siti"
+      - input: "Kancil"
+        output: "Halo Kancil"
+      - input: "Andi"
+        output: "Halo Andi"
+      - input: "Rina"
+        output: "Halo Rina"
+    solusi: |
+      nama = input()
+      print('Halo', nama)
+    petunjuk:
+      - "Baca nama dengan input() dan simpan ke variabel."
+      - "Cetak kata 'Halo' lalu variabel nama."
+      - "Pakai print('Halo', nama) — koma otomatis memberi satu spasi di antaranya."
+
+  - id: "s2-2"
+    judul: "Kasir Kantin yang Pembulat"
+    sulit: "sedang"
+    cerita: |
+      Ibu kasir di kantin sekolah menghitung harga kue dengan kalkulator.
+      Hasilnya sering angka desimal, misalnya 2500.75. Ibu kasir ingin
+      membuang angka di belakang koma supaya harganya jadi 2500. Bantuin
+      dia: baca harga yang bisa desimal, lalu cetak harga bulatnya.
+      Gunakan int() untuk memotong bagian desimal. Output harus persis
+      seperti contoh, dengan kata Harga bulat diikuti titik dua.
+    input: "Satu baris: harga dalam bentuk desimal (float)."
+    output: "Satu baris: Harga bulat: diikuti angka bulat."
+    contoh:
+      - input: "2500.75"
+        output: "Harga bulat: 2500"
+      - input: "199.99"
+        output: "Harga bulat: 199"
+    tes:
+      - input: "2500.75"
+        output: "Harga bulat: 2500"
+      - input: "199.99"
+        output: "Harga bulat: 199"
+      - input: "0.5"
+        output: "Harga bulat: 0"
+      - input: "7500.0"
+        output: "Harga bulat: 7500"
+      - input: "3.14"
+        output: "Harga bulat: 3"
+    solusi: |
+      harga = float(input())
+      print('Harga bulat:', int(harga))
+    petunjuk:
+      - "Baca harga dengan float(input()) supaya jadi bilangan desimal."
+      - "Ubah ke bilangan bulat dengan int() — bagian desimal dibuang."
+      - "Cetak dengan print('Harga bulat:', int(harga))."
+
+  - id: "s2-3"
+    judul: "Kartu Pelajar Baru"
+    sulit: "sulit"
+    cerita: |
+      Sekolah Kancil membuat kartu pelajar baru. Setiap siswa mengetik
+      nama, umur, dan tinggi badan dalam cm. Tinggi bisa desimal,
+      misalnya 150.7. Program mencetak kartu tiga baris: Nama, Umur, dan
+      Tinggi. Contohnya, Budi umur 13 tinggi 150.7 menjadi 'Nama: Budi',
+      'Umur: 13 tahun', 'Tinggi: 150 cm'. Bagian desimal tinggi harus
+      dibuang. Baca tiga input berurutan, lalu cetak tiga baris kartu
+      persis seperti contoh.
+    input: "Tiga baris: nama (teks), umur (int), tinggi (float)."
+    output: "Tiga baris: Nama: <nama>, Umur: <umur> tahun, Tinggi: <tinggi bulat> cm."
+    contoh:
+      - input: "Budi\n13\n150.7"
+        output: "Nama: Budi\nUmur: 13 tahun\nTinggi: 150 cm"
+      - input: "Siti\n12\n145.2"
+        output: "Nama: Siti\nUmur: 12 tahun\nTinggi: 145 cm"
+    tes:
+      - input: "Budi\n13\n150.7"
+        output: "Nama: Budi\nUmur: 13 tahun\nTinggi: 150 cm"
+      - input: "Siti\n12\n145.2"
+        output: "Nama: Siti\nUmur: 12 tahun\nTinggi: 145 cm"
+      - input: "Kancil\n14\n160.9"
+        output: "Nama: Kancil\nUmur: 14 tahun\nTinggi: 160 cm"
+      - input: "Andi\n11\n138.4"
+        output: "Nama: Andi\nUmur: 11 tahun\nTinggi: 138 cm"
+      - input: "Rina\n15\n152.0"
+        output: "Nama: Rina\nUmur: 15 tahun\nTinggi: 152 cm"
+    solusi: |
+      nama = input()
+      umur = int(input())
+      tinggi = float(input())
+      print('Nama:', nama)
+      print('Umur:', umur, 'tahun')
+      print('Tinggi:', int(tinggi), 'cm')
+    petunjuk:
+      - "Baca tiga input berurutan: nama, umur, lalu tinggi."
+      - "Umur dibaca dengan int(input()), tinggi dengan float(input())."
+      - "Cetak tiga baris; contoh: print('Nama:', nama) dan print('Tinggi:', int(tinggi), 'cm')."

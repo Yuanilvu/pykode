@@ -34,6 +34,10 @@ pelajaran:
       for itu seperti instruktur senam: satu perintah, semua peserta
       ikut bergerak. Kamu cukup menulis gerakannya sekali, Python
       mengulanginya untukmu.
+
+      Tanpa perulangan, kita harus menulis print berkali-kali —
+      bayangkan kalau harus 100 kali! Dengan for, cukup beberapa
+      baris saja.
     contoh:
       - kode: |
           for i in range(5):
@@ -94,6 +98,9 @@ pelajaran:
 
       range(a, b) sangat berguna untuk deret 1 sampai n: tinggal tulis
       `range(1, n + 1)`. Angka n ikut, karena kita berhenti di n+1.
+
+      Latihan: tebak dulu output `range(3, 7)` sebelum menjalankannya.
+      Kalau jawabanmu 3, 4, 5, 6 — berarti kamu sudah paham aturannya!
     contoh:
       - kode: |
           for i in range(2, 6):
@@ -147,6 +154,10 @@ pelajaran:
       Perhatikan contoh kedua: variabel n harus dikurangi setiap
       putaran. Kalau baris `n = n - 1` hilang, angka tidak akan pernah
       habis dan program tidak akan berhenti.
+
+      Latihan kecil: jalankan contoh kedua, lalu ganti `x <= 3` dengan
+      `x < 3`. Lihat bedanya? Kondisi itulah yang menentukan kapan
+      loop berhenti.
     contoh:
       - kode: |
           n = 3
@@ -218,6 +229,10 @@ pelajaran:
       Keduanya biasanya dipasangkan dengan if: `if ...: break` atau
       `if ...: continue`. Ingat: continue hanya melompati SATU
       putaran, sedangkan break menghentikan SEMUA putaran.
+
+      Coba ubah contoh pertama: ganti break dengan continue, lalu
+      jalankan. Kamu akan melihat 3 tetap tercetak — bukti bahwa
+      continue tidak menghentikan loop.
     contoh:
       - kode: |
           for i in range(1, 6):

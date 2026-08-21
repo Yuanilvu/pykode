@@ -1,0 +1,415 @@
+bab: 7
+judul: "Dictionary & Set"
+emoji: "🗂️"
+warna: "#8b5cf6"
+deskripsi: "Simpan data berpasangan (dict) dan kumpulan unik (set)."
+
+pelajaran:
+  - id: "7-1"
+    judul: "Dictionary: Kamus Ajaib"
+    menit: 7
+    materi: |
+      List menyimpan data berurutan dengan nomor index. Tapi kadang
+      kita tidak ingin memanggil data dengan angka — kita ingin
+      memanggil dengan NAMA. Di sinilah **dictionary** (dict) bekerja.
+
+      Dict menyimpan pasangan **kunci → nilai** (key → value).
+      Bayangkan buku nilai: kuncinya nama siswa, nilainya angka
+      ulangan. Ditulis dengan kurung kurawal:
+
+      `nilai = {'Budi': 90, 'Sari': 85}`
+
+      ## Mengambil dan mengubah nilai
+
+      - `nilai['Budi']` → 90. Panggil dengan kunci, bukan index!
+      - `nilai['Sari'] = 88` → mengubah nilai Sari jadi 88.
+      - `nilai['Rina'] = 92` → kalau Rina belum ada, otomatis
+        DITAMBAHKAN sebagai pasangan baru.
+
+      ## Aturan kunci
+
+      - Kunci harus unik — tidak boleh ada dua 'Budi'.
+      - Kunci biasanya teks, tapi bisa juga angka.
+      - Kalau kamu memanggil kunci yang tidak ada, Python error
+        (KeyError). Hati-hati!
+
+      Dict itu seperti lemari arsip: setiap map punya label nama.
+      Kamu tidak perlu mencari berurutan — cukup sebut labelnya,
+      langsung ketemu. Jauh lebih cepat daripada membongkar semua map
+      satu per satu!
+    contoh:
+      - kode: |
+          nilai = {'Budi': 90, 'Sari': 85}
+          print(nilai['Budi'])
+          nilai['Sari'] = 88
+          print(nilai['Sari'])
+        penjelasan: "Mencetak 90 lalu 88 — nilai Sari berhasil diubah."
+      - kode: |
+          nilai = {}
+          nilai['Rina'] = 92
+          print(nilai)
+        penjelasan: "Dict kosong lalu diisi satu pasangan kunci-nilai: {'Rina': 92}."
+    kuis:
+      - soal: "Untuk mengambil nilai dengan kunci 'Budi' dari dict nilai, kita menulis..."
+        pilihan:
+          - "nilai[0]"
+          - "nilai['Budi']"
+          - "nilai.getBudi"
+          - "nilai.Budi"
+        jawaban: 1
+        penjelasan: "Dict dipanggil dengan kunci di dalam kurung siku: nilai['Budi']."
+      - soal: "Kalau kita menulis nilai['Tono'] padahal 'Tono' tidak ada di dict, yang terjadi adalah..."
+        pilihan:
+          - "nilai 0 dikembalikan"
+          - "dict bertambah otomatis"
+          - "Python error (KeyError)"
+          - "nilai None dikembalikan"
+        jawaban: 2
+        penjelasan: "Memanggil kunci yang tidak ada menyebabkan KeyError."
+
+  - id: "7-2"
+    judul: "Menjelajah Dictionary"
+    menit: 7
+    materi: |
+      Dict punya banyak cara untuk dilihat isinya. Tiga jurus andalan:
+
+      - `d.keys()` — daftar semua kunci.
+      - `d.values()` — daftar semua nilai.
+      - `d.items()` — pasangan kunci dan nilai sekaligus.
+
+      ## Cek dengan in
+
+      Mau tahu apakah sebuah kunci ada? Pakai `in`:
+      `'Budi' in d` menghasilkan True kalau ada, False kalau tidak.
+      Ini cara aman sebelum mengambil nilai.
+
+      ## .get() — pengambil yang ramah
+
+      `d.get(kunci)` hampir sama dengan `d[kunci]`, tapi TIDAK error
+      kalau kuncinya tidak ada — dia mengembalikan None. Bahkan bisa
+      dikasih nilai cadangan: `d.get('Tono', 0)` mengembalikan 0
+      kalau 'Tono' tidak ada.
+
+      ## Loop atas dict
+
+      for bisa langsung menjelajah dict:
+
+      ```
+      for k in d:
+          print(k)
+      ```
+
+      Itu mencetak semua KUNCI. Kalau mau kunci DAN nilai sekaligus,
+      pakai items():
+
+      ```
+      for k, v in d.items():
+          print(k, v)
+      ```
+
+      Pola `for k, v in d.items()` ini sangat sering dipakai —
+      misalnya untuk mencetak daftar nilai atau mencari nilai
+      terbesar. Dengan dict, data "nama → nilai" jadi mudah
+      dijelajahi.
+    contoh:
+      - kode: |
+          nilai = {'Budi': 90, 'Sari': 85, 'Rina': 92}
+          print(nilai.keys())
+          print('Sari' in nilai)
+          print('Tono' in nilai)
+        penjelasan: "Mencetak daftar kunci, lalu True, lalu False."
+      - kode: |
+          nilai = {'Budi': 90, 'Sari': 85}
+          for k, v in nilai.items():
+              print(k, v)
+        penjelasan: "Mencetak 'Budi 90' dan 'Sari 85' — kunci dan nilai bersama-sama."
+    kuis:
+      - soal: "Untuk mendapat daftar semua kunci sebuah dict d, gunakan..."
+        pilihan:
+          - "d.values()"
+          - "d.keys()"
+          - "d.items()"
+          - "d.list()"
+        jawaban: 1
+        penjelasan: "d.keys() mengembalikan semua kunci; d.values() untuk nilai."
+      - soal: "d.get('Tono') ketika 'Tono' tidak ada akan mengembalikan..."
+        pilihan:
+          - "error"
+          - "0"
+          - "None"
+          - "string kosong"
+        jawaban: 2
+        penjelasan: "get() tidak error; dia mengembalikan None kalau kunci tidak ada."
+
+  - id: "7-3"
+    judul: "Set: Koleksi Tanpa Duplikat"
+    menit: 7
+    materi: |
+      Bayangkan kamu mengumpulkan stiker: kalau sudah punya, stiker
+      yang sama tidak perlu disimpan lagi. Di Python, kumpulan yang
+      tidak boleh ada duplikat disebut **set**, ditulis dengan kurung
+      kurawal tanpa pasangan kunci: `hobi = {'membaca', 'renang'}`.
+
+      ## Aturan set
+
+      - Semua isi **unik** — duplikat otomatis dibuang.
+      - Tidak ada urutan dan tidak ada index — kamu tidak bisa
+        memanggil `s[0]`.
+      - Isinya bisa ditambah dengan `add()`: `hobi.add('ngoding')`.
+        Kalau ditambah yang sudah ada, tidak terjadi apa-apa.
+
+      ## Fungsi yang sering dipakai
+
+      - `len(s)` — berapa isi unik.
+      - `x in s` — cek apakah x ada di set.
+
+      ## Operasi dasar antar set
+
+      - `s1 | s2` — gabungan (semua yang ada di salah satu set).
+      - `s1 & s2` — irisan (yang ada di KEDUA set).
+
+      Set itu seperti daftar hadir: satu nama hanya boleh muncul
+      sekali. Kalau Budi absen dua kali, tetap dihitung satu. Itu
+      sebabnya set sangat cocok untuk menghitung "berapa macam" atau
+      "berapa orang berbeda".
+    contoh:
+      - kode: |
+          hobi = set()
+          hobi.add('membaca')
+          hobi.add('membaca')
+          hobi.add('renang')
+          print(len(hobi))
+        penjelasan: "Mencetak 2 — 'membaca' yang dobel hanya dihitung sekali."
+      - kode: |
+          a = {1, 2, 3}
+          b = {2, 3, 4}
+          print(a | b)
+          print(a & b)
+        penjelasan: "Gabungan berisi 1, 2, 3, 4; irisan berisi 2, 3."
+    kuis:
+      - soal: "Ciri utama set adalah..."
+        pilihan:
+          - "bisa punya duplikat"
+          - "semua isinya unik"
+          - "berurutan dan ber-index"
+          - "tidak bisa ditambah"
+        jawaban: 1
+        penjelasan: "Set otomatis membuang duplikat, jadi semua isinya unik."
+      - soal: "s = {1, 2, 2, 3}; len(s) menghasilkan..."
+        pilihan:
+          - "4"
+          - "3"
+          - "2"
+          - "error"
+        jawaban: 1
+        penjelasan: "Angka 2 yang dobel dihitung sekali, jadi isi uniknya 1, 2, 3 = 3 buah."
+
+  - id: "7-4"
+    judul: "Dict + Set untuk Menghitung"
+    menit: 8
+    materi: |
+      Sekarang saatnya menggabungkan semuanya! Pola paling berguna di
+      dunia nyata: **menghitung dengan dict**.
+
+      Misalnya menghitung suara ketua kelas. Setiap nama yang muncul,
+      tambah satu. Polanya:
+
+      ```
+      if nama in hitung:
+          hitung[nama] = hitung[nama] + 1
+      else:
+          hitung[nama] = 1
+      ```
+
+      Baca: "kalau namanya sudah ada, naikkan satu; kalau belum, buat
+      dengan nilai 1". Setelah semua data dibaca, `hitung` berisi
+      berapa kali setiap nama muncul. Lalu pakai loop
+      `for k, v in hitung.items()` untuk mencari siapa yang paling
+      banyak.
+
+      ## Set sebagai penyaring
+
+      Set berguna untuk pertanyaan "berapa yang BERBEDA": masukkan
+      semua ke set, lalu `len(set)` memberi jawabannya. Tidak perlu
+      mikir dua kali — duplikat dibuang otomatis.
+
+      ## Trik gabungan
+
+      - Set → tahu "berapa macam".
+      - Dict → tahu "berapa kali masing-masing".
+
+      Kombinasi keduanya menyelesaikan banyak soal, dari absen kelas
+      sampai pemilihan ketua OSIS. Latih pola `if kunci in dict`
+      sampai lancar — itu kunci utama menaklukkan soal-soal dict!
+
+      Semakin sering berlatih, semakin cepat kamu mengenali kapan
+      harus memakai dict dan kapan memakai set.
+    contoh:
+      - kode: |
+          suara = ['Budi', 'Sari', 'Budi', 'Budi', 'Sari']
+          hitung = {}
+          for nama in suara:
+              if nama in hitung:
+                  hitung[nama] = hitung[nama] + 1
+              else:
+                  hitung[nama] = 1
+          print(hitung)
+        penjelasan: "Mencetak {'Budi': 3, 'Sari': 2} — setiap nama dihitung berapa kali muncul."
+      - kode: |
+          nama = ['Budi', 'Sari', 'Budi', 'Rina']
+          print(len(set(nama)))
+        penjelasan: "Mencetak 3 — hanya nama berbeda yang dihitung: Budi, Sari, Rina."
+    kuis:
+      - soal: "Pola untuk menambah hitungan nama di dict adalah..."
+        pilihan:
+          - "hitung[nama] = hitung[nama] + 1 tanpa cek apa pun"
+          - "cek dulu dengan in: kalau ada tambah 1, kalau belum mulai dari 1"
+          - "hitung.append(nama)"
+          - "len(hitung) + 1"
+        jawaban: 1
+        penjelasan: "Pola aman: cek dulu apakah kunci sudah ada, baru tambah atau mulai dari 1."
+      - soal: "Untuk tahu berapa NAMA BERBEDA dari sebuah list nama, gunakan..."
+        pilihan:
+          - "len(nama)"
+          - "len(set(nama))"
+          - "max(nama)"
+          - "nama.sort()"
+        jawaban: 1
+        penjelasan: "Set membuang duplikat, lalu len menghitung nama yang tersisa."
+
+soal:
+  - id: "s7-1"
+    judul: "Absen Ekstrakurikuler"
+    sulit: "mudah"
+    cerita: |
+      Setiap hari Senin, kelas 7A mengadakan ekstrakurikuler. Bu Guru
+      mencatat nama siswa yang hadir — dan ternyata beberapa nama
+      muncul berkali-kali karena absennya diulang.
+
+      Bu Guru penasaran: sebenarnya ada berapa siswa BERBEDA yang
+      hadir? Bantu dia: baca N (banyak catatan), lalu N nama, lalu
+      cetak banyaknya nama berbeda.
+    input: "Baris 1: N (banyak catatan). N baris berikutnya: nama siswa."
+    output: "Satu angka: banyak nama berbeda."
+    contoh:
+      - input: "4\nBudi\nSari\nBudi\nRina"
+        output: "3"
+      - input: "3\nTono\nTono\nTono"
+        output: "1"
+    tes:
+      - input: "4\nBudi\nSari\nBudi\nRina"
+        output: "3"
+      - input: "3\nTono\nTono\nTono"
+        output: "1"
+      - input: "1\nAyu"
+        output: "1"
+      - input: "5\nA\nB\nC\nB\nA"
+        output: "3"
+      - input: "6\nx\nx\ny\nx\ny\nz"
+        output: "3"
+    solusi: |
+      n = int(input())
+      nama = set()
+      for i in range(n):
+          nama.add(input())
+      print(len(nama))
+    petunjuk:
+      - "Buat set kosong dan tambahkan setiap nama dengan add()."
+      - "Duplikat otomatis dibuang oleh set."
+      - "Cetak len(set) — itulah banyak nama berbeda."
+
+  - id: "s7-2"
+    judul: "Kamus Nilai Ulangan"
+    sulit: "sedang"
+    cerita: |
+      Bu Guru menyimpan nilai ulangan matematika di buku catatan.
+      Kamu diminta membantu mencari nilai seorang siswa dengan cepat.
+
+      Baca N (banyak siswa), lalu N baris berisi nama dan nilai
+      (dipisah spasi), lalu satu nama yang dicari. Cetak nilai siswa
+      itu. Kalau namanya tidak ada di catatan, cetak tulisan:
+      tidak ada
+    input: "Baris 1: N. N baris berikutnya: nama dan nilai (dipisah spasi). Baris terakhir: nama yang dicari."
+    output: "Satu baris: nilai siswa itu, atau tulisan: tidak ada"
+    contoh:
+      - input: "3\nBudi 90\nSari 85\nRina 88\nSari"
+        output: "85"
+      - input: "2\nBudi 90\nSari 85\nTono"
+        output: "tidak ada"
+    tes:
+      - input: "3\nBudi 90\nSari 85\nRina 88\nSari"
+        output: "85"
+      - input: "2\nBudi 90\nSari 85\nTono"
+        output: "tidak ada"
+      - input: "1\nAyu 100\nAyu"
+        output: "100"
+      - input: "4\nA 70\nB 80\nC 90\nD 60\nC"
+        output: "90"
+      - input: "3\nx 50\ny 60\nz 70\nq"
+        output: "tidak ada"
+    solusi: |
+      n = int(input())
+      nilai = {}
+      for i in range(n):
+          baris = input().split()
+          nilai[baris[0]] = int(baris[1])
+      tanya = input()
+      if tanya in nilai:
+          print(nilai[tanya])
+      else:
+          print('tidak ada')
+    petunjuk:
+      - "Simpan pasangan nama-nilai ke dict: nilai[nama] = angka."
+      - "Pisahkan nama dan nilai dengan split(): baris.split()."
+      - "Cek dengan in: kalau nama ada cetak nilainya, kalau tidak cetak 'tidak ada'."
+
+  - id: "s7-3"
+    judul: "Pemilihan Ketua OSIS"
+    sulit: "sulit"
+    cerita: |
+      Pemilihan ketua OSIS sudah selesai! Setiap suara ditulis sebagai
+      satu nama kandidat di secarik kertas. Sekarang panitia harus
+      menghitung suara dan mengumumkan pemenangnya: kandidat dengan
+      suara terbanyak.
+
+      Kalau ada seri, kandidat yang namanya muncul lebih dulu di
+      catatan yang menang. Bantu panitia: baca N (banyak suara), lalu
+      N nama kandidat, lalu cetak nama pemenang.
+    input: "Baris 1: N (banyak suara). N baris berikutnya: nama kandidat."
+    output: "Satu baris: nama pemenang."
+    contoh:
+      - input: "5\nBudi\nSari\nBudi\nRina\nBudi"
+        output: "Budi"
+      - input: "4\nSari\nRina\nSari\nRina"
+        output: "Sari"
+    tes:
+      - input: "5\nBudi\nSari\nBudi\nRina\nBudi"
+        output: "Budi"
+      - input: "4\nSari\nRina\nSari\nRina"
+        output: "Sari"
+      - input: "1\nTono"
+        output: "Tono"
+      - input: "6\nA\nB\nB\nC\nC\nC"
+        output: "C"
+      - input: "3\nx\ny\nz"
+        output: "x"
+    solusi: |
+      n = int(input())
+      suara = {}
+      for i in range(n):
+          nama = input()
+          if nama in suara:
+              suara[nama] = suara[nama] + 1
+          else:
+              suara[nama] = 1
+      terbanyak = 0
+      pemenang = ''
+      for k, v in suara.items():
+          if v > terbanyak:
+              terbanyak = v
+              pemenang = k
+      print(pemenang)
+    petunjuk:
+      - "Hitung suara dengan pola: if nama in suara, tambah 1; kalau belum, mulai dari 1."
+      - "Jelajahi suara.items() untuk mencari nilai terbesar."
+      - "Simpan pemenang sementara; ganti hanya kalau ada suara yang lebih banyak."

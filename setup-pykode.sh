@@ -22,6 +22,9 @@ fi
 chown yuan:yuan "$APP_DIR/.env" 2>/dev/null || true
 
 echo "== 3/5 Install & start service =="
+# Matikan server dev yang mungkin masih jalan (hanya milik PyKode)
+pkill -f "/home/yuan/pykode/.venv/bin/python app.py" 2>/dev/null || true
+sleep 1
 cp "$APP_DIR/pykode.service" /etc/systemd/system/pykode.service
 systemctl daemon-reload
 systemctl enable pykode.service >/dev/null 2>&1

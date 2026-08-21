@@ -1,0 +1,435 @@
+bab: 10
+judul: "Algoritma & Logika"
+emoji: "🧩"
+warna: "#f59e0b"
+deskripsi: "Nested loop, pola bintang, sorting manual, dan searching."
+
+pelajaran:
+  - id: "10-1"
+    judul: "Lingkaran di Dalam Lingkaran"
+    menit: 8
+    materi: |
+      Pernah lihat jam dinding di sekolah? Jarum menit bergerak, dan
+      di dalam setiap menit, jarum detik juga bergerak. Di Python,
+      kita bisa membuat **perulangan di dalam perulangan** — namanya
+      **nested loop**.
+
+      ## Cara kerja nested loop
+
+      Perulangan luar berjalan pelan, perulangan dalam berjalan
+      cepat. Untuk setiap satu putaran perulangan luar, perulangan
+      dalam menyelesaikan SEMUA putarannya.
+
+      ```python
+      for baris in range(3):
+          for kolom in range(4):
+              print('*', end='')
+          print()
+      ```
+
+      Kode di atas mencetak persegi panjang bintang 3 baris 4 kolom.
+      `end=''` membuat print tidak pindah baris, jadi bintang-bintang
+      tetap sebaris. Lalu `print()` kosong dipakai untuk pindah ke
+      baris berikutnya.
+
+      ## Kenapa penting?
+
+      Nested loop dipakai untuk membuat pola, tabel, papan game,
+      sampai mengolah data yang berbaris-baris. Kalau kamu bisa
+      menguasai nested loop, kamu sudah bisa membuat pola apa pun —
+      segitiga, berlian, sampai papan catur bintang!
+    contoh:
+      - kode: |
+          for baris in range(3):
+              for kolom in range(4):
+                  print('*', end='')
+              print()
+        penjelasan: "Perulangan dalam mencetak 4 bintang, lalu print() pindah baris. Diulang 3 kali."
+      - kode: |
+          for i in range(1, 4):
+              for j in range(i):
+                  print('*', end='')
+              print()
+        penjelasan: "Perulangan dalam mengikuti nilai i: baris 1 satu bintang, baris 2 dua bintang, dst."
+    kuis:
+      - soal: "Untuk satu putaran perulangan luar, perulangan dalam berjalan..."
+        pilihan:
+          - "sampai selesai semua putarannya"
+          - "sekali saja"
+          - "setengah putaran"
+          - "tidak pernah jalan"
+        jawaban: 0
+        penjelasan: "Perulangan dalam menyelesaikan semua putarannya dulu, baru perulangan luar lanjut."
+      - soal: "Apa fungsi end='' pada print('*', end='')?"
+        pilihan:
+          - "menghentikan program"
+          - "tidak pindah baris setelah mencetak"
+          - "mencetak lebih cepat"
+          - "menghapus bintang"
+        jawaban: 1
+        penjelasan: "end='' mengganti akhiran baris baru dengan string kosong, jadi cetakan tetap satu baris."
+      - soal: "Berapa total bintang yang dicetak jika loop luar 3 kali dan loop dalam 4 kali?"
+        pilihan:
+          - "7"
+          - "34"
+          - "12"
+          - "3"
+        jawaban: 2
+        penjelasan: "3 x 4 = 12. Setiap putaran luar menjalankan 4 bintang di dalamnya."
+
+  - id: "10-2"
+    judul: "Pola Angka dan Segitiga"
+    menit: 8
+    materi: |
+      Bintang saja kurang seru — sekarang saatnya membuat pola dari
+      **angka** dan pola segitiga yang lebih keren!
+
+      ## Pola angka
+
+      Kalau kamu mencetak `j` (variabel perulangan dalam), kamu bisa
+      membuat baris berisi 1 2 3. Ganti `end=''` dengan `end=' '`
+      supaya ada spasi di antara angka.
+
+      ## Segitiga dengan spasi
+
+      Pernah lihat piramida? Baris paling atas cuma satu bintang di
+      tengah, lalu makin ke bawah makin lebar. Rahasianya: cetak
+      spasi dulu, baru bintang.
+
+      ```python
+      n = 3
+      for i in range(1, n + 1):
+          print(' ' * (n - i) + '*' * (2 * i - 1))
+      ```
+
+      - `' ' * (n - i)` : spasi pengatur posisi, makin ke bawah makin sedikit
+      - `'*' * (2 * i - 1)` : jumlah bintang ganjil: 1, 3, 5, ...
+
+      ## Trik membaca pola
+
+      Semua pola sebenarnya cuma matematika kecil: hitung berapa
+      spasi dan berapa bintang di setiap baris, lalu ubah jadi rumus.
+      Begitu kamu bisa melihat polanya, kamu bisa membuat pola apa
+      pun — dari tangga sampai berlian!
+    contoh:
+      - kode: |
+          for i in range(1, 4):
+              for j in range(1, 4):
+                  print(j, end=' ')
+              print()
+        penjelasan: "Setiap baris mencetak 1 2 3 — nilai j berubah lebih cepat daripada nilai i."
+      - kode: |
+          n = 3
+          for i in range(1, n + 1):
+              print(' ' * (n - i) + '*' * (2 * i - 1))
+        penjelasan: "Piramida 3 baris: spasi makin sedikit, bintang makin banyak (1, 3, 5)."
+    kuis:
+      - soal: "Untuk membuat segitiga rata kiri, kita bisa memakai..."
+        pilihan:
+          - "print('*' * i)"
+          - "print('*' + i)"
+          - "print(i * i)"
+          - "print('*' - i)"
+        jawaban: 0
+        penjelasan: "Mengalikan string '*' dengan i menghasilkan i bintang sebaris, tanpa perlu spasi."
+      - soal: "Pada piramida, jumlah bintang tiap baris adalah..."
+        pilihan:
+          - "genap"
+          - "ganjil (1, 3, 5, ...)"
+          - "selalu sama"
+          - "acak"
+        jawaban: 1
+        penjelasan: "Rumus 2 * i - 1 selalu menghasilkan bilangan ganjil."
+      - soal: "Apa output dari print(' ' * 2 + '*' * 1)?"
+        pilihan:
+          - "  *"
+          - "*  "
+          - " ***"
+          - "  ***"
+        jawaban: 0
+        penjelasan: "Dua spasi dulu, lalu satu bintang: hasilnya '  *'."
+
+  - id: "10-3"
+    judul: "Sorting Manual: Bubble Sort"
+    menit: 9
+    materi: |
+      Kamu punya 5 kartu angka acak dan ingin mengurutkannya dari
+      kecil ke besar. Tanpa fitur `.sort()`, bagaimana caranya?
+      Jawabannya: **bubble sort** — si gelembung!
+
+      ## Cara kerja bubble sort
+
+      Bayangkan gelembung udara yang naik ke permukaan air. Bubble
+      sort membandingkan dua angka bersebelahan. Kalau yang kiri
+      lebih besar dari yang kanan, mereka **bertukar tempat**. Begitu
+      terus sampai semua angka rapi.
+
+      ```python
+      angka = [5, 2, 8, 1]
+      n = len(angka)
+      for i in range(n):
+          for j in range(n - 1):
+              if angka[j] > angka[j + 1]:
+                  angka[j], angka[j + 1] = angka[j + 1], angka[j]
+      print(angka)
+      ```
+
+      Satu putaran penuh (dari j=0 sampai n-2) disebut satu **pass**.
+      Setiap pass, angka terbesar "menggelembung" ke posisi paling
+      belakang.
+
+      ## Kenapa belajar sorting manual?
+
+      Fitur `.sort()` memang ada, tapi memahami cara kerja sorting
+      itu seperti mengetahui trik sulap di balik panggung. Ini
+      melatih logika kamu — dan soal ujian suka sekali
+      menyembunyikan trik ini!
+    contoh:
+      - kode: |
+          angka = [5, 2, 8, 1]
+          n = len(angka)
+          for i in range(n):
+              for j in range(n - 1):
+                  if angka[j] > angka[j + 1]:
+                      angka[j], angka[j + 1] = angka[j + 1], angka[j]
+          print(angka)
+        penjelasan: "Setelah beberapa pass, list berubah dari [5, 2, 8, 1] menjadi [1, 2, 5, 8]."
+      - kode: |
+          angka = [3, 1, 2]
+          if angka[0] > angka[1]:
+              angka[0], angka[1] = angka[1], angka[0]
+          print(angka)
+        penjelasan: "Menukar dua angka bersebelahan kalau yang kiri lebih besar — dasar dari bubble sort."
+    kuis:
+      - soal: "Bubble sort membandingkan..."
+        pilihan:
+          - "dua angka bersebelahan"
+          - "angka pertama dan angka terakhir"
+          - "semua angka sekaligus"
+          - "angka genap saja"
+        jawaban: 0
+        penjelasan: "Bubble sort selalu membandingkan angka[j] dengan angka[j + 1], dua tetangga."
+      - soal: "Kalau angka kiri lebih besar dari angka kanan, bubble sort akan..."
+        pilihan:
+          - "menghapus angka kiri"
+          - "menukar posisi keduanya"
+          - "menambah angka baru"
+          - "berhenti"
+        jawaban: 1
+        penjelasan: "Angka besar bertukar tempat dengan angka kecil supaya yang kecil maju ke depan."
+      - soal: "Setelah satu pass penuh pada [5, 2, 8, 1], angka terbesar berada di..."
+        pilihan:
+          - "depan"
+          - "tengah"
+          - "belakang"
+          - "hilang"
+        jawaban: 2
+        penjelasan: "Angka 8 'menggelembung' ke posisi paling belakang setelah satu pass."
+
+  - id: "10-4"
+    judul: "String Lanjutan & Searching"
+    menit: 8
+    materi: |
+      Teks (string) punya banyak trik yang belum kamu coba! Kali ini
+      kita belajar empat senjata andalan plus cara mencari nilai
+      secara manual.
+
+      ## Senjata string lanjutan
+
+      - `.count('kata')` : berapa kali kata muncul
+      - `.find('kata')` : posisi pertama kata ditemukan (mulai dari 0)
+      - `.replace('lama', 'baru')` : ganti semua kata lama
+      - `.split()` : potong kalimat jadi daftar kata
+      - `'-'.join(daftar)` : gabung daftar kata dengan tanda -
+
+      ## Searching manual
+
+      Kadang kamu perlu mencari nilai terbesar atau terkecil tanpa
+      bantuan fungsi. Caranya: simpan angka pertama sebagai juara
+      sementara, lalu bandingkan dengan semua angka lain satu per
+      satu. Kalau ada yang lebih besar, dia jadi juara baru!
+
+      ```python
+      angka = [3, 9, 5]
+      terbesar = angka[0]
+      for a in angka:
+          if a > terbesar:
+              terbesar = a
+      print(terbesar)
+      ```
+
+      ## Kenapa penting?
+
+      Metode string ini dipakai terus-menerus di dunia nyata —
+      memfilter kata di mesin pencari, membersihkan data, sampai
+      membuat chat bot. Searching manual melatih cara berpikir
+      algoritma yang menjadi dasar ilmu komputer.
+    contoh:
+      - kode: |
+          kalimat = 'aku suka python, python itu seru'
+          print(kalimat.count('python'))
+          print(kalimat.find('suka'))
+        penjelasan: "count menghitung 'python' muncul 2 kali; find menemukan 'suka' di posisi 4."
+      - kode: |
+          kata = ['halo', 'dunia']
+          print('-'.join(kata))
+        penjelasan: "join menyambung kata-kata dengan tanda -: menjadi 'halo-dunia'."
+    kuis:
+      - soal: "'buku buku bagus'.count('buku') menghasilkan..."
+        pilihan:
+          - "1"
+          - "2"
+          - "3"
+          - "0"
+        jawaban: 1
+        penjelasan: "Kata 'buku' muncul dua kali dalam kalimat itu."
+      - soal: "'makan'.replace('a', 'i') menghasilkan..."
+        pilihan:
+          - "mikin"
+          - "makin"
+          - "makan"
+          - "makanan"
+        jawaban: 0
+        penjelasan: "Semua huruf 'a' diganti 'i': m-a-k-a-n menjadi m-i-k-i-n."
+      - soal: "Untuk mencari nilai terbesar secara manual, kita mulai dengan..."
+        pilihan:
+          - "angka terakhir"
+          - "angka pertama sebagai juara sementara"
+          - "angka nol"
+          - "angka acak"
+        jawaban: 1
+        penjelasan: "Angka pertama jadi juara sementara, lalu ditantang semua angka lain satu per satu."
+
+soal:
+  - id: "s10-1"
+    judul: "Tangga Bintang"
+    sulit: "mudah"
+    cerita: |
+      Kancil mau pindah ke rumah baru yang bertingkat. Dia penasaran:
+      kalau rumahnya punya 3 lantai, bagaimana bentuk tangga
+      bintangnya? Bantuin dia menggambar tangga bintang dengan
+      Python!
+
+      Baca satu angka n. Cetak n baris bintang: baris 1 satu bintang,
+      baris 2 dua bintang, dan seterusnya. Baris terakhir berisi n
+      bintang.
+    input: "Satu baris: angka n."
+    output: "n baris: baris ke-i berisi i bintang."
+    contoh:
+      - input: "3"
+        output: "*\n**\n***"
+      - input: "1"
+        output: "*"
+    tes:
+      - input: "3"
+        output: "*\n**\n***"
+      - input: "1"
+        output: "*"
+      - input: "5"
+        output: "*\n**\n***\n****\n*****"
+      - input: "2"
+        output: "*\n**"
+      - input: "4"
+        output: "*\n**\n***\n****"
+      - input: "6"
+        output: "*\n**\n***\n****\n*****\n******"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print('*' * i)
+    petunjuk:
+      - "Pakai for dan range(1, n + 1) supaya nomor baris mulai dari 1."
+      - "Setiap baris = '*' dikali nomor baris."
+      - "print('*' * i) otomatis membuat i bintang sebaris."
+
+  - id: "s10-2"
+    judul: "Urutkan Skor Game"
+    sulit: "sedang"
+    cerita: |
+      Di sekolah ada turnamen game edukasi. Skor para peserta masih
+      acak dan Bu Guru minta bantuanmu mengurutkannya dari kecil ke
+      besar. Kamu tidak boleh pakai .sort() — harus manual!
+
+      Baca jumlah peserta n, lalu n skor. Cetak semua skor urut dari
+      terkecil ke terbesar dalam satu baris, dipisah spasi.
+    input: "Baris pertama: n. Lalu n baris berisi skor."
+    output: "Satu baris: skor urut naik, dipisah spasi."
+    contoh:
+      - input: "3\n8\n3\n5"
+        output: "3 5 8"
+      - input: "4\n10\n2\n7\n1"
+        output: "1 2 7 10"
+    tes:
+      - input: "3\n8\n3\n5"
+        output: "3 5 8"
+      - input: "4\n10\n2\n7\n1"
+        output: "1 2 7 10"
+      - input: "2\n5\n5"
+        output: "5 5"
+      - input: "1\n9"
+        output: "9"
+      - input: "5\n4\n3\n2\n1\n0"
+        output: "0 1 2 3 4"
+      - input: "4\n1\n2\n3\n4"
+        output: "1 2 3 4"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      for i in range(n):
+          for j in range(n - 1):
+              if a[j] > a[j + 1]:
+                  a[j], a[j + 1] = a[j + 1], a[j]
+      for x in a:
+          print(x, end=' ')
+      print()
+    petunjuk:
+      - "Simpan semua skor di dalam list."
+      - "Pakai dua for: satu untuk pass, satu untuk membandingkan angka bersebelahan."
+      - "Tukar posisi kalau angka kiri lebih besar dari angka kanan."
+
+  - id: "s10-3"
+    judul: "Kata Terpanjang"
+    sulit: "sulit"
+    cerita: |
+      Kancil ikut lomba menulis cerita. Panitia ingin tahu kata
+      terpanjang di setiap cerita yang masuk — katanya itu tanda
+      penulis hebat! Kancil minta bantuanmu membuat detektif kata.
+
+      Baca satu kalimat. Cetak kata terpanjangnya, lalu di baris
+      berikutnya cetak "Panjang: <jumlah huruf>". Kalau ada dua kata
+      sama panjang, pilih yang muncul lebih dulu.
+    input: "Satu baris kalimat (kata dipisah spasi)."
+    output: "Baris 1: kata terpanjang. Baris 2: Panjang: <n>."
+    contoh:
+      - input: "aku suka python"
+        output: "python\nPanjang: 6"
+      - input: "belajar itu menyenangkan"
+        output: "menyenangkan\nPanjang: 12"
+    tes:
+      - input: "aku suka python"
+        output: "python\nPanjang: 6"
+      - input: "belajar itu menyenangkan"
+        output: "menyenangkan\nPanjang: 12"
+      - input: "a bb ccc"
+        output: "ccc\nPanjang: 3"
+      - input: "satu kata"
+        output: "satu\nPanjang: 4"
+      - input: "pemrograman"
+        output: "pemrograman\nPanjang: 11"
+      - input: "ikan hiu makan plankton"
+        output: "plankton\nPanjang: 8"
+    solusi: |
+      kalimat = input()
+      kata = kalimat.split()
+      terpanjang = kata[0]
+      for k in kata:
+          if len(k) > len(terpanjang):
+              terpanjang = k
+      print(terpanjang)
+      print('Panjang:', len(terpanjang))
+    petunjuk:
+      - "Gunakan .split() untuk memecah kalimat menjadi daftar kata."
+      - "Mulai dengan kata pertama sebagai kandidat terpanjang."
+      - "Pakai perbandingan > (bukan >=) supaya kata pertama yang menang saat seri."

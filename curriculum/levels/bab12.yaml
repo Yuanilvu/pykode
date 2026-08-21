@@ -1,0 +1,423 @@
+bab: 12
+judul: "Python Keren"
+emoji: "⚡"
+warna: "#8b5cf6"
+deskripsi: "List comprehension, lambda, file I/O, dan string lanjutan."
+
+pelajaran:
+  - id: "12-1"
+    judul: "List Comprehension"
+    menit: 7
+    materi: |
+      Mau membuat list angka genap dari 1 sampai 10? Cara biasa:
+      buat list kosong, loop, append... tiga langkah! Dengan **list
+      comprehension**, cukup SATU baris:
+
+      ```python
+      genap = [x for x in range(1, 11) if x % 2 == 0]
+      ```
+
+      Bacanya seperti kalimat: "buat list berisi x untuk setiap x
+      dari 1 sampai 10, kalau x genap".
+
+      ## Struktur list comprehension
+
+      `[ekspresi for variabel in data if syarat]`
+
+      - **ekspresi**: yang dimasukkan ke list (bisa diubah, misal `x * x`)
+      - **for variabel in data**: perulangannya
+      - **if syarat**: opsional, dipakai untuk menyaring
+
+      Contoh: `[x * x for x in [1, 2, 3]]` menghasilkan
+      `[1, 4, 9]`.
+
+      ## Kenapa penting?
+
+      Comprehension membuat kode lebih pendek dan mudah dibaca —
+      sekali lihat langsung paham maksudnya. Programmer profesional
+      memakainya setiap hari untuk mengolah data. Kamu tetap boleh
+      memakai cara biasa kalau lebih nyaman, tapi comprehension itu
+      senjata rahasia yang keren banget!
+    contoh:
+      - kode: |
+          angka = [1, 2, 3, 4]
+          kuadrat = [x * x for x in angka]
+          print(kuadrat)
+        penjelasan: "Setiap angka di list diubah jadi kuadratnya: [1, 4, 9, 16]."
+      - kode: |
+          genap = [x for x in range(1, 11) if x % 2 == 0]
+          print(genap)
+        penjelasan: "Hanya angka genap dari 1-10 yang masuk list: [2, 4, 6, 8, 10]."
+    kuis:
+      - soal: "Hasil dari [x * 2 for x in [1, 2, 3]] adalah..."
+        pilihan:
+          - "[1, 2, 3]"
+          - "[2, 4, 6]"
+          - "[3, 4, 5]"
+          - "[1, 4, 9]"
+        jawaban: 1
+        penjelasan: "Setiap anggota dikali 2: 1→2, 2→4, 3→6."
+      - soal: "Bagian if di list comprehension berfungsi untuk..."
+        pilihan:
+          - "mempercepat program"
+          - "menyaring data yang masuk"
+          - "mengganti variabel"
+          - "menghentikan loop"
+        jawaban: 1
+        penjelasan: "if menjadi filter: hanya data yang memenuhi syarat yang masuk list."
+      - soal: "List comprehension [x for x in range(5)] menghasilkan..."
+        pilihan:
+          - "[0, 1, 2, 3, 4]"
+          - "[1, 2, 3, 4, 5]"
+          - "[5, 4, 3, 2, 1]"
+          - "[0, 5]"
+        jawaban: 0
+        penjelasan: "range(5) berisi 0 sampai 4, dan comprehension menyalinnya apa adanya."
+
+  - id: "12-2"
+    judul: "Lambda: Fungsi Kilat"
+    menit: 7
+    materi: |
+      Ada fungsi yang cuma dipakai sekali dan isinya satu baris.
+      Membuat fungsi lengkap pakai def terasa berat? Kenalkan:
+      **lambda** — fungsi kilat sekali pakai!
+
+      ```python
+      kali2 = lambda x: x * 2
+      print(kali2(5))  # 10
+      ```
+
+      Bacanya: "lambda menerima x, mengembalikan x * 2". Lambda
+      ditulis tanpa def, tanpa nama panjang, dan otomatis
+      mengembalikan hasilnya.
+
+      ## Lambda + map
+
+      Lambda sering dipasangkan dengan `map()` — yang menerapkan
+      sebuah fungsi ke setiap anggota list:
+
+      ```python
+      angka = [1, 2, 3]
+      hasil = list(map(lambda x: x + 1, angka))
+      print(hasil)  # [2, 3, 4]
+      ```
+
+      `map(lambda x: x + 1, angka)` artinya: "tambah 1 ke setiap
+      anggota angka". Kita bungkus dengan list() supaya hasilnya
+      jadi list biasa.
+
+      ## Kapan memakai lambda?
+
+      Kalau fungsinya kecil dan cuma dipakai di satu tempat. Kalau
+      fungsinya panjang atau dipakai berulang kali, tetap pakai
+      def! Lambda itu seperti pisau lipat — praktis, tapi tidak
+      untuk semua pekerjaan.
+    contoh:
+      - kode: |
+          kali2 = lambda x: x * 2
+          print(kali2(5))
+        penjelasan: "Lambda menerima 5 dan mengembalikan 10."
+      - kode: |
+          angka = [1, 2, 3, 4]
+          hasil = list(map(lambda x: x + 1, angka))
+          print(hasil)
+        penjelasan: "map menambah 1 ke setiap anggota: [2, 3, 4, 5]."
+    kuis:
+      - soal: "lambda x: x * 2 adalah..."
+        pilihan:
+          - "fungsi biasa dengan def"
+          - "fungsi kilat satu baris"
+          - "variabel"
+          - "class"
+        jawaban: 1
+        penjelasan: "Lambda adalah fungsi anonim satu baris yang otomatis mengembalikan hasilnya."
+      - soal: "map() berguna untuk..."
+        pilihan:
+          - "menerapkan fungsi ke setiap anggota list"
+          - "menggabungkan dua list"
+          - "menghapus list"
+          - "mencetak list"
+        jawaban: 0
+        penjelasan: "map menerapkan fungsi (misalnya lambda) ke setiap anggota list."
+      - soal: "Kalau lambda dipakai berulang kali dan panjang, sebaiknya..."
+        pilihan:
+          - "tetap pakai lambda"
+          - "pakai def"
+          - "hapus saja"
+          - "pakai variabel"
+        jawaban: 1
+        penjelasan: "Fungsi yang panjang dan sering dipakai lebih jelas ditulis dengan def."
+
+  - id: "12-3"
+    judul: "File I/O: Menyimpan Catatan"
+    menit: 8
+    materi: |
+      Program yang hasilnya hilang setiap ditutup itu menyedihkan!
+      Dengan **file**, kamu bisa menyimpan data ke komputer dan
+      membacanya lagi nanti — seperti buku catatan ajaib.
+
+      ## Menulis file
+
+      ```python
+      with open('catatan.txt', 'w') as f:
+          f.write('Aku suka Python!')
+      ```
+
+      - `open('catatan.txt', 'w')` — buka (atau buat) file, mode 'w' = tulis
+      - `with ... as f` — buka file sebagai f, dan otomatis menutupnya
+      - `f.write(...)` — tulis teks ke file
+
+      ## Membaca file
+
+      ```python
+      with open('catatan.txt', 'r') as f:
+          isi = f.read()
+      print(isi)
+      ```
+
+      Mode 'r' = baca. `f.read()` membaca semua isi file jadi satu
+      teks. Ada juga `f.readline()` untuk satu baris, dan
+      `f.readlines()` untuk semua baris dalam bentuk list.
+
+      ## Kenapa harus 'with'?
+
+      `with` menjamin file selalu ditutup, bahkan kalau terjadi
+      error. File yang lupa ditutup bisa membuat data rusak. Jadi
+      biasakan `with` sejak sekarang!
+
+      File I/O dipakai di mana-mana: menyimpan skor game, daftar
+      nilai siswa, sampai data jutaan pengguna di server.
+    contoh:
+      - kode: |
+          with open('catatan.txt', 'w') as f:
+              f.write('Aku suka Python!\n')
+          with open('catatan.txt', 'r') as f:
+              isi = f.read()
+          print(isi)
+        penjelasan: "Teks ditulis ke file, lalu dibaca kembali dan dicetak."
+      - kode: |
+          with open('nilai.txt', 'w') as f:
+              f.write('90\n80\n100')
+          with open('nilai.txt', 'r') as f:
+              baris = f.readlines()
+          print(len(baris), 'baris nilai')
+        penjelasan: "readlines() mengembalikan list berisi 3 baris, jadi len-nya 3."
+    kuis:
+      - soal: "Mode 'w' pada open() berarti..."
+        pilihan:
+          - "membaca file"
+          - "menulis ke file"
+          - "menghapus file"
+          - "menyalin file"
+        jawaban: 1
+        penjelasan: "'w' singkatan dari write (tulis). Mode 'r' untuk read (baca)."
+      - soal: "Kelebihan memakai with ... as f adalah..."
+        pilihan:
+          - "file otomatis ditutup"
+          - "file jadi lebih cepat"
+          - "file tidak perlu dibuat"
+          - "file otomatis terhapus"
+        jawaban: 0
+        penjelasan: "with menjamin file ditutup setelah selesai, bahkan saat terjadi error."
+      - soal: "f.readlines() mengembalikan..."
+        pilihan:
+          - "satu string panjang"
+          - "list berisi baris-baris file"
+          - "angka jumlah baris"
+          - "huruf pertama file"
+        jawaban: 1
+        penjelasan: "readlines() memecah isi file menjadi list, satu anggota per baris."
+
+  - id: "12-4"
+    judul: "Metode String Lanjutan"
+    menit: 6
+    materi: |
+      String masih punya trik rahasia lagi! Empat metode ini sering
+      muncul di dunia nyata:
+
+      ## Pemeriksaan isi
+
+      - `.isdigit()` — True kalau semua karakter angka ("123" → True)
+      - `.isalpha()` — True kalau semua karakter huruf ("abc" → True)
+
+      ## Perapian dan pencarian
+
+      - `.title()` — huruf pertama tiap kata jadi besar ("halo dunia" → "Halo Dunia")
+      - `.startswith('py')` — True kalau diawali "py" ("python" → True)
+
+      Metode pemeriksaan mengembalikan True/False — cocok dipakai
+      di dalam if atau list comprehension.
+
+      ```python
+      teks = 'SMP 7 Jakarta'
+      huruf = [c for c in teks if c.isalpha()]
+      print(huruf)  # ['S', 'M', 'P', 'J', 'a', 'k', 'a', 'r', 't', 'a']
+      ```
+
+      ## Kenapa penting?
+
+      Program sungguhan selalu memeriksa input: apakah ini angka?
+      Apakah ini nama? Metode-metode ini menjadi penjaga pintu yang
+      memastikan data yang masuk benar. Kombinasikan dengan
+      comprehension dan kamu punya alat penyaring teks yang sangat
+      kuat!
+    contoh:
+      - kode: |
+          print('123'.isdigit())
+          print('abc'.isalpha())
+          print('halo dunia'.title())
+        penjelasan: "Hasilnya: True, True, lalu 'Halo Dunia'."
+      - kode: |
+          kata = ['apel', 'anggur', 'pisang']
+          hasil = [k for k in kata if k.startswith('a')]
+          print(hasil)
+        penjelasan: "Hanya kata berawalan 'a' yang masuk list: ['apel', 'anggur']."
+    kuis:
+      - soal: "'2026'.isdigit() menghasilkan..."
+        pilihan:
+          - "True"
+          - "False"
+          - "error"
+          - "2026"
+        jawaban: 0
+        penjelasan: "Semua karakternya angka, jadi isdigit() mengembalikan True."
+      - soal: "'halo dunia'.title() menghasilkan..."
+        pilihan:
+          - "HALO DUNIA"
+          - "Halo Dunia"
+          - "halo dunia"
+          - "Halo dunia"
+        jawaban: 1
+        penjelasan: "title() membuat huruf pertama tiap kata jadi kapital: 'Halo Dunia'."
+      - soal: "'python'.startswith('py') menghasilkan..."
+        pilihan:
+          - "False"
+          - "True"
+          - "error"
+          - "'py'"
+        jawaban: 1
+        penjelasan: "'python' memang diawali 'py', jadi hasilnya True."
+
+soal:
+  - id: "s12-1"
+    judul: "Bilangan Genap"
+    sulit: "mudah"
+    cerita: |
+      Kancil belajar tabel perkalian dan penasaran dengan bilangan
+      genap. Dia minta tolong kamu membuat daftar bilangan genap
+      dari 2 sampai n dengan sekali gebrakan list comprehension!
+
+      Baca satu angka n. Cetak semua bilangan genap dari 2 sampai n
+      dalam satu baris, dipisah spasi.
+    input: "Satu baris: angka n."
+    output: "Satu baris: bilangan genap dari 2 sampai n, dipisah spasi."
+    contoh:
+      - input: "10"
+        output: "2 4 6 8 10"
+      - input: "7"
+        output: "2 4 6"
+    tes:
+      - input: "10"
+        output: "2 4 6 8 10"
+      - input: "7"
+        output: "2 4 6"
+      - input: "2"
+        output: "2"
+      - input: "12"
+        output: "2 4 6 8 10 12"
+      - input: "1"
+        output: ""
+      - input: "6"
+        output: "2 4 6"
+    solusi: |
+      n = int(input())
+      genap = [x for x in range(2, n + 1) if x % 2 == 0]
+      for x in genap:
+          print(x, end=' ')
+      print()
+    petunjuk:
+      - "Gunakan list comprehension dengan range(2, n + 1)."
+      - "Saring dengan if x % 2 == 0 supaya hanya genap yang masuk."
+      - "Cetak isi list dengan for, pakai end=' ' supaya sebaris."
+
+  - id: "s12-2"
+    judul: "Detektif Digit"
+    sulit: "sedang"
+    cerita: |
+      Di sekolah ada lomba "Tebak Angka Tersembunyi". Setiap
+      kalimat berisi angka-angka tersembunyi di antara huruf.
+      Pemenangnya adalah yang bisa menghitung jumlah digit paling
+      cepat. Kancil butuh senjata rahasia: Python!
+
+      Baca satu kalimat. Hitung berapa banyak digit (0-9) di
+      dalamnya, lalu cetak "Jumlah digit: <n>".
+    input: "Satu baris kalimat."
+    output: "Satu baris: Jumlah digit: <n>."
+    contoh:
+      - input: "SMP 7 Jakarta 2026"
+        output: "Jumlah digit: 5"
+      - input: "abc"
+        output: "Jumlah digit: 0"
+    tes:
+      - input: "SMP 7 Jakarta 2026"
+        output: "Jumlah digit: 5"
+      - input: "abc"
+        output: "Jumlah digit: 0"
+      - input: "12345"
+        output: "Jumlah digit: 5"
+      - input: "a1b2c3"
+        output: "Jumlah digit: 3"
+      - input: "No. 17"
+        output: "Jumlah digit: 2"
+      - input: "1 2 3"
+        output: "Jumlah digit: 3"
+    solusi: |
+      teks = input()
+      jumlah = len([c for c in teks if c.isdigit()])
+      print('Jumlah digit:', jumlah)
+    petunjuk:
+      - "Loop setiap karakter dengan list comprehension."
+      - "Saring pakai c.isdigit() supaya hanya digit yang masuk list."
+      - "len() menghitung berapa banyak digit yang tersaring."
+
+  - id: "s12-3"
+    judul: "Kata Berawalan"
+    sulit: "sulit"
+    cerita: |
+      Perpustakaan punya ribuan kata kunci. Bu Pustakawan ingin tahu
+      berapa banyak kata yang diawali suku kata tertentu — misalnya
+      semua kata berawalan "me". Menghitung manual membuat matanya
+      perih. Kancil menawarkan jasa Python-nya!
+
+      Baca satu kalimat lalu satu awalan (2 huruf). Cetak jumlah
+      kata di kalimat yang diawali awalan tersebut: "Jumlah: <n>".
+    input: "Baris 1: kalimat. Baris 2: awalan."
+    output: "Satu baris: Jumlah: <n>."
+    contoh:
+      - input: "meja merah milik mira\nme"
+        output: "Jumlah: 2"
+      - input: "si kancil suka sekali\nsi"
+        output: "Jumlah: 1"
+    tes:
+      - input: "meja merah milik mira\nme"
+        output: "Jumlah: 2"
+      - input: "si kancil suka sekali\nsi"
+        output: "Jumlah: 1"
+      - input: "apa apa aku\nap"
+        output: "Jumlah: 2"
+      - input: "batu bata bakso\nba"
+        output: "Jumlah: 3"
+      - input: "python keren\npy"
+        output: "Jumlah: 1"
+      - input: "tidak ada\nza"
+        output: "Jumlah: 0"
+    solusi: |
+      kalimat = input()
+      awalan = input()
+      kata = kalimat.split()
+      jumlah = len([k for k in kata if k.startswith(awalan)])
+      print('Jumlah:', jumlah)
+    petunjuk:
+      - "Pecah kalimat jadi daftar kata dengan .split()."
+      - "Gunakan k.startswith(awalan) untuk mengecek awal kata."
+      - "Hitung kata yang lolos dengan len() pada hasil comprehension."

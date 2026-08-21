@@ -118,6 +118,12 @@ body {
 .materi h3 { margin: 18px 0 8px; }
 .materi h4 { margin: 14px 0 6px; }
 .materi p { margin: 8px 0; }
+.materi pre.block-code {
+  background: #0f172a; color: #e2e8f0; border-radius: 12px; padding: 14px;
+  overflow-x: auto; font-family: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  font-size: .9rem; line-height: 1.55; margin: 10px 0;
+}
+.materi pre.block-code code { background: transparent; color: inherit; padding: 0; font-size: inherit; }
 .materi code, .materi li code {
   background: #eef2ff; color: #4338ca; border-radius: 6px;
   padding: 2px 6px; font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; font-size: .9em;

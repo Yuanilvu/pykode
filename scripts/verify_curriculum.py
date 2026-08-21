@@ -23,6 +23,30 @@ FAILURES = []
 WARNINGS = []
 CHECKED = {"soal_tes": 0, "soal_contoh": 0, "drill_tes": 0, "contoh_pelajaran": 0}
 
+# Fitur yang dilarang per bab (static check pedagogi).
+# index 0 = bab 1. 'for' akan false-positive kalau muncul di string teks
+# (mis. print('for sale')) — karena itu hanya WARN, bukan FAIL.
+BANNED_BY_BAB = [
+    ["for", "while", "def", "class", "import", "try", "lambda", "if", "input"],  # bab 1
+    ["for", "while", "def", "class", "import", "try", "lambda"],                  # bab 2-3
+    ["for", "while", "def", "class", "import", "try", "lambda"],                  # bab 4
+    ["def", "class", "import", "try", "lambda"],                                  # bab 5-7
+    ["class", "import", "try", "lambda"],                                         # bab 8
+    ["class", "import", "lambda"],                                                # bab 9-10 (try/except mulai bab 9)
+    ["import", "lambda"],                                                         # bab 11
+    [],                                                                           # bab 12
+]
+
+
+# Kelompok larangan per bab (lihat komentar BANNED_BY_BAB). index = kelompok.
+_BAB_TO_GROUP = [0, 1, 1, 2, 3, 3, 3, 4, 5, 5, 6, 7]  # bab 1..12 → bab9 & bab10 = grup 5 (try boleh)
+
+
+def banned_for(bab_num):
+    if 1 <= bab_num <= 12:
+        return BANNED_BY_BAB[_BAB_TO_GROUP[bab_num - 1]]
+    return []
+
 
 def fail(msg):
     FAILURES.append(msg)
@@ -137,6 +161,10 @@ def main():
                 seen_ids[s["id"]] = fn
                 if s["sulit"] not in ("mudah", "sedang", "sulit"):
                     fail(f"{spath}: sulit harus mudah/sedang/sulit, dapat '{s['sulit']}'")
+                for bad in banned_for(data["bab"]):
+                    if bad in s["solusi"]:
+                        warn(f"{spath}: solusi mengandung '{bad}' (fitur bab {data['bab']} "
+                             f"— mungkin melanggar progresi bab)")
                 if len(s["tes"]) < 2:
                     warn(f"{spath}: test case cuma {len(s['tes'])} (min. 2; untuk soal "
                          f"ber-input sebaiknya 4-6)")
@@ -162,6 +190,10 @@ def main():
                 if d["id"] in seen_ids:
                     fail(f"{dpath}: id '{d['id']}' duplikat (sudah di {seen_ids[d['id']]})")
                 seen_ids[d["id"]] = fn
+                for bad in banned_for(d.get("tingkat", 12)):
+                    if bad in d["solusi"]:
+                        warn(f"{dpath}: solusi mengandung '{bad}' (drill tingkat "
+                             f"{d.get('tingkat')} — mungkin melanggar progresi bab)")
                 for ti, t in enumerate(d["tes"]):
                     err = check_code_runs("drill_tes", d["solusi"], t.get("input", ""),
                                           t.get("output", ""))

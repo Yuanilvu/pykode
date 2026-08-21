@@ -1,0 +1,477 @@
+bab: 11
+judul: "OOP Dasar"
+emoji: "🏗️"
+warna: "#10b981"
+deskripsi: "Class, __init__, method, dan attribute — cetak objek sendiri."
+
+pelajaran:
+  - id: "11-1"
+    judul: "Class: Cetakan Kue"
+    menit: 7
+    materi: |
+      Di toko kue, satu cetakan bisa membuat banyak kue yang
+      bentuknya sama. Di Python, **class** adalah cetakannya, dan
+      **object** adalah kue jadi hasil cetakan itu.
+
+      ## Membuat class pertama
+
+      ```python
+      class Kue:
+          rasa = 'cokelat'
+
+      kue1 = Kue()
+      kue2 = Kue()
+      print(kue1.rasa)
+      ```
+
+      - `class Kue:` — membuat cetakan bernama Kue
+      - `rasa = 'cokelat'` — **attribute**, sifat yang dimiliki setiap kue
+      - `Kue()` — mencetak kue baru (object)
+      - `kue1.rasa` — mengambil attribute dengan tanda titik
+
+      ## Kenapa class penting?
+
+      Tanpa class, kamu harus menulis ulang data untuk setiap benda.
+      Dengan class, kamu membuat satu cetakan lalu mencetak banyak
+      object dengan mudah. Bayangkan menulis resep sekali, lalu bisa
+      membuat 100 kue dari resep itu!
+
+      Semua yang kamu lihat di Python sebenarnya object: string,
+      list, bahkan angka. Class itu cara Python meniru dunia nyata —
+      dan cara kamu berpikir seperti programmer sungguhan.
+    contoh:
+      - kode: |
+          class Kue:
+              rasa = 'cokelat'
+
+          kue1 = Kue()
+          kue2 = Kue()
+          print(kue1.rasa)
+          print(kue2.rasa)
+        penjelasan: "Dua object dari satu class — keduanya punya attribute rasa cokelat."
+      - kode: |
+          class Hewan:
+              nama = 'Kancil'
+              kaki = 4
+
+          k = Hewan()
+          print(k.nama, 'punya', k.kaki, 'kaki')
+        penjelasan: "Attribute diambil dengan tanda titik: k.nama dan k.kaki."
+    kuis:
+      - soal: "Class itu seperti..."
+        pilihan:
+          - "cetakan kue"
+          - "kue jadinya"
+          - "toko kue"
+          - "harga kue"
+        jawaban: 0
+        penjelasan: "Class adalah cetakan/template; object adalah hasil cetakannya."
+      - soal: "Object itu..."
+        pilihan:
+          - "cetakan"
+          - "hasil jadi dari sebuah class"
+          - "nama class"
+          - "fungsi"
+        jawaban: 1
+        penjelasan: "Object dibuat dengan memanggil class, misalnya Kue()."
+      - soal: "Untuk mengambil attribute rasa dari object kue1, kita menulis..."
+        pilihan:
+          - "kue1.rasa"
+          - "rasa.kue1"
+          - "kue1->rasa"
+          - "kue1(rasa)"
+        jawaban: 0
+        penjelasan: "Attribute diambil dengan format object.attribute, yaitu kue1.rasa."
+
+  - id: "11-2"
+    judul: "__init__: Resep Awal"
+    menit: 8
+    materi: |
+      Cetakan kue polos itu membosankan — kamu ingin tiap kue beda
+      rasa! Di sinilah **__init__** (dibaca: inisialisasi) berperan.
+      Dia adalah **resep awal** yang dijalankan otomatis setiap
+      object dibuat.
+
+      ```python
+      class Kue:
+          def __init__(self, rasa, topping):
+              self.rasa = rasa
+              self.topping = topping
+
+      kue1 = Kue('cokelat', 'keju')
+      kue2 = Kue('vanila', 'cokelat chip')
+      ```
+
+      Saat `Kue('cokelat', 'keju')` dipanggil, Python otomatis
+      memanggil `__init__` dengan `self` = object baru, `rasa` =
+      'cokelat', dan `topping` = 'keju'.
+
+      ## Apa itu self?
+
+      `self` adalah object itu sendiri. `self.rasa = rasa` artinya:
+      "simpan nilai rasa ke dalam object ini". Tanpa self, attribute
+      tidak akan tersimpan di object.
+
+      ## Kenapa penting?
+
+      Dengan __init__, setiap object lahir dengan data miliknya
+      sendiri. Dua kue bisa beda rasa tanpa saling mengganggu. Ini
+      fondasi dari semua program besar — game, aplikasi, sampai
+      website!
+    contoh:
+      - kode: |
+          class Kue:
+              def __init__(self, rasa, topping):
+                  self.rasa = rasa
+                  self.topping = topping
+
+          kue1 = Kue('cokelat', 'keju')
+          print(kue1.rasa, kue1.topping)
+        penjelasan: "Saat object dibuat, __init__ menyimpan rasa dan topping ke object itu."
+      - kode: |
+          class Siswa:
+              def __init__(self, nama, kelas):
+                  self.nama = nama
+                  self.kelas = kelas
+
+          s = Siswa('Budi', '7A')
+          print(s.nama, 'dari kelas', s.kelas)
+        penjelasan: "Object s punya attribute nama='Budi' dan kelas='7A'."
+    kuis:
+      - soal: "__init__ dijalankan ketika..."
+        pilihan:
+          - "kita memanggilnya secara manual"
+          - "object dibuat"
+          - "program dimulai"
+          - "class ditulis"
+        jawaban: 1
+        penjelasan: "__init__ otomatis dipanggil saat kita membuat object baru dari class."
+      - soal: "self di dalam __init__ adalah..."
+        pilihan:
+          - "nama class"
+          - "object itu sendiri"
+          - "parameter pertama pemanggil"
+          - "variabel global"
+        jawaban: 1
+        penjelasan: "self selalu menunjuk ke object yang sedang dibuat, jadi attribute tersimpan di object itu."
+      - soal: "Kalau __init__ punya parameter (self, rasa, topping), saat membuat object kita menulis..."
+        pilihan:
+          - "Kue('cokelat', 'keju')"
+          - "Kue('cokelat')"
+          - "Kue()"
+          - "Kue(self, 'cokelat')"
+        jawaban: 0
+        penjelasan: "self tidak perlu diisi — Python mengisinya sendiri. Kita cukup mengisi rasa dan topping."
+
+  - id: "11-3"
+    judul: "Method: Kemampuan Objek"
+    menit: 8
+    materi: |
+      Attribute adalah sifat object (warna, nama, tinggi). Tapi
+      object juga bisa **melakukan sesuatu** — itulah **method**:
+      fungsi yang tinggal di dalam class.
+
+      ```python
+      class Kucing:
+          def __init__(self, nama):
+              self.nama = nama
+          def bersuara(self):
+              return self.nama + ': Meong!'
+
+      k = Kucing('Milo')
+      print(k.bersuara())
+      ```
+
+      Perhatikan: method `bersuara` memakai `self` supaya bisa
+      membaca attribute `nama` dari object yang memanggilnya.
+      `k.bersuara()` akan menghasilkan "Milo: Meong!".
+
+      ## Method vs fungsi biasa
+
+      Fungsi biasa dipanggil `nama_fungsi()`. Method dipanggil
+      lewat object: `object.nama_method()`. Method tahu data siapa
+      yang sedang diproses — itu kelebihannya!
+
+      Method bisa mengubah attribute juga. Contoh: method `makan()`
+      bisa menambah energi, method `lari()` menguranginya. Object
+      jadi hidup: punya sifat dan bisa bertingkah laku, persis
+      karakter di game!
+    contoh:
+      - kode: |
+          class Kucing:
+              def __init__(self, nama):
+                  self.nama = nama
+              def bersuara(self):
+                  return self.nama + ': Meong!'
+
+          k = Kucing('Milo')
+          print(k.bersuara())
+        penjelasan: "Method bersuara() membaca attribute nama dan mengembalikan kalimat."
+      - kode: |
+          class Kalkulator:
+              def __init__(self, angka):
+                  self.angka = angka
+              def dua_kali(self):
+                  return self.angka * 2
+
+          k = Kalkulator(21)
+          print(k.dua_kali())
+        penjelasan: "Method dua_kali() menghitung 21 * 2 = 42."
+    kuis:
+      - soal: "Method adalah..."
+        pilihan:
+          - "fungsi di dalam class"
+          - "attribute di dalam class"
+          - "object baru"
+          - "modul Python"
+        jawaban: 0
+        penjelasan: "Method adalah fungsi yang didefinisikan di dalam class dan dipanggil lewat object."
+      - soal: "Method dipanggil dengan cara..."
+        pilihan:
+          - "nama_method()"
+          - "object.nama_method()"
+          - "class.nama_method"
+          - "nama_method[object]"
+        jawaban: 1
+        penjelasan: "Method selalu dipanggil lewat object-nya: k.bersuara()."
+      - soal: "Mengapa method perlu parameter self?"
+        pilihan:
+          - "agar bisa memakai attribute object itu"
+          - "agar method berjalan lebih cepat"
+          - "agar method jadi global"
+          - "self itu wajib di Python versi lama"
+        jawaban: 0
+        penjelasan: "Lewat self, method tahu attribute milik object mana yang sedang diproses."
+
+  - id: "11-4"
+    judul: "__str__: Kartu Nama Objek"
+    menit: 7
+    materi: |
+      Coba `print(kucing)` dengan object biasa — hasilnya aneh,
+      seperti `<__main__.Kucing object at 0x...>`. Python tidak tahu
+      cara menampilkan object kamu dengan cantik. Solusinya: method
+      ajaib **__str__**!
+
+      ```python
+      class Hewan:
+          def __init__(self, nama, kaki):
+              self.nama = nama
+              self.kaki = kaki
+          def __str__(self):
+              return self.nama + ' punya ' + str(self.kaki) + ' kaki'
+
+      k = Hewan('Kancil', 4)
+      print(k)  # Kancil punya 4 kaki
+      ```
+
+      Method `__str__` menentukan bagaimana object ditampilkan
+      sebagai teks. Begitu kamu mendefinisikannya, `print(object)`
+      dan `str(object)` langsung tampil rapi.
+
+      ## Kapan memakai __str__?
+
+      Setiap kali kamu ingin object tampil mudah dibaca — misalnya
+      kartu karakter game ("Level 5, HP 100") atau data siswa
+      ("Budi, 7A"). Tanpa __str__, program tetap jalan, tapi hasil
+      print-nya jelek dan susah dibaca.
+
+      __str__ itu seperti seragam sekolah: membuat semua object dari
+      satu class terlihat rapi dan sama aturannya!
+    contoh:
+      - kode: |
+          class Hewan:
+              def __init__(self, nama, kaki):
+                  self.nama = nama
+                  self.kaki = kaki
+              def __str__(self):
+                  return self.nama + ' punya ' + str(self.kaki) + ' kaki'
+
+          k = Hewan('Kancil', 4)
+          print(k)
+        penjelasan: "print(k) memanggil __str__ sehingga tampil 'Kancil punya 4 kaki'."
+      - kode: |
+          class Game:
+              def __init__(self, nama, level):
+                  self.nama = nama
+                  self.level = level
+              def __str__(self):
+                  return self.nama + ' (level ' + str(self.level) + ')'
+
+          g = Game('Kancil Petualang', 5)
+          print(g)
+        penjelasan: "Object game tampil rapi: 'Kancil Petualang (level 5)'."
+    kuis:
+      - soal: "Method __str__ berguna untuk..."
+        pilihan:
+          - "membuat object tampil rapi saat di-print"
+          - "menghapus object"
+          - "menggandakan object"
+          - "menyimpan object ke file"
+        jawaban: 0
+        penjelasan: "__str__ menentukan teks yang tampil saat object dicetak."
+      - soal: "print(k) pada object yang punya __str__ akan..."
+        pilihan:
+          - "memunculkan alamat memory"
+          - "memanggil __str__ dan menampilkan teksnya"
+          - "error"
+          - "menghapus object"
+        jawaban: 1
+        penjelasan: "print() otomatis memakai __str__ untuk menampilkan object sebagai teks."
+      - soal: "Di dalam __str__, kita wajib..."
+        pilihan:
+          - "mengembalikan (return) teks"
+          - "mencetak langsung"
+          - "memakai input()"
+          - "menutup file"
+        jawaban: 0
+        penjelasan: "__str__ harus return teks; teks itulah yang ditampilkan oleh print()."
+
+soal:
+  - id: "s11-1"
+    judul: "Buku Perpustakaan"
+    sulit: "mudah"
+    cerita: |
+      Perpustakaan sekolah baru saja menerima kiriman buku. Bu
+      Pustakawan minta bantuanmu membuat program yang
+      memperkenalkan setiap buku dengan rapi.
+
+      Buat class Buku dengan attribute judul dan penulis. Method
+      info() mengembalikan teks "Buku: <judul> oleh <penulis>".
+      Baca judul lalu penulis, lalu cetak hasil info().
+    input: "Dua baris: judul buku, lalu nama penulis."
+    output: "Satu baris: Buku: <judul> oleh <penulis>."
+    contoh:
+      - input: "Si Kancil\nPak Rusa"
+        output: "Buku: Si Kancil oleh Pak Rusa"
+      - input: "Python untuk Pemula\nBu Guru"
+        output: "Buku: Python untuk Pemula oleh Bu Guru"
+    tes:
+      - input: "Si Kancil\nPak Rusa"
+        output: "Buku: Si Kancil oleh Pak Rusa"
+      - input: "Python untuk Pemula\nBu Guru"
+        output: "Buku: Python untuk Pemula oleh Bu Guru"
+      - input: "Petualangan di Pulau\nKancil"
+        output: "Buku: Petualangan di Pulau oleh Kancil"
+      - input: "Hujan\nSari"
+        output: "Buku: Hujan oleh Sari"
+      - input: "Aku dan Python\nTono"
+        output: "Buku: Aku dan Python oleh Tono"
+      - input: "Buku Besar\nUmi"
+        output: "Buku: Buku Besar oleh Umi"
+    solusi: |
+      class Buku:
+          def __init__(self, judul, penulis):
+              self.judul = judul
+              self.penulis = penulis
+
+          def info(self):
+              return 'Buku: ' + self.judul + ' oleh ' + self.penulis
+
+      j = input()
+      p = input()
+      buku = Buku(j, p)
+      print(buku.info())
+    petunjuk:
+      - "Buat class Buku dengan __init__ yang menerima judul dan penulis."
+      - "Method info() mengembalikan (return) teks, bukan mencetak langsung."
+      - "Baca dua input, buat object Buku, lalu print(buku.info())."
+
+  - id: "s11-2"
+    judul: "Persegi Panjang Ajaib"
+    sulit: "sedang"
+    cerita: |
+      Kelas 7A dapat tugas membuat taman mini. Taman itu berbentuk
+      persegi panjang, dan Bu Guru ingin tahu luasnya. Sayangnya,
+      kalkulator di kelas rusak. Bantulah dengan Python!
+
+      Buat class PersegiPanjang dengan attribute panjang dan lebar.
+      Method luas() mengembalikan hasil kali keduanya. Baca dua
+      angka lalu cetak "Luas: <hasil>".
+    input: "Dua baris: panjang, lalu lebar."
+    output: "Satu baris: Luas: <hasil kali panjang dan lebar>."
+    contoh:
+      - input: "5\n3"
+        output: "Luas: 15"
+      - input: "10\n10"
+        output: "Luas: 100"
+    tes:
+      - input: "5\n3"
+        output: "Luas: 15"
+      - input: "10\n10"
+        output: "Luas: 100"
+      - input: "7\n2"
+        output: "Luas: 14"
+      - input: "1\n1"
+        output: "Luas: 1"
+      - input: "12\n5"
+        output: "Luas: 60"
+      - input: "8\n4"
+        output: "Luas: 32"
+    solusi: |
+      class PersegiPanjang:
+          def __init__(self, panjang, lebar):
+              self.panjang = panjang
+              self.lebar = lebar
+
+          def luas(self):
+              return self.panjang * self.lebar
+
+      p = PersegiPanjang(int(input()), int(input()))
+      print('Luas:', p.luas())
+    petunjuk:
+      - "Class PersegiPanjang punya dua attribute: panjang dan lebar."
+      - "Method luas() mengembalikan self.panjang * self.lebar."
+      - "Ubah input menjadi int langsung saat membuat object."
+
+  - id: "s11-3"
+    judul: "Hasil Ujian 7A"
+    sulit: "sulit"
+    cerita: |
+      Nilai ulangan 7A sudah keluar! Bu Guru ingin mencetak daftar
+      siapa yang lulus (nilai 70 ke atas) dan siapa yang belum.
+      Membuatnya satu per satu capek — untung ada kamu dan Python!
+
+      Buat class Siswa dengan attribute nama dan nilai. Method
+      status() mengembalikan "Lulus" atau "Tidak Lulus". Baca
+      jumlah siswa n, lalu n baris berisi nama dan nilai. Cetak
+      "nama: status" untuk setiap siswa.
+    input: "Baris pertama: n. Lalu n baris: nama spasi nilai."
+    output: "n baris: <nama>: <Lulus/Tidak Lulus>."
+    contoh:
+      - input: "2\nBudi 85\nSari 60"
+        output: "Budi: Lulus\nSari: Tidak Lulus"
+      - input: "3\nAyu 70\nDedi 69\nRina 100"
+        output: "Ayu: Lulus\nDedi: Tidak Lulus\nRina: Lulus"
+    tes:
+      - input: "2\nBudi 85\nSari 60"
+        output: "Budi: Lulus\nSari: Tidak Lulus"
+      - input: "3\nAyu 70\nDedi 69\nRina 100"
+        output: "Ayu: Lulus\nDedi: Tidak Lulus\nRina: Lulus"
+      - input: "1\nKancil 50"
+        output: "Kancil: Tidak Lulus"
+      - input: "2\nTono 100\nUmi 0"
+        output: "Tono: Lulus\nUmi: Tidak Lulus"
+      - input: "4\nA 80\nB 70\nC 71\nD 69"
+        output: "A: Lulus\nB: Lulus\nC: Lulus\nD: Tidak Lulus"
+      - input: "2\nMina 69\nNina 70"
+        output: "Mina: Tidak Lulus\nNina: Lulus"
+    solusi: |
+      class Siswa:
+          def __init__(self, nama, nilai):
+              self.nama = nama
+              self.nilai = nilai
+
+          def status(self):
+              if self.nilai >= 70:
+                  return 'Lulus'
+              return 'Tidak Lulus'
+
+      n = int(input())
+      for i in range(n):
+          data = input().split()
+          s = Siswa(data[0], int(data[1]))
+          print(s.nama + ': ' + s.status())
+    petunjuk:
+      - "Pakai .split() untuk memisahkan nama dan nilai dalam satu baris input."
+      - "Nilai yang dibaca dari input masih teks — ubah dengan int() dulu."
+      - "Method status() memakai if untuk memutuskan Lulus atau Tidak Lulus."

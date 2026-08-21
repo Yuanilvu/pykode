@@ -89,13 +89,29 @@ def stats():
 
 
 def render_markdown(md: str) -> str:
-    """Markdown mini (cukup untuk materi pelajaran): heading, bold, inline code, list, paragraf."""
+    """Markdown mini (cukup untuk materi pelajaran): heading, bold, inline code,
+    list, paragraf, dan fenced code block ```...```."""
     md = (md or "").strip()
     lines = md.split("\n")
     out = []
     in_list = False
+    in_code = False
     for line in lines:
         stripped = line.strip()
+        if stripped.startswith("```"):
+            if in_list:
+                out.append("</ul>")
+                in_list = False
+            if in_code:
+                out.append("</code></pre>")
+                in_code = False
+            else:
+                out.append("<pre class='block-code'><code>")
+                in_code = True
+            continue
+        if in_code:
+            out.append(_esc(line))
+            continue
         if not stripped:
             if in_list:
                 out.append("</ul>")
@@ -128,11 +144,17 @@ def render_markdown(md: str) -> str:
             out.append(f"<p>{_inline(stripped)}</p>")
     if in_list:
         out.append("</ul>")
+    if in_code:
+        out.append("</code></pre>")
     return "\n".join(out)
 
 
+def _esc(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
 def _inline(s: str) -> str:
-    s = s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    s = _esc(s)
     # `kode`
     s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
     # **tebal**
