@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Drill — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">
+  <div>
+    <h1>🧠 Drill Logika</h1>
+    <p>Latihan kecil buat melatih otak coding-mu! Sudah {{ n_done }}/{{ drills|length }} drill selesai.</p>
+  </div>
+  <div style="font-size:2.6rem">⚡</div>
+</div>
+
+<div class="drill-grid" style="display:grid;gap:12px">
+  {% for d in drills %}
+  <a class="card drill-card {% if d.done %}done{% endif %}" href="{{ url_for('drill', drill_id=d.data.id) }}" style="text-decoration:none;color:inherit">
+    <span class="d-emoji">{{ d.data.emoji or '🧩' }}</span>
+    <div class="d-info">
+      <div class="d-title">{{ d.data.judul }}</div>
+      <div class="d-meta">{{ d.data.tema }} · {{ d.data.tes|length }} test case · +40 XP</div>
+    </div>
+    <span class="btn btn-sm {% if d.done %}btn-outline{% else %}btn-primary{% endif %}" style="pointer-events:none">{% if d.done %}Ulangi 🔁{% else %}Main ▶{% endif %}</span>
+  </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

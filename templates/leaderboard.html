@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Papan Skor — PyKode{% endblock %}
+{% block content %}
+<div class="section-title">🏆 Papan Skor</div>
+<div class="card">
+  <table class="lb-table">
+    <tr><th>#</th><th>Pengguna</th><th>Pangkat</th><th>XP</th><th>Streak</th></tr>
+    {% for r in rows %}
+    <tr {% if r.username == g_user.username %}class="me"{% endif %}>
+      <td><span class="medal">{{ r.rank_emoji }}</span></td>
+      <td>{{ r.username }}{% if r.username == g_user.username %} (kamu){% endif %}</td>
+      <td>{{ r.rank[1] }} {{ r.rank[0] }}</td>
+      <td>⭐ {{ r.xp }}</td>
+      <td>🔥 {{ r.streak }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

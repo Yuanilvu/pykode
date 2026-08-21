@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}PyKode — Belajar Python{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='vendor/codemirror/codemirror.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐍</text></svg>">
+</head>
+<body>
+<nav class="topnav">
+  <a class="logo" href="{{ url_for('index') }}">🐍 PyKode</a>
+  <div class="navlinks">
+    <a href="{{ url_for('index') }}">Belajar</a>
+    <a href="{{ url_for('drills') }}">Drill 🧠</a>
+    <a href="{{ url_for('leaderboard') }}">Papan Skor</a>
+  </div>
+  {% if g_user %}
+  <div class="navuser">
+    <span class="pill pill-xp" title="XP">⭐ {{ g_user.xp }}</span>
+    <span class="pill pill-streak" title="Streak hari">🔥 {{ g_user.streak }}</span>
+    <span class="pill pill-user">{{ rank_emoji }} {{ g_user.username }}</span>
+    <a class="logout" href="{{ url_for('logout') }}">Keluar</a>
+  </div>
+  {% endif %}
+</nav>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="flash flash-{{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<div id="toast" class="toast"></div>
+<script src="{{ url_for('static', filename='vendor/codemirror/codemirror.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/codemirror/python.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

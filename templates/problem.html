@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}{{ soal.judul }} — PyKode{% endblock %}
+{% block content %}
+
+<div class="breadcrumb">
+  <a href="{{ url_for('index') }}">🏠 Beranda</a> › Bab {{ bab.bab }}: {{ bab.judul }}
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+    <h1 class="lesson-title" style="margin:0">{{ soal.judul }}</h1>
+    <span class="diff-tag diff-{{ soal.sulit }}">{{ soal.sulit|capitalize }}</span>
+    {% if state.solved %}<span style="color:var(--success);font-weight:800">✅ Sudah diselesaikan (+{{ {'mudah':50,'sedang':100,'sulit':150}[soal.sulit] }} XP)</span>{% endif %}
+  </div>
+
+  <div class="soal-cerita">{{ render_markdown(soal.cerita) | safe }}</div>
+
+  {% if soal.spesifikasi %}
+  <div class="io-box"><div class="io-label">📋 Spesifikasi</div><pre>{{ soal.spesifikasi }}</pre></div>
+  {% endif %}
+
+  {% for c in soal.contoh %}
+  <div class="io-box">
+    <div class="io-label">Contoh {{ loop.index }}</div>
+    <pre><strong>Input:</strong>
+{{ c.input }}
+<strong>Output:</strong>
+{{ c.output }}</pre>
+  </div>
+  {% endfor %}
+
+  {% if soal.petunjuk %}
+  <button class="btn btn-ghost btn-sm" id="btn-hint">💡 Lihat Petunjuk</button>
+  <div class="hint-box" id="hint-box">
+    {% for h in soal.petunjuk %}<div>• {{ h }}</div>{% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <div class="editor-wrap short">
+    <div class="editor-head"><span>🐍 Python</span><span>Python 3</span></div>
+    <textarea id="code-editor" class="cm-editor">{{ soal.starter if soal.starter else "# Tulis kode kamu di sini 👇" }}</textarea>
+  </div>
+
+  <div style="margin-top:10px">
+    <label class="inline-label" for="stdin-input">Input untuk uji coba (opsional):</label>
+    <textarea id="stdin-input" class="stdin" placeholder="Ketik input di sini (satu nilai per baris)"></textarea>
+  </div>
+
+  <div class="editor-foot">
+    <button class="btn btn-outline" id="btn-run">▶ Jalankan</button>
+    <button class="btn btn-success" id="btn-submit">✅ Kirim Jawaban</button>
+    <span class="spacer"></span>
+    <span id="run-info" style="color:var(--muted);font-size:.85rem"></span>
+  </div>
+
+  <div id="run-output"></div>
+  <div id="submit-results"></div>
+</div>
+
+<div class="lesson-nav">
+  {% if prev_p %}
+  <a class="btn btn-outline btn-sm" href="{{ url_for('problem', problem_id=prev_p.id) }}">← {{ prev_p.judul }}</a>
+  {% else %}
+  <span></span>
+  {% endif %}
+  {% if next_p %}
+  <a class="btn btn-outline btn-sm" href="{{ url_for('problem', problem_id=next_p.id) }}">{{ next_p.judul }} →</a>
+  {% endif %}
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var problemId = {{ soal.id | tojson }};
+  var editor = initEditor(document.getElementById('code-editor'));
+  var btnRun = document.getElementById('btn-run');
+  var btnSubmit = document.getElementById('btn-submit');
+  var outBox = document.getElementById('run-output');
+  var resBox = document.getElementById('submit-results');
+
+  function getCode() { return editor.getValue(); }
+  function getStdin() { return document.getElementById('stdin-input').value; }
+
+  btnRun.addEventListener('click', function () {
+    outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
+    btnRun.disabled = true;
+    fetch('/api/run', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({code: getCode(), stdin: getStdin()})
+    }).then(r => r.json()).then(d => {
+      btnRun.disabled = false;
+      if (d.status === 'ok') {
+        outBox.innerHTML = '<div class="output-box ok">' + esc(d.stdout || '(tidak ada output)') + '</div>';
+        maybeFirstRun();
+      } else if (d.status === 'timeout') {
+        outBox.innerHTML = '<div class="output-box err">' + esc(d.stderr) + '</div>';
+      } else {
+        outBox.innerHTML = '<div class="output-box err">' + esc(d.stderr || 'Error') + '</div>';
+      }
+      document.getElementById('run-info').textContent = '⏱ ' + d.time_ms + ' ms';
+    }).catch(() => { btnRun.disabled = false; outBox.innerHTML = '<div class="output-box err">Gagal terhubung ke server.</div>'; });
+  });
+
+  btnSubmit.addEventListener('click', function () {
+    resBox.innerHTML = '<div class="output-box">⏳ Menguji jawaban...</div>';
+    btnSubmit.disabled = true; btnRun.disabled = true;
+    fetch('/api/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({problem_id: problemId, code: getCode()})
+    }).then(r => r.json()).then(d => {
+      btnSubmit.disabled = false; btnRun.disabled = false;
+      renderResults(d);
+    }).catch(() => {
+      btnSubmit.disabled = false; btnRun.disabled = false;
+      resBox.innerHTML = '<div class="output-box err">Gagal terhubung ke server.</div>';
+    });
+  });
+
+  function renderResults(d) {
+    var html = '';
+    if (d.verdict === 'AC') {
+      html += '<div class="verdict-banner verdict-AC">🎉 BENAR SEMUA! ' + d.passed + '/' + d.total + ' test case lolos' +
+              (d.xp_added ? ' — +' + d.xp_added + ' XP!' : '') + '</div>';
+      confetti();
+      if (d.new_badges && d.new_badges.length) {
+        d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
+      }
+    } else {
+      html += '<div class="verdict-banner verdict-WA">😅 Belum benar — ' + d.passed + '/' + d.total + ' test case lolos. Cek lagi, kamu pasti bisa!</div>';
+    }
+    html += '<div class="results">';
+    d.results.forEach(function (r) {
+      if (r.status === 'benar') {
+        html += '<div class="result-row pass"><span class="tag">✅ Test case</span><pre>(output cocok)</pre></div>';
+      } else if (r.status === 'salah') {
+        html += '<div class="result-row fail"><span class="tag">❌ Output salah</span><pre><strong>Input:</strong> ' + esc(r.input) + '\n<strong>Diharapkan:</strong> ' + esc(r.expected) + '\n<strong>Kode kamu:</strong> ' + esc(r.got) + '</pre></div>';
+      } else {
+        html += '<div class="result-row fail"><span class="tag">⚠️ ' + esc(r.status) + '</span><pre>' + esc(r.stderr || '') + '</pre></div>';
+      }
+    });
+    html += '</div>';
+    resBox.innerHTML = html;
+    resBox.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  }
+})();
+</script>
+{% endblock %}

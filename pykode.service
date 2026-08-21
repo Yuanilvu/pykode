@@ -1,0 +1,15 @@
+[Unit]
+Description=PyKode — Belajar Python untuk anak SMP
+After=network.target
+
+[Service]
+Type=simple
+User=yuan
+WorkingDirectory=/home/yuan/pykode
+EnvironmentFile=/home/yuan/pykode/.env
+ExecStart=/home/yuan/pykode/.venv/bin/gunicorn -w 2 -b 0.0.0.0:8000 "app:app" --timeout 30
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

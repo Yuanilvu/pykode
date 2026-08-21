@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}{{ lesson.judul }} — PyKode{% endblock %}
+{% block content %}
+
+<div class="breadcrumb">
+  <a href="{{ url_for('index') }}">🏠 Beranda</a> › Bab {{ bab.bab }}: {{ bab.judul }}
+</div>
+
+<div class="card">
+  <div class="lesson-head">
+    <h1 class="lesson-title">{{ bab.emoji }} {{ lesson.judul }}</h1>
+    <div class="lesson-meta">⏱️ ±{{ lesson.menit }} menit
+      {% if done %} · <span style="color:var(--success);font-weight:700">✅ Selesai (+30 XP)</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="materi">{{ render_markdown(lesson.materi) | safe }}</div>
+
+  {% if lesson.contoh %}
+  <h3>🧪 Coba Langsung!</h3>
+  {% for c in lesson.contoh %}
+  <div class="example-box">
+    <pre><code>{{ c.kode }}</code></pre>
+    <div class="ex-foot">
+      <button class="btn btn-primary btn-sm run-example" data-code="{{ c.kode | e }}">▶ Jalankan</button>
+      {% if c.penjelasan %}<span class="ex-explain">{{ c.penjelasan }}</span>{% endif %}
+    </div>
+    <pre class="example-out"></pre>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% if lesson.kuis %}
+  <h3>📝 Cek Pemahaman</h3>
+  {% for q in lesson.kuis %}
+  {% set q_idx = loop.index0 %}
+  <div class="quiz-item" data-lesson="{{ lesson.id }}" data-q="{{ q_idx }}">
+    <div class="quiz-q">{{ loop.index }}. {{ q.soal }}</div>
+    <div class="quiz-opts">
+      {% for p in q.pilihan %}
+      <label class="quiz-opt">
+        <input type="radio" name="q{{ q_idx }}" value="{{ loop.index0 }}">
+        <span>{{ p }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    {% if done %}
+    <button class="btn btn-success" disabled>✅ Pelajaran selesai</button>
+    {% else %}
+    <button class="btn btn-success" id="btn-lesson-done">✅ Tandai Selesai (+30 XP)</button>
+    {% endif %}
+    {% if next_problem %}
+    <a class="btn btn-primary" href="{{ url_for('problem', problem_id=next_problem.id) }}">Lanjut ke Soal: {{ next_problem.judul }} →</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="lesson-nav">
+  {% if prev_l %}
+  <a class="btn btn-outline btn-sm" href="{{ url_for('lesson', lesson_id=prev_l.id) }}">← {{ prev_l.judul }}</a>
+  {% else %}
+  <span></span>
+  {% endif %}
+  {% if next_l %}
+  <a class="btn btn-outline btn-sm" href="{{ url_for('lesson', lesson_id=next_l.id) }}">{{ next_l.judul }} →</a>
+  {% endif %}
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var lessonId = {{ lesson.id | tojson }};
+  document.getElementById('btn-lesson-done')?.addEventListener('click', function () {
+    var btn = this;
+    btn.disabled = true;
+    fetch('/api/lesson-done', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({lesson_id: lessonId})
+    }).then(r => r.json()).then(d => {
+      btn.textContent = '✅ Pelajaran selesai';
+      toast('Pelajaran selesai! +' + d.xp_added + ' XP 🎉', 'good');
+      if (d.new_badges && d.new_badges.length) {
+        d.new_badges.forEach(b => setTimeout(() => confetti(), 500));
+        d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
+      }
+      location.reload();
+    }).catch(() => { btn.disabled = false; toast('Gagal menyimpan. Coba lagi.', 'bad'); });
+  });
+})();
+</script>
+{% endblock %}

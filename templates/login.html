@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Masuk — PyKode{% endblock %}
+{% block content %}
+<div class="card auth-card">
+  <h1>🐍 PyKode</h1>
+  <p style="text-align:center;color:var(--muted)">Belajar Python dari nol — seru, ada XP & badge!</p>
+  <form method="POST">
+    <div class="form-field">
+      <label>Nama pengguna</label>
+      <input type="text" name="username" required autofocus placeholder="mis. adekku123">
+    </div>
+    <div class="form-field">
+      <label>Kata sandi</label>
+      <input type="password" name="password" required placeholder="••••••">
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Masuk 🚀</button>
+  </form>
+  <p style="text-align:center;margin-top:14px;font-size:.9rem">
+    Belum punya akun? <a href="{{ url_for('register') }}">Buat akun dulu</a>
+  </p>
+</div>
+{% endblock %}

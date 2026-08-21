@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}PyKode — Belajar Python{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>Halo, {{ g_user.username }}! 👋</h1>
+    <p>Pilih bab, baca materi, selesaikan soal, kumpulkan XP!</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big">{{ rank_emoji }}</div>
+    <div><strong>{{ rank_name }}</strong></div>
+  </div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-box"><span class="num">⭐ {{ g_user.xp }}</span><span class="lbl">XP</span></div>
+  <div class="stat-box"><span class="num">🔥 {{ g_user.streak }}</span><span class="lbl">Streak</span></div>
+  <div class="stat-box"><span class="num">📖 {{ stats.pelajaran }}</span><span class="lbl">Pelajaran</span></div>
+  <div class="stat-box"><span class="num">🎯 {{ stats.soal }}</span><span class="lbl">Soal</span></div>
+  <div class="stat-box"><span class="num">🧠 {{ stats.drill }}</span><span class="lbl">Drill</span></div>
+  <div class="stat-box"><span class="num">🏅 {{ n_bab_done }}/{{ stats.babs }}</span><span class="lbl">Bab selesai</span></div>
+</div>
+
+{% if streak_bonus > 0 %}
+<div class="flash flash-success">🔥 Bonus streak {{ streak_bonus }} XP! Lanjutkan semangatnya!</div>
+{% endif %}
+
+<div class="section-title">📚 Pilih Bab</div>
+<div class="bab-grid">
+  {% for b in babs %}
+  <a class="bab-card {% if b.complete %}bab-done{% endif %}" href="{{ url_for('lesson', lesson_id=babs[loop.index0].pelajaran[0].id) if babs[loop.index0].pelajaran else '#' }}">
+    <div class="bab-head">
+      <span class="bab-emoji">{{ b.emoji }}</span>
+      <div>
+        <div class="bab-title">Bab {{ b.bab }}: {{ b.judul }}</div>
+        <div class="bab-sub">{{ b.deskripsi }}</div>
+      </div>
+    </div>
+    <div class="bab-meta">
+      <span>{{ b.n_lessons }} pelajaran · {{ b.n_problems }} soal</span>
+      <span>{{ b.done }}/{{ b.total }}</span>
+    </div>
+    <div class="progress"><i style="width:{{ b.pct }}%; background:{{ b.warna }}"></i></div>
+  </a>
+  {% endfor %}
+</div>
+
+<div class="section-title">🏆 Papan Skor Top 5</div>
+<div class="card">
+  <table class="lb-table">
+    <tr><th>#</th><th>Pengguna</th><th>XP</th><th>Streak</th></tr>
+    {% for r in top %}
+    <tr {% if r.username == g_user.username %}class="me"{% endif %}>
+      <td>{{ ['🥇','🥈','🥉'][loop.index0] if loop.index0 < 3 else loop.index0 + 1 }}</td>
+      <td>{{ r.username }}</td>
+      <td>⭐ {{ r.xp }}</td>
+      <td>🔥 {{ r.streak }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <p style="margin:10px 0 0; text-align:right"><a href="{{ url_for('leaderboard') }}">Lihat semua →</a></p>
+</div>
+
+<div class="section-title">🎖️ Badge Kamu ({{ badges|length }})</div>
+<div class="badge-grid">
+  {% for bid, b in badges.items() %}
+  <div class="badge-item" title="{{ b.desc }}">
+    <span class="b-emoji">{{ b.emoji }}</span>
+    <span class="b-name">{{ b.nama }}</span>
+    <span class="b-desc">{{ b.desc }}</span>
+  </div>
+  {% endfor %}
+  {% if not badges %}
+  <p class="flash flash-info">Belum ada badge. Selesaikan pelajaran & soal pertamamu untuk dapat badge! 🦁</p>
+  {% endif %}
+</div>
+
+{% endblock %}

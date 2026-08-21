@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Daftar — PyKode{% endblock %}
+{% block content %}
+<div class="card auth-card">
+  <h1>🐍 Buat Akun</h1>
+  <p style="text-align:center;color:var(--muted)">Ajak kakak/adikmu belajar bareng — tiap orang punya progres sendiri!</p>
+  <form method="POST">
+    <div class="form-field">
+      <label>Nama pengguna (3-20 huruf)</label>
+      <input type="text" name="username" required autofocus placeholder="mis. adekku123">
+    </div>
+    <div class="form-field">
+      <label>Kata sandi (min. 4 karakter)</label>
+      <input type="password" name="password" required placeholder="••••••">
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Daftar 🎉</button>
+  </form>
+  <p style="text-align:center;margin-top:14px;font-size:.9rem">
+    Sudah punya akun? <a href="{{ url_for('login') }}">Masuk</a>
+  </p>
+</div>
+{% endblock %}

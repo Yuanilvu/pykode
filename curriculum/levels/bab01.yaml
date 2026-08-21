@@ -1,0 +1,245 @@
+bab: 1
+judul: "Kenalan dengan Python"
+emoji: "🐍"
+warna: "#6366f1"
+deskripsi: "Program pertamamu: print, komentar, dan error pertama."
+
+pelajaran:
+  - id: "1-1"
+    judul: "Halo, Dunia!"
+    menit: 5
+    materi: |
+      Python itu bahasa yang dipakai buat bikin game, website, sampai robot!
+      Kabar baiknya: Python gampang dibaca — hampir kayak bahasa Inggris biasa.
+
+      Program pertama semua orang di dunia biasanya mencetak tulisan **Halo, Dunia!**.
+      Di Python, kita pakai perintah `print()` untuk menampilkan teks ke layar.
+
+      ## Cara kerja print
+
+      `print()` itu kayak speaker: apa pun yang kamu kasih ke dalam kurungnya,
+      akan "dibacakan" ke layar. Teks ditulis di dalam tanda kutip `'...'`.
+
+      Coba pencet tombol **▶ Jalankan** di bawah ini!
+    contoh:
+      - kode: |
+          print('Halo, Dunia!')
+        penjelasan: "print() menampilkan teks. Tanda kutip menandakan itu teks, bukan perintah."
+      - kode: |
+          print('Aku belajar Python!')
+        penjelasan: "Ganti isinya dengan kalimatmu sendiri, lalu jalankan lagi!"
+    kuis:
+      - soal: "Perintah apa yang dipakai untuk menampilkan teks di layar?"
+        pilihan:
+          - "input()"
+          - "print()"
+          - "output()"
+          - "text()"
+        jawaban: 1
+        penjelasan: "print() menampilkan teks ke layar. input() justru dipakai untuk membaca ketikan user."
+      - soal: "Teks di dalam print() harus dibungkus dengan..."
+        pilihan:
+          - "tanda kurung siku []"
+          - "tanda kutip ''"
+          - "titik koma ;"
+          - "tanda pagar #"
+        jawaban: 1
+        penjelasan: "Tanda kutip menandakan itu teks (string). Kalau lupa, Python bingung membedakan teks dan perintah."
+      - soal: "Apa output dari perintah print(3 + 4)?"
+        pilihan:
+          - "34"
+          - "7"
+          - "3 + 4"
+          - "Error"
+        jawaban: 1
+        penjelasan: "Python menghitung dulu 3 + 4 = 7, baru mencetak hasilnya. Itu bedanya dengan teks!"
+
+  - id: "1-2"
+    judul: "Python Si Penerjemah"
+    menit: 7
+    materi: |
+      Python itu seperti penerjemah yang setia: dia membaca kode kamu **baris demi baris,
+      dari atas ke bawah**, lalu menjalankannya satu per satu.
+
+      ## Error itu wajar!
+
+      Kalau kamu salah menulis, Python nggak diam — dia akan protes dengan **pesan error**.
+      Jangan takut! Pesan error itu justru temanmu: dia memberi tahu baris mana yang salah
+      dan kenapa. Semua programmer (termasuk yang jago) pernah lihat error setiap hari.
+
+      Yang sering salah di awal: lupa menutup tanda kutip. Coba lihat contoh kedua
+      di bawah — jalankan dan baca pesan errornya!
+    contoh:
+      - kode: |
+          print('Baris satu')
+          print('Baris dua')
+        penjelasan: "Python menjalankan baris demi baris, dari atas ke bawah."
+      - kode: |
+          print('Tanda kutip harus sepasang!)
+        penjelasan: "Ini sengaja error: tanda kutip tidak ditutup. Jalankan dan baca pesannya!"
+        error: true
+    kuis:
+      - soal: "Python menjalankan kode..."
+        pilihan:
+          - "dari bawah ke atas"
+          - "secara acak"
+          - "dari atas ke bawah, baris demi baris"
+          - "semua baris sekaligus"
+        jawaban: 2
+        penjelasan: "Python membaca dan menjalankan kode baris demi baris dari atas ke bawah."
+      - soal: "Kalau kode kamu ada kesalahan penulisan, Python akan..."
+        pilihan:
+          - "diam saja"
+          - "tetap jalan dengan benar"
+          - "menampilkan pesan error"
+          - "menghapus kode kamu"
+        jawaban: 2
+        penjelasan: "Python menampilkan pesan error yang memberi tahu di baris mana masalahnya."
+      - soal: "Pesan error itu sebenarnya..."
+        pilihan:
+          - "musuh yang harus dihindari"
+          - "teman yang memberi tahu kesalahanmu"
+          - "hukuman karena bodoh"
+          - "tidak ada gunanya"
+        jawaban: 1
+        penjelasan: "Pesan error membantu kita menemukan dan memperbaiki kesalahan. Itu bagian normal dari coding!"
+
+  - id: "1-3"
+    judul: "Komentar: Catatan Kecil"
+    menit: 5
+    materi: |
+      Kadang kamu ingin menulis catatan di kode — misalnya "ini buat apa" — tanpa
+      membuat Python menjalankannya. Caranya? Pakai **komentar**: tanda pagar `#`.
+
+      Semua yang ada di belakang `#` akan **diabaikan** Python. Komentar itu untuk
+      manusia yang membaca kode (termasuk kamu yang beberapa bulan lagi!).
+
+      ## Aturan main komentar
+
+      - `#` di awal baris = seluruh baris jadi komentar
+      - `#` di belakang kode = hanya bagian belakang yang jadi komentar
+      - Komentar bisa berisi apa saja: penjelasan, pengingat, sampai curhat 😄
+    contoh:
+      - kode: |
+          # Ini komentar — Python mengabaikannya
+          print('Kode ini tetap jalan!')
+        penjelasan: "Baris komentar tidak dijalankan, tapi baris print tetap jalan."
+      - kode: |
+          print('Pertama')  # komentar bisa di belakang kode
+          print('Kedua')
+        penjelasan: "Kata setelah # tidak ikut tercetak. Coba lihat outputnya."
+    kuis:
+      - soal: "Tanda apa yang dipakai untuk membuat komentar di Python?"
+        pilihan:
+          - "//"
+          - "#"
+          - "/*"
+          - "<!--"
+        jawaban: 1
+        penjelasan: "Python memakai tanda pagar # untuk komentar."
+      - soal: "Apa yang dilakukan Python terhadap komentar?"
+        pilihan:
+          - "dijalankan seperti kode biasa"
+          - "diabaikan"
+          - "dihapus otomatis dari file"
+          - "diubah jadi teks"
+        jawaban: 1
+        penjelasan: "Komentar hanya untuk manusia; Python melewatinya begitu saja."
+      - soal: "Dari kode di bawah, apa outputnya?\n\nprint('# Halo')"
+        pilihan:
+          - "'# Halo' tercetak apa adanya"
+          - "Python error"
+          - "Halo tercetak tanpa tanda pagar"
+          - "tidak ada output"
+        jawaban: 0
+        penjelasan: "Di dalam tanda kutip, # hanyalah teks biasa. Komentar hanya berlaku di luar tanda kutip."
+
+soal:
+  - id: "s1-1"
+    judul: "Sapaan Pertama"
+    sulit: "mudah"
+    cerita: |
+      Si Kancil baru pertama kali belajar Python dan sangat semangat!
+      Bantuin dia mencetak salam pembuka persis seperti ini:
+
+      **Halo Python!**
+
+      Cetak tulisan itu persis: huruf besar di awal, tanda seru di akhir.
+    input: "Tidak ada input."
+    output: "Satu baris: Halo Python!"
+    contoh:
+      - input: ""
+        output: "Halo Python!"
+    tes:
+      - input: ""
+        output: "Halo Python!"
+      - input: ""
+        output: "Halo Python!"
+    solusi: |
+      print('Halo Python!')
+    petunjuk:
+      - "Gunakan perintah print()."
+      - "Tulis teks di dalam tanda kutip."
+      - "Perhatikan huruf besar H dan P, serta tanda seru di akhir."
+
+  - id: "s1-2"
+    judul: "Tiga Baris Poster"
+    sulit: "mudah"
+    cerita: |
+      Bu Guru menyuruh kelas membuat poster tiga baris tentang Python.
+      Setiap kalimat harus di barisnya sendiri, persis seperti ini:
+
+      Baris pertama
+      Baris kedua
+      Baris ketiga
+
+      Cetak ketiga baris itu urut dari atas.
+    input: "Tidak ada input."
+    output: "Tiga baris, urut: Baris pertama, Baris kedua, Baris ketiga."
+    contoh:
+      - input: ""
+        output: "Baris pertama\nBaris kedua\nBaris ketiga"
+    tes:
+      - input: ""
+        output: "Baris pertama\nBaris kedua\nBaris ketiga"
+      - input: ""
+        output: "Baris pertama\nBaris kedua\nBaris ketiga"
+    solusi: |
+      print('Baris pertama')
+      print('Baris kedua')
+      print('Baris ketiga')
+    petunjuk:
+      - "Pakai tiga perintah print()."
+      - "Satu print() menghasilkan satu baris."
+      - "Urutkan dari 'Baris pertama' dulu."
+
+  - id: "s1-3"
+    judul: "Komentar Rahasia"
+    sulit: "sedang"
+    cerita: |
+      Si Kancil menulis catatan rahasia di kodenya: "Ini kode buat tugas sekolah".
+      Tapi catatan itu tidak boleh muncul di layar — hanya dua kalimat ini yang tercetak:
+
+      Aku suka Python
+      Python itu seru
+
+      Tulis kode yang mencetak kedua kalimat itu, dan sembunyikan catatan rahasiamu
+      di dalam komentar!
+    input: "Tidak ada input."
+    output: "Dua baris: Aku suka Python, lalu Python itu seru."
+    contoh:
+      - input: ""
+        output: "Aku suka Python\nPython itu seru"
+    tes:
+      - input: ""
+        output: "Aku suka Python\nPython itu seru"
+      - input: ""
+        output: "Aku suka Python\nPython itu seru"
+    solusi: |
+      # Catatan rahasia: ini kode buat tugas sekolah
+      print('Aku suka Python')
+      print('Python itu seru')
+    petunjuk:
+      - "Catatan rahasia ditulis setelah tanda #."
+      - "Baris komentar tidak ikut tercetak."
+      - "Dua print() untuk dua baris, urut sesuai contoh."
