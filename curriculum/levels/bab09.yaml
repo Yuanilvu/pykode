@@ -1,5 +1,5 @@
 bab: 9
-judul: "Error & Debugging"
+judul: "Error Itu Teman"
 emoji: "🛠️"
 warna: "#ef4444"
 deskripsi: "Error bukan musuh: baca pesannya, tangkap dengan try/except."
@@ -9,49 +9,52 @@ pelajaran:
     judul: "Error Itu Temanmu"
     menit: 7
     materi: |
-      Saat kamu main game dan karaktermu jatuh ke jurang, game tidak
-      langsung mati — dia kasih tahu: "Kamu jatuh!" Di Python juga
-      begitu. Kalau ada yang salah, Python berteriak lewat **pesan
-      error**. Error itu bukan hukuman, tapi petunjuk!
+      Saat kamu main game, karaktermu bisa jatuh ke jurang.
+      Game tidak langsung mati.
+      Game kasih tahu: "Kamu jatuh!"
+      Python juga begitu.
+      Kalau ada yang salah, Python berteriak lewat **pesan error**.
+      Error itu bukan hukuman.
+      Error itu petunjuk!
 
       ## Error yang paling sering muncul
 
+      Ada lima error yang sering muncul:
       - **NameError**: nama variabel belum dibuat. Contoh: `print(umur)` padahal `umur` belum pernah diisi.
-      - **TypeError**: tipe data tidak cocok, misalnya `'5' + 3`. Teks tidak bisa ditambah angka begitu saja.
-      - **ValueError**: nilainya tidak cocok, misalnya `int('abc')` — 'abc' bukan angka.
+      - **TypeError**: jenis data tidak cocok. Contoh: `'5' + 3`. Teks tidak bisa ditambah angka begitu saja.
+      - **ValueError**: nilainya tidak cocok. Contoh: `int('abc')` — 'abc' bukan angka.
       - **ZeroDivisionError**: membagi dengan nol. Di matematika pun itu dilarang!
       - **IndexError**: mengambil isi list di posisi yang tidak ada.
 
-      Setiap pesan error punya nama di baris terakhirnya. Kalau kamu
-      tahu namanya, kamu langsung tahu harus memperbaiki apa. Seperti
-      di game: kalau musuhmu bernama "Golem Batu", kamu tahu harus
-      pakai senjata apa!
+      Nama error ada di baris terakhir pesan.
+      Kalau kamu tahu namanya, kamu langsung tahu cara memperbaikinya.
+      Seperti di game: kalau musuhmu bernama "Golem Batu", kamu tahu harus pakai senjata apa!
 
       ## Trik menghafal
 
-      Error itu cuma lima: Name (nama), Type (tipe), Value (nilai),
-      Zero (bagi nol), Index (posisi). Hafalkan kelimanya, dan kamu
-      sudah jadi pembaca error tingkat dewa!
+      Error cuma lima: Name (nama), Type (jenis), Value (nilai),
+      Zero (bagi nol), Index (posisi).
+      Hafalkan kelimanya, kamu jadi pembaca error yang hebat!
     contoh:
       - kode: |
           print('Baris ini jalan')
           print(angka)  # angka belum pernah dibuat
-        penjelasan: "Jalankan dan baca pesannya: NameError muncul karena variabel angka belum dibuat."
+        penjelasan: "Jalankan, lalu baca pesannya. NameError muncul karena variabel angka belum dibuat."
         error: true
       - kode: |
           angka = 10
           print(angka * 2)
         penjelasan: "Variabel angka dibuat dulu, baru dipakai. Hasilnya 20."
     kuis:
-      - soal: "Error NameError muncul ketika..."
+      - soal: "Error NameError muncul kalau kita..."
         pilihan:
-          - "kita membagi dengan nol"
-          - "kita memakai nama variabel yang belum dibuat"
-          - "kita menulis angka di dalam teks"
-          - "kita memakai tanda kutip ganda"
+          - "membagi dengan nol"
+          - "memakai nama variabel yang belum dibuat"
+          - "menulis angka di dalam teks"
+          - "memakai tanda kutip ganda"
         jawaban: 1
         penjelasan: "NameError = nama yang dipakai belum ada. Buat dulu variabelnya!"
-      - soal: "Kode int('abc') akan memunculkan error..."
+      - soal: "Kode int('abc') akan membuat error..."
         pilihan:
           - "NameError"
           - "TypeError"
@@ -59,7 +62,7 @@ pelajaran:
           - "IndexError"
         jawaban: 2
         penjelasan: "'abc' bukan angka, jadi nilainya tidak cocok untuk diubah jadi int — itu ValueError."
-      - soal: "Error ZeroDivisionError terjadi karena..."
+      - soal: "Error ZeroDivisionError muncul karena..."
         pilihan:
           - "membagi dengan nol"
           - "menjumlahkan teks dan angka"
@@ -72,44 +75,42 @@ pelajaran:
     judul: "try/except: Jaring Pengaman"
     menit: 8
     materi: |
-      Di sirkus, pesulap yang gagal tetap aman karena ada **jaring
-      pengaman** di bawahnya. Di Python, `try/except` adalah jaring
-      pengaman untuk kode kamu.
+      Di sirkus, pemain sirkus yang gagal tetap aman.
+      Kenapa? Ada **jaring pengaman** di bawahnya.
+      Di Python, `try/except` adalah jaring pengaman untuk kode kamu.
 
       ## Cara memasang jaring
 
       ```python
       try:
           # kode yang mungkin error
-      except NamaError:
+      except NameError:
           # yang dilakukan kalau error terjadi
       ```
 
-      Python mencoba menjalankan kode di dalam `try`. Kalau muncul
-      error, program **tidak langsung mati** — dia melompat ke blok
-      `except` dan menjalankan perintah di sana. Kalau tidak ada
-      error, blok `except` dilewati begitu saja.
+      Python mencoba menjalankan kode di dalam `try`.
+      Kalau muncul error, program **tidak langsung mati**.
+      Program melompat ke blok `except` dan menjalankan cara di sana.
+      Kalau tidak ada error, blok `except` dilewati begitu saja.
 
       ## Kenapa penting?
 
-      Bayangkan program kasir di kantin. Kalau ada harga yang
-      ketikannya salah dan program langsung mati, antrean di
-      belakangmu ikut berantakan! Dengan try/except, program tetap
-      jalan dan tinggal menampilkan pesan ramah: "Maaf, data tidak
-      valid."
+      Bayangkan program kasir di kantin.
+      Kalau ada harga yang salah ketik dan program langsung mati, antrean di belakangmu ikut berantakan!
+      Dengan try/except, program tetap jalan.
+      Program tinggal mencetak pesan ramah: "Maaf, data tidak valid."
 
-      Kamu juga bisa menangkap error spesifik, seperti
-      `except ValueError:` untuk angka yang tidak valid, atau
-      `except ZeroDivisionError:` untuk pembagian nol. Menangkap
-      error yang spesifik itu seperti memakai obat yang tepat untuk
-      penyakit yang tepat.
+      Kamu juga bisa menangkap error spesifik.
+      Pakai `except ValueError:` untuk angka yang tidak valid.
+      Pakai `except ZeroDivisionError:` untuk pembagian nol.
+      Menangkap error yang spesifik itu seperti memakai obat yang tepat untuk penyakit yang tepat.
     contoh:
       - kode: |
           try:
               hasil = 10 / 0
           except ZeroDivisionError:
               print('Tidak bisa membagi dengan nol!')
-        penjelasan: "10 / 0 memicu ZeroDivisionError, tapi jaring pengaman except menangkapnya dan mencetak pesan."
+        penjelasan: "10 / 0 memicu ZeroDivisionError. Jaring pengaman except menangkapnya dan mencetak pesan."
       - kode: |
           try:
               umur = int('dua belas')
@@ -121,11 +122,11 @@ pelajaran:
       - soal: "Apa tugas blok except?"
         pilihan:
           - "menjalankan kode yang berhasil"
-          - "menangkap error dan menjalankan perintah penyelamat"
+          - "menangkap error dan menjalankan cara penyelamat"
           - "menghentikan program lebih cepat"
           - "menghapus kode yang error"
         jawaban: 1
-        penjelasan: "except menangkap error dari try lalu menjalankan perintah di dalamnya, jadi program tidak mati."
+        penjelasan: "except menangkap error dari try lalu menjalankan cara di dalamnya, jadi program tidak mati."
       - soal: "Kalau tidak ada error di dalam try, maka blok except akan..."
         pilihan:
           - "tetap dijalankan"
@@ -147,34 +148,28 @@ pelajaran:
     judul: "Membaca Pesan Error"
     menit: 6
     materi: |
-      Pesan error Python itu seperti peta harta karun: kalau kamu
-      tahu membacanya, kamu langsung tahu di mana masalahnya.
+      Pesan error Python itu seperti peta harta karun.
+      Kalau kamu tahu membacanya, kamu langsung tahu di mana masalahnya.
 
       ## Bagian-bagian pesan error
 
-      Saat error terjadi, Python menampilkan **traceback** — daftar
-      jejak baris yang dilewati sebelum error. Yang penting cuma dua
-      hal:
+      Saat error terjadi, Python menampilkan **traceback** — daftar jejak baris yang dilewati sebelum error.
+      Yang penting cuma dua hal:
+      1. **Baris terakhir**: nama error-nya (misalnya `NameError: name 'angka' is not defined`).
+      2. **Baris "File main.py, line N"**: nomor baris tempat masalah terjadi.
 
-      1. **Baris terakhir**: nama error-nya (misalnya
-         `NameError: name 'angka' is not defined`).
-      2. **Baris "File main.py, line N"**: nomor baris tempat
-         masalah terjadi.
-
-      Contoh: kalau pesannya `TypeError ... line 2`, berarti baris 2
-      yang bermasalah. Cek dulu baris itu!
+      Contoh: kalau pesannya `TypeError ... line 2`, berarti baris 2 yang bermasalah.
+      Cek dulu baris itu!
 
       ## Cara membaca pesan
 
-      Jangan baca dari atas — baca dari **bawah**! Nama error dan
-      penjelasan singkatnya selalu ada di baris terakhir. Bagian
-      atas hanya jejak langkah yang tidak terlalu penting untuk
-      pemula.
+      Jangan baca dari atas — baca dari **bawah**!
+      Nama error dan penjelasan singkatnya selalu ada di baris terakhir.
+      Bagian atas hanya jejak langkah yang tidak terlalu penting untuk pemula.
 
-      Biasakan diri membaca pesan error pelan-pelan. Semakin sering
-      kamu membaca, semakin cepat kamu paham. Programmer hebat pun
-      masih membaca pesan error setiap hari — mereka cuma makin
-      cepat mengerti maksudnya!
+      Biasakan diri membaca pesan error pelan-pelan.
+      Semakin sering kamu membaca, semakin cepat kamu paham.
+      Programmer hebat pun masih membaca pesan error setiap hari — mereka cuma makin cepat mengerti maksudnya!
     contoh:
       - kode: |
           print('Baris 1')
@@ -215,21 +210,18 @@ pelajaran:
     judul: "Debugging: Jadi Detektif"
     menit: 8
     materi: |
-      Program kamu error atau hasilnya aneh? Saatnya memakai topi
-      detektif! **Debugging** adalah proses mencari dan memperbaiki
-      bug (kesalahan) di kode. Namanya berasal dari zaman dulu: ada
-      serangga (bug) yang masuk ke komputer dan membuat program
-      rusak!
+      Program kamu error atau hasilnya aneh?
+      Saatnya memakai topi detektif!
+      **Debugging** adalah cara mencari dan memperbaiki bug (kesalahan) di kode.
+      Namanya dari zaman dulu: ada serangga (bug) yang masuk ke komputer dan membuat program rusak!
 
       ## Senjata utama detektif: print()
 
-      Cara paling mudah melihat apa yang terjadi di dalam program
-      adalah menaruh `print()` di beberapa titik. Dengan begitu kamu
-      bisa melihat isi variabel langkah demi langkah.
+      Cara paling gampang melihat apa yang terjadi di dalam program adalah menaruh `print()` di beberapa titik.
+      Dengan begitu kamu bisa melihat isi variabel langkah demi langkah.
 
       Contoh kasus: program menghitung total tapi hasilnya salah.
-      Taruh `print()` di dalam perulangan untuk melihat nilai total
-      setiap kali bertambah.
+      Taruh `print()` di dalam perulangan untuk melihat nilai total setiap kali bertambah.
 
       ## Langkah debugging
 
@@ -238,8 +230,8 @@ pelajaran:
       3. **Perbaiki** satu hal kecil.
       4. **Jalankan lagi** dan lihat apakah berubah.
 
-      Ulangi sampai benar. Detektif sejati tidak menyerah di langkah
-      pertama — dia terus menyelidiki sampai pelakunya tertangkap!
+      Ulangi sampai benar.
+      Detektif sejati tidak menyerah di langkah pertama — dia terus menyelidiki sampai pelakunya tertangkap!
     contoh:
       - kode: |
           total = 0
@@ -284,13 +276,13 @@ soal:
     judul: "Kalkulator Aman"
     sulit: "mudah"
     cerita: |
-      Si Kancil jualan keripik di kantin. Dia ingin membuat kalkulator
-      pembagian untuk menghitung harga per bungkus. Tapi dia takut
-      ada pembeli yang mengetik angka nol — nanti programnya error!
+      Si Kancil jualan keripik di kantin.
+      Dia mau membuat kalkulator pembagian untuk menghitung harga per bungkus.
+      Tapi dia takut ada pembeli yang mengetik angka nol — nanti programnya error!
 
-      Bantu Kancil: baca dua angka. Cetak hasil baginya. Kalau angka
-      kedua nol, jangan biarkan program mati — cetak pesan "Tidak
-      bisa dibagi nol!" saja.
+      Bantu Kancil: baca dua angka.
+      Cetak hasil baginya.
+      Kalau angka kedua nol, jangan biarkan program mati — cetak pesan "Tidak bisa dibagi nol!" saja.
     input: "Dua baris: angka pertama, lalu angka kedua."
     output: "Satu baris: hasil bagi (bisa desimal), atau 'Tidak bisa dibagi nol!'."
     contoh:
@@ -328,14 +320,13 @@ soal:
     judul: "Mesin Kasir"
     sulit: "sedang"
     cerita: |
-      Bu Rina memasang mesin kasir baru di warungnya. Mesin itu
-      membaca harga barang dan uang yang dibayar, lalu menghitung
-      kembalian. Masalahnya, kadang harga barang diketik salah —
-      bukan angka — dan mesin langsung mati!
+      Bu Rina memasang mesin kasir baru di warungnya.
+      Mesin itu membaca harga barang dan uang yang dibayar, lalu menghitung kembalian.
+      Masalahnya, kadang harga barang diketik salah — bukan angka — dan mesin langsung mati!
 
-      Bantu Bu Rina: baca harga lalu uang bayar. Cetak
-      "Kembalian: ...". Kalau harga bukan angka, cetak "Harga tidak
-      valid!" dan jangan lanjutkan.
+      Bantu Bu Rina: baca harga lalu uang bayar.
+      Cetak "Kembalian: ...".
+      Kalau harga bukan angka, cetak "Harga tidak valid!" dan jangan lanjutkan.
     input: "Dua baris: harga barang, lalu uang yang dibayar."
     output: "Satu baris: 'Kembalian: <angka>' atau 'Harga tidak valid!'."
     contoh:
@@ -372,14 +363,14 @@ soal:
     judul: "Rata-Rata Kelas"
     sulit: "sulit"
     cerita: |
-      Pak Guru mengetik nilai ulangan 7A ke komputer. Ada beberapa
-      nilai yang ketikannya salah — huruf ikut masuk! Pak Guru ingin
-      menghitung rata-rata, tapi kalau ada data rusak, lebih baik
-      tahu dulu daripada hasilnya salah.
+      Pak Guru mengetik nilai ulangan 7A ke komputer.
+      Ada beberapa nilai yang ketikannya salah — huruf ikut masuk!
+      Pak Guru ingin menghitung rata-rata.
+      Tapi kalau ada data rusak, lebih baik tahu dulu daripada hasilnya salah.
 
       Baca jumlah nilai, lalu baca nilai-nilainya satu per satu.
-      Kalau ada nilai yang bukan angka, cetak "Ada data rusak!" dan
-      berhenti. Kalau semua benar, cetak rata-ratanya.
+      Kalau ada nilai yang bukan angka, cetak "Ada data rusak!" dan berhenti.
+      Kalau semua benar, cetak rata-ratanya.
     input: "Baris pertama: jumlah nilai (n). Lalu n baris berisi nilai."
     output: "Satu baris: rata-rata (bisa desimal) atau 'Ada data rusak!'."
     contoh:

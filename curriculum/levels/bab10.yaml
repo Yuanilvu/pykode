@@ -1,24 +1,25 @@
 bab: 10
-judul: "Algoritma & Logika"
+judul: "Logika dan Pola"
 emoji: "🧩"
 warna: "#f59e0b"
-deskripsi: "Nested loop, pola bintang, sorting manual, dan searching."
+deskripsi: "Loop di dalam loop, pola bintang, urutkan angka, dan cari angka."
 
 pelajaran:
   - id: "10-1"
     judul: "Lingkaran di Dalam Lingkaran"
     menit: 8
     materi: |
-      Pernah lihat jam dinding di sekolah? Jarum menit bergerak, dan
-      di dalam setiap menit, jarum detik juga bergerak. Di Python,
-      kita bisa membuat **perulangan di dalam perulangan** — namanya
-      **nested loop**.
+      Pernah lihat jam dinding di sekolah?
+      Jarum menit bergerak.
+      Di dalam setiap menit, jarum detik juga bergerak.
+      Di Python, kita bisa membuat **perulangan di dalam perulangan**.
+      Namanya **nested loop**.
 
       ## Cara kerja nested loop
 
-      Perulangan luar berjalan pelan, perulangan dalam berjalan
-      cepat. Untuk setiap satu putaran perulangan luar, perulangan
-      dalam menyelesaikan SEMUA putarannya.
+      Perulangan luar berjalan pelan.
+      Perulangan dalam berjalan cepat.
+      Untuk setiap satu putaran perulangan luar, perulangan dalam menyelesaikan SEMUA putarannya.
 
       ```python
       for baris in range(3):
@@ -28,16 +29,13 @@ pelajaran:
       ```
 
       Kode di atas mencetak persegi panjang bintang 3 baris 4 kolom.
-      `end=''` membuat print tidak pindah baris, jadi bintang-bintang
-      tetap sebaris. Lalu `print()` kosong dipakai untuk pindah ke
-      baris berikutnya.
+      `end=''` membuat print tidak pindah baris, jadi bintang-bintang tetap sebaris.
+      Lalu `print()` kosong dipakai untuk pindah ke baris berikutnya.
 
       ## Kenapa penting?
 
-      Nested loop dipakai untuk membuat pola, tabel, papan game,
-      sampai mengolah data yang berbaris-baris. Kalau kamu bisa
-      menguasai nested loop, kamu sudah bisa membuat pola apa pun —
-      segitiga, berlian, sampai papan catur bintang!
+      Nested loop dipakai untuk membuat pola, tabel, papan game, sampai mengolah data yang berbaris-baris.
+      Kalau kamu bisa menguasai nested loop, kamu sudah bisa membuat pola apa pun — segitiga, berlian, sampai papan catur bintang!
     contoh:
       - kode: |
           for baris in range(3):
@@ -68,7 +66,7 @@ pelajaran:
           - "menghapus bintang"
         jawaban: 1
         penjelasan: "end='' mengganti akhiran baris baru dengan string kosong, jadi cetakan tetap satu baris."
-      - soal: "Berapa total bintang yang dicetak jika loop luar 3 kali dan loop dalam 4 kali?"
+      - soal: "Berapa total bintang yang dicetak kalau loop luar 3 kali dan loop dalam 4 kali?"
         pilihan:
           - "7"
           - "34"
@@ -81,20 +79,18 @@ pelajaran:
     judul: "Pola Angka dan Segitiga"
     menit: 8
     materi: |
-      Bintang saja kurang seru — sekarang saatnya membuat pola dari
-      **angka** dan pola segitiga yang lebih keren!
+      Bintang saja kurang seru — sekarang saatnya membuat pola dari **angka** dan pola segitiga yang lebih keren!
 
       ## Pola angka
 
-      Kalau kamu mencetak `j` (variabel perulangan dalam), kamu bisa
-      membuat baris berisi 1 2 3. Ganti `end=''` dengan `end=' '`
-      supaya ada spasi di antara angka.
+      Kalau kamu mencetak `j` (variabel perulangan dalam), kamu bisa membuat baris berisi 1 2 3.
+      Ganti `end=''` dengan `end=' '` supaya ada spasi di antara angka.
 
       ## Segitiga dengan spasi
 
-      Pernah lihat piramida? Baris paling atas cuma satu bintang di
-      tengah, lalu makin ke bawah makin lebar. Rahasianya: cetak
-      spasi dulu, baru bintang.
+      Pernah lihat piramida?
+      Baris paling atas cuma satu bintang di tengah, lalu makin ke bawah makin lebar.
+      Rahasianya: cetak spasi dulu, baru bintang.
 
       ```python
       n = 3
@@ -107,10 +103,8 @@ pelajaran:
 
       ## Trik membaca pola
 
-      Semua pola sebenarnya cuma matematika kecil: hitung berapa
-      spasi dan berapa bintang di setiap baris, lalu ubah jadi rumus.
-      Begitu kamu bisa melihat polanya, kamu bisa membuat pola apa
-      pun — dari tangga sampai berlian!
+      Semua pola sebenarnya cuma matematika kecil: hitung berapa spasi dan berapa bintang di setiap baris, lalu ubah jadi rumus.
+      Begitu kamu bisa melihat polanya, kamu bisa membuat pola apa pun — dari tangga sampai berlian!
     contoh:
       - kode: |
           for i in range(1, 4):
@@ -153,16 +147,16 @@ pelajaran:
     judul: "Sorting Manual: Bubble Sort"
     menit: 9
     materi: |
-      Kamu punya 5 kartu angka acak dan ingin mengurutkannya dari
-      kecil ke besar. Tanpa fitur `.sort()`, bagaimana caranya?
+      Kamu punya 5 kartu angka acak dan ingin mengurutkannya dari kecil ke besar.
+      Tanpa fitur `.sort()`, bagaimana caranya?
       Jawabannya: **bubble sort** — si gelembung!
 
       ## Cara kerja bubble sort
 
-      Bayangkan gelembung udara yang naik ke permukaan air. Bubble
-      sort membandingkan dua angka bersebelahan. Kalau yang kiri
-      lebih besar dari yang kanan, mereka **bertukar tempat**. Begitu
-      terus sampai semua angka rapi.
+      Bayangkan gelembung udara yang naik ke permukaan air.
+      Bubble sort membandingkan dua angka bersebelahan.
+      Kalau yang kiri lebih besar dari yang kanan, mereka **bertukar tempat**.
+      Begitu terus sampai semua angka rapi.
 
       ```python
       angka = [5, 2, 8, 1]
@@ -175,15 +169,13 @@ pelajaran:
       ```
 
       Satu putaran penuh (dari j=0 sampai n-2) disebut satu **pass**.
-      Setiap pass, angka terbesar "menggelembung" ke posisi paling
-      belakang.
+      Setiap pass, angka terbesar "menggelembung" ke posisi paling belakang.
 
       ## Kenapa belajar sorting manual?
 
-      Fitur `.sort()` memang ada, tapi memahami cara kerja sorting
-      itu seperti mengetahui trik sulap di balik panggung. Ini
-      melatih logika kamu — dan soal ujian suka sekali
-      menyembunyikan trik ini!
+      Fitur `.sort()` memang ada.
+      Tapi memahami cara kerja sorting itu seperti mengetahui trik sulap di balik panggung.
+      Ini melatih logika kamu — dan soal ujian suka sekali menyembunyikan trik ini!
     contoh:
       - kode: |
           angka = [5, 2, 8, 1]
@@ -230,9 +222,8 @@ pelajaran:
     judul: "String Lanjutan & Searching"
     menit: 8
     materi: |
-      Teks (string) punya banyak trik yang belum kamu coba! Kali ini
-      kita belajar empat senjata andalan plus cara mencari nilai
-      secara manual.
+      Teks (string) punya banyak trik yang belum kamu coba!
+      Kali ini kita belajar empat senjata andalan plus cara mencari nilai secara manual.
 
       ## Senjata string lanjutan
 
@@ -244,10 +235,9 @@ pelajaran:
 
       ## Searching manual
 
-      Kadang kamu perlu mencari nilai terbesar atau terkecil tanpa
-      bantuan fungsi. Caranya: simpan angka pertama sebagai juara
-      sementara, lalu bandingkan dengan semua angka lain satu per
-      satu. Kalau ada yang lebih besar, dia jadi juara baru!
+      Kadang kamu perlu mencari nilai terbesar atau terkecil tanpa bantuan fungsi.
+      Caranya: simpan angka pertama sebagai juara sementara, lalu bandingkan dengan semua angka lain satu per satu.
+      Kalau ada yang lebih besar, dia jadi juara baru!
 
       ```python
       angka = [3, 9, 5]
@@ -260,10 +250,8 @@ pelajaran:
 
       ## Kenapa penting?
 
-      Metode string ini dipakai terus-menerus di dunia nyata —
-      memfilter kata di mesin pencari, membersihkan data, sampai
-      membuat chat bot. Searching manual melatih cara berpikir
-      algoritma yang menjadi dasar ilmu komputer.
+      Metode string ini dipakai terus-menerus di dunia nyata — memfilter kata di mesin pencari, membersihkan data, sampai membuat chat bot.
+      Searching manual melatih cara berpikir algoritma yang menjadi dasar ilmu komputer.
     contoh:
       - kode: |
           kalimat = 'aku suka python, python itu seru'
@@ -305,14 +293,13 @@ soal:
     judul: "Tangga Bintang"
     sulit: "mudah"
     cerita: |
-      Kancil mau pindah ke rumah baru yang bertingkat. Dia penasaran:
-      kalau rumahnya punya 3 lantai, bagaimana bentuk tangga
-      bintangnya? Bantuin dia menggambar tangga bintang dengan
-      Python!
+      Kancil mau pindah ke rumah baru yang bertingkat.
+      Dia penasaran: kalau rumahnya punya 3 lantai, bagaimana bentuk tangga bintangnya?
+      Bantuin dia menggambar tangga bintang dengan Python!
 
-      Baca satu angka n. Cetak n baris bintang: baris 1 satu bintang,
-      baris 2 dua bintang, dan seterusnya. Baris terakhir berisi n
-      bintang.
+      Baca satu angka n.
+      Cetak n baris bintang: baris 1 satu bintang, baris 2 dua bintang, dan seterusnya.
+      Baris terakhir berisi n bintang.
     input: "Satu baris: angka n."
     output: "n baris: baris ke-i berisi i bintang."
     contoh:
@@ -346,12 +333,12 @@ soal:
     judul: "Urutkan Skor Game"
     sulit: "sedang"
     cerita: |
-      Di sekolah ada turnamen game edukasi. Skor para peserta masih
-      acak dan Bu Guru minta bantuanmu mengurutkannya dari kecil ke
-      besar. Kamu tidak boleh pakai .sort() — harus manual!
+      Di sekolah ada turnamen game edukasi.
+      Skor para peserta masih acak dan Bu Guru minta bantuanmu mengurutkannya dari kecil ke besar.
+      Kamu tidak boleh pakai .sort() — harus manual!
 
-      Baca jumlah peserta n, lalu n skor. Cetak semua skor urut dari
-      terkecil ke terbesar dalam satu baris, dipisah spasi.
+      Baca jumlah peserta n, lalu n skor.
+      Cetak semua skor urut dari terkecil ke terbesar dalam satu baris, dipisah spasi.
     input: "Baris pertama: n. Lalu n baris berisi skor."
     output: "Satu baris: skor urut naik, dipisah spasi."
     contoh:
@@ -393,13 +380,13 @@ soal:
     judul: "Kata Terpanjang"
     sulit: "sulit"
     cerita: |
-      Kancil ikut lomba menulis cerita. Panitia ingin tahu kata
-      terpanjang di setiap cerita yang masuk — katanya itu tanda
-      penulis hebat! Kancil minta bantuanmu membuat detektif kata.
+      Kancil ikut lomba menulis cerita.
+      Panitia ingin tahu kata terpanjang di setiap cerita yang masuk — katanya itu tanda penulis hebat!
+      Kancil minta bantuanmu membuat detektif kata.
 
-      Baca satu kalimat. Cetak kata terpanjangnya, lalu di baris
-      berikutnya cetak "Panjang: <jumlah huruf>". Kalau ada dua kata
-      sama panjang, pilih yang muncul lebih dulu.
+      Baca satu kalimat.
+      Cetak kata terpanjangnya, lalu di baris berikutnya cetak "Panjang: <jumlah huruf>".
+      Kalau ada dua kata sama panjang, pilih yang muncul lebih dulu.
     input: "Satu baris kalimat (kata dipisah spasi)."
     output: "Baris 1: kata terpanjang. Baris 2: Panjang: <n>."
     contoh:

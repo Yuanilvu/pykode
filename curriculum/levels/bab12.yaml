@@ -2,23 +2,22 @@ bab: 12
 judul: "Python Keren"
 emoji: "⚡"
 warna: "#8b5cf6"
-deskripsi: "List comprehension, lambda, file I/O, dan string lanjutan."
+deskripsi: "List comprehension, lambda, simpan dan baca file, trik string."
 
 pelajaran:
   - id: "12-1"
     judul: "List Comprehension"
     menit: 7
     materi: |
-      Mau membuat list angka genap dari 1 sampai 10? Cara biasa:
-      buat list kosong, loop, append... tiga langkah! Dengan **list
-      comprehension**, cukup SATU baris:
+      Mau membuat list angka genap dari 1 sampai 10?
+      Cara biasa: buat list kosong, loop, append... tiga langkah!
+      Dengan **list comprehension**, cukup SATU baris:
 
       ```python
       genap = [x for x in range(1, 11) if x % 2 == 0]
       ```
 
-      Bacanya seperti kalimat: "buat list berisi x untuk setiap x
-      dari 1 sampai 10, kalau x genap".
+      Bacanya seperti kalimat: "buat list berisi x untuk setiap x dari 1 sampai 10, kalau x genap".
 
       ## Struktur list comprehension
 
@@ -28,16 +27,13 @@ pelajaran:
       - **for variabel in data**: perulangannya
       - **if syarat**: opsional, dipakai untuk menyaring
 
-      Contoh: `[x * x for x in [1, 2, 3]]` menghasilkan
-      `[1, 4, 9]`.
+      Contoh: `[x * x for x in [1, 2, 3]]` menghasilkan `[1, 4, 9]`.
 
       ## Kenapa penting?
 
-      Comprehension membuat kode lebih pendek dan mudah dibaca —
-      sekali lihat langsung paham maksudnya. Programmer profesional
-      memakainya setiap hari untuk mengolah data. Kamu tetap boleh
-      memakai cara biasa kalau lebih nyaman, tapi comprehension itu
-      senjata rahasia yang keren banget!
+      Comprehension membuat kode lebih pendek dan mudah dibaca — sekali lihat langsung paham maksudnya.
+      Programmer profesional memakainya setiap hari untuk mengolah data.
+      Kamu tetap boleh memakai cara biasa kalau lebih nyaman, tapi comprehension itu senjata rahasia yang keren banget!
     contoh:
       - kode: |
           angka = [1, 2, 3, 4]
@@ -79,22 +75,20 @@ pelajaran:
     menit: 7
     materi: |
       Ada fungsi yang cuma dipakai sekali dan isinya satu baris.
-      Membuat fungsi lengkap pakai def terasa berat? Kenalkan:
-      **lambda** — fungsi kilat sekali pakai!
+      Membuat fungsi lengkap pakai def terasa berat?
+      Kenalkan: **lambda** — fungsi kilat sekali pakai!
 
       ```python
       kali2 = lambda x: x * 2
       print(kali2(5))  # 10
       ```
 
-      Bacanya: "lambda menerima x, mengembalikan x * 2". Lambda
-      ditulis tanpa def, tanpa nama panjang, dan otomatis
-      mengembalikan hasilnya.
+      Bacanya: "lambda menerima x, mengembalikan x * 2".
+      Lambda ditulis tanpa def, tanpa nama panjang, dan otomatis mengembalikan hasilnya.
 
       ## Lambda + map
 
-      Lambda sering dipasangkan dengan `map()` — yang menerapkan
-      sebuah fungsi ke setiap anggota list:
+      Lambda sering dipasangkan dengan `map()` — yang menerapkan sebuah fungsi ke setiap anggota list:
 
       ```python
       angka = [1, 2, 3]
@@ -102,16 +96,14 @@ pelajaran:
       print(hasil)  # [2, 3, 4]
       ```
 
-      `map(lambda x: x + 1, angka)` artinya: "tambah 1 ke setiap
-      anggota angka". Kita bungkus dengan list() supaya hasilnya
-      jadi list biasa.
+      `map(lambda x: x + 1, angka)` artinya: "tambah 1 ke setiap anggota angka".
+      Kita bungkus dengan list() supaya hasilnya jadi list biasa.
 
       ## Kapan memakai lambda?
 
-      Kalau fungsinya kecil dan cuma dipakai di satu tempat. Kalau
-      fungsinya panjang atau dipakai berulang kali, tetap pakai
-      def! Lambda itu seperti pisau lipat — praktis, tapi tidak
-      untuk semua pekerjaan.
+      Kalau fungsinya kecil dan cuma dipakai di satu tempat.
+      Kalau fungsinya panjang atau dipakai berulang kali, tetap pakai def!
+      Lambda itu seperti pisau lipat — praktis, tapi tidak untuk semua pekerjaan.
     contoh:
       - kode: |
           kali2 = lambda x: x * 2
@@ -153,8 +145,7 @@ pelajaran:
     menit: 8
     materi: |
       Program yang hasilnya hilang setiap ditutup itu menyedihkan!
-      Dengan **file**, kamu bisa menyimpan data ke komputer dan
-      membacanya lagi nanti — seperti buku catatan ajaib.
+      Dengan **file**, kamu bisa menyimpan data ke komputer dan membacanya lagi nanti — seperti buku catatan ajaib.
 
       ## Menulis file
 
@@ -175,18 +166,17 @@ pelajaran:
       print(isi)
       ```
 
-      Mode 'r' = baca. `f.read()` membaca semua isi file jadi satu
-      teks. Ada juga `f.readline()` untuk satu baris, dan
-      `f.readlines()` untuk semua baris dalam bentuk list.
+      Mode 'r' = baca.
+      `f.read()` membaca semua isi file jadi satu teks.
+      Ada juga `f.readline()` untuk satu baris, dan `f.readlines()` untuk semua baris dalam bentuk list.
 
       ## Kenapa harus 'with'?
 
-      `with` menjamin file selalu ditutup, bahkan kalau terjadi
-      error. File yang lupa ditutup bisa membuat data rusak. Jadi
-      biasakan `with` sejak sekarang!
+      `with` menjamin file selalu ditutup, bahkan kalau terjadi error.
+      File yang lupa ditutup bisa membuat data rusak.
+      Jadi biasakan `with` sejak sekarang!
 
-      File I/O dipakai di mana-mana: menyimpan skor game, daftar
-      nilai siswa, sampai data jutaan pengguna di server.
+      File I/O dipakai di mana-mana: menyimpan skor game, daftar nilai siswa, sampai data jutaan pengguna di server.
     contoh:
       - kode: |
           with open('catatan.txt', 'w') as f:
@@ -232,8 +222,8 @@ pelajaran:
     judul: "Metode String Lanjutan"
     menit: 6
     materi: |
-      String masih punya trik rahasia lagi! Empat metode ini sering
-      muncul di dunia nyata:
+      String masih punya trik rahasia lagi!
+      Empat metode ini sering muncul di dunia nyata:
 
       ## Pemeriksaan isi
 
@@ -245,8 +235,7 @@ pelajaran:
       - `.title()` — huruf pertama tiap kata jadi besar ("halo dunia" → "Halo Dunia")
       - `.startswith('py')` — True kalau diawali "py" ("python" → True)
 
-      Metode pemeriksaan mengembalikan True/False — cocok dipakai
-      di dalam if atau list comprehension.
+      Metode pemeriksaan mengembalikan True/False — cocok dipakai di dalam if atau list comprehension.
 
       ```python
       teks = 'SMP 7 Jakarta'
@@ -256,11 +245,9 @@ pelajaran:
 
       ## Kenapa penting?
 
-      Program sungguhan selalu memeriksa input: apakah ini angka?
-      Apakah ini nama? Metode-metode ini menjadi penjaga pintu yang
-      memastikan data yang masuk benar. Kombinasikan dengan
-      comprehension dan kamu punya alat penyaring teks yang sangat
-      kuat!
+      Program sungguhan selalu memeriksa input: apakah ini angka? Apakah ini nama?
+      Metode-metode ini menjadi penjaga pintu yang memastikan data yang masuk benar.
+      Kombinasikan dengan comprehension dan kamu punya alat penyaring teks yang sangat kuat!
     contoh:
       - kode: |
           print('123'.isdigit())
@@ -303,12 +290,11 @@ soal:
     judul: "Bilangan Genap"
     sulit: "mudah"
     cerita: |
-      Kancil belajar tabel perkalian dan penasaran dengan bilangan
-      genap. Dia minta tolong kamu membuat daftar bilangan genap
-      dari 2 sampai n dengan sekali gebrakan list comprehension!
+      Kancil belajar tabel perkalian dan penasaran dengan bilangan genap.
+      Dia minta tolong kamu membuat daftar bilangan genap dari 2 sampai n dengan sekali gebrakan list comprehension!
 
-      Baca satu angka n. Cetak semua bilangan genap dari 2 sampai n
-      dalam satu baris, dipisah spasi.
+      Baca satu angka n.
+      Cetak semua bilangan genap dari 2 sampai n dalam satu baris, dipisah spasi.
     input: "Satu baris: angka n."
     output: "Satu baris: bilangan genap dari 2 sampai n, dipisah spasi."
     contoh:
@@ -344,13 +330,13 @@ soal:
     judul: "Detektif Digit"
     sulit: "sedang"
     cerita: |
-      Di sekolah ada lomba "Tebak Angka Tersembunyi". Setiap
-      kalimat berisi angka-angka tersembunyi di antara huruf.
-      Pemenangnya adalah yang bisa menghitung jumlah digit paling
-      cepat. Kancil butuh senjata rahasia: Python!
+      Di sekolah ada lomba "Tebak Angka Tersembunyi".
+      Setiap kalimat berisi angka-angka tersembunyi di antara huruf.
+      Pemenangnya adalah yang bisa menghitung jumlah digit paling cepat.
+      Kancil butuh senjata rahasia: Python!
 
-      Baca satu kalimat. Hitung berapa banyak digit (0-9) di
-      dalamnya, lalu cetak "Jumlah digit: <n>".
+      Baca satu kalimat.
+      Hitung berapa banyak digit (0-9) di dalamnya, lalu cetak "Jumlah digit: <n>".
     input: "Satu baris kalimat."
     output: "Satu baris: Jumlah digit: <n>."
     contoh:
@@ -384,13 +370,13 @@ soal:
     judul: "Kata Berawalan"
     sulit: "sulit"
     cerita: |
-      Perpustakaan punya ribuan kata kunci. Bu Pustakawan ingin tahu
-      berapa banyak kata yang diawali suku kata tertentu — misalnya
-      semua kata berawalan "me". Menghitung manual membuat matanya
-      perih. Kancil menawarkan jasa Python-nya!
+      Perpustakaan punya ribuan kata kunci.
+      Bu Pustakawan ingin tahu berapa banyak kata yang diawali suku kata tertentu — misalnya semua kata berawalan "me".
+      Menghitung manual membuat matanya perih.
+      Kancil menawarkan jasa Python-nya!
 
-      Baca satu kalimat lalu satu awalan (2 huruf). Cetak jumlah
-      kata di kalimat yang diawali awalan tersebut: "Jumlah: <n>".
+      Baca satu kalimat lalu satu awalan (2 huruf).
+      Cetak jumlah kata di kalimat yang diawali awalan tersebut: "Jumlah: <n>".
     input: "Baris 1: kalimat. Baris 2: awalan."
     output: "Satu baris: Jumlah: <n>."
     contoh:

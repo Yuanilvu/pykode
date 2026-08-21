@@ -3,8 +3,23 @@
 # ============================================================
 #
 # Target pembaca: anak SMP kelas 7-9 (usia 12-15 tahun), pemula TOTAL.
-# Bahasa: Indonesia ramah anak. Analogi sehari-hari (jajan, game, sekolah).
-# JANGAN pakai istilah teknis tanpa penjelasan.
+# Bahasa: Indonesia RAMAH ANAK KECIL — sekelas anak SD kelas 1 bisa paham
+# kalau dibacakan. Kalimat pendek, kata sehari-hari, analogi dunia anak.
+
+# ⚠️ ATURAN BAHASA — WAJIB (paling penting!)
+# --------------------------------------------
+# - Kalimat PENDEK: maksimal 10-12 kata. Satu ide per kalimat.
+# - Kata sehari-hari anak kecil. GANTI: "melalui"→"pakai", "sehingga"→"jadi",
+#   "tersebut"→"itu", "perintah"→"cara", "menampilkan"→"mencetak/menampilkan
+#   di layar", "menginput"→"mengetik", "output"→"hasil", "input"→"ketikan".
+# - Istilah teknis BOLEH dipakai (print, variabel, list) tapi WAJIB langsung
+#   dijelaskan dengan kalimat paling sederhana di kalimat berikutnya.
+# - Analogi dari dunia anak: mainan, jajan, kue, sekolah, keluarga, hewan.
+# - Panggil pembaca "kamu" (bukan "Anda"). Pakai "ayo" untuk ajakan.
+# - Contoh GAYA BENAR:  "print() itu alat buat mencetak tulisan di layar."
+#   Contoh GAYA SALAH:  "Fungsi print() digunakan untuk menampilkan output."
+# - Materi pelajaran: 100-250 kata. Cerita soal: 30-80 kata.
+# - Penjelasan kuis & petunjuk: 1-2 kalimat pendek.
 #
 # 1 file YAML = 1 bab (bab01.yaml ... bab12.yaml) + drills.yaml.
 # File disimpan di: /home/yuan/pykode/curriculum/levels/
@@ -23,10 +38,11 @@
 #   - id: "1-1"                             # "<bab>-<urutan>"
 #     judul: "Halo, Dunia!"                 # judul pelajaran
 #     menit: 5                              # estimasi menit (int, 3-10)
-#     materi: |                             # WAJIB block scalar! 150-300 kata
+#     materi: |                             # WAJIB block scalar! 100-250 kata
 #       Markdown sederhana. Boleh pakai:
 #       ## sub judul, **tebal**, `kode`, - daftar
-#       Analogi anak SMP. Tambahkan contoh kecil di materi.
+#       BAHASA SUPER MUDAH — kalimat pendek, kata sehari-hari anak kecil.
+#       Analogi dunia anak. Tambahkan contoh kecil di materi.
 #     contoh:                               # 1-2 contoh jalan (WAJIB ada)
 #       - kode: |                           # WAJIB block scalar
 #           print('Halo Dunia!')

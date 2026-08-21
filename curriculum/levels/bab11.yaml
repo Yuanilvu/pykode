@@ -1,16 +1,16 @@
 bab: 11
-judul: "OOP Dasar"
+judul: "Cetakan Kue Ajaib"
 emoji: "🏗️"
 warna: "#10b981"
-deskripsi: "Class, __init__, method, dan attribute — cetak objek sendiri."
+deskripsi: "Buat object sendiri: class, __init__, method, dan attribute."
 
 pelajaran:
   - id: "11-1"
     judul: "Class: Cetakan Kue"
     menit: 7
     materi: |
-      Di toko kue, satu cetakan bisa membuat banyak kue yang
-      bentuknya sama. Di Python, **class** adalah cetakannya, dan
+      Di toko kue, satu cetakan bisa membuat banyak kue yang bentuknya sama.
+      Di Python, **class** adalah cetakannya.
       **object** adalah kue jadi hasil cetakan itu.
 
       ## Membuat class pertama
@@ -32,13 +32,11 @@ pelajaran:
       ## Kenapa class penting?
 
       Tanpa class, kamu harus menulis ulang data untuk setiap benda.
-      Dengan class, kamu membuat satu cetakan lalu mencetak banyak
-      object dengan mudah. Bayangkan menulis resep sekali, lalu bisa
-      membuat 100 kue dari resep itu!
+      Dengan class, kamu membuat satu cetakan lalu mencetak banyak object dengan mudah.
+      Bayangkan menulis resep sekali, lalu bisa membuat 100 kue dari resep itu!
 
-      Semua yang kamu lihat di Python sebenarnya object: string,
-      list, bahkan angka. Class itu cara Python meniru dunia nyata —
-      dan cara kamu berpikir seperti programmer sungguhan.
+      Semua yang kamu lihat di Python sebenarnya object: string, list, bahkan angka.
+      Class itu cara Python meniru dunia nyata — dan cara kamu berpikir seperti programmer sungguhan.
     contoh:
       - kode: |
           class Kue:
@@ -87,10 +85,9 @@ pelajaran:
     judul: "__init__: Resep Awal"
     menit: 8
     materi: |
-      Cetakan kue polos itu membosankan — kamu ingin tiap kue beda
-      rasa! Di sinilah **__init__** (dibaca: inisialisasi) berperan.
-      Dia adalah **resep awal** yang dijalankan otomatis setiap
-      object dibuat.
+      Cetakan kue polos itu membosankan — kamu ingin tiap kue beda rasa!
+      Di sinilah **__init__** (dibaca: inisialisasi) berperan.
+      Dia adalah **resep awal** yang dijalankan otomatis setiap object dibuat.
 
       ```python
       class Kue:
@@ -102,22 +99,19 @@ pelajaran:
       kue2 = Kue('vanila', 'cokelat chip')
       ```
 
-      Saat `Kue('cokelat', 'keju')` dipanggil, Python otomatis
-      memanggil `__init__` dengan `self` = object baru, `rasa` =
-      'cokelat', dan `topping` = 'keju'.
+      Saat `Kue('cokelat', 'keju')` dipanggil, Python otomatis memanggil `__init__` dengan `self` = object baru, `rasa` = 'cokelat', dan `topping` = 'keju'.
 
       ## Apa itu self?
 
-      `self` adalah object itu sendiri. `self.rasa = rasa` artinya:
-      "simpan nilai rasa ke dalam object ini". Tanpa self, attribute
-      tidak akan tersimpan di object.
+      `self` adalah object itu sendiri.
+      `self.rasa = rasa` artinya: "simpan nilai rasa ke dalam object ini".
+      Tanpa self, attribute tidak akan tersimpan di object.
 
       ## Kenapa penting?
 
-      Dengan __init__, setiap object lahir dengan data miliknya
-      sendiri. Dua kue bisa beda rasa tanpa saling mengganggu. Ini
-      fondasi dari semua program besar — game, aplikasi, sampai
-      website!
+      Dengan __init__, setiap object lahir dengan data miliknya sendiri.
+      Dua kue bisa beda rasa tanpa saling mengganggu.
+      Ini fondasi dari semua program besar — game, aplikasi, sampai website!
     contoh:
       - kode: |
           class Kue:
@@ -167,9 +161,8 @@ pelajaran:
     judul: "Method: Kemampuan Objek"
     menit: 8
     materi: |
-      Attribute adalah sifat object (warna, nama, tinggi). Tapi
-      object juga bisa **melakukan sesuatu** — itulah **method**:
-      fungsi yang tinggal di dalam class.
+      Attribute adalah sifat object (warna, nama, tinggi).
+      Tapi object juga bisa **melakukan sesuatu** — itulah **method**: fungsi yang tinggal di dalam class.
 
       ```python
       class Kucing:
@@ -182,20 +175,18 @@ pelajaran:
       print(k.bersuara())
       ```
 
-      Perhatikan: method `bersuara` memakai `self` supaya bisa
-      membaca attribute `nama` dari object yang memanggilnya.
+      Perhatikan: method `bersuara` memakai `self` supaya bisa membaca attribute `nama` dari object yang memanggilnya.
       `k.bersuara()` akan menghasilkan "Milo: Meong!".
 
       ## Method vs fungsi biasa
 
-      Fungsi biasa dipanggil `nama_fungsi()`. Method dipanggil
-      lewat object: `object.nama_method()`. Method tahu data siapa
-      yang sedang diproses — itu kelebihannya!
+      Fungsi biasa dipanggil `nama_fungsi()`.
+      Method dipanggil lewat object: `object.nama_method()`.
+      Method tahu data siapa yang sedang diproses — itu kelebihannya!
 
-      Method bisa mengubah attribute juga. Contoh: method `makan()`
-      bisa menambah energi, method `lari()` menguranginya. Object
-      jadi hidup: punya sifat dan bisa bertingkah laku, persis
-      karakter di game!
+      Method bisa mengubah attribute juga.
+      Contoh: method `makan()` bisa menambah energi, method `lari()` menguranginya.
+      Object jadi hidup: punya sifat dan bisa bertingkah laku, persis karakter di game!
     contoh:
       - kode: |
           class Kucing:
@@ -247,10 +238,9 @@ pelajaran:
     judul: "__str__: Kartu Nama Objek"
     menit: 7
     materi: |
-      Coba `print(kucing)` dengan object biasa — hasilnya aneh,
-      seperti `<__main__.Kucing object at 0x...>`. Python tidak tahu
-      cara menampilkan object kamu dengan cantik. Solusinya: method
-      ajaib **__str__**!
+      Coba `print(kucing)` dengan object biasa — hasilnya aneh, seperti `<__main__.Kucing object at 0x...>`.
+      Python tidak tahu cara menampilkan object kamu dengan cantik.
+      Solusinya: method ajaib **__str__**!
 
       ```python
       class Hewan:
@@ -264,19 +254,15 @@ pelajaran:
       print(k)  # Kancil punya 4 kaki
       ```
 
-      Method `__str__` menentukan bagaimana object ditampilkan
-      sebagai teks. Begitu kamu mendefinisikannya, `print(object)`
-      dan `str(object)` langsung tampil rapi.
+      Method `__str__` menentukan bagaimana object ditampilkan sebagai teks.
+      Begitu kamu mendefinisikannya, `print(object)` dan `str(object)` langsung tampil rapi.
 
       ## Kapan memakai __str__?
 
-      Setiap kali kamu ingin object tampil mudah dibaca — misalnya
-      kartu karakter game ("Level 5, HP 100") atau data siswa
-      ("Budi, 7A"). Tanpa __str__, program tetap jalan, tapi hasil
-      print-nya jelek dan susah dibaca.
+      Setiap kali kamu ingin object tampil mudah dibaca — misalnya kartu karakter game ("Level 5, HP 100") atau data siswa ("Budi, 7A").
+      Tanpa __str__, program tetap jalan, tapi hasil print-nya jelek dan susah dibaca.
 
-      __str__ itu seperti seragam sekolah: membuat semua object dari
-      satu class terlihat rapi dan sama aturannya!
+      __str__ itu seperti seragam sekolah: membuat semua object dari satu class terlihat rapi dan sama aturannya!
     contoh:
       - kode: |
           class Hewan:
@@ -288,7 +274,7 @@ pelajaran:
 
           k = Hewan('Kancil', 4)
           print(k)
-        penjelasan: "print(k) memanggil __str__ sehingga tampil 'Kancil punya 4 kaki'."
+        penjelasan: "print(k) memanggil __str__, jadi tampil 'Kancil punya 4 kaki'."
       - kode: |
           class Game:
               def __init__(self, nama, level):
@@ -331,12 +317,11 @@ soal:
     judul: "Buku Perpustakaan"
     sulit: "mudah"
     cerita: |
-      Perpustakaan sekolah baru saja menerima kiriman buku. Bu
-      Pustakawan minta bantuanmu membuat program yang
-      memperkenalkan setiap buku dengan rapi.
+      Perpustakaan sekolah baru saja menerima kiriman buku.
+      Bu Pustakawan minta bantuanmu membuat program yang memperkenalkan setiap buku dengan rapi.
 
-      Buat class Buku dengan attribute judul dan penulis. Method
-      info() mengembalikan teks "Buku: <judul> oleh <penulis>".
+      Buat class Buku dengan attribute judul dan penulis.
+      Method info() mengembalikan teks "Buku: <judul> oleh <penulis>".
       Baca judul lalu penulis, lalu cetak hasil info().
     input: "Dua baris: judul buku, lalu nama penulis."
     output: "Satu baris: Buku: <judul> oleh <penulis>."
@@ -380,13 +365,13 @@ soal:
     judul: "Persegi Panjang Ajaib"
     sulit: "sedang"
     cerita: |
-      Kelas 7A dapat tugas membuat taman mini. Taman itu berbentuk
-      persegi panjang, dan Bu Guru ingin tahu luasnya. Sayangnya,
-      kalkulator di kelas rusak. Bantulah dengan Python!
+      Kelas 7A dapat tugas membuat taman mini.
+      Taman itu berbentuk persegi panjang, dan Bu Guru ingin tahu luasnya.
+      Sayangnya, kalkulator di kelas rusak. Bantulah dengan Python!
 
       Buat class PersegiPanjang dengan attribute panjang dan lebar.
-      Method luas() mengembalikan hasil kali keduanya. Baca dua
-      angka lalu cetak "Luas: <hasil>".
+      Method luas() mengembalikan hasil kali keduanya.
+      Baca dua angka lalu cetak "Luas: <hasil>".
     input: "Dua baris: panjang, lalu lebar."
     output: "Satu baris: Luas: <hasil kali panjang dan lebar>."
     contoh:
@@ -427,14 +412,14 @@ soal:
     judul: "Hasil Ujian 7A"
     sulit: "sulit"
     cerita: |
-      Nilai ulangan 7A sudah keluar! Bu Guru ingin mencetak daftar
-      siapa yang lulus (nilai 70 ke atas) dan siapa yang belum.
+      Nilai ulangan 7A sudah keluar!
+      Bu Guru ingin mencetak daftar siapa yang lulus (nilai 70 ke atas) dan siapa yang belum.
       Membuatnya satu per satu capek — untung ada kamu dan Python!
 
-      Buat class Siswa dengan attribute nama dan nilai. Method
-      status() mengembalikan "Lulus" atau "Tidak Lulus". Baca
-      jumlah siswa n, lalu n baris berisi nama dan nilai. Cetak
-      "nama: status" untuk setiap siswa.
+      Buat class Siswa dengan attribute nama dan nilai.
+      Method status() mengembalikan "Lulus" atau "Tidak Lulus".
+      Baca jumlah siswa n, lalu n baris berisi nama dan nilai.
+      Cetak "nama: status" untuk setiap siswa.
     input: "Baris pertama: n. Lalu n baris: nama spasi nilai."
     output: "n baris: <nama>: <Lulus/Tidak Lulus>."
     contoh:

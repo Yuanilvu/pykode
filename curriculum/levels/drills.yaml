@@ -8,9 +8,11 @@ drill:
     tema: "Deret Angka"
     tingkat: 2
     cerita: |
-      Di kantin sekolah, Kancil jualan es teh. Kamu bantu dia
-      menghitung kembalian pembeli! Baca harga es teh dan uang yang
-      dibayar, lalu cetak kembaliannya.
+      Di kantin sekolah, Kancil jualan es teh.
+      Kamu bantu dia menghitung kembalian pembeli!
+      Baca harga es teh dan uang yang dibayar.
+      Cetak kembaliannya, yaitu uang dikurangi harga.
+      Uang dikurangi harga itulah kembaliannya.
     input: "Dua baris: harga, lalu uang yang dibayar."
     output: "Satu baris: Kembalian: <hasil pengurangan>."
     contoh:
@@ -36,17 +38,14 @@ drill:
       uang = int(input())
       print('Kembalian:', uang - harga)
     penjelasan: |
-      Langkah pertama, baca harga jajan dengan int(input()) dan
-      simpan ke variabel harga. Kedua, baca uang yang dibayar dan
-      simpan ke variabel uang. Ingat, input() selalu mengembalikan
-      teks, jadi kita bungkus dengan int() supaya bisa dihitung.
-      Ketiga, hitung kembalian dengan mengurangkan: uang - harga.
+      Pertama, baca harga jajan dengan int(input()) dan simpan ke variabel harga.
+      Kedua, baca uang yang dibayar dan simpan ke variabel uang.
+      Ingat, input() selalu mengembalikan teks, jadi kita bungkus dengan int() supaya bisa dihitung.
+      Ketiga, hitung kembalian dengan mengurangi: uang - harga.
       Terakhir, cetak hasilnya dengan print('Kembalian:', ...).
-      Tanda koma di print otomatis memberi spasi antara teks dan
-      angka. Contoh: harga 5000 dan uang 10000, maka
-      10000 - 5000 = 5000, dan program mencetak "Kembalian: 5000".
-      Kalau uangnya kurang, hasilnya angka negatif — itu wajar,
-      artinya pembeli masih kurang bayar!
+      Tanda koma di print otomatis memberi spasi antara teks dan angka.
+      Contoh: harga 5000 dan uang 10000, maka 10000 - 5000 = 5000, dan program mencetak "Kembalian: 5000".
+      Kalau uangnya kurang, hasilnya angka negatif — itu wajar, artinya pembeli masih kurang bayar!
 
   - id: "d2"
     judul: "Kartu Nama"
@@ -54,9 +53,11 @@ drill:
     tema: "String"
     tingkat: 3
     cerita: |
-      OSIS membuat kartu nama untuk semua anggota baru. Setiap kartu
-      harus bertuliskan nama dan kelas. Bantu Kancil mencetak kartu
-      nama dengan f-string!
+      OSIS membuat kartu nama untuk semua anggota baru.
+      Setiap kartu harus bertuliskan nama dan kelas.
+      Bantu Kancil mencetak kartu nama dengan f-string!
+      Baca nama dulu, lalu kelas.
+      Hasilnya harus persis seperti contoh.
     input: "Dua baris: nama, lalu kelas."
     output: "Satu baris: Halo, <nama>! Kamu di kelas <kelas>."
     contoh:
@@ -82,17 +83,12 @@ drill:
       kelas = input()
       print(f'Halo, {nama}! Kamu di kelas {kelas}.')
     penjelasan: |
-      Baca nama dengan input() dan simpan ke variabel nama, lalu
-      baca kelas ke variabel kelas. Kedua input ini masih berbentuk
-      teks, dan memang harus teks karena akan digabung ke kalimat.
-      Untuk menyusun kalimat dengan variabel di tengahnya, pakai
-      f-string: tulis huruf f sebelum tanda kutip, lalu tempatkan
-      variabel di dalam kurung kurawal {nama} dan {kelas}. Python
-      akan mengganti {nama} dengan isi variabel nama, dan {kelas}
-      dengan isi variabel kelas. Perhatikan tanda seru dan titik di
-      akhir kalimat — output harus persis sama dengan contoh. Coba
-      ganti nama dan kelasnya dengan datamu sendiri, lalu jalankan
-      lagi!
+      Baca nama dengan input() dan simpan ke variabel nama, lalu baca kelas ke variabel kelas.
+      Kedua input ini memang harus teks karena akan digabung ke kalimat.
+      Untuk menyusun kalimat dengan variabel di tengahnya, pakai f-string: tulis huruf f sebelum tanda kutip, lalu tempatkan variabel di dalam kurung kurawal {nama} dan {kelas}.
+      Python akan mengganti {nama} dengan isi variabel nama, dan {kelas} dengan isi variabel kelas.
+      Perhatikan tanda seru dan titik di akhir kalimat — hasilnya harus persis sama dengan contoh.
+      Coba ganti nama dan kelasnya dengan datamu sendiri, lalu jalankan lagi!
 
   - id: "d3"
     judul: "Predikat Raport"
@@ -100,9 +96,10 @@ drill:
     tema: "Logika Kondisi"
     tingkat: 4
     cerita: |
-      Nilai raport sudah keluar! Aturannya: nilai 85 ke atas dapat
-      A, 70 ke atas dapat B, 55 ke atas dapat C, sisanya D. Bantu
-      Kancil membuat program penentu predikat.
+      Nilai raport sudah keluar!
+      Aturannya: nilai 85 ke atas dapat A, 70 ke atas dapat B, 55 ke atas dapat C, sisanya D.
+      Bantu Kancil membuat program penentu predikat.
+      Satu nilai hanya mendapat satu predikat.
     input: "Satu baris: nilai (angka)."
     output: "Satu baris: predikat A, B, C, atau D."
     contoh:
@@ -134,16 +131,14 @@ drill:
       else:
           print('D')
     penjelasan: |
-      Baca nilai dengan int(input()) supaya berbentuk angka, lalu
-      simpan ke variabel nilai. Sekarang periksa dari predikat
-      tertinggi: kalau nilai 85 atau lebih, cetak 'A' — selesai,
-      pemeriksaan berhenti. Kalau tidak, cek elif berikutnya: nilai
-      70 atau lebih dapat 'B'. Kalau masih tidak memenuhi, cek
-      apakah nilai 55 atau lebih — dapat 'C'. Terakhir, kalau semua
-      syarat gagal, else mencetak 'D'. Urutan ini penting: kalau
-      kita cek 'B' dulu, nilai 90 juga memenuhi dan salah dapat 'B'.
-      Makanya cek dari yang paling tinggi dulu. Nilai 85 masuk A
-      karena >= 85, sedangkan 84 jatuh ke B.
+      Baca nilai dengan int(input()) supaya berbentuk angka, lalu simpan ke variabel nilai.
+      Sekarang periksa dari predikat tertinggi: kalau nilai 85 atau lebih, cetak 'A' — selesai, pemeriksaan berhenti.
+      Kalau tidak, cek elif berikutnya: nilai 70 atau lebih dapat 'B'.
+      Kalau masih tidak memenuhi, cek apakah nilai 55 atau lebih — dapat 'C'.
+      Terakhir, kalau semua syarat gagal, else mencetak 'D'.
+      Urutan ini penting: kalau kita cek 'B' dulu, nilai 90 juga memenuhi dan salah dapat 'B'.
+      Makanya cek dari yang paling tinggi dulu.
+      Nilai 85 masuk A karena >= 85, sedangkan 84 jatuh ke B.
 
   - id: "d4"
     judul: "Tabel Perkalian"
@@ -151,10 +146,10 @@ drill:
     tema: "Perulangan"
     tingkat: 5
     cerita: |
-      Bu Guru menyuruh kelas menghafal tabel perkalian. Kancil
-      malas menulisnya manual — dia minta Python membuatkannya!
-      Baca satu angka, lalu cetak tabel perkaliannya dari 1 sampai
-      10.
+      Bu Guru menyuruh kelas menghafal tabel perkalian.
+      Kancil malas menulisnya manual — dia minta Python membuatkannya!
+      Baca satu angka, lalu cetak tabel perkaliannya dari 1 sampai 10.
+      Cetak urut dari 1 sampai 10.
     input: "Satu baris: angka n."
     output: "10 baris: n x 1 = ... sampai n x 10 = ..."
     contoh:
@@ -180,16 +175,13 @@ drill:
       for i in range(1, 11):
           print(f'{n} x {i} = {n * i}')
     penjelasan: |
-      Baca angka n dengan int(input()). Kita mau mencetak 10 baris,
-      jadi pakai for dengan range(1, 11) — range ini menghasilkan 1
-      sampai 10. Setiap putaran, variabel i berisi pengali: 1, 2, 3,
-      sampai 10. Di dalam loop, cetak satu baris tabel memakai
-      f-string: f'{n} x {i} = {n * i}'. Python mengganti {n} dengan
-      angka yang dibaca, {i} dengan pengali, dan {n * i} dengan
-      hasil kalinya. Perhatikan formatnya persis: spasi di sekitar
-      tanda x dan sama dengan. Kalau n = 5, baris pertama menjadi
-      "5 x 1 = 5", baris kedua "5 x 2 = 10", dan seterusnya sampai
-      "5 x 10 = 50".
+      Baca angka n dengan int(input()).
+      Kita mau mencetak 10 baris, jadi pakai for dengan range(1, 11) — range ini menghasilkan 1 sampai 10.
+      Setiap putaran, variabel i berisi pengali: 1, 2, 3, sampai 10.
+      Di dalam loop, cetak satu baris tabel memakai f-string: f'{n} x {i} = {n * i}'.
+      Python mengganti {n} dengan angka yang dibaca, {i} dengan pengali, dan {n * i} dengan hasil kalinya.
+      Perhatikan formatnya persis: spasi di sekitar tanda x dan sama dengan.
+      Kalau n = 5, baris pertama menjadi "5 x 1 = 5", baris kedua "5 x 2 = 10", dan seterusnya sampai "5 x 10 = 50".
 
   - id: "d5"
     judul: "Tangga Bintang"
@@ -197,10 +189,10 @@ drill:
     tema: "Pola Bintang"
     tingkat: 5
     cerita: |
-      Kancil menemukan tangga ajaib di taman bermain. Setiap anak
-      tangganya terbuat dari bintang! Bantu dia menggambar tangga
-      bintang: baris 1 satu bintang, baris 2 dua bintang, sampai n
-      baris.
+      Kancil menemukan tangga ajaib di taman bermain.
+      Setiap anak tangganya terbuat dari bintang!
+      Bantu dia menggambar tangga bintang: baris 1 satu bintang, baris 2 dua bintang, sampai n baris.
+      Baris terakhir berisi n bintang.
     input: "Satu baris: angka n."
     output: "n baris: baris ke-i berisi i bintang."
     contoh:
@@ -226,16 +218,14 @@ drill:
       for i in range(1, n + 1):
           print('*' * i)
     penjelasan: |
-      Baca n dengan int(input()). Kita mau mencetak n baris, dan
-      baris ke-i harus berisi i bintang. Pakai for dengan
-      range(1, n + 1) supaya i berjalan dari 1 sampai n. Di dalam
-      loop, print('*' * i). Tanda kali di sini bukan menghitung
-      angka, melainkan mengulang string: '*' * 1 menghasilkan satu
-      bintang, '*' * 2 menghasilkan dua bintang, dan seterusnya.
-      Jadi saat i = 1 tercetak "*", saat i = 2 tercetak "**", sampai
-      baris terakhir berisi n bintang. print() otomatis pindah ke
-      baris baru setiap kali dipanggil, jadi setiap i menghasilkan
-      satu baris tersendiri. Untuk n = 3 hasilnya: *, **, ***.
+      Baca n dengan int(input()).
+      Kita mau mencetak n baris, dan baris ke-i harus berisi i bintang.
+      Pakai for dengan range(1, n + 1) supaya i berjalan dari 1 sampai n.
+      Di dalam loop, print('*' * i).
+      Tanda kali di sini bukan menghitung angka, melainkan mengulang string: '*' * 1 menghasilkan satu bintang, '*' * 2 menghasilkan dua bintang, dan seterusnya.
+      Jadi saat i = 1 tercetak "*", saat i = 2 tercetak "**", sampai baris terakhir berisi n bintang.
+      print() otomatis pindah ke baris baru setiap kali dipanggil, jadi setiap i menghasilkan satu baris tersendiri.
+      Untuk n = 3 hasilnya: *, **, ***.
 
   - id: "d6"
     judul: "Angka Terbesar"
@@ -243,10 +233,10 @@ drill:
     tema: "List"
     tingkat: 6
     cerita: |
-      Kancil mengumpulkan skor teman-temannya di lomba lari. Dia
-      ingin tahu siapa yang mencetak skor terbesar. Baca jumlah
-      skor n, lalu n skor. Simpan semuanya di list, lalu cari angka
-      terbesarnya.
+      Kancil mengumpulkan skor teman-temannya di lomba lari.
+      Dia ingin tahu siapa yang mencetak skor terbesar.
+      Baca jumlah skor n, lalu n skor.
+      Simpan semuanya di list, lalu cari angka terbesarnya.
     input: "Baris pertama: n. Lalu n baris berisi skor."
     output: "Satu baris: Angka terbesar: <skor>."
     contoh:
@@ -278,17 +268,12 @@ drill:
               terbesar = a
       print('Angka terbesar:', terbesar)
     penjelasan: |
-      Baca n, lalu buat list kosong bernama angka. Ulangi n kali:
-      setiap putaran baca satu skor dengan int(input()) dan
-      tambahkan ke list memakai angka.append(...). Setelah semua
-      skor masuk list, kita cari yang terbesar dengan cara manual:
-      ambil angka pertama (angka[0]) sebagai juara sementara di
-      variabel terbesar. Lalu loop seluruh list: kalau ada anggota
-      a yang lebih besar dari terbesar, ganti terbesar dengan a.
-      Karena kita memakai perbandingan >, angka yang sama besarnya
-      tidak menggantikan juara — itu tidak masalah karena hasilnya
-      tetap sama. Terakhir cetak dengan print('Angka terbesar:',
-      terbesar).
+      Baca n, lalu buat list kosong bernama angka.
+      Ulangi n kali: setiap putaran baca satu skor dengan int(input()) dan tambahkan ke list memakai angka.append(...).
+      Setelah semua skor masuk list, kita cari yang terbesar dengan cara manual: ambil angka pertama (angka[0]) sebagai juara sementara di variabel terbesar.
+      Lalu loop seluruh list: kalau ada anggota a yang lebih besar dari terbesar, ganti terbesar dengan a.
+      Karena kita memakai perbandingan >, angka yang sama besarnya tidak menggantikan juara — itu tidak masalah karena hasilnya tetap sama.
+      Terakhir cetak dengan print('Angka terbesar:', terbesar).
 
   - id: "d7"
     judul: "Penghitung Huruf"
@@ -296,9 +281,10 @@ drill:
     tema: "Kombinasi"
     tingkat: 7
     cerita: |
-      Kancil iseng menghitung berapa kali tiap huruf muncul di
-      sebuah kata. Ternyata seru! Bantu dia: baca satu kata, lalu
-      cetak tiap huruf beserta jumlah kemunculannya.
+      Kancil iseng menghitung berapa kali tiap huruf muncul di sebuah kata.
+      Ternyata seru!
+      Bantu dia: baca satu kata, lalu cetak tiap huruf beserta jumlah kemunculannya.
+      Contohnya, kata "banana" punya huruf b 1 kali, a 3 kali, dan n 2 kali.
     input: "Satu baris: kata."
     output: "Beberapa baris: <huruf>:<jumlah>, urut sesuai kemunculan pertama."
     contoh:
@@ -331,16 +317,13 @@ drill:
           print(h + ':' + str(hitung[h]))
     penjelasan: |
       Baca kata, lalu buat dictionary kosong bernama hitung.
-      Dictionary dipakai untuk menyimpan pasangan huruf dan
-      jumlahnya. Loop setiap huruf h di dalam kata: kalau h sudah
-      pernah masuk dictionary (h in hitung), tambah jumlahnya
-      dengan hitung[h] += 1. Kalau belum ada, buat entri baru dengan
-      hitung[h] = 1. Dengan cara ini setiap huruf dihitung tepat
-      sekali. Setelah selesai, loop dictionary untuk mencetak hasil.
-      Ingat, dictionary di Python menjaga urutan kemunculan pertama,
-      jadi "banana" mencetak b dulu, lalu a, lalu n. Jumlahnya
-      harus diubah jadi teks dulu dengan str() sebelum digabung
-      pakai tanda +.
+      Dictionary dipakai untuk menyimpan pasangan huruf dan jumlahnya.
+      Loop setiap huruf h di dalam kata: kalau h sudah pernah masuk dictionary (h in hitung), tambah jumlahnya dengan hitung[h] += 1.
+      Kalau belum ada, buat entri baru dengan hitung[h] = 1.
+      Dengan cara ini setiap huruf dihitung tepat sekali.
+      Setelah selesai, loop dictionary untuk mencetak hasil.
+      Ingat, dictionary di Python menjaga urutan kemunculan pertama, jadi "banana" mencetak b dulu, lalu a, lalu n.
+      Jumlahnya harus diubah jadi teks dulu dengan str() sebelum digabung pakai tanda +.
 
   - id: "d8"
     judul: "Cek Palindrom"
@@ -348,10 +331,9 @@ drill:
     tema: "String"
     tingkat: 8
     cerita: |
-      Kancil belajar kata yang bisa dibaca dari depan maupun
-      belakang, seperti "katak" dan "malam" — namanya palindrom!
-      Buatlah fungsi cek_palindrom(kata) untuk memeriksa sebuah
-      kata.
+      Kancil belajar kata yang bisa dibaca dari depan maupun belakang, seperti "katak" dan "malam" — namanya palindrom!
+      Buatlah fungsi cek_palindrom(kata) untuk memeriksa sebuah kata.
+      Baca satu kata, lalu cetak hasilnya.
     input: "Satu baris: kata."
     output: "Satu baris: Palindrom atau Bukan palindrom."
     contoh:
@@ -382,16 +364,13 @@ drill:
       else:
           print('Bukan palindrom')
     penjelasan: |
-      Pertama, buat fungsi cek_palindrom yang menerima satu
-      parameter kata. Di dalam fungsi, kita balik katanya memakai
-      slicing kata[::-1] — cara ajaib untuk membalik string. Lalu
-      bandingkan: kalau kata sama dengan kebalikannya, kembalikan
-      True; kalau tidak, False. Ekspresi kata == kata[::-1] sudah
-      menghasilkan True/False, jadi bisa langsung di-return. Setelah
-      fungsi siap, baca input dengan input() dan simpan ke variabel
-      kata. Panggil fungsi di dalam if: kalau hasilnya True, cetak
-      'Palindrom'; kalau False, cetak 'Bukan palindrom'. Contoh:
-      "katak" dibalik menjadi "katak" juga, jadi Palindrom.
+      Pertama, buat fungsi cek_palindrom yang menerima satu parameter kata.
+      Di dalam fungsi, kita balik katanya memakai slicing kata[::-1] — cara ajaib untuk membalik string.
+      Lalu bandingkan: kalau kata sama dengan kebalikannya, kembalikan True; kalau tidak, False.
+      Ekspresi kata == kata[::-1] sudah menghasilkan True/False, jadi bisa langsung di-return.
+      Setelah fungsi siap, baca input dengan input() dan simpan ke variabel kata.
+      Panggil fungsi di dalam if: kalau hasilnya True, cetak 'Palindrom'; kalau False, cetak 'Bukan palindrom'.
+      Contoh: "katak" dibalik menjadi "katak" juga, jadi Palindrom.
       Sedangkan "buku" dibalik menjadi "ukub" — tidak sama.
 
   - id: "d9"
@@ -400,10 +379,9 @@ drill:
     tema: "Deret Angka"
     tingkat: 9
     cerita: |
-      Kancil membuat program penjumlah tiga angka, tapi sering ada
-      teman yang iseng mengetik huruf. Dengan try/except, program
-      tidak akan mati! Baca tiga angka, jumlahkan, dan tangkap
-      kalau ada yang bukan angka.
+      Kancil membuat program penjumlah tiga angka, tapi sering ada teman yang iseng mengetik huruf.
+      Dengan try/except, program tidak akan mati!
+      Baca tiga angka, jumlahkan, dan tangkap kalau ada yang bukan angka.
     input: "Tiga baris angka (bisa ada yang bukan angka)."
     output: "Satu baris: Total: <jumlah> atau Ada angka yang bukan bilangan!."
     contoh:
@@ -435,17 +413,12 @@ drill:
       else:
           print('Total:', total)
     penjelasan: |
-      Siapkan variabel total mulai dari 0. Kita membaca tepat tiga
-      angka, jadi pakai for dengan range(3). Di dalam loop, bungkus
-      int(input()) dengan try: kalau inputnya angka, langsung
-      ditambahkan ke total. Kalau inputnya bukan angka (misalnya
-      huruf), int() memicu ValueError — dan except ValueError
-      menangkapnya, mencetak 'Ada angka yang bukan bilangan!', lalu
-      break menghentikan loop supaya tidak membaca sisa input.
-      Bagian else yang menempel pada for hanya dijalankan kalau
-      loop selesai tanpa break — artinya ketiga angka bagus semua,
-      baru kita cetak 'Total: ...'. Jadi kalau ada satu saja data
-      rusak, yang tercetak hanya pesan peringatan.
+      Siapkan variabel total mulai dari 0.
+      Kita membaca tepat tiga angka, jadi pakai for dengan range(3).
+      Di dalam loop, bungkus int(input()) dengan try: kalau inputnya angka, langsung ditambahkan ke total.
+      Kalau inputnya bukan angka (misalnya huruf), int() memicu ValueError — dan except ValueError menangkapnya, mencetak 'Ada angka yang bukan bilangan!', lalu break menghentikan loop supaya tidak membaca sisa input.
+      Bagian else yang menempel pada for hanya dijalankan kalau loop selesai tanpa break — artinya ketiga angka bagus semua, baru kita cetak 'Total: ...'.
+      Jadi kalau ada satu saja data rusak, yang tercetak hanya pesan peringatan.
 
   - id: "d10"
     judul: "Berlian Bintang"
@@ -453,10 +426,10 @@ drill:
     tema: "Pola Bintang"
     tingkat: 10
     cerita: |
-      Kancil ingin membuat berlian dari bintang untuk hadiah
-      sahabatnya. Berliannya terdiri dari piramida atas dan bawah
-      yang saling menempel! Baca angka n dan gambarkan berlian
-      bintangnya.
+      Kancil ingin membuat berlian dari bintang untuk hadiah sahabatnya.
+      Berliannya terdiri dari piramida atas dan bawah yang saling menempel!
+      Baca angka n dan gambarkan berlian bintangnya.
+      Baris paling tengah adalah yang paling lebar.
     input: "Satu baris: angka n."
     output: "Berlian bintang: baris tengah berisi 2*n-1 bintang."
     contoh:
@@ -484,16 +457,13 @@ drill:
       for i in range(n - 1, 0, -1):
           print(' ' * (n - i) + '*' * (2 * i - 1))
     penjelasan: |
-      Berlian terdiri dari dua bagian: piramida atas dan piramida
-      bawah (terbalik). Bagian atas: loop i dari 1 sampai n. Setiap
-      baris mencetak spasi sebanyak n - i (makin ke bawah makin
-      sedikit) lalu bintang sebanyak 2 * i - 1 (bilangan ganjil: 1,
-      3, 5, ...). Untuk n = 3: baris 1 = 2 spasi + 1 bintang, baris
-      2 = 1 spasi + 3 bintang, baris 3 = 0 spasi + 5 bintang.
-      Bagian bawah: loop i mundur dari n - 1 sampai 1 memakai
-      range(n - 1, 0, -1). Rumusnya sama, jadi baris-baris bawah
-      adalah cermin bagian atas tanpa baris tengah. Gabungan kedua
-      loop menghasilkan bentuk berlian yang simetris.
+      Berlian terdiri dari dua bagian: piramida atas dan piramida bawah (terbalik).
+      Bagian atas: loop i dari 1 sampai n.
+      Setiap baris mencetak spasi sebanyak n - i (makin ke bawah makin sedikit) lalu bintang sebanyak 2 * i - 1 (bilangan ganjil: 1, 3, 5, ...).
+      Untuk n = 3: baris 1 = 2 spasi + 1 bintang, baris 2 = 1 spasi + 3 bintang, baris 3 = 0 spasi + 5 bintang.
+      Bagian bawah: loop i mundur dari n - 1 sampai 1 memakai range(n - 1, 0, -1).
+      Rumusnya sama, jadi baris-baris bawah adalah cermin bagian atas tanpa baris tengah.
+      Gabungan kedua loop menghasilkan bentuk berlian yang simetris.
 
   - id: "d11"
     judul: "Urutkan Skor"
@@ -501,9 +471,10 @@ drill:
     tema: "Perulangan"
     tingkat: 10
     cerita: |
-      Papan peringkat turnamen catur sekolah masih acak! Bu Guru
-      minta skor diurutkan dari yang terbesar ke terkecil, tanpa
-      memakai .sort(). Gunakan bubble sort buatanmu sendiri.
+      Papan peringkat turnamen catur sekolah masih acak!
+      Bu Guru minta skor diurutkan dari yang terbesar ke terkecil, tanpa memakai .sort().
+      Gunakan bubble sort buatanmu sendiri.
+      Baca jumlah skor n, lalu n skor.
     input: "Baris pertama: n. Lalu n baris berisi skor."
     output: "Satu baris: skor urut menurun, dipisah spasi."
     contoh:
@@ -537,17 +508,14 @@ drill:
           print(x, end=' ')
       print()
     penjelasan: |
-      Simpan semua skor ke list a dengan loop dan append. Sekarang
-      urutkan menurun (terbesar dulu) dengan bubble sort. Loop luar
-      berjalan n kali sebagai jumlah pass. Di setiap pass, loop
-      dalam membandingkan pasangan bersebelahan a[j] dan a[j + 1].
-      Karena kita mau urut menurun, tukar kalau yang kiri LEBIH
-      KECIL dari yang kanan — bedanya dengan urut naik yang menukar
-      kalau kiri lebih besar. Setiap pass, angka terkecil
-      "menggelembung" ke belakang. Setelah semua pass, list rapi
-      dari besar ke kecil. Terakhir cetak semua anggota list dengan
-      end=' ' supaya sebaris dipisah spasi, lalu print() kosong
-      untuk pindah baris.
+      Simpan semua skor ke list a dengan loop dan append.
+      Sekarang urutkan menurun (terbesar dulu) dengan bubble sort.
+      Loop luar berjalan n kali sebagai jumlah pass.
+      Di setiap pass, loop dalam membandingkan pasangan bersebelahan a[j] dan a[j + 1].
+      Karena kita mau urut menurun, tukar kalau yang kiri LEBIH KECIL dari yang kanan — bedanya dengan urut naik yang menukar kalau kiri lebih besar.
+      Setiap pass, angka terkecil "menggelembung" ke belakang.
+      Setelah semua pass, list rapi dari besar ke kecil.
+      Terakhir cetak semua anggota list dengan end=' ' supaya sebaris dipisah spasi, lalu print() kosong untuk pindah baris.
 
   - id: "d12"
     judul: "Tabungan Kancil"
@@ -555,10 +523,9 @@ drill:
     tema: "List"
     tingkat: 11
     cerita: |
-      Kancil mulai menabung untuk membeli sepeda baru! Dia membuat
-      class Tabungan yang bisa menyimpan saldo dan menerima
-      setoran. Bantu dia: baca saldo awal dan setoran, lalu cetak
-      saldo setelah menabung.
+      Kancil mulai menabung untuk membeli sepeda baru!
+      Dia membuat class Tabungan yang bisa menyimpan saldo dan menerima setoran.
+      Bantu dia: baca saldo awal dan setoran, lalu cetak saldo setelah menabung.
     input: "Dua baris: saldo awal, lalu setoran."
     output: "Satu baris: Saldo sekarang: <saldo>."
     contoh:
@@ -594,16 +561,14 @@ drill:
       t.nabung(setoran)
       print('Saldo sekarang:', t.lihat())
     penjelasan: |
-      Buat class Tabungan dengan __init__ yang menerima saldo awal
-      dan menyimpannya ke attribute self.saldo. Method nabung
-      menerima jumlah setoran lalu menambahkannya ke saldo dengan
-      self.saldo += jumlah. Method lihat mengembalikan saldo saat
-      ini. Di bagian utama program, baca saldo awal dan setoran
-      dengan int(input()). Buat object t = Tabungan(awal) — saat
-      ini __init__ otomatis dipanggil dan saldo terisi. Panggil
-      t.nabung(setoran) untuk menambah saldo. Terakhir cetak
-      t.lihat() untuk menampilkan saldo terbaru. Contoh: saldo
-      10000 + setoran 5000 = 15000.
+      Buat class Tabungan dengan __init__ yang menerima saldo awal dan menyimpannya ke attribute self.saldo.
+      Method nabung menerima jumlah setoran lalu menambahkannya ke saldo dengan self.saldo += jumlah.
+      Method lihat mengembalikan saldo saat ini.
+      Di bagian utama program, baca saldo awal dan setoran dengan int(input()).
+      Buat object t = Tabungan(awal) — saat ini __init__ otomatis dipanggil dan saldo terisi.
+      Panggil t.nabung(setoran) untuk menambah saldo.
+      Terakhir cetak t.lihat() untuk menampilkan saldo terbaru.
+      Contoh: saldo 10000 + setoran 5000 = 15000.
 
   - id: "d13"
     judul: "Kuadrat Angka Genap"
@@ -612,9 +577,8 @@ drill:
     tingkat: 12
     cerita: |
       Kancil menemukan pola ajaib: kuadrat dari bilangan genap!
-      Dengan list comprehension, dia bisa membuat daftarnya secepat
-      kilat. Baca angka n, lalu cetak kuadrat dari semua bilangan
-      genap antara 2 sampai n.
+      Dengan list comprehension, dia bisa membuat daftarnya secepat kilat.
+      Baca angka n, lalu cetak kuadrat dari semua bilangan genap antara 2 sampai n.
     input: "Satu baris: angka n."
     output: "Satu baris: kuadrat bilangan genap 2..n, dipisah spasi."
     contoh:
@@ -642,16 +606,12 @@ drill:
           print(x, end=' ')
       print()
     penjelasan: |
-      Baca n dengan int(input()). Kita mau bilangan genap dari 2
-      sampai n, dan range(2, n + 1, 2) menghasilkan tepat itu —
-      mulai dari 2, naik 2 setiap langkah. Gabungkan dengan list
-      comprehension: [x * x for x in range(2, n + 1, 2)] artinya
-      "buat list berisi kuadrat x untuk setiap x genap". Jadi untuk
-      n = 10: x = 2, 4, 6, 8, 10, dan kuadratnya 4, 16, 36, 64,
-      100. Kalau n = 1, tidak ada bilangan genap sama sekali,
-      listnya kosong, dan tidak ada yang tercetak. Terakhir, loop
-      list dan cetak setiap anggota dengan end=' ' supaya hasilnya
-      satu baris dipisah spasi.
+      Baca n dengan int(input()).
+      Kita mau bilangan genap dari 2 sampai n, dan range(2, n + 1, 2) menghasilkan tepat itu — mulai dari 2, naik 2 setiap langkah.
+      Gabungkan dengan list comprehension: [x * x for x in range(2, n + 1, 2)] artinya "buat list berisi kuadrat x untuk setiap x genap".
+      Jadi untuk n = 10: x = 2, 4, 6, 8, 10, dan kuadratnya 4, 16, 36, 64, 100.
+      Kalau n = 1, tidak ada bilangan genap sama sekali, listnya kosong, dan tidak ada yang tercetak.
+      Terakhir, loop list dan cetak setiap anggota dengan end=' ' supaya hasilnya satu baris dipisah spasi.
 
   - id: "d14"
     judul: "Judul Buku"
@@ -659,10 +619,9 @@ drill:
     tema: "String"
     tingkat: 12
     cerita: |
-      Perpustakaan ingin semua judul buku ditulis dengan rapi: huruf
-      pertama setiap kata jadi besar. Ada ratusan buku — mengetik
-      manual jelas tidak mungkin! Bantu Kancil merapikan judul
-      dengan metode string ajaib.
+      Perpustakaan ingin semua judul buku ditulis dengan rapi: huruf pertama setiap kata jadi besar.
+      Ada ratusan buku — mengetik manual jelas tidak mungkin!
+      Bantu Kancil merapikan judul dengan metode string ajaib.
     input: "Satu baris: judul buku (huruf kecil)."
     output: "Satu baris: judul dengan huruf pertama tiap kata kapital."
     contoh:
@@ -688,13 +647,9 @@ drill:
       print(judul.title())
     penjelasan: |
       Baca judul dengan input() dan simpan ke variabel judul.
-      Metode string .title() melakukan semuanya sekaligus: huruf
-      pertama setiap kata diubah menjadi kapital, sedangkan huruf
-      lainnya dibuat kecil. Jadi "aku suka python" berubah menjadi
-      "Aku Suka Python". Yang menarik, .title() juga merapikan
-      judul yang semua hurufnya kapital: "PETUALANGAN DI PULAU"
-      menjadi "Petualangan Di Pulau" — huruf pertama tiap kata
-      tetap besar, sisanya kecil. Angka tidak terpengaruh: "buku 1"
-      menjadi "Buku 1". Cukup satu baris kode, ratusan judul buku
-      langsung rapi. Bayangkan kalau harus mengetik manual satu per
-      satu!
+      Metode string .title() melakukan semuanya sekaligus: huruf pertama setiap kata diubah menjadi kapital, sedangkan huruf lainnya dibuat kecil.
+      Jadi "aku suka python" berubah menjadi "Aku Suka Python".
+      Yang menarik, .title() juga merapikan judul yang semua hurufnya kapital: "PETUALANGAN DI PULAU" menjadi "Petualangan Di Pulau" — huruf pertama tiap kata tetap besar, sisanya kecil.
+      Angka tidak terpengaruh: "buku 1" menjadi "Buku 1".
+      Cukup satu baris kode, ratusan judul buku langsung rapi.
+      Bayangkan kalau harus mengetik manual satu per satu!

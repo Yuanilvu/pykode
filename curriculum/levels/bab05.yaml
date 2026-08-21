@@ -2,42 +2,38 @@ bab: 5
 judul: "Perulangan: for, while, break, continue"
 emoji: "🔁"
 warna: "#f59e0b"
-deskripsi: "Ulangi pekerjaan otomatis: for, range, while, break, continue."
+deskripsi: "Kerja berulang jadi otomatis: for, range, while, break, continue."
 
 pelajaran:
   - id: "5-1"
-    judul: "Perulangan for: Putaran Otomatis"
+    judul: "for: Putaran Otomatis"
     menit: 7
     materi: |
-      Pernah lihat petugas upacara memanggil nama satu per satu? "Budi...
-      Sari... Rina..." — itu namanya perulangan! Di Python, kita punya
-      perintah **for** yang bisa mengulang otomatis.
+      Pernah lihat guru absen kelas? Dia panggil nama satu-satu:
+      "Budi... Sari... Rina..." Itu namanya mengulang.
+      Python juga bisa mengulang, pakai **for**.
 
-      ## for dan range
+      ## for itu seperti antrean
 
-      Perintah `for` dipakai untuk mengulang sesuatu beberapa kali.
-      Biar tahu berapa kali, kita pakai `range(n)` — artinya "dari 0
-      sampai n-1".
+      for itu kayak antrean: tiap orang maju satu-satu.
+      Kita tulis `for i in range(5):` — artinya ulang 5 kali.
+      Setiap putaran, `i` berisi angka: 0, 1, 2, 3, 4.
 
-      Contoh: `for i in range(5)` akan mengulang 5 kali, dengan `i`
-      berisi 0, 1, 2, 3, 4. Kenapa berhenti di 4? Karena Python selalu
-      mulai dari 0 dan berhenti sebelum angka di dalam range.
+      Kenapa berhenti di 4? Karena Python mulai dari 0.
+      Dia berhenti sebelum angka di dalam kurung.
 
-      ## Aturan penting
+      ## Aturan for
 
       - Baris di dalam for harus diberi **spasi di awal** (indentasi).
         Baris itulah yang diulang.
-      - `i` itu nama variabel bebas — boleh diganti `x`, `n`, atau
-        apa saja.
+      - `i` itu nama bebas. Boleh ganti `x` atau `n`.
       - Jangan lupa titik dua `:` di akhir baris for!
 
-      for itu seperti instruktur senam: satu perintah, semua peserta
-      ikut bergerak. Kamu cukup menulis gerakannya sekali, Python
-      mengulanginya untukmu.
+      for itu seperti instruktur senam. Satu aba-aba, semua bergerak.
+      Kamu tulis gerakannya sekali, Python mengulanginya untukmu.
 
-      Tanpa perulangan, kita harus menulis print berkali-kali —
-      bayangkan kalau harus 100 kali! Dengan for, cukup beberapa
-      baris saja.
+      Tanpa for, kamu harus menulis print berkali-kali.
+      Bayangkan kalau harus 100 kali! Dengan for, cukup beberapa baris saja.
     contoh:
       - kode: |
           for i in range(5):
@@ -55,7 +51,7 @@ pelajaran:
           - "0, 1, 2, 3, 4"
           - "4, 3, 2, 1"
         jawaban: 0
-        penjelasan: "Python mulai dari 0 dan berhenti sebelum 4, jadi hasilnya 0, 1, 2, 3."
+        penjelasan: "Python mulai dari 0 dan berhenti sebelum 4. Hasilnya 0, 1, 2, 3."
       - soal: "Baris yang diulang di dalam for harus..."
         pilihan:
           - "ditulis di baris yang sama"
@@ -63,7 +59,7 @@ pelajaran:
           - "diawali tanda pagar #"
           - "ditulis dengan huruf besar"
         jawaban: 1
-        penjelasan: "Indentasi menandakan baris itu bagian dari perulangan."
+        penjelasan: "Spasi di awal menandakan baris itu bagian dari perulangan."
       - soal: "Berapa kali 'Halo' tercetak?\n\nfor i in range(3):\n    print('Halo')"
         pilihan:
           - "2 kali"
@@ -71,33 +67,34 @@ pelajaran:
           - "4 kali"
           - "tidak pernah"
         jawaban: 1
-        penjelasan: "range(3) = 3 putaran, jadi 'Halo' tercetak 3 kali."
+        penjelasan: "range(3) = 3 putaran. Jadi 'Halo' tercetak 3 kali."
 
   - id: "5-2"
     judul: "range(a, b): Mulai dan Berhenti"
     menit: 6
     materi: |
-      Kadang kita tidak mau mulai dari 0. Misalnya absen kelas dimulai
-      dari nomor 1, bukan 0. Untungnya, `range` bisa diberi dua angka:
-      `range(a, b)`.
+      Kadang kita tidak mau mulai dari 0. Misalnya absen kelas
+      mulai dari nomor 1, bukan 0. Untungnya, `range` bisa diberi
+      dua angka: `range(a, b)`.
 
-      `range(a, b)` menghasilkan angka **a, a+1, ..., b-1**. Angka
-      pertama (a) ikut, angka terakhir (b) TIDAK ikut. Ini aturan yang
-      sering bikin lupa, jadi ingat baik-baik!
+      ## Aturan range(a, b)
+
+      `range(a, b)` memberi angka **a, a+1, ..., b-1**.
+      Angka pertama (a) ikut. Angka terakhir (b) TIDAK ikut.
+      Ini aturan yang sering bikin lupa. Ingat baik-baik!
 
       ## Contoh
 
       - `range(1, 4)` → 1, 2, 3
       - `range(2, 6)` → 2, 3, 4, 5
-      - `range(5, 5)` → kosong, karena mulai dan berhenti di angka
-        yang sama
+      - `range(5, 5)` → kosong, karena mulai dan berhenti di angka sama
 
-      Biar gampang ingat: bayangkan antrean tiket bioskop. Nomor a
-      masuk ke dalam gedung, tapi penjaga pintu berhenti di nomor b —
-      b tidak jadi masuk. Jadi yang menonton hanya a sampai b-1.
+      Biar gampang ingat, bayangkan antrean tiket bioskop.
+      Nomor a masuk ke gedung. Penjaga pintu berhenti di nomor b.
+      Jadi b tidak masuk. Yang menonton hanya a sampai b-1.
 
-      range(a, b) sangat berguna untuk deret 1 sampai n: tinggal tulis
-      `range(1, n + 1)`. Angka n ikut, karena kita berhenti di n+1.
+      Mau deret 1 sampai n? Tulis `range(1, n + 1)`.
+      Angka n ikut, karena kita berhenti di n+1.
 
       Latihan: tebak dulu output `range(3, 7)` sebelum menjalankannya.
       Kalau jawabanmu 3, 4, 5, 6 — berarti kamu sudah paham aturannya!
@@ -118,7 +115,7 @@ pelajaran:
           - "0, 1, 2, 3"
           - "2, 3"
         jawaban: 0
-        penjelasan: "Mulai dari 1, berhenti sebelum 4: hasilnya 1, 2, 3."
+        penjelasan: "Mulai dari 1, berhenti sebelum 4. Hasilnya 1, 2, 3."
       - soal: "Supaya angka 1 sampai 5 ikut tercetak, kita menulis..."
         pilihan:
           - "range(1, 5)"
@@ -126,34 +123,34 @@ pelajaran:
           - "range(5, 1)"
           - "range(0, 5)"
         jawaban: 1
-        penjelasan: "range(1, 6) menghasilkan 1, 2, 3, 4, 5 — berhenti sebelum 6."
+        penjelasan: "range(1, 6) memberi 1, 2, 3, 4, 5. Berhenti sebelum 6."
 
   - id: "5-3"
     judul: "while: Ulang Sampai Cukup"
     menit: 7
     materi: |
-      for itu cocok kalau kita sudah tahu berapa kali mengulang. Tapi
-      bagaimana kalau kita tidak tahu? Misalnya: "terus menabung sampai
-      uangmu 50 ribu" — berapa kali? Tidak tahu! Di sinilah **while**
-      bekerja.
+      for dipakai kalau kita sudah tahu berapa kali mengulang.
+      Tapi kalau belum tahu? Misalnya: "terus menabung sampai
+      uangmu 50 ribu" — berapa kali? Tidak tahu!
+      Di sinilah **while** bekerja.
 
-      `while` mengulang **selama** kondisinya benar (True). Begitu
-      kondisinya salah (False), perulangan berhenti.
+      `while` mengulang **selama** kondisinya benar (True).
+      Begitu kondisinya salah (False), perulangan berhenti.
 
       ## Aturan main
 
       - Tulis kondisi setelah kata while, lalu titik dua.
-      - Jangan lupa mengubah sesuatu di dalam loop supaya kondisinya
-        bisa berubah. Kalau tidak, loop jalan terus selamanya — itu
-        namanya **infinite loop**! Seperti kipas yang lupa dimatikan.
+      - Jangan lupa mengubah sesuatu di dalam loop. Kalau tidak,
+        loop jalan terus selamanya. Itu namanya **infinite loop**!
+        Seperti kipas yang lupa dimatikan.
       - Baris di dalam while juga harus diberi indentasi.
 
-      while itu seperti meniup balon: selama balon belum besar (kondisi
-      benar), kamu terus meniup. Begitu sudah cukup, berhenti.
+      while itu seperti meniup balon. Selama balon belum besar
+      (kondisi benar), kamu terus meniup. Begitu sudah cukup, berhenti.
 
-      Perhatikan contoh kedua: variabel n harus dikurangi setiap
-      putaran. Kalau baris `n = n - 1` hilang, angka tidak akan pernah
-      habis dan program tidak akan berhenti.
+      Perhatikan contoh kedua. Variabel n harus dikurangi setiap putaran.
+      Kalau baris `n = n - 1` hilang, angka tidak akan pernah habis.
+      Program pun tidak akan berhenti.
 
       Latihan kecil: jalankan contoh kedua, lalu ganti `x <= 3` dengan
       `x < 3`. Lihat bedanya? Kondisi itulah yang menentukan kapan
@@ -180,7 +177,7 @@ pelajaran:
           - "tombol ditekan"
           - "tidak pernah"
         jawaban: 0
-        penjelasan: "while berjalan selama kondisi bernilai True, berhenti saat False."
+        penjelasan: "while berjalan selama kondisi bernilai True. Berhenti saat False."
       - soal: "Kalau di dalam while kita lupa mengubah nilai yang dicek, yang terjadi adalah..."
         pilihan:
           - "program langsung selesai"
@@ -188,7 +185,7 @@ pelajaran:
           - "error langsung muncul"
           - "angka berubah otomatis"
         jawaban: 1
-        penjelasan: "Kondisi tidak pernah berubah jadi False, sehingga loop tidak berhenti (infinite loop)."
+        penjelasan: "Kondisi tidak pernah berubah jadi False. Jadi loop tidak berhenti (infinite loop)."
       - soal: "Berapa kali 'Halo' tercetak?\n\nn = 2\nwhile n > 0:\n    print('Halo')\n    n = n - 1"
         pilihan:
           - "1 kali"
@@ -196,43 +193,41 @@ pelajaran:
           - "3 kali"
           - "0 kali"
         jawaban: 1
-        penjelasan: "n bernilai 2 lalu 1 (dua putaran), setelah n = 0 kondisi salah dan loop berhenti."
+        penjelasan: "n berisi 2 lalu 1 (dua putaran). Setelah n = 0, kondisi salah dan loop berhenti."
 
   - id: "5-4"
     judul: "break dan continue: Rem dan Lompat"
     menit: 7
     materi: |
-      Kadang di tengah perulangan kita ingin keluar lebih awal, atau
-      melewati satu putaran. Python punya dua senjata rahasia:
+      Kadang di tengah perulangan kita ingin keluar lebih awal.
+      Atau melewati satu putaran saja. Python punya dua senjata rahasia:
       **break** dan **continue**.
 
       ## break: rem darurat
 
-      `break` langsung **menghentikan** seluruh perulangan — seperti
-      lari pulang saat hujan turun. Kode setelah break di putaran itu
-      tidak dijalankan, dan loop selesai total.
+      `break` langsung **menghentikan** seluruh perulangan.
+      Seperti lari pulang saat hujan turun.
+      Kode setelah break di putaran itu tidak dijalankan.
+      Loop selesai total.
 
       ## continue: lompati satu putaran
 
-      `continue` **melewati sisa putaran itu saja**, lalu lanjut ke
-      putaran berikutnya — seperti melompati batu kotor di jalan
-      setapak. Kode setelah continue tidak dijalankan di putaran itu,
-      tapi loop tetap jalan.
+      `continue` **melewati sisa putaran itu saja**.
+      Lalu lanjut ke putaran berikutnya.
+      Seperti melompati batu kotor di jalan setapak.
 
       ## Kapan dipakai?
 
-      - break: mencari sesuatu dan sudah ketemu — berhenti, tidak usah
-        cari lagi.
-      - continue: menyaring — misalnya "lewati bilangan genap, cetak
-        yang ganjil saja".
+      - break: mencari sesuatu dan sudah ketemu. Berhenti, tidak usah cari lagi.
+      - continue: menyaring. Misalnya "lewati bilangan genap, cetak yang ganjil saja".
 
-      Keduanya biasanya dipasangkan dengan if: `if ...: break` atau
-      `if ...: continue`. Ingat: continue hanya melompati SATU
-      putaran, sedangkan break menghentikan SEMUA putaran.
+      Keduanya biasanya dipasang dengan if: `if ...: break` atau
+      `if ...: continue`. Ingat: continue hanya melompati SATU putaran.
+      break menghentikan SEMUA putaran.
 
-      Coba ubah contoh pertama: ganti break dengan continue, lalu
-      jalankan. Kamu akan melihat 3 tetap tercetak — bukti bahwa
-      continue tidak menghentikan loop.
+      Coba ubah contoh pertama: ganti break dengan continue, lalu jalankan.
+      Kamu akan melihat 3 tetap tercetak. Itu bukti bahwa continue
+      tidak menghentikan loop.
     contoh:
       - kode: |
           for i in range(1, 6):
@@ -247,22 +242,22 @@ pelajaran:
               print(i)
         penjelasan: "Mencetak 1, 3, 5 — bilangan genap dilewati oleh continue."
     kuis:
-      - soal: "Perintah yang menghentikan seluruh perulangan adalah..."
+      - soal: "Kata apa yang menghentikan semua perulangan?"
         pilihan:
           - "continue"
           - "break"
           - "stop()"
           - "exit()"
         jawaban: 1
-        penjelasan: "break menghentikan seluruh loop; continue hanya melewati satu putaran."
-      - soal: "Perintah yang hanya melewati satu putaran adalah..."
+        penjelasan: "break menghentikan semua loop. continue hanya melewati satu putaran."
+      - soal: "Kata apa yang hanya melewati satu putaran?"
         pilihan:
           - "break"
           - "pause"
           - "continue"
           - "skip()"
         jawaban: 2
-        penjelasan: "continue melompati sisa putaran itu, lalu loop lanjut ke putaran berikutnya."
+        penjelasan: "continue melompati sisa putaran itu. Lalu loop lanjut ke putaran berikutnya."
       - soal: "Apa outputnya?\n\nfor i in range(1, 4):\n    if i == 2:\n        continue\n    print(i)"
         pilihan:
           - "1, 2, 3"
@@ -270,19 +265,18 @@ pelajaran:
           - "2"
           - "1, 2"
         jawaban: 1
-        penjelasan: "Saat i = 2, continue melewati print(2), jadi hanya 1 dan 3 yang tercetak."
+        penjelasan: "Saat i = 2, continue melewati print(2). Jadi hanya 1 dan 3 yang tercetak."
 
 soal:
   - id: "s5-1"
     judul: "Hitung Mundur Roket"
     sulit: "mudah"
     cerita: |
-      Raka membuat roket mainan dari botol bekas. Panel kontrol
-      roketnya hanya bisa menampilkan hitung mundur: dari angka N
-      sampai 1, satu angka per baris. Setelah angka 1, roket meluncur!
+      Raka membuat roket mainan dari botol bekas.
+      Panel roketnya cuma bisa menghitung mundur: dari angka N sampai 1.
+      Setiap angka di baris sendiri. Setelah angka 1, roket meluncur!
 
-      Bantu Raka membuat program hitung mundur: baca angka N, lalu
-      cetak N, N-1, N-2, sampai 1 — setiap angka di baris sendiri.
+      Bantu Raka: baca angka N, lalu cetak N, N-1, N-2, sampai 1.
     input: "Satu angka N (1-20)."
     output: "N baris: angka dari N turun ke 1."
     contoh:
@@ -308,19 +302,19 @@ soal:
           n = n - 1
     petunjuk:
       - "Pakai while dengan kondisi n > 0."
-      - "Di dalam loop, cetak n lalu kurangi n dengan 1."
-      - "Pastikan n selalu mengecil supaya tidak infinite loop."
+      - "Di dalam loop, cetak n, lalu kurangi n dengan 1."
+      - "Pastikan n selalu mengecil. Kalau tidak, loop jalan terus."
 
   - id: "s5-2"
     judul: "Tabungan Dina"
     sulit: "sedang"
     cerita: |
-      Dina menabung di celengan selama beberapa hari. Hari pertama ia
-      menabung 1 ribu, hari kedua 2 ribu, hari ketiga 3 ribu, dan
-      seterusnya sampai hari ke-N ia menabung N ribu.
+      Dina menabung di celengan. Hari pertama ia menabung 1 ribu.
+      Hari kedua 2 ribu. Hari ketiga 3 ribu. Begitu seterusnya.
+      Sampai hari ke-N, ia menabung N ribu.
 
-      Berapa total uang Dina setelah N hari? Bantu Dina: baca angka N,
-      lalu cetak jumlah 1 + 2 + 3 + ... + N.
+      Berapa total uang Dina setelah N hari?
+      Baca angka N, lalu cetak 1 + 2 + 3 + ... + N.
     input: "Satu angka N (1-100)."
     output: "Satu angka: total tabungan Dina."
     contoh:
@@ -347,20 +341,19 @@ soal:
       print(total)
     petunjuk:
       - "Buat variabel total = 0 sebelum loop."
-      - "Pakai for i in range(1, n + 1) dan tambahkan i ke total."
+      - "Pakai for i in range(1, n + 1), lalu tambahkan i ke total."
       - "Cetak total setelah loop selesai."
 
   - id: "s5-3"
     judul: "Lomba Lari Angka"
     sulit: "sulit"
     cerita: |
-      Di acara sekolah ada lomba "Lari Angka". Peserta menyebut
-      bilangan dari 1 sampai N secara urut. Ada dua aturan: bilangan
-      kelipatan 3 tidak boleh disebut (langsung lewati), dan lomba
-      langsung berhenti begitu ada bilangan kelipatan 7 yang disebut.
+      Di sekolah ada lomba "Lari Angka". Peserta menyebut bilangan
+      dari 1 sampai N secara urut. Ada dua aturan: bilangan kelipatan 3
+      tidak boleh disebut (langsung lewati). Dan lomba langsung berhenti
+      begitu ada bilangan kelipatan 7 yang disebut.
 
-      Bantu peserta mencetak semua bilangan yang berhasil disebut,
-      satu per baris, sesuai urutan.
+      Bantu peserta mencetak semua bilangan yang disebut, satu per baris.
     input: "Satu angka N (1-50)."
     output: "Bilangan yang disebut, satu per baris."
     contoh:
@@ -392,4 +385,4 @@ soal:
     petunjuk:
       - "Pakai for i in range(1, n + 1)."
       - "Kalau i kelipatan 3, pakai continue untuk melewatinya."
-      - "Cetak i, lalu kalau i kelipatan 7, pakai break untuk berhenti."
+      - "Cetak i. Kalau i kelipatan 7, pakai break untuk berhenti."

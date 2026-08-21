@@ -9,9 +9,9 @@ pelajaran:
     judul: "Jalan Bercabang: if"
     menit: 8
     materi: |
-      Program yang hebat tidak hanya berjalan lurus — kadang dia harus
-      memilih jalan. Di sinilah percabangan masuk. Dengan `if`, program
-      memeriksa sebuah syarat; kalau syaratnya benar, dia menjalankan
+      Program yang hebat tidak hanya berjalan lurus. Kadang dia harus
+      memilih jalan. Ini namanya percabangan. Dengan `if`, program
+      memeriksa sebuah syarat. Kalau syaratnya benar, dia menjalankan
       kode di bawahnya.
 
       ## Cara menulis if
@@ -35,7 +35,7 @@ pelajaran:
       - `>=` lebih besar atau sama, `<=` lebih kecil atau sama
 
       Hati-hati dengan `==`: satu tanda sama dengan itu mengisi
-      variabel, dua tanda sama dengan itu membandingkan. Tertukar
+      variabel. Dua tanda sama dengan itu membandingkan. Tertukar
       sedikit saja, programmu bisa error atau bertingkah aneh. Coba dua
       contoh di bawah ini dan ubah-ubah angkanya!
     contoh:
@@ -43,12 +43,12 @@ pelajaran:
           umur = 15
           if umur >= 13:
               print('Kamu sudah remaja')
-        penjelasan: "15 lebih besar atau sama dengan 13, jadi baris di dalam if ikut dijalankan."
+        penjelasan: "15 lebih besar atau sama dengan 13. Jadi baris di dalam if ikut dijalankan."
       - kode: |
           nama = 'Kancil'
           if nama == 'Kancil':
               print('Halo, Kancil!')
-        penjelasan: "== membandingkan isi variabel dengan teks 'Kancil'; karena cocok, sapaan dicetak."
+        penjelasan: "== membandingkan isi variabel dengan tulisan 'Kancil'. Karena cocok, sapaan dicetak."
     kuis:
       - soal: "Apa yang terjadi kalau syarat if bernilai salah?"
         pilihan:
@@ -57,7 +57,7 @@ pelajaran:
           - "program error"
           - "program berhenti"
         jawaban: 1
-        penjelasan: "Kalau syarat salah, blok if dilewati dan program lanjut ke baris berikutnya."
+        penjelasan: "Kalau syarat salah, blok if dilewati. Program lanjut ke baris berikutnya."
       - soal: "Tanda apa untuk membandingkan 'sama dengan' di Python?"
         pilihan:
           - "="
@@ -65,7 +65,7 @@ pelajaran:
           - "!="
           - ":="
         jawaban: 1
-        penjelasan: "== dipakai untuk membandingkan; satu tanda = khusus untuk mengisi variabel."
+        penjelasan: "== dipakai untuk membandingkan. Satu tanda = khusus untuk mengisi variabel."
       - soal: "Kode di dalam if harus..."
         pilihan:
           - "menjorok ke dalam (indentasi)"
@@ -79,9 +79,9 @@ pelajaran:
     judul: "Pilih Satu: if/else"
     menit: 7
     materi: |
-      `if` saja masih setengah jalan — bagaimana kalau syaratnya salah?
+      `if` saja masih setengah jalan. Bagaimana kalau syaratnya salah?
       Kita ingin program tetap melakukan sesuatu. Di sinilah `else`
-      datang: blok yang jalan kalau syarat `if` salah.
+      datang. `else` adalah blok yang jalan kalau syarat `if` salah.
 
       `if nilai >= 75:`
       `    print('Lulus!')`
@@ -89,7 +89,7 @@ pelajaran:
       `    print('Belum lulus')`
 
       Satu hal penting: dari pasangan if/else, tepat satu blok yang
-      selalu jalan. Tidak mungkin dua-duanya, dan tidak mungkin tidak
+      selalu jalan. Tidak mungkin dua-duanya. Tidak mungkin juga tidak
       ada.
 
       ## Kapan else dipakai?
@@ -99,20 +99,20 @@ pelajaran:
       selalu mendarat di satu sisi.
 
       Kamu juga bisa memakai `!=` untuk memeriksa ketidaksamaan.
-      Misalnya, kalau jawaban user tidak sama dengan kunci jawaban,
+      Misalnya, kalau jawaban kamu tidak sama dengan kunci jawaban,
       program bisa mencetak 'Salah!'. Coba contoh kedua dan ubah nilai
-      `jawaban` — lihat bagaimana hasilnya berubah!
+      `jawaban`. Lihat bagaimana hasilnya berubah!
 
       ## Contoh sehari-hari
 
-      Bayangkan program absen kelas: kalau kehadiran lebih dari 20
+      Bayangkan program absen kelas. Kalau kehadiran lebih dari 20
       hari, cetak 'Rajin'. Kalau tidak, cetak 'Ayo lebih rajin!'. Hanya
       dengan if dan else, program sudah bisa menilai siswanya.
 
-      Else juga nanti bisa dipakai di dalam program yang lebih besar —
-      misalnya di dalam percabangan lain. Tapi untuk sekarang, ingat
-      satu hal: if dan else selalu berpasangan, dan tepat satu blok
-      yang jalan.
+      Else juga nanti bisa dipakai di dalam program yang lebih besar.
+      Misalnya di dalam percabangan lain. Tapi untuk sekarang, ingat
+      satu hal: if dan else selalu berpasangan. Tepat satu blok yang
+      jalan.
     contoh:
       - kode: |
           nilai = 80
@@ -120,14 +120,14 @@ pelajaran:
               print('Lulus!')
           else:
               print('Belum lulus')
-        penjelasan: "80 memenuhi syarat, jadi yang dicetak 'Lulus!' — blok else dilewati."
+        penjelasan: "80 memenuhi syarat. Jadi yang dicetak 'Lulus!' — blok else dilewati."
       - kode: |
           jawaban = 'kancil'
           if jawaban != 'kancil':
               print('Salah!')
           else:
               print('Benar!')
-        penjelasan: "jawaban sama dengan 'kancil', jadi syarat != bernilai salah dan blok else yang jalan."
+        penjelasan: "jawaban sama dengan 'kancil'. Jadi syarat != bernilai salah dan blok else yang jalan."
     kuis:
       - soal: "Kalau syarat if salah, blok mana yang jalan?"
         pilihan:
@@ -145,14 +145,14 @@ pelajaran:
           - "tidak pernah"
         jawaban: 1
         penjelasan: "if/else cocok untuk keputusan dua pilihan, seperti lulus atau tidak lulus."
-      - soal: "Apa output kode ini?\n\nx = 5\nif x > 10:\n    print('Besar')\nelse:\n    print('Kecil')"
+      - soal: "Kode ini mencetak apa?\n\nx = 5\nif x > 10:\n    print('Besar')\nelse:\n    print('Kecil')"
         pilihan:
           - "Besar"
           - "Kecil"
           - "Besar dan Kecil"
           - "error"
         jawaban: 1
-        penjelasan: "5 tidak lebih besar dari 10, jadi blok if dilewati dan blok else yang jalan: Kecil."
+        penjelasan: "5 tidak lebih besar dari 10. Jadi blok if dilewati dan blok else yang jalan: Kecil."
 
   - id: "4-3"
     judul: "Banyak Pilihan: elif"
@@ -160,8 +160,7 @@ pelajaran:
     materi: |
       Bagaimana kalau pilihannya lebih dari dua? Misalnya nilai diubah
       jadi huruf A, B, atau C. Pakai `elif` — kependekan dari "else if".
-      Elif dipasang di antara if dan else, dan bisa dipasang
-      berulang-ulang.
+      Elif dipasang di antara if dan else. Bisa dipasang berulang-ulang.
 
       `nilai = 85`
       `if nilai >= 85:`
@@ -176,12 +175,12 @@ pelajaran:
       ## Cara kerja elif
 
       Python memeriksa dari atas ke bawah. Begitu menemukan syarat yang
-      benar, blok itu dijalankan, lalu Python melompat ke akhir
-      percabangan — syarat di bawahnya tidak diperiksa lagi.
+      benar, blok itu dijalankan. Lalu Python melompat ke akhir
+      percabangan. Syarat di bawahnya tidak diperiksa lagi.
 
       Jadi pada contoh di atas, nilai 85 memenuhi syarat pertama
-      (>= 85) langsung dapat A. Nilai 75 tidak memenuhi syarat pertama,
-      tapi memenuhi `elif nilai >= 70`, jadi dapat B.
+      (>= 85) langsung dapat A. Nilai 75 tidak memenuhi syarat pertama.
+      Tapi memenuhi `elif nilai >= 70`, jadi dapat B.
 
       ## Yang perlu diingat
 
@@ -199,7 +198,7 @@ pelajaran:
               print('B')
           else:
               print('C')
-        penjelasan: "90 memenuhi syarat pertama (>= 85), jadi langsung dapat A — elif tidak diperiksa."
+        penjelasan: "90 memenuhi syarat pertama (>= 85). Jadi langsung dapat A — elif tidak diperiksa."
       - kode: |
           menu = 'nasi'
           if menu == 'nasi':
@@ -208,7 +207,7 @@ pelajaran:
               print('Mie ayam!')
           else:
               print('Terserah kamu')
-        penjelasan: "menu berisi 'nasi', jadi hanya blok pertama yang jalan."
+        penjelasan: "menu berisi 'nasi'. Jadi hanya blok pertama yang jalan."
     kuis:
       - soal: "Apa kepanjangan dari elif?"
         pilihan:
@@ -217,7 +216,7 @@ pelajaran:
           - "end if"
           - "elif tidak punya kepanjangan"
         jawaban: 0
-        penjelasan: "elif adalah kependekan dari 'else if': syarat berikutnya yang diperiksa kalau yang sebelumnya salah."
+        penjelasan: "elif adalah kependekan dari 'else if'. Syarat berikutnya yang diperiksa kalau yang sebelumnya salah."
       - soal: "Berapa blok yang dijalankan dalam satu rangkaian if/elif/else?"
         pilihan:
           - "semua blok"
@@ -225,7 +224,7 @@ pelajaran:
           - "tepat satu blok"
           - "tidak tentu"
         jawaban: 2
-        penjelasan: "Python memeriksa dari atas; begitu ada syarat benar, blok itu jalan dan sisanya dilewati."
+        penjelasan: "Python memeriksa dari atas. Begitu ada syarat benar, blok itu jalan dan sisanya dilewati."
       - soal: "Nilai 75 di kode ini dapat huruf apa?\n\nif nilai >= 85:\n    print('A')\nelif nilai >= 70:\n    print('B')\nelse:\n    print('C')"
         pilihan:
           - "A"
@@ -233,7 +232,7 @@ pelajaran:
           - "C"
           - "error"
         jawaban: 1
-        penjelasan: "75 tidak memenuhi syarat pertama, tapi memenuhi elif nilai >= 70, jadi dapat B."
+        penjelasan: "75 tidak memenuhi syarat pertama. Tapi memenuhi elif nilai >= 70, jadi dapat B."
 
   - id: "4-4"
     judul: "Gabungkan Syarat & Sisa Bagi"
@@ -261,7 +260,7 @@ pelajaran:
 
       Modulo jago untuk mengecek genap/ganjil: kalau `n % 2 == 0`,
       berarti n genap. Modulo juga dipakai untuk tahu apakah suatu
-      bilangan habis dibagi bilangan lain — kamu akan butuh ini di soal
+      bilangan habis dibagi bilangan lain. Kamu akan butuh ini di soal
       tahun kabisat nanti!
 
       Coba dua contoh di bawah: yang pertama memakai and, yang kedua
@@ -274,14 +273,14 @@ pelajaran:
               print('Boleh naik wahana')
           else:
               print('Belum boleh naik')
-        penjelasan: "Kedua syarat benar (14 >= 12 dan 150 >= 140), jadi and bernilai benar."
+        penjelasan: "Kedua syarat benar (14 >= 12 dan 150 >= 140). Jadi and bernilai benar."
       - kode: |
           n = 7
           if n % 2 == 0:
               print('Genap')
           else:
               print('Ganjil')
-        penjelasan: "7 % 2 = 1, tidak sama dengan 0, jadi n ganjil."
+        penjelasan: "7 % 2 = 1, tidak sama dengan 0. Jadi n ganjil."
     kuis:
       - soal: "Berapa hasil 10 % 3?"
         pilihan:
@@ -314,11 +313,11 @@ soal:
     sulit: "mudah"
     cerita: |
       Bibi memberi Kancil sekantong permen. Kancil ingin membagi
-      permennya menjadi dua kelompok sama rata untuk dimakan bersama
-      teman, tapi dia tidak tahu jumlahnya genap atau ganjil. Kalau
-      jumlah permen habis dibagi dua, cetak 'Genap'. Kalau bersisa satu,
-      cetak 'Ganjil'. Bantuin Kancil: baca jumlah permen, periksa
-      sisanya dengan operator %, lalu cetak jawabannya.
+      permennya jadi dua kelompok sama rata. Dia tidak tahu jumlahnya
+      genap atau ganjil. Kalau jumlah permen habis dibagi dua, cetak
+      'Genap'. Kalau bersisa satu, cetak 'Ganjil'. Bantuin Kancil: baca
+      jumlah permen, periksa sisanya dengan operator %, lalu cetak
+      jawabannya.
     input: "Satu baris: jumlah permen (int)."
     output: "Satu baris: Genap atau Ganjil."
     contoh:
@@ -345,16 +344,16 @@ soal:
           print('Ganjil')
     petunjuk:
       - "Baca n dengan int(input())."
-      - "n % 2 memberi sisa bagi 2; kalau sisanya 0 berarti habis dibagi dua."
-      - "Cetak 'Genap' kalau n % 2 == 0, selain itu cetak 'Ganjil'."
+      - "n % 2 memberi sisa bagi 2. Kalau sisanya 0 berarti habis dibagi dua."
+      - "Cetak 'Genap' kalau n % 2 == 0. Selain itu cetak 'Ganjil'."
 
   - id: "s4-2"
     judul: "Nilai Raport"
     sulit: "sedang"
     cerita: |
       Akhir semester tiba! Bu Guru membagikan raport dan mengubah nilai
-      menjadi huruf. Nilai 85 ke atas mendapat A, nilai 70 sampai 84
-      mendapat B, nilai 60 sampai 69 mendapat C, dan nilai di bawah 60
+      menjadi huruf. Nilai 85 ke atas mendapat A. Nilai 70 sampai 84
+      mendapat B. Nilai 60 sampai 69 mendapat C. Nilai di bawah 60
       mendapat D. Kancil mengetik nilainya di komputer, lalu program
       mencetak huruf yang dia dapat. Bantuin Kancil: baca satu nilai,
       periksa dengan if dan elif dari atas ke bawah, lalu cetak
@@ -391,7 +390,7 @@ soal:
           print('D')
     petunjuk:
       - "Baca nilai dengan int(input()) dan simpan di variabel n."
-      - "Periksa dari atas: n >= 85 dapat A, lalu n >= 70 dapat B, lalu n >= 60 dapat C."
+      - "Periksa dari atas: n >= 85 dapat A. Lalu n >= 70 dapat B. Lalu n >= 60 dapat C."
       - "Semua yang tersisa (di bawah 60) masuk ke else dan dapat D."
 
   - id: "s4-3"
@@ -400,8 +399,8 @@ soal:
     cerita: |
       Kancil membantu Bu Guru menyusun kalender sekolah untuk tahun
       depan. Bu Guru ingin tahu tahun mana yang kabisat. Aturannya:
-      tahun habis dibagi 4 adalah kabisat, kecuali kalau habis dibagi
-      100 — tapi kalau habis dibagi 400, tetap kabisat. Contoh: 2024
+      tahun habis dibagi 4 adalah kabisat. Kecuali kalau habis dibagi
+      100. Tapi kalau habis dibagi 400, tetap kabisat. Contoh: 2024
       kabisat, 1900 bukan, 2000 kabisat. Baca satu tahun, lalu cetak
       'Kabisat' atau 'Bukan kabisat'. Gunakan operator % bersama and
       dan or!
@@ -434,4 +433,4 @@ soal:
     petunjuk:
       - "Habis dibagi 4 artinya t % 4 == 0."
       - "Gabungkan syaratnya: (habis dibagi 4 DAN tidak habis dibagi 100) ATAU habis dibagi 400."
-      - "Cetak 'Kabisat' kalau syarat gabungan benar, selain itu cetak 'Bukan kabisat'."
+      - "Cetak 'Kabisat' kalau syarat gabungan benar. Selain itu cetak 'Bukan kabisat'."

@@ -54,14 +54,14 @@ def _friendly_error(err: str) -> str:
         ("SyntaxError", "Ada kesalahan penulisan kode (syntax error). Cek tanda kurung, titik dua, atau tanda kutip yang belum ditutup."),
         ("IndentationError", "Masalah indentasi/spasi. Di Python, spasi di awal baris itu penting! Pastikan rapi dan konsisten."),
         ("NameError", "Ada nama (variabel/fungsi) yang belum dikenal. Cek ejaannya — Python beda besar-kecil huruf!"),
-        ("TypeError", "Tipe data tidak cocok. Contoh: menggabungkan angka dengan teks tanpa konversi (str/int)."),
-        ("IndexError", "Index di luar jangkauan. List/tuple kamu tidak punya posisi segitu — mulai dari 0 ya!"),
-        ("KeyError", "Kunci tidak ada di dictionary. Cek ejaan kunci yang kamu pakai."),
+        ("TypeError", "Tipe data tidak cocok. Contoh: angka digabung dengan teks tanpa diubah dulu."),
+        ("IndexError", "Posisi ini tidak ada di daftar. Ingat, daftar mulai dari posisi 0 ya!"),
+        ("KeyError", "Kunci ini tidak ada di dictionary. Cek ejaan kunci yang kamu pakai."),
         ("ValueError", "Nilai tidak cocok. Contoh: mengubah 'abc' menjadi angka."),
         ("ZeroDivisionError", "Tidak bisa membagi dengan nol!"),
-        ("EOFError", "Program minta input padahal tidak ada input yang diberikan (input() tanpa data)."),
+        ("EOFError", "Program minta ketikan, tapi tidak ada ketikan yang diberikan."),
         ("FileNotFoundError", "File yang dicari tidak ada. Cek nama file-nya."),
-        ("RecursionError", "Rekursi terlalu dalam — kemungkinan fungsi memanggil dirinya sendiri tanpa berhenti."),
+        ("RecursionError", "Fungsi memanggil dirinya sendiri terus tanpa berhenti."),
     ]
     for keyword, friendly in mapping:
         if keyword in msg:

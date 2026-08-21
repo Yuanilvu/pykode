@@ -10,8 +10,8 @@ pelajaran:
     menit: 7
     materi: |
       Pernah pakai mesin penjual minuman? Kamu menekan satu tombol,
-      mesin mengerjakan semuanya, dan minuman keluar. Di Python, kita
-      bisa membuat "mesin" sendiri — namanya **fungsi**.
+      mesin mengerjakan semuanya, minuman keluar. Di Python, kita bisa
+      membuat "mesin" sendiri. Namanya **fungsi**.
 
       Fungsi adalah kumpulan kode yang diberi nama, bisa dipanggil
       kapan saja. Daripada menulis kode yang sama berulang-ulang,
@@ -24,24 +24,24 @@ pelajaran:
           print('Halo!')
       ```
 
-      - `def` = perintah mendefinisikan fungsi.
+      - `def` = cara membuat fungsi.
       - `sapa` = nama fungsi (bebas, tapi usahakan jelas).
-      - kurung dan titik dua wajib.
-      - isi fungsi harus diberi indentasi, seperti isi for dan while.
+      - Kurung dan titik dua wajib.
+      - Isi fungsi harus diberi indentasi, seperti isi for dan while.
 
       ## Memanggil fungsi
 
-      Setelah dibuat, fungsi dijalankan dengan menulis namanya +
-      kurung: `sapa()`. Bisa dipanggil berkali-kali — setiap panggilan
-      menjalankan isi fungsi dari atas ke bawah.
+      Setelah dibuat, fungsi dijalankan dengan menulis namanya + kurung:
+      `sapa()`. Bisa dipanggil berkali-kali. Setiap panggilan menjalankan
+      isi fungsi dari atas ke bawah.
 
-      Penting: fungsi TIDAK jalan sebelum dipanggil. Mendefinisikan
-      itu seperti menyimpan resep di buku; baru jalan saat kamu
-      memasaknya (memanggilnya). Program dibaca dari atas ke bawah:
-      definisi dulu, panggilan setelahnya.
+      Penting: fungsi TIDAK jalan sebelum dipanggil.
+      Membuat fungsi itu seperti menyimpan resep di buku.
+      Baru jalan saat kamu memasaknya (memanggilnya).
+      Program dibaca dari atas ke bawah: definisi dulu, panggilan setelahnya.
 
       Fungsi membuat kode lebih pendek, lebih rapi, dan lebih mudah
-      dicari kalau ada yang salah — cukup perbaiki di satu tempat.
+      dicari kalau ada yang salah. Cukup perbaiki di satu tempat.
     contoh:
       - kode: |
           def sapa():
@@ -55,7 +55,7 @@ pelajaran:
               print('Ayo belajar Python!')
 
           semangat()
-        penjelasan: "Fungsi didefinisikan lalu dipanggil sekali."
+        penjelasan: "Fungsi dibuat lalu dipanggil sekali."
     kuis:
       - soal: "Kata kunci untuk membuat fungsi adalah..."
         pilihan:
@@ -64,7 +64,7 @@ pelajaran:
           - "function"
           - "define()"
         jawaban: 1
-        penjelasan: "def adalah kata kunci Python untuk mendefinisikan fungsi."
+        penjelasan: "def adalah kata kunci Python untuk membuat fungsi."
       - soal: "Kode di dalam fungsi hanya jalan ketika..."
         pilihan:
           - "file dibuka"
@@ -72,45 +72,43 @@ pelajaran:
           - "komputer dinyalakan"
           - "tidak pernah"
         jawaban: 1
-        penjelasan: "Fungsi baru bekerja saat dipanggil, bukan saat didefinisikan."
+        penjelasan: "Fungsi baru bekerja saat dipanggil, bukan saat dibuat."
 
   - id: "8-2"
     judul: "Parameter: Tombol Mesin"
     menit: 7
     materi: |
-      Mesin penjual minuman punya banyak tombol: satu untuk teh, satu
-      untuk kopi. Fungsinya sama (mengeluarkan minuman), tapi hasilnya
-      beda tergantung tombol yang ditekan. Di Python, "tombol" itu
-      disebut **parameter**.
+      Mesin penjual minuman punya banyak tombol. Satu untuk teh,
+      satu untuk kopi. Fungsinya sama (mengeluarkan minuman),
+      tapi hasilnya beda tergantung tombol yang ditekan.
+      Di Python, "tombol" itu disebut **parameter**.
 
-      Parameter adalah variabel yang ditulis di dalam kurung saat
-      membuat fungsi:
+      Parameter adalah variabel yang ditulis di dalam kurung
+      saat membuat fungsi:
 
       ```
       def sapa(nama):
           print('Halo, ' + nama + '!')
       ```
 
-      Saat memanggil `sapa('Budi')`, nilai 'Budi' masuk ke parameter
-      `nama`. Fungsi lalu mencetak "Halo, Budi!". Panggil dengan nama
-      lain, hasilnya beda — satu fungsi untuk banyak orang.
+      Saat memanggil `sapa('Budi')`, nilai 'Budi' masuk ke parameter `nama`.
+      Fungsi lalu mencetak "Halo, Budi!". Panggil dengan nama lain,
+      hasilnya beda. Satu fungsi untuk banyak orang.
 
       ## Aturan parameter
 
-      - Jumlah nilai saat memanggil harus cocok dengan jumlah
-        parameter.
+      - Jumlah nilai saat memanggil harus cocok dengan jumlah parameter.
       - Urutan penting: `sapa('Budi')` mengisi parameter pertama.
-      - Nama parameter bebas — yang penting dipakai konsisten di dalam
-        fungsi.
+      - Nama parameter bebas. Yang penting dipakai konsisten di dalam fungsi.
 
-      Fungsi dengan parameter itu seperti resep dengan bahan:
-      resepnya sama, tapi kalau bahannya beda, hasilnya beda. Kamu
-      tidak perlu menulis resep baru untuk setiap bahan — cukup ganti
-      bahannya saat memasak!
+      Fungsi dengan parameter itu seperti resep dengan bahan.
+      Resepnya sama, tapi kalau bahannya beda, hasilnya beda.
+      Kamu tidak perlu menulis resep baru untuk setiap bahan.
+      Cukup ganti bahannya saat memasak!
 
       Kamu juga bisa memanggil fungsi dengan variabel:
-      `nama = 'Budi'` lalu `sapa(nama)`. Nilai variabel itulah yang
-      masuk ke parameter — sama seperti mengisi bahan ke resep.
+      `nama = 'Budi'` lalu `sapa(nama)`. Nilai variabel itulah
+      yang masuk ke parameter. Sama seperti mengisi bahan ke resep.
     contoh:
       - kode: |
           def sapa(nama):
@@ -142,18 +140,18 @@ pelajaran:
           - "6"
           - "error"
         jawaban: 2
-        penjelasan: "a = 3 dan b = 2, jadi 3 * 2 = 6."
+        penjelasan: "a = 3 dan b = 2. Jadi 3 * 2 = 6."
 
   - id: "8-3"
     judul: "return: Hasil Keluar dari Mesin"
     menit: 7
     materi: |
-      Mesin penjual tiket tidak hanya bekerja — dia MENGELUARKAN tiket
+      Mesin penjual tiket tidak hanya bekerja. Dia MENGELUARKAN tiket
       yang bisa kamu pegang dan pakai lagi. Fungsi juga bisa
       mengeluarkan hasil dengan **return**.
 
-      `return` mengirim nilai hasil ke tempat fungsi dipanggil. Nilai
-      itu bisa disimpan di variabel atau langsung dipakai:
+      `return` mengirim nilai hasil ke tempat fungsi dipanggil.
+      Nilai itu bisa disimpan di variabel atau langsung dipakai:
 
       ```
       def kali(a, b):
@@ -167,24 +165,23 @@ pelajaran:
 
       ## Bedanya print dan return
 
-      - `print` hanya menampilkan ke layar — nilainya hilang setelah
-        itu.
-      - `return` memberikan nilai ke pemanggil — bisa disimpan,
+      - `print` hanya mencetak ke layar. Nilainya hilang setelah itu.
+      - `return` memberikan nilai ke pemanggil. Bisa disimpan,
         dihitung lagi, dipakai di mana saja.
 
       ## Aturan return
 
-      - Begitu `return` dijalankan, fungsi LANGSUNG selesai. Kode
-        setelahnya tidak jalan.
+      - Begitu `return` dijalankan, fungsi LANGSUNG selesai.
+        Kode setelahnya tidak jalan.
       - Fungsi tanpa return menghasilkan None (tidak ada nilai).
 
-      Return itu seperti menyerahkan PR ke guru: kamu tidak hanya
-      mengerjakan, tapi hasilnya diserahkan untuk dinilai. Fungsi
-      dengan return bisa dipakai di dalam perhitungan lain — itulah
-      kekuatan sebenarnya.
+      Return itu seperti menyerahkan PR ke guru. Kamu tidak hanya
+      mengerjakan, tapi hasilnya diserahkan untuk dinilai.
+      Fungsi dengan return bisa dipakai di dalam perhitungan lain.
+      Itulah kekuatan sebenarnya.
 
-      Coba tebak: apa hasil fungsi yang tidak punya return? Jawabannya
-      None — tidak ada nilai yang keluar.
+      Coba tebak: apa hasil fungsi yang tidak punya return?
+      Jawabannya None. Tidak ada nilai yang keluar.
     contoh:
       - kode: |
           def kali(a, b):
@@ -201,7 +198,7 @@ pelajaran:
           print(kuadrat(3) + 1)
         penjelasan: "Mencetak 25 lalu 10 — hasil fungsi bisa langsung dipakai dalam perhitungan."
     kuis:
-      - soal: "Perintah untuk mengeluarkan hasil dari fungsi adalah..."
+      - soal: "Kata apa yang dipakai untuk mengeluarkan hasil dari fungsi?"
         pilihan:
           - "print"
           - "return"
@@ -216,7 +213,7 @@ pelajaran:
           - "mengulang dari awal"
           - "error"
         jawaban: 1
-        penjelasan: "return menghentikan fungsi saat itu juga; kode setelahnya tidak jalan."
+        penjelasan: "return menghentikan fungsi saat itu juga. Kode setelahnya tidak jalan."
       - soal: "def tambah(a, b): return a + b lalu print(tambah(2, 3) * 2) mencetak..."
         pilihan:
           - "5"
@@ -224,14 +221,14 @@ pelajaran:
           - "10"
           - "error"
         jawaban: 2
-        penjelasan: "tambah(2, 3) menjadi 5, lalu 5 * 2 = 10."
+        penjelasan: "tambah(2, 3) menjadi 5. Lalu 5 * 2 = 10."
 
   - id: "8-4"
     judul: "Variabel Lokal: Rahasia di Dalam Fungsi"
     menit: 6
     materi: |
-      Variabel yang dibuat DI DALAM fungsi itu seperti rahasia kamar:
-      hanya diketahui di dalam kamar itu, tidak terlihat dari luar.
+      Variabel yang dibuat DI DALAM fungsi itu seperti rahasia kamar.
+      Hanya diketahui di dalam kamar itu, tidak terlihat dari luar.
       Variabel seperti ini disebut **variabel lokal**.
 
       ```
@@ -242,29 +239,29 @@ pelajaran:
       print(hitung())
       ```
 
-      Di sini `x` hanya ada di dalam fungsi `hitung`. Kalau kamu
-      mencoba `print(x)` di luar fungsi, Python error: NameError —
+      Di sini `x` hanya ada di dalam fungsi `hitung`.
+      Kalau kamu mencoba `print(x)` di luar fungsi, Python error: NameError.
       x tidak dikenal di luar.
 
       ## Kenapa penting?
 
-      - Fungsi tidak saling mengganggu: dua fungsi boleh punya
+      - Fungsi tidak saling mengganggu. Dua fungsi boleh punya
         variabel dengan nama yang sama.
-      - Kode di luar fungsi tidak bisa mengubah isi fungsi secara
-        tidak sengaja.
-      - Fungsi jadi "kotak tertutup": masuk lewat parameter, keluar
-        lewat return.
+      - Kode di luar fungsi tidak bisa mengubah isi fungsi
+        secara tidak sengaja.
+      - Fungsi jadi "kotak tertutup": masuk lewat parameter,
+        keluar lewat return.
 
       ## Yang sering salah
 
       Banyak pemula menulis variabel di luar fungsi, lalu memakainya
-      di dalam — itu BOLEH (namanya variabel global). Tapi kebiasaan
+      di dalam. Itu BOLEH (namanya variabel global). Tapi kebiasaan
       terbaik: semua yang dibutuhkan fungsi, lewatkan lewat parameter.
       Kode jadi rapi dan mudah ditebak.
 
-      Bayangkan fungsi itu kamar pribadi: barang di dalamnya milik
-      sendiri. Kalau ingin meminjam barang dari luar, kamu memintanya
-      lewat pintu — itulah parameter!
+      Bayangkan fungsi itu kamar pribadi. Barang di dalamnya milik sendiri.
+      Kalau ingin meminjam barang dari luar, kamu memintanya lewat pintu.
+      Itulah parameter!
     contoh:
       - kode: |
           def hitung():
@@ -296,7 +293,7 @@ pelajaran:
           - "error NameError"
           - "membuat x baru"
         jawaban: 2
-        penjelasan: "x tidak dikenal di luar fungsi, sehingga terjadi NameError."
+        penjelasan: "x tidak dikenal di luar fungsi. Jadi terjadi NameError."
 
 soal:
   - id: "s8-1"
@@ -308,8 +305,8 @@ soal:
       bernama sapa yang menerima satu parameter nama, lalu mencetak
       "Halo, <nama>!".
 
-      Setelah itu panggil fungsi itu dengan nama yang dibaca dari
-      input. Bantu Py-Bot menyapa siswa!
+      Setelah itu panggil fungsi itu dengan nama yang dibaca dari input.
+      Bantu Py-Bot menyapa siswa!
     input: "Satu baris: nama siswa."
     output: "Satu baris: Halo, <nama>!"
     contoh:
@@ -342,13 +339,12 @@ soal:
     judul: "Luas Karpet Kelas"
     sulit: "sedang"
     cerita: |
-      Kelas 7A ingin memasang karpet baru di ruang kelas. Panjang dan
-      lebar ruangan sudah diukur, tapi belum dihitung luasnya.
+      Kelas 7A ingin memasang karpet baru di ruang kelas.
+      Panjang dan lebar ruangan sudah diukur, tapi belum dihitung luasnya.
 
-      Buat fungsi bernama luas yang menerima dua parameter: panjang
-      dan lebar, lalu mengembalikan hasil panjang dikali lebar. Baca
-      panjang dan lebar dari input (dua baris), lalu cetak luas
-      ruangan.
+      Buat fungsi bernama luas yang menerima dua parameter:
+      panjang dan lebar. Lalu kembalikan hasil panjang dikali lebar.
+      Baca panjang dan lebar dari input (dua baris), lalu cetak luas ruangan.
     input: "Baris 1: panjang. Baris 2: lebar."
     output: "Satu angka: luas ruangan."
     contoh:
@@ -378,20 +374,20 @@ soal:
       print(luas(p, l))
     petunjuk:
       - "Fungsi: def luas(p, l): return p * l."
-      - "Baca panjang dulu, lalu lebar — dua baris input."
+      - "Baca panjang dulu, lalu lebar. Dua baris input."
       - "Cetak hasil pemanggilan luas(p, l)."
 
   - id: "s8-3"
     judul: "Detektif Bilangan Prima"
     sulit: "sulit"
     cerita: |
-      Detektif Angka sedang menguji bilangan-bilangan misterius. Ia
-      perlu tahu apakah sebuah bilangan itu PRIMA — bilangan yang
-      hanya bisa dibagi habis oleh 1 dan dirinya sendiri.
+      Detektif Angka sedang menguji bilangan-bilangan misterius.
+      Ia perlu tahu apakah sebuah bilangan itu PRIMA.
+      Bilangan prima hanya bisa dibagi habis oleh 1 dan dirinya sendiri.
 
       Buat fungsi prima yang menerima satu angka dan mengembalikan
-      True kalau angka itu prima, False kalau bukan. Baca satu angka
-      dari input, lalu cetak 'prima' atau 'bukan'.
+      True kalau angka itu prima, False kalau bukan.
+      Baca satu angka dari input, lalu cetak 'prima' atau 'bukan'.
     input: "Satu angka N (1-100)."
     output: "Satu baris: prima atau bukan"
     contoh:
@@ -427,6 +423,6 @@ soal:
       else:
           print('bukan')
     petunjuk:
-      - "Angka 1 bukan prima, angka 2 adalah prima."
+      - "Angka 1 bukan prima. Angka 2 adalah prima."
       - "Cek pembagian dari 2 sampai n-1 dengan for dan %."
       - "Kalau ada angka yang habis membagi n, langsung return False."

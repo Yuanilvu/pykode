@@ -9,33 +9,32 @@ pelajaran:
     judul: "Angka Main Hitung"
     menit: 8
     materi: |
-      Python adalah kalkulator super! Dengan variabel yang sudah kamu
-      kenal, sekarang saatnya berhitung. Operator aritmatika di Python:
+      Python itu kalkulator super! Sekarang saatnya berhitung. Tanda
+      hitung di Python:
 
       - `+` tambah
       - `-` kurang
       - `*` kali (bintang, bukan huruf x!)
       - `/` bagi
 
-      Pembagian di Python selalu menghasilkan bilangan desimal. Jadi
-      `10 / 4` hasilnya `2.5`, bukan `2`.
+      Pembagian di Python selalu memberi angka desimal. Jadi `10 / 4`
+      hasilnya `2.5`, bukan `2`.
 
       ## Urutan hitung
 
-      Python mengikuti aturan matematika biasa: yang di dalam kurung
-      dikerjakan paling dulu, lalu kali dan bagi, baru tambah dan kurang.
+      Python mengikuti aturan matematika biasa. Yang di dalam kurung
+      dikerjakan paling dulu. Lalu kali dan bagi. Baru tambah dan kurang.
 
       - `2 + 3 * 4` hasilnya 14 (kali dulu: 3 * 4 = 12, baru ditambah 2)
       - `(2 + 3) * 4` hasilnya 20 (kurung dulu: 2 + 3 = 5, baru dikali 4)
 
-      Kalau ragu, pakai saja tanda kurung — tidak ada salahnya, malah
-      membuat kode lebih jelas dibaca.
+      Kalau ragu, pakai saja tanda kurung. Tidak ada salahnya. Kode juga
+      jadi lebih jelas dibaca.
 
       Angka bisa datang dari variabel juga. Simpan dulu ke variabel,
-      lalu hitung pakai nama variabelnya. Python akan mengambil isinya
-      dan menghitung. Contoh pertama di bawah memakai angka langsung,
-      contoh kedua memakai variabel. Jalankan keduanya dan bandingkan
-      hasilnya!
+      lalu hitung pakai nama variabelnya. Python mengambil isinya dan
+      menghitung. Contoh pertama memakai angka langsung. Contoh kedua
+      memakai variabel. Jalankan keduanya dan bandingkan hasilnya!
     contoh:
       - kode: |
           print(2 + 3 * 4)
@@ -44,7 +43,7 @@ pelajaran:
           a = 10
           b = 4
           print('Hasil bagi:', a / b)
-        penjelasan: "10 / 4 menghasilkan 2.5 karena pembagian di Python selalu memberi desimal."
+        penjelasan: "10 / 4 hasilnya 2.5. Pembagian di Python selalu memberi desimal."
     kuis:
       - soal: "Berapa hasil 10 / 4 di Python?"
         pilihan:
@@ -53,7 +52,7 @@ pelajaran:
           - "2 sisa 2"
           - "error"
         jawaban: 1
-        penjelasan: "Pembagian di Python selalu menghasilkan desimal: 10 / 4 = 2.5."
+        penjelasan: "Pembagian di Python selalu memberi desimal: 10 / 4 = 2.5."
       - soal: "Berapa hasil 2 + 3 * 4?"
         pilihan:
           - "20"
@@ -61,7 +60,7 @@ pelajaran:
           - "24"
           - "9"
         jawaban: 1
-        penjelasan: "Kali dulu: 3 * 4 = 12, baru ditambah 2, jadi 14."
+        penjelasan: "Kali dulu: 3 * 4 = 12. Baru ditambah 2, jadi 14."
       - soal: "Berapa hasil (2 + 3) * 4?"
         pilihan:
           - "14"
@@ -69,36 +68,35 @@ pelajaran:
           - "20"
           - "24"
         jawaban: 2
-        penjelasan: "Yang di dalam kurung dikerjakan dulu: 2 + 3 = 5, lalu 5 * 4 = 20."
+        penjelasan: "Yang di dalam kurung dikerjakan dulu: 2 + 3 = 5. Lalu 5 * 4 = 20."
 
   - id: "3-2"
     judul: "Kalimat Ajaib: f-string"
     menit: 7
     materi: |
       Pernah lihat poster yang rapi? Isinya kalimat lengkap dengan angka
-      yang menyatu, bukan angka yang terpisah. Di Python, kita bisa
-      membuat kalimat seperti itu dengan f-string — singkatan dari
-      "format string".
+      yang menyatu. Di Python, kita bisa membuat kalimat seperti itu
+      dengan f-string. f-string itu singkatan dari "format string".
 
-      Cara pakainya: tulis huruf `f` di depan tanda kutip, lalu sisipkan
-      variabel di dalam tanda kurung kurawal `{}`:
+      Cara pakainya: tulis huruf `f` di depan tanda kutip. Lalu sisipkan
+      variabel di dalam kurung kurawal `{}`:
 
       `nama = 'Budi'`
       `print(f'Halo, {nama}!')`
 
-      Python akan mengganti `{nama}` dengan isi variabelnya, jadi
-      hasilnya: `Halo, Budi!`
+      Python mengganti `{nama}` dengan isi variabelnya. Jadi hasilnya:
+      `Halo, Budi!`
 
       Kerennya, di dalam kurung kurawal kita boleh langsung menulis
       hitungan:
 
       `print(f'Total: {1500 + 2500}')`
 
-      hasilnya `Total: 4000`. Python menghitung dulu, baru mencetak.
+      Hasilnya `Total: 4000`. Python menghitung dulu, baru mencetak.
 
       Kenapa f-string lebih baik daripada print dengan koma? Karena kita
       bisa mengatur spasi dan tanda baca dengan bebas. Dengan koma,
-      Python menaruh spasi di antara nilai — kadang muncul di tempat yang
+      Python menaruh spasi di antara nilai. Kadang muncul di tempat yang
       tidak kita mau, misalnya sebelum tanda seru. Dengan f-string,
       semua yang kita tulis di dalam kutipan tercetak apa adanya.
 
@@ -106,20 +104,20 @@ pelajaran:
       kalimat yang rapi!
 
       Satu lagi: f-string bisa memuat banyak variabel sekaligus. Tinggal
-      tulis beberapa pasang kurung kurawal dalam satu kalimat, dan
-      Python mengganti semuanya satu per satu.
+      tulis beberapa pasang kurung kurawal dalam satu kalimat. Python
+      mengganti semuanya satu per satu.
     contoh:
       - kode: |
           nama = 'Kancil'
           print(f'Selamat datang, {nama}!')
-        penjelasan: "Kurung kurawal {nama} diganti isi variabelnya, jadi tercetak 'Selamat datang, Kancil!'."
+        penjelasan: "Kurung kurawal {nama} diganti isi variabelnya. Jadi tercetak 'Selamat datang, Kancil!'."
       - kode: |
           uang = 5000
           harga = 1500
           print(f'Uangku {uang} rupiah, sisa jajan {uang - harga}')
         penjelasan: "Di dalam kurung kurawal boleh langsung ada hitungan: 5000 - 1500 = 3500."
     kuis:
-      - soal: "Apa output dari kode ini?\n\nnama = 'Budi'\nprint(f'Halo, {nama}!')"
+      - soal: "Kode ini mencetak apa?\n\nnama = 'Budi'\nprint(f'Halo, {nama}!')"
         pilihan:
           - "Halo, {nama}!"
           - "Halo, Budi!"
@@ -134,38 +132,38 @@ pelajaran:
           - "p"
           - "x"
         jawaban: 1
-        penjelasan: "f-string diawali huruf f, contoh: f'halo {nama}'."
-      - soal: "Apa output dari print(f'Total: {1500 + 2500}')?"
+        penjelasan: "f-string diawali huruf f. Contoh: f'halo {nama}'."
+      - soal: "Apa hasil dari print(f'Total: {1500 + 2500}')?"
         pilihan:
           - "Total: {1500 + 2500}"
           - "Total: 4000"
           - "Total: 1500 + 2500"
           - "error"
         jawaban: 1
-        penjelasan: "Di dalam kurung kurawal boleh ada hitungan; Python menghitung dulu: 1500 + 2500 = 4000."
+        penjelasan: "Di dalam kurung kurawal boleh ada hitungan. Python menghitung dulu: 1500 + 2500 = 4000."
 
   - id: "3-3"
     judul: "Rakit Kalimat & Ukur Panjang"
     menit: 8
     materi: |
       Kalau f-string merakit kalimat dengan kurung kurawal, ada cara
-      lain: menyambung teks dengan tanda tambah `+`. Ini disebut
-      menggabungkan string (string concatenation).
+      lain. Menyambung tulisan dengan tanda tambah `+`. Ini namanya
+      menggabungkan string.
 
       `'Py' + 'thon'` hasilnya `'Python'`.
 
-      ## Angka dan teks belum tentu akur
+      ## Angka dan tulisan belum tentu akur
 
       Coba tebak: `'Umurku ' + 13` — hasilnya? Error! Python tidak mau
-      menyambung teks dengan angka. Solusinya: ubah angka jadi teks dulu
-      pakai `str()`.
+      menyambung tulisan dengan angka. Solusinya: ubah angka jadi tulisan
+      dulu pakai `str()`.
 
       `'Umurku ' + str(13)` hasilnya `'Umurku 13'`.
 
-      Jadi `str()` mengubah angka menjadi teks — kebalikan dari `int()`
+      Jadi `str()` mengubah angka menjadi tulisan. Kebalikan dari `int()`
       dan `float()` yang kamu pelajari di Bab 2.
 
-      ## Mengukur panjang teks
+      ## Mengukur panjang tulisan
 
       Pernah penasaran berapa huruf dalam namamu? Python bisa
       menghitungnya dengan `len()`:
@@ -176,8 +174,8 @@ pelajaran:
       `len('SMPN 1')` hasilnya 6 juga — huruf S, M, P, N, spasi, dan
       angka 1.
 
-      Mana yang kamu pakai, f-string atau tanda tambah? Dua-duanya sah.
-      Banyak programmer memakai f-string karena lebih rapi, tapi kamu
+      Mana yang kamu pakai, f-string atau tanda tambah? Dua-duanya boleh.
+      Banyak programmer memakai f-string karena lebih rapi. Tapi kamu
       tetap harus paham `+` dan `str()` karena sering muncul di kode
       orang lain.
     contoh:
@@ -185,7 +183,7 @@ pelajaran:
           kata1 = 'Py'
           kata2 = 'thon'
           print(kata1 + kata2)
-        penjelasan: "Tanda + menyambung dua teks tanpa spasi: 'Py' + 'thon' = 'Python'."
+        penjelasan: "Tanda + menyambung dua tulisan tanpa spasi: 'Py' + 'thon' = 'Python'."
       - kode: |
           nama = 'Python'
           print('Jumlah huruf:', len(nama))
@@ -198,7 +196,7 @@ pelajaran:
           - "error"
           - "'Py+'thon'"
         jawaban: 1
-        penjelasan: "Tanda + menyambung dua teks tanpa spasi: 'Py' + 'thon' = 'Python'."
+        penjelasan: "Tanda + menyambung dua tulisan tanpa spasi: 'Py' + 'thon' = 'Python'."
       - soal: "Apa yang terjadi kalau kita menulis 'Umurku ' + 13?"
         pilihan:
           - "menjadi 'Umurku 13'"
@@ -206,7 +204,7 @@ pelajaran:
           - "menjadi 13"
           - "menjadi 'Umurku '"
         jawaban: 1
-        penjelasan: "Python tidak bisa menyambung teks dengan angka; ubah dulu angkanya dengan str(13)."
+        penjelasan: "Python tidak bisa menyambung tulisan dengan angka. Ubah dulu angkanya dengan str(13)."
       - soal: "Berapa hasil len('Python')?"
         pilihan:
           - "5"
@@ -221,7 +219,7 @@ pelajaran:
     menit: 6
     materi: |
       Pernah mengetik kata sandi dan lupa memakai huruf besar? Komputer
-      menganggap 'Kancil' dan 'kancil' sebagai dua teks yang berbeda!
+      menganggap 'Kancil' dan 'kancil' sebagai dua tulisan yang berbeda!
       Untungnya Python punya alat untuk merapikan huruf besar-kecil.
 
       ## Huruf besar semua: upper()
@@ -232,20 +230,19 @@ pelajaran:
 
       `'KANCIL'.lower()` hasilnya `'kancil'`.
 
-      Perhatikan cara menulisnya: nama teksnya dulu, lalu titik, lalu
-      nama perintahnya. Ini disebut metode — perintah khusus yang
-      menempel pada teks. Kamu akan sering melihat pola seperti ini di
-      Python.
+      Perhatikan cara menulisnya: nama tulisan dulu, lalu titik, lalu
+      nama caranya. Ini disebut metode — cara khusus yang menempel pada
+      tulisan. Kamu akan sering melihat pola seperti ini di Python.
 
       ## Buat apa sih?
 
-      - Merapikan input dari user, supaya 'KANCIL', 'Kancil', dan
+      - Merapikan ketikan dari user. Supaya 'KANCIL', 'Kancil', dan
         'kancil' dianggap sama
       - Membuat tulisan di game jadi besar semua untuk efek teriak
       - Membandingkan jawaban tanpa peduli besar-kecil huruf
 
-      Metode tidak mengubah teks aslinya — `upper()` dan `lower()`
-      membuat teks baru sebagai hasil. Kalau kamu mau menyimpannya,
+      Metode tidak mengubah tulisan aslinya. `upper()` dan `lower()`
+      membuat tulisan baru sebagai hasil. Kalau mau menyimpannya,
       masukkan ke variabel baru:
 
       `teks_besar = teks.upper()`
@@ -253,9 +250,9 @@ pelajaran:
       Coba dua contoh di bawah ini, lalu ubah-ubah hurufnya dan lihat
       hasilnya!
 
-      Coba juga teks campuran seperti 'PyThOn' — `.upper()` membuat
-      semua hurufnya besar, `.lower()` membuat semuanya kecil. Seru,
-      kan? Sekarang kamu bisa merapikan teks apa pun!
+      Coba juga tulisan campuran seperti 'PyThOn'. `.upper()` membuat
+      semua hurufnya besar. `.lower()` membuat semuanya kecil. Seru,
+      kan? Sekarang kamu bisa merapikan tulisan apa pun!
     contoh:
       - kode: |
           print('kancil'.upper())
@@ -295,13 +292,13 @@ soal:
     sulit: "mudah"
     cerita: |
       Si Kancil jajan di kantin sekolah. Dia membayar dengan uang
-      lembaran, dan Bu Kantin menghitung kembaliannya. Hari ini Kancil
-      membayar 5000 rupiah untuk jajanan seharga 3500, jadi kembaliannya
+      lembaran. Bu Kantin menghitung kembaliannya. Hari ini Kancil
+      membayar 5000 rupiah. Jajannya seharga 3500, jadi kembaliannya
       1500. Program membaca dua angka: uang yang dibayar dan harga
-      jajanan. Bantuin Bu Kantin: hitung kembaliannya dengan mengurangkan
-      harga dari uang, lalu cetak hasilnya.
+      jajanan. Bantuin Bu Kantin: kurangkan harga dari uang, lalu cetak
+      hasilnya.
     input: "Dua baris: uang yang dibayar (int), lalu harga jajanan (int)."
-    output: "Satu baris: Kembalian: diikuti angka kembalian."
+    output: "Satu baris: Kembalian: lalu angka kembalian."
     contoh:
       - input: "5000\n3500"
         output: "Kembalian: 1500"
@@ -323,22 +320,22 @@ soal:
       harga = int(input())
       print('Kembalian:', uang - harga)
     petunjuk:
-      - "Baca dua angka dengan int(input()) secara berurutan."
-      - "Kembalian dihitung dengan uang dikurangi harga."
+      - "Baca dua angka dengan int(input()) berurutan."
+      - "Kembalian = uang dikurangi harga."
       - "Cetak dengan print('Kembalian:', uang - harga)."
 
   - id: "s3-2"
     judul: "Rata-Rata Nilai Ulangan"
     sulit: "sedang"
     cerita: |
-      Bu Guru memberikan tiga nilai ulangan harian kepada Kancil. Kancil
-      penasaran, berapa rata-rata nilainya? Program membaca tiga nilai
-      yang berupa bilangan bulat, lalu mencetak rata-ratanya. Rata-rata
-      dihitung dengan menjumlahkan ketiga nilai, lalu membaginya dengan
-      tiga. Hasilnya bisa berupa angka desimal, jadi jangan dibulatkan.
-      Bantuin Kancil menghitung dan mencetak rata-ratanya!
+      Bu Guru memberi Kancil tiga nilai ulangan. Kancil penasaran,
+      berapa rata-ratanya? Program membaca tiga nilai angka bulat. Lalu
+      mencetak rata-ratanya. Rata-rata dihitung dengan menjumlahkan
+      ketiga nilai. Lalu membaginya dengan tiga. Hasilnya bisa angka
+      desimal, jadi jangan dibulatkan. Bantuin Kancil menghitung dan
+      mencetak rata-ratanya!
     input: "Tiga baris: nilai pertama, kedua, dan ketiga (int)."
-    output: "Satu baris: Rata-rata: diikuti angka rata-rata (bisa desimal)."
+    output: "Satu baris: Rata-rata: lalu angka rata-rata (bisa desimal)."
     contoh:
       - input: "7\n8\n9"
         output: "Rata-rata: 8.0"
@@ -362,7 +359,7 @@ soal:
       print('Rata-rata:', (a + b + c) / 3)
     petunjuk:
       - "Baca tiga nilai dan simpan di variabel a, b, c."
-      - "Jumlahkan lalu bagi tiga — pakai tanda kurung supaya penjumlahan dikerjakan dulu."
+      - "Jumlahkan lalu bagi tiga. Pakai tanda kurung supaya penjumlahan dikerjakan dulu."
       - "Cetak dengan print('Rata-rata:', (a + b + c) / 3)."
 
   - id: "s3-3"
@@ -372,12 +369,11 @@ soal:
       Perpustakaan sekolah punya komputer baru untuk membuat kartu
       anggota. Saat anggota baru mendaftar, mereka mengetik nama.
       Komputer mencetak kartu berisi: nama asli, jumlah huruf dalam
-      nama, nama dalam huruf besar semua, dan nama dalam huruf kecil
-      semua. Contohnya, nama 'Kancil' punya 6 huruf, huruf besarnya
-      'KANCIL', huruf kecilnya 'kancil'. Bantuin Kancil menulis
-      programnya: baca satu nama, cetak empat baris persis seperti
-      contoh.
-    input: "Satu baris: nama anggota (teks)."
+      nama, nama huruf besar semua, dan nama huruf kecil semua.
+      Contohnya, nama 'Kancil' punya 6 huruf. Huruf besarnya 'KANCIL',
+      huruf kecilnya 'kancil'. Bantuin Kancil menulis programnya: baca
+      satu nama, cetak empat baris persis seperti contoh.
+    input: "Satu baris: nama anggota (tulisan)."
     output: "Empat baris: Kartu untuk <nama>, Jumlah huruf: <n>, Huruf besar: <NAMA>, Huruf kecil: <nama>."
     contoh:
       - input: "Kancil"
@@ -404,4 +400,4 @@ soal:
     petunjuk:
       - "Simpan nama di variabel, lalu pakai f-string untuk mencetak kalimat."
       - "Jumlah huruf didapat dari len(nama)."
-      - "Huruf besar pakai nama.upper() dan huruf kecil pakai nama.lower()."
+      - "Huruf besar pakai nama.upper(). Huruf kecil pakai nama.lower()."

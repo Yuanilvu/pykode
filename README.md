@@ -2,9 +2,10 @@
 
 Aplikasi belajar Python dari nol sampai advance, ala **Mimo + Online Judge**:
 baca materi ringkas → coba kode langsung di browser → jawab kuis → pecahkan soal
-dengan test case tersembunyi → kumpulkan XP, badge, dan streak!
+dengan tes rahasia → kumpulkan XP, badge, dan streak!
 
-Dibuat khusus untuk pemula (kelas 7-9) dengan bahasa Indonesia yang ramah anak.
+Bahasa semua materi dibuat **sangat sederhana** — kalimat pendek, kata sehari-hari,
+analogi dunia anak (mainan, jajan, kue). Anak SD kelas 1 pun paham kalau dibacakan.
 
 ## Fitur
 
@@ -31,6 +32,40 @@ buka port 8000 untuk jaringan rumah saja (deteksi subnet otomatis), lalu verifik
 Setelah jalan, buka dari browser perangkat mana pun di WiFi yang sama:
 `http://<IP-PC>:8000` (IP-nya ditampilkan script di akhir).
 
+## Akses dari Luar Rumah (Tailscale) — PILIHAN AMAN vs BERISIKO
+
+⚠️ **Penting:** PyKode menjalankan kode Python yang dikirim user. Kalau aplikasi
+terbuka untuk publik, siapa pun bisa eksekusi kode di mesin ini. Pilih dengan sadar:
+
+| Cara | Privasi | Keamanan | Setup |
+|------|---------|----------|-------|
+| **A. Tailscale privat (DIREKOMENDASIKAN)** | Hanya device milik kalian | Kode cuma bisa dikirim dari device yang kamu undang | Adek install app Tailscale (HP/laptop), kamu undang akun mereka |
+| **B. Tailscale Funnel (publik)** | URL bisa dibuka siapa saja | ⚠️ Siapa pun dengan URL bisa kirim kode ke mesinmu — jangan dipakai kecuali sandbox sudah diperkeras | `tailscale funnel 8000` |
+
+### Cara A (aman): Tailscale privat
+
+```bash
+# Di PC server (sekali, butuh sudo):
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up --hostname pykode
+
+# Di HP/laptop adek: install app Tailscale, login dengan akun mereka,
+# minta diundang ke tailnet kamu (Magic Links / invite di admin console).
+```
+
+Setelah adek join, mereka buka `http://pykode:8000` dari perangkatnya —
+dari mana saja (rumah, sekolah, luar kota), tanpa membuka port ke internet.
+
+### Cara B (publik — HANYA kalau kamu terima risikonya)
+
+```bash
+sudo tailscale set --operator=$USER
+tailscale funnel 8000   # jalan sebagai systemd user service biar tahan restart
+```
+
+Sebelum pakai cara B, sandbox HARUS diperkeras dulu (jalankan kode sebagai user
+terpisah tanpa akses ke home + blokir jaringan) — tanyakan ke pemelihara jika ragu.
+
 ## Operasi Harian
 
 ```bash
@@ -38,9 +73,6 @@ systemctl status pykode          # cek status
 sudo systemctl restart pykode    # restart setelah update kode
 journalctl -u pykode -n 30       # lihat log
 ```
-
-Kalau adeknya mau belajar dari luar rumah, bisa pakai Tailscale Funnel
-(lihat proyek lain di mesin ini sebagai referensi) — cukup expose port 8000.
 
 ## Struktur Proyek
 
