@@ -62,6 +62,10 @@ BADGES = {
                        "desc": "Selesaikan SEMUA bab"},
     "bintang":        {"nama": "Bintang Baru",    "emoji": "⭐", "xp": 50,
                        "desc": "Kumpulkan 1000 XP"},
+    "pembangun":      {"nama": "Pembangun",       "emoji": "🧱", "xp": 30,
+                       "desc": "Selesaikan misi pertama Proyek Besar"},
+    "arsitek":        {"nama": "Arsitek Sekolah", "emoji": "🏛️", "xp": 300,
+                       "desc": "Selesaikan SEMUA misi Proyek Besar"},
 }
 
 
@@ -128,11 +132,16 @@ def index():
     badges = {bid: BADGES[bid] for bid in db.awarded_badges(user["id"]) if bid in BADGES}
     n_bab_done = sum(1 for b in babs if b["complete"])
     stats = curriculum.stats()
+    proyek = curriculum.get_project()
+    n_misi_done = len(db.milestones_done_ids(user["id"])) if proyek else 0
+    n_misi_total = len(proyek.get("misi") or []) if proyek else 0
     top = db.leaderboard(5)
     rank = rank_for(user["xp"])
     return render_template("index.html", babs=babs, badges=badges,
                            stats=stats, top=top, streak_bonus=bonus,
-                           rank=rank, n_bab_done=n_bab_done)
+                           rank=rank, n_bab_done=n_bab_done, project=proyek,
+                           n_project_done=n_misi_done,
+                           project_pct=round(100 * n_misi_done / n_misi_total) if n_misi_total else 0)
 
 
 @app.route("/lesson/<lesson_id>")
@@ -363,7 +372,100 @@ def api_drill_submit():
                     "new_badges": new_badges, "penjelasan": d.get("penjelasan", "")})
 
 
+def _milestone_unlocked(user_id, misi):
+    """Misi terbuka kalau: semua pelajaran bab misi selesai + misi sebelumnya selesai."""
+    bab = curriculum.get_bab(misi.get("bab", 1))
+    if not bab:
+        return False
+    done_lessons = db.lessons_done_ids(user_id)
+    lessons = bab.get("pelajaran") or []
+    if not lessons or not all(l["id"] in done_lessons for l in lessons):
+        return False
+    idx = curriculum.get_project()["misi"].index(misi)
+    if idx == 0:
+        return True
+    prev = curriculum.get_project()["misi"][idx - 1]
+    return db.milestone_done(user_id, prev["id"])
+
+
+@app.route("/project")
+@login_required
+def project():
+    proyek = curriculum.get_project()
+    if not proyek:
+        flash("Proyek Besar belum tersedia.", "info")
+        return redirect(url_for("index"))
+    done_ids = db.milestones_done_ids(g.user["id"])
+    misi_list = []
+    for m in proyek.get("misi") or []:
+        unlocked = _milestone_unlocked(g.user["id"], m)
+        misi_list.append({
+            "data": m,
+            "done": m["id"] in done_ids,
+            "unlocked": unlocked,
+        })
+    n_done = len(done_ids)
+    total = len(misi_list)
+    saved_code = db.get_project_code(g.user["id"])
+    return render_template("project.html", proyek=proyek, misi=misi_list,
+                           n_done=n_done, total=total,
+                           pct=round(100 * n_done / total) if total else 0,
+                           has_code=bool(saved_code.strip()))
+
+
+@app.route("/project/<milestone_id>")
+@login_required
+def project_milestone(milestone_id):
+    m = curriculum.get_milestone(milestone_id)
+    if not m:
+        flash("Misi tidak ditemukan.", "danger")
+        return redirect(url_for("project"))
+    if not _milestone_unlocked(g.user["id"], m):
+        flash("🔒 Misi ini belum terbuka. Selesaikan pelajaran bab sebelumnya dulu!", "info")
+        return redirect(url_for("project"))
+    done = db.milestone_done(g.user["id"], milestone_id)
+    saved = db.get_project_code(g.user["id"])
+    starter = m.get("starter", "") if not saved.strip() else ""
+    return render_template("project_milestone.html", misi=m, done=done,
+                           starter=starter, saved_code=saved)
+
+
+@app.route("/api/project-submit", methods=["POST"])
+@login_required
+def api_project_submit():
+    body = request.get_json(silent=True) or {}
+    milestone_id = body.get("milestone_id", "")
+    code = (body.get("code") or "")[:20000]
+    m = curriculum.get_milestone(milestone_id)
+    if not m:
+        return jsonify({"ok": False, "error": "Misi tidak ditemukan"}), 404
+    if not _milestone_unlocked(g.user["id"], m):
+        return jsonify({"ok": False, "error": "Misi belum terbuka"}), 403
+    result = judge(code, m.get("tes") or [])
+    status = "AC" if result["verdict"] == "AC" else "WA"
+    xp_added, new_badges, first_done = 0, [], False
+    if status == "AC":
+        first_done = not db.milestone_done(g.user["id"], milestone_id)
+        db.save_project_code(g.user["id"], code)
+        if first_done:
+            db.mark_milestone_done(g.user["id"], milestone_id)
+            xp_added = int(m.get("xp", 80))
+            db.add_xp(g.user["id"], xp_added)
+        new_badges = _check_badges(g.user["id"])
+    return jsonify({**result, "status": status, "xp_added": xp_added,
+                    "first_done": first_done, "new_badges": new_badges,
+                    "solusi": m.get("solusi", "") if status == "AC" else ""})
+
+
 # ---------- Badges ----------
+def _all_milestones_done(user_id):
+    proyek = curriculum.get_project()
+    if not proyek:
+        return False
+    done = db.milestones_done_ids(user_id)
+    return all(m["id"] in done for m in (proyek.get("misi") or []))
+
+
 def _check_badges(user_id):
     """Cek semua badge yang memenuhi syarat; berikan yang belum dimiliki."""
     user = db.get_user(user_id)
@@ -401,6 +503,8 @@ def _check_badges(user_id):
                         and all(l["id"] in done_lessons for l in b["pelajaran"])) >= 5,
         "python_master": all_lesson_ids <= done_lessons,
         "bintang": xp >= 1000,
+        "pembangun": len(db.milestones_done_ids(user_id)) >= 1,
+        "arsitek": _all_milestones_done(user_id),
     }
     new_badges = []
     for bid, cond in conditions.items():

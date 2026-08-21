@@ -205,6 +205,57 @@ def main():
                     if err:
                         fail(f"{dpath} contoh[{ci}]: solusi {err}")
 
+        elif "proyek" in data:
+            proyek = data["proyek"]
+            if not validate_structure(proyek, fn, ["judul", "emoji", "warna",
+                                                   "deskripsi", "misi"]):
+                continue
+            misi_list = proyek["misi"] or []
+            if len(misi_list) < 3:
+                fail(f"{fn}: proyek harus punya minimal 3 misi, dapat {len(misi_list)}")
+            prev_tes = None
+            prev_bab = 0
+            for mi, m in enumerate(misi_list):
+                mpath = f"{fn} misi[{mi}] ({m.get('id', '?')})"
+                if not validate_structure(m, mpath, ["id", "judul", "emoji", "bab", "menit",
+                                                     "xp", "cerita", "instruksi", "contoh",
+                                                     "tes", "solusi", "petunjuk"]):
+                    continue
+                if m["id"] in seen_ids:
+                    fail(f"{mpath}: id '{m['id']}' duplikat (sudah di {seen_ids[m['id']]})")
+                seen_ids[m["id"]] = fn
+                bab_n = int(m.get("bab", 0))
+                if not (1 <= bab_n <= 12):
+                    fail(f"{mpath}: bab harus 1-12, dapat {bab_n}")
+                if bab_n <= prev_bab:
+                    fail(f"{mpath}: bab harus NAIK dari misi sebelumnya (dapat {bab_n}, "
+                         f"sebelumnya {prev_bab})")
+                prev_bab = bab_n
+                # Regresi: tes tidak boleh MENYUSUT (fitur lama harus tetap dicover),
+                # dan beri warning kalau tes misi sebelumnya hilang total.
+                if prev_tes is not None:
+                    if len(m["tes"]) < len(prev_tes):
+                        fail(f"{mpath}: jumlah tes menyusut ({len(prev_tes)} -> "
+                             f"{len(m['tes'])}). Fitur lama harus tetap diuji.")
+                    missing = [pt for pt in prev_tes if pt not in m["tes"]]
+                    if missing:
+                        warn(f"{mpath}: {len(missing)} tes misi sebelumnya tidak "
+                             f"disalin — pastikan fitur lama tetap jalan & teruji "
+                             f"(contoh input {missing[0].get('input')!r}).")
+                prev_tes = m["tes"]
+                if len(m["tes"]) < 3:
+                    warn(f"{mpath}: test case cuma {len(m['tes'])} (min. 3 dianjurkan)")
+                for ti, t in enumerate(m["tes"]):
+                    err = check_code_runs("project_tes", m["solusi"], t.get("input", ""),
+                                          t.get("output", ""))
+                    if err:
+                        fail(f"{mpath} tes[{ti}]: solusi {err}")
+                for ci, c in enumerate(m["contoh"]):
+                    err = check_code_runs("project_tes", m["solusi"], c.get("input", ""),
+                                          c.get("output", ""))
+                    if err:
+                        fail(f"{mpath} contoh[{ci}]: solusi {err}")
+
     print("\n" + "=" * 60)
     print(f"RINGKASAN: contoh pelajaran jalan: {CHECKED['contoh_pelajaran']}, "
           f"tes soal: {CHECKED['soal_tes']}, contoh soal: {CHECKED['soal_contoh']}, "

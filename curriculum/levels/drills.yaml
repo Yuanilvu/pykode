@@ -653,3 +653,769 @@ drill:
       Angka tidak terpengaruh: "buku 1" menjadi "Buku 1".
       Cukup satu baris kode, ratusan judul buku langsung rapi.
       Bayangkan kalau harus mengetik manual satu per satu!
+
+  - id: "d15"
+    judul: "Jumlah dan Selisih"
+    emoji: "➕"
+    tema: "Deret Angka"
+    tingkat: 2
+    cerita: |
+      Kancil belajar berhitung di rumah.
+      Dia punya dua angka favorit.
+      Dia ingin tahu jumlah dan selisihnya.
+      Baca dua angka.
+      Cetak jumlahnya dulu, lalu selisihnya.
+      Selisih artinya angka pertama dikurangi angka kedua.
+    input: "Dua baris: angka pertama, lalu angka kedua."
+    output: "Baris 1: Jumlah: <a+b>. Baris 2: Selisih: <a-b>."
+    contoh:
+      - input: "10\n4"
+        output: "Jumlah: 14\nSelisih: 6"
+      - input: "7\n9"
+        output: "Jumlah: 16\nSelisih: -2"
+    tes:
+      - input: "10\n4"
+        output: "Jumlah: 14\nSelisih: 6"
+      - input: "7\n9"
+        output: "Jumlah: 16\nSelisih: -2"
+      - input: "5\n5"
+        output: "Jumlah: 10\nSelisih: 0"
+      - input: "100\n50"
+        output: "Jumlah: 150\nSelisih: 50"
+      - input: "3\n8"
+        output: "Jumlah: 11\nSelisih: -5"
+      - input: "20\n1"
+        output: "Jumlah: 21\nSelisih: 19"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      print('Jumlah:', a + b)
+      print('Selisih:', a - b)
+    penjelasan: |
+      Baca dua angka dengan int(input()) dan simpan di variabel a dan b.
+      Input() selalu memberi teks, jadi kita ubah dulu dengan int() supaya bisa dihitung.
+      Jumlah didapat dari a + b, lalu dicetak dengan print('Jumlah:', a + b).
+      Tanda koma di print otomatis memberi spasi antara teks dan angka.
+      Selisih didapat dari a - b, dicetak di baris berikutnya.
+      Kalau angka kedua lebih besar, hasil selisihnya negatif — itu wajar, bukan kesalahan.
+      Contoh: a = 10 dan b = 4, jumlahnya 14 dan selisihnya 6.
+      Coba jalankan dengan angka lain untuk berlatih!
+
+  - id: "d16"
+    judul: "Inisial Nama"
+    emoji: "📛"
+    tema: "String"
+    tingkat: 3
+    cerita: |
+      OSIS membuat lencana nama untuk semua anggota.
+      Di lencana hanya ada inisial: huruf pertama nama depan dan nama belakang.
+      Baca nama depan lalu nama belakang.
+      Cetak 'Inisial: <huruf><huruf>'.
+      Contoh: Budi Santoso jadi BS.
+    input: "Dua baris: nama depan, lalu nama belakang."
+    output: "Satu baris: Inisial: <huruf pertama nama depan><huruf pertama nama belakang>."
+    contoh:
+      - input: "Budi\nSantoso"
+        output: "Inisial: BS"
+      - input: "Sari\nLestari"
+        output: "Inisial: SL"
+    tes:
+      - input: "Budi\nSantoso"
+        output: "Inisial: BS"
+      - input: "Sari\nLestari"
+        output: "Inisial: SL"
+      - input: "Kancil\nCerdas"
+        output: "Inisial: KC"
+      - input: "Ayu\nPutri"
+        output: "Inisial: AP"
+      - input: "Tono\nWijaya"
+        output: "Inisial: TW"
+      - input: "Umi\nKulsum"
+        output: "Inisial: UK"
+    solusi: |
+      depan = input()
+      belakang = input()
+      print('Inisial:', depan[0] + belakang[0])
+    penjelasan: |
+      Baca nama depan dengan input() dan simpan di variabel depan.
+      Baca nama belakang dan simpan di variabel belakang.
+      Huruf pertama sebuah teks bisa diambil dengan index 0: depan[0] memberi huruf pertama nama depan.
+      Index di Python mulai dari 0, jadi huruf pertama ada di posisi 0.
+      Gabungkan dua huruf itu dengan tanda +: depan[0] + belakang[0] menghasilkan dua huruf, misalnya 'B' dan 'S' menjadi 'BS'.
+      Terakhir cetak dengan print('Inisial:', ...).
+      Tanda koma memberi spasi otomatis setelah kata 'Inisial:'.
+      Contoh: Budi Santoso menjadi 'Inisial: BS'.
+      Coba dengan namamu sendiri!
+
+  - id: "d17"
+    judul: "Angka Terbesar dari Tiga"
+    emoji: "🥇"
+    tema: "Logika Kondisi"
+    tingkat: 4
+    cerita: |
+      Kancil, Sari, dan Tono bermain lompat jauh.
+      Mereka ingin tahu siapa yang melompat paling jauh.
+      Baca tiga angka: jarak Kancil, Sari, lalu Tono.
+      Cetak angka terbesarnya.
+      Kalau ada yang sama besar, cetak angka itu juga.
+    input: "Tiga baris: tiga angka."
+    output: "Satu baris: angka terbesar."
+    contoh:
+      - input: "5\n9\n3"
+        output: "9"
+      - input: "7\n7\n2"
+        output: "7"
+    tes:
+      - input: "5\n9\n3"
+        output: "9"
+      - input: "7\n7\n2"
+        output: "7"
+      - input: "1\n2\n3"
+        output: "3"
+      - input: "10\n10\n10"
+        output: "10"
+      - input: "4\n4\n8"
+        output: "8"
+      - input: "6\n1\n2"
+        output: "6"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      if a >= b and a >= c:
+          print(a)
+      elif b >= c:
+          print(b)
+      else:
+          print(c)
+    penjelasan: |
+      Baca tiga angka dengan int(input()) dan simpan di a, b, dan c.
+      Sekarang cari yang terbesar.
+      Pertama, cek apakah a paling besar: a >= b dan a >= c.
+      Kalau benar, a yang terbesar, cetak a.
+      Kalau tidak, berarti a bukan yang terbesar.
+      Lalu cek apakah b >= c.
+      Kalau benar, b yang terbesar, cetak b.
+      Kalau tidak, berarti c yang terbesar, cetak c.
+      Tanda >= dipakai supaya angka yang sama besar tetap dianggap menang.
+      Contoh: a = 5, b = 9, c = 3. a bukan terbesar, lalu b >= c benar, jadi cetak 9.
+      Cara ini sederhana dan tidak perlu loop sama sekali!
+
+  - id: "d18"
+    judul: "Jumlah dari 1 sampai n"
+    emoji: "🧮"
+    tema: "Perulangan"
+    tingkat: 5
+    cerita: |
+      Bu Guru memberi PR: jumlahkan semua angka dari 1 sampai n.
+      Kancil malas menghitung manual.
+      Dia minta Python membantunya!
+      Baca satu angka n.
+      Cetak 'Jumlah: <total>'.
+      Contoh: n = 4, jumlahnya 1 + 2 + 3 + 4 = 10.
+    input: "Satu baris: angka n."
+    output: "Satu baris: Jumlah: <total 1 sampai n>."
+    contoh:
+      - input: "4"
+        output: "Jumlah: 10"
+      - input: "3"
+        output: "Jumlah: 6"
+    tes:
+      - input: "4"
+        output: "Jumlah: 10"
+      - input: "3"
+        output: "Jumlah: 6"
+      - input: "1"
+        output: "Jumlah: 1"
+      - input: "10"
+        output: "Jumlah: 55"
+      - input: "5"
+        output: "Jumlah: 15"
+      - input: "2"
+        output: "Jumlah: 3"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(1, n + 1):
+          total = total + i
+      print('Jumlah:', total)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Siapkan variabel total mulai dari 0.
+      Variabel ini akan menampung jumlah semua angka.
+      Pakai for dengan range(1, n + 1) supaya i berjalan dari 1 sampai n.
+      Setiap putaran, tambahkan i ke total: total = total + i.
+      Kalau n = 4, putarannya: i = 1, total jadi 1; i = 2, total jadi 3; i = 3, total jadi 6; i = 4, total jadi 10.
+      Setelah loop selesai, total berisi jumlah semua angka.
+      Terakhir cetak dengan print('Jumlah:', total).
+      Tanda koma memberi spasi otomatis.
+      Cara ini cepat, apalagi kalau n-nya besar seperti 100!
+
+  - id: "d19"
+    judul: "Piramida Bintang"
+    emoji: "🔺"
+    tema: "Pola Bintang"
+    tingkat: 5
+    cerita: |
+      Kancil membangun piramida dari bintang di pantai.
+      Baris paling atas satu bintang.
+      Setiap baris ke bawah bertambah dua bintang.
+      Baca angka n.
+      Cetak piramida dengan n baris.
+      Baris paling bawah berisi 2*n - 1 bintang.
+    input: "Satu baris: angka n."
+    output: "n baris piramida: baris ke-i punya n-i spasi lalu 2*i-1 bintang."
+    contoh:
+      - input: "3"
+        output: "  *\n ***\n*****"
+      - input: "2"
+        output: " *\n***"
+    tes:
+      - input: "3"
+        output: "  *\n ***\n*****"
+      - input: "2"
+        output: " *\n***"
+      - input: "1"
+        output: "*"
+      - input: "4"
+        output: "   *\n  ***\n *****\n*******"
+      - input: "5"
+        output: "    *\n   ***\n  *****\n *******\n*********"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print(' ' * (n - i) + '*' * (2 * i - 1))
+    penjelasan: |
+      Baca n dengan int(input()).
+      Piramida punya n baris.
+      Untuk baris ke-i, kita butuh dua bagian: spasi di kiri dan bintang.
+      Spasi di kiri sebanyak n - i. Makin ke bawah, makin sedikit spasi.
+      Bintang sebanyak 2 * i - 1. Angka ini selalu ganjil: 1, 3, 5, dan seterusnya.
+      Pakai for dengan range(1, n + 1) supaya i berjalan dari 1 sampai n.
+      Cetak dengan print(' ' * (n - i) + '*' * (2 * i - 1)).
+      Tanda kali pada teks mengulang teks: ' ' * 2 membuat dua spasi.
+      Untuk n = 3: baris 1 = 2 spasi + 1 bintang, baris 2 = 1 spasi + 3 bintang, baris 3 = 0 spasi + 5 bintang.
+      Hasilnya piramida yang rapi!
+
+  - id: "d20"
+    judul: "Rata-Rata Skor"
+    emoji: "📈"
+    tema: "List"
+    tingkat: 6
+    cerita: |
+      Kancil mencatat skor kuis semua temannya.
+      Dia ingin tahu rata-rata skor kelas.
+      Baca banyak skor n, lalu n skor.
+      Simpan skor di list.
+      Jumlahkan semua, lalu bagi dengan n.
+      Cetak 'Rata-rata: <hasil>'.
+    input: "Baris 1: n (banyak skor). n baris berikutnya: skor."
+    output: "Satu baris: Rata-rata: <total dibagi n>."
+    contoh:
+      - input: "3\n5\n6\n7"
+        output: "Rata-rata: 6.0"
+      - input: "2\n10\n4"
+        output: "Rata-rata: 7.0"
+    tes:
+      - input: "3\n5\n6\n7"
+        output: "Rata-rata: 6.0"
+      - input: "2\n10\n4"
+        output: "Rata-rata: 7.0"
+      - input: "1\n8"
+        output: "Rata-rata: 8.0"
+      - input: "4\n2\n4\n6\n8"
+        output: "Rata-rata: 5.0"
+      - input: "5\n10\n10\n10\n10\n10"
+        output: "Rata-rata: 10.0"
+      - input: "3\n1\n2\n3"
+        output: "Rata-rata: 2.0"
+    solusi: |
+      n = int(input())
+      skor = []
+      for i in range(n):
+          skor.append(int(input()))
+      total = 0
+      for s in skor:
+          total = total + s
+      print('Rata-rata:', total / n)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Buat list kosong bernama skor.
+      Ulangi n kali: setiap putaran baca satu skor dengan int(input()) lalu tambahkan ke list dengan skor.append(...).
+      Setelah semua skor masuk list, siapkan total mulai dari 0.
+      Loop seluruh list: setiap anggota s ditambahkan ke total.
+      Sekarang total berisi jumlah semua skor.
+      Rata-rata didapat dengan membagi total dengan n: total / n.
+      Pembagian di Python menghasilkan angka desimal, jadi 18 / 3 menjadi 6.0.
+      Cetak dengan print('Rata-rata:', total / n).
+      Contoh: skor 5, 6, 7 → total 18, rata-rata 6.0.
+      List membantu kita menyimpan semua skor dulu sebelum dihitung.
+
+  - id: "d21"
+    judul: "Balik Urutan"
+    emoji: "🔄"
+    tema: "List"
+    tingkat: 6
+    cerita: |
+      Kancil menulis daftar nama pahlawan di papan tulis.
+      Bu Guru minta daftar itu dibalik: yang terakhir jadi pertama.
+      Baca banyak nama n, lalu n nama.
+      Cetak nama-nama itu dari yang terakhir ke yang pertama.
+      Satu nama satu baris.
+    input: "Baris 1: n (banyak nama). n baris berikutnya: nama."
+    output: "n baris: nama urut terbalik."
+    contoh:
+      - input: "3\nKancil\nBuaya\nRusa"
+        output: "Rusa\nBuaya\nKancil"
+      - input: "2\nBudi\nSari"
+        output: "Sari\nBudi"
+    tes:
+      - input: "3\nKancil\nBuaya\nRusa"
+        output: "Rusa\nBuaya\nKancil"
+      - input: "2\nBudi\nSari"
+        output: "Sari\nBudi"
+      - input: "1\nTono"
+        output: "Tono"
+      - input: "4\nA\nB\nC\nD"
+        output: "D\nC\nB\nA"
+      - input: "3\nx\ny\nz"
+        output: "z\ny\nx"
+      - input: "2\nMimi\nMilo"
+        output: "Milo\nMimi"
+    solusi: |
+      n = int(input())
+      nama = []
+      for i in range(n):
+          nama.append(input())
+      for x in nama[::-1]:
+          print(x)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Buat list kosong bernama nama.
+      Ulangi n kali: setiap putaran baca satu nama dengan input() dan tambahkan ke list dengan nama.append(...).
+      Setelah semua nama masuk list, kita balik urutannya dengan slicing ajaib: nama[::-1].
+      Slicing dengan [::-1] membaca list dari belakang ke depan.
+      Jadi anggota terakhir jadi pertama, dan anggota pertama jadi terakhir.
+      Loop hasil balikan itu dengan for x in nama[::-1]: setiap x dicetak di baris sendiri dengan print(x).
+      Contoh: list ['Kancil', 'Buaya', 'Rusa'] dibalik menjadi ['Rusa', 'Buaya', 'Kancil'].
+      Tanpa slicing, kamu harus pakai index dari belakang — tapi slicing membuatnya satu langkah saja!
+
+  - id: "d22"
+    judul: "Buku Telepon Kelas"
+    emoji: "📒"
+    tema: "Dict"
+    tingkat: 7
+    cerita: |
+      OSIS membuat buku telepon kelas.
+      Setiap anggota punya nomor telepon.
+      Kancil ingin mencari nomor temannya dengan cepat.
+      Baca banyak anggota n, lalu n baris: nama dan nomor.
+      Lalu baca satu nama yang dicari.
+      Cetak nomornya, atau 'tidak ada' kalau tidak ketemu.
+    input: "Baris 1: n. n baris berikutnya: nama dan nomor (dipisah spasi). Baris terakhir: nama yang dicari."
+    output: "Satu baris: nomor telepon, atau 'tidak ada'."
+    contoh:
+      - input: "3\nBudi 0812\nSari 0856\nTono 0877\nSari"
+        output: "0856"
+      - input: "2\nBudi 0812\nSari 0856\nRina"
+        output: "tidak ada"
+    tes:
+      - input: "3\nBudi 0812\nSari 0856\nTono 0877\nSari"
+        output: "0856"
+      - input: "2\nBudi 0812\nSari 0856\nRina"
+        output: "tidak ada"
+      - input: "1\nAyu 0800\nAyu"
+        output: "0800"
+      - input: "4\nA 1\nB 2\nC 3\nD 4\nD"
+        output: "4"
+      - input: "3\nX 111\nY 222\nZ 333\nW"
+        output: "tidak ada"
+      - input: "2\nMilo 001\nMimi 002\nMilo"
+        output: "001"
+    solusi: |
+      n = int(input())
+      telepon = {}
+      for i in range(n):
+          baris = input().split()
+          telepon[baris[0]] = baris[1]
+      tanya = input()
+      if tanya in telepon:
+          print(telepon[tanya])
+      else:
+          print('tidak ada')
+    penjelasan: |
+      Baca n dengan int(input()).
+      Buat dictionary kosong bernama telepon.
+      Dictionary cocok untuk menyimpan pasangan nama dan nomor.
+      Ulangi n kali: setiap putaran baca satu baris dan pecah dengan split() menjadi dua bagian.
+      Bagian pertama baris[0] adalah nama, bagian kedua baris[1] adalah nomor.
+      Simpan ke dict: telepon[baris[0]] = baris[1].
+      Setelah semua masuk, baca nama yang dicari dengan input().
+      Cek dengan in: kalau tanya ada di telepon, cetak nomornya telepon[tanya].
+      Kalau tidak ada, cetak 'tidak ada'.
+      Mencari dengan dict sangat cepat karena tidak perlu memeriksa satu per satu.
+      Contoh: cari 'Sari' langsung ketemu '0856'.
+
+  - id: "d23"
+    judul: "Fungsi Jumlah"
+    emoji: "🔧"
+    tema: "Fungsi"
+    tingkat: 8
+    cerita: |
+      Kancil membuat fungsi rahasia di rumah.
+      Fungsi itu bernama total.
+      Dia menerima satu angka n dan mengembalikan jumlah angka 1 sampai n.
+      Baca satu angka.
+      Cetak 'Total: <hasil>'.
+      Pakai fungsi buatanmu sendiri!
+    input: "Satu baris: angka n."
+    output: "Satu baris: Total: <jumlah 1 sampai n>."
+    contoh:
+      - input: "5"
+        output: "Total: 15"
+      - input: "3"
+        output: "Total: 6"
+    tes:
+      - input: "5"
+        output: "Total: 15"
+      - input: "3"
+        output: "Total: 6"
+      - input: "1"
+        output: "Total: 1"
+      - input: "10"
+        output: "Total: 55"
+      - input: "4"
+        output: "Total: 10"
+      - input: "2"
+        output: "Total: 3"
+    solusi: |
+      def total(n):
+          s = 0
+          for i in range(1, n + 1):
+              s = s + i
+          return s
+
+      n = int(input())
+      print('Total:', total(n))
+    penjelasan: |
+      Buat fungsi dengan def total(n):.
+      Nama fungsi total, dan n adalah parameternya — nilai yang masuk saat fungsi dipanggil.
+      Di dalam fungsi, siapkan variabel s mulai dari 0.
+      Pakai for dengan range(1, n + 1) supaya i berjalan dari 1 sampai n.
+      Setiap putaran, tambahkan i ke s.
+      Setelah loop selesai, kembalikan hasilnya dengan return s.
+      Return mengirim nilai keluar dari fungsi ke tempat pemanggilan.
+      Di bagian utama program, baca n dengan int(input()).
+      Lalu cetak dengan print('Total:', total(n)).
+      Saat total(n) dipanggil, nilai n masuk ke parameter, fungsi menghitung, lalu return mengirim hasilnya.
+      Contoh: total(5) menghitung 1 + 2 + 3 + 4 + 5 = 15.
+
+  - id: "d24"
+    judul: "Total Harga Aman"
+    emoji: "🛒"
+    tema: "Deret Angka"
+    tingkat: 9
+    cerita: |
+      Kancil jualan pensil di koperasi.
+      Pembeli bisa beli beberapa pensil sekaligus.
+      Kancil menghitung total: harga kali jumlah.
+      Tapi kadang ada yang mengetik huruf!
+      Kalau ada ketikan bukan angka, cetak 'Angka tidak valid!'.
+      Kalau aman, cetak totalnya.
+    input: "Dua baris: harga pensil, lalu jumlah pensil."
+    output: "Satu baris: Total: <harga x jumlah> atau 'Angka tidak valid!'."
+    contoh:
+      - input: "500\n3"
+        output: "Total: 1500"
+      - input: "abc\n2"
+        output: "Angka tidak valid!"
+    tes:
+      - input: "500\n3"
+        output: "Total: 1500"
+      - input: "abc\n2"
+        output: "Angka tidak valid!"
+      - input: "1000\n5"
+        output: "Total: 5000"
+      - input: "250\n0"
+        output: "Total: 0"
+      - input: "700\nx"
+        output: "Angka tidak valid!"
+      - input: "10\n10"
+        output: "Total: 100"
+    solusi: |
+      try:
+          harga = int(input())
+          jumlah = int(input())
+          print('Total:', harga * jumlah)
+      except ValueError:
+          print('Angka tidak valid!')
+    penjelasan: |
+      Baca harga dengan int(input()) dan jumlah dengan int(input()).
+      Masalahnya, kalau yang diketik huruf, int() langsung error.
+      Supaya program tidak mati, bungkus semuanya di dalam try.
+      Di dalam try, ubah kedua ketikan menjadi angka lalu cetak totalnya: harga * jumlah.
+      Kalau salah satu ketikan bukan angka, int() memicu ValueError.
+      Blok except ValueError menangkapnya dan mencetak 'Angka tidak valid!'.
+      Program tidak mati, tapi memberi pesan yang jelas.
+      Satu try bisa membungkus beberapa baris, jadi kedua input dan perhitungannya aman sekaligus.
+      Contoh: harga 500 dan jumlah 3 → 500 * 3 = 1500.
+      Kalau 'abc' diketik sebagai harga, langsung muncul 'Angka tidak valid!'.
+
+  - id: "d25"
+    judul: "Hitung Huruf Vokal"
+    emoji: "🎤"
+    tema: "String"
+    tingkat: 9
+    cerita: |
+      Kancil belajar membaca puisi.
+      Dia ingin tahu berapa huruf vokal di setiap kata.
+      Huruf vokal itu a, i, u, e, o.
+      Baca satu kata.
+      Hitung huruf vokalnya.
+      Cetak 'Vokal: <jumlah>'.
+    input: "Satu baris: kata."
+    output: "Satu baris: Vokal: <jumlah huruf vokal>."
+    contoh:
+      - input: "kancil"
+        output: "Vokal: 2"
+      - input: "buku"
+        output: "Vokal: 2"
+    tes:
+      - input: "kancil"
+        output: "Vokal: 2"
+      - input: "buku"
+        output: "Vokal: 2"
+      - input: "aiueo"
+        output: "Vokal: 5"
+      - input: "smp"
+        output: "Vokal: 0"
+      - input: "sekolah"
+        output: "Vokal: 3"
+      - input: "makan"
+        output: "Vokal: 2"
+    solusi: |
+      kata = input()
+      vokal = 0
+      for h in kata:
+          if h in 'aiueo':
+              vokal = vokal + 1
+      print('Vokal:', vokal)
+    penjelasan: |
+      Baca kata dengan input() dan simpan di variabel kata.
+      Siapkan penghitung vokal mulai dari 0.
+      Pakai for untuk menjelajah setiap huruf di dalam kata: for h in kata.
+      Setiap putaran, variabel h berisi satu huruf.
+      Cek apakah h termasuk huruf vokal dengan if h in 'aiueo'.
+      Operator in memeriksa apakah h ada di dalam teks 'aiueo'.
+      Kalau benar, tambahkan satu ke vokal.
+      Kalau bukan vokal, tidak terjadi apa-apa.
+      Setelah loop selesai, vokal berisi jumlah huruf vokal.
+      Cetak dengan print('Vokal:', vokal).
+      Contoh: kata 'kancil' punya huruf a dan i, jadi hasilnya 2.
+      Huruf konsonan seperti k, n, c, l tidak dihitung.
+      Coba dengan kata lain!
+
+  - id: "d26"
+    judul: "Tabel Perkalian Kotak"
+    emoji: "🎲"
+    tema: "Kombinasi"
+    tingkat: 10
+    cerita: |
+      Kancil membuat tabel perkalian berbentuk kotak untuk PR matematika.
+      Baris dan kolomnya sama: dari 1 sampai n.
+      Isi kotak baris i kolom j adalah i kali j.
+      Baca satu angka n.
+      Cetak tabelnya.
+      Setiap baris dipisah spasi.
+    input: "Satu baris: angka n."
+    output: "n baris: tiap baris berisi i*j untuk j dari 1 sampai n, dipisah spasi."
+    contoh:
+      - input: "3"
+        output: "1 2 3\n2 4 6\n3 6 9"
+      - input: "2"
+        output: "1 2\n2 4"
+    tes:
+      - input: "3"
+        output: "1 2 3\n2 4 6\n3 6 9"
+      - input: "2"
+        output: "1 2\n2 4"
+      - input: "1"
+        output: "1"
+      - input: "4"
+        output: "1 2 3 4\n2 4 6 8\n3 6 9 12\n4 8 12 16"
+      - input: "5"
+        output: "1 2 3 4 5\n2 4 6 8 10\n3 6 9 12 15\n4 8 12 16 20\n5 10 15 20 25"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          for j in range(1, n + 1):
+              print(i * j, end=' ')
+          print()
+    penjelasan: |
+      Baca n dengan int(input()).
+      Tabel ini butuh dua perulangan bersarang: loop luar untuk baris, loop dalam untuk kolom.
+      Loop luar: for i in range(1, n + 1), jadi i berjalan dari 1 sampai n.
+      Di dalamnya, loop dalam: for j in range(1, n + 1), jadi j juga berjalan dari 1 sampai n.
+      Setiap putaran loop dalam, cetak hasil i * j dengan end=' ' supaya tidak pindah baris — angka-angka dalam satu baris dipisah spasi.
+      Setelah loop dalam selesai, panggil print() kosong untuk pindah ke baris berikutnya.
+      Untuk n = 3: baris 1 = 1 2 3, baris 2 = 2 4 6, baris 3 = 3 6 9.
+      Perhatikan: angka di baris 2 kolom 3 adalah 2 * 3 = 6.
+      Kombinasi dua loop ini menghasilkan tabel lengkap!
+
+  - id: "d27"
+    judul: "Kartu Peliharaan"
+    emoji: "🐾"
+    tema: "Kombinasi"
+    tingkat: 11
+    cerita: |
+      Kancil membuat kartu untuk semua hewan peliharaannya.
+      Setiap kartu berisi nama dan umur hewan.
+      Buat class Hewan dengan attribute nama dan umur.
+      Method perkenalan() mengembalikan teks 'Aku <nama>, umur <umur> tahun'.
+      Baca nama lalu umur, cetak hasilnya.
+    input: "Dua baris: nama hewan, lalu umur."
+    output: "Satu baris: Aku <nama>, umur <umur> tahun."
+    contoh:
+      - input: "Milo\n3"
+        output: "Aku Milo, umur 3 tahun"
+      - input: "Putih\n1"
+        output: "Aku Putih, umur 1 tahun"
+    tes:
+      - input: "Milo\n3"
+        output: "Aku Milo, umur 3 tahun"
+      - input: "Putih\n1"
+        output: "Aku Putih, umur 1 tahun"
+      - input: "Kancil\n5"
+        output: "Aku Kancil, umur 5 tahun"
+      - input: "Mimi\n2"
+        output: "Aku Mimi, umur 2 tahun"
+      - input: "Tono\n4"
+        output: "Aku Tono, umur 4 tahun"
+      - input: "Oyen\n6"
+        output: "Aku Oyen, umur 6 tahun"
+    solusi: |
+      class Hewan:
+          def __init__(self, nama, umur):
+              self.nama = nama
+              self.umur = umur
+
+          def perkenalan(self):
+              return 'Aku ' + self.nama + ', umur ' + str(self.umur) + ' tahun'
+
+      nama = input()
+      umur = input()
+      h = Hewan(nama, umur)
+      print(h.perkenalan())
+    penjelasan: |
+      Buat class Hewan dengan def __init__(self, nama, umur).
+      __init__ adalah method istimewa yang dipanggil otomatis saat object dibuat.
+      Di dalamnya, simpan nama ke self.nama dan umur ke self.umur.
+      Tanda self artinya attribute milik object itu sendiri.
+      Method perkenalan(self) mengembalikan teks perkenalan.
+      Gabungkan teks dengan tanda +: 'Aku ' + self.nama + ', umur ' + str(self.umur) + ' tahun'.
+      Umur diubah dulu dengan str() supaya bisa digabung dengan teks.
+      Di bagian utama, baca nama dan umur dengan input().
+      Buat object dengan h = Hewan(nama, umur) — saat ini __init__ otomatis dipanggil.
+      Terakhir cetak dengan print(h.perkenalan()).
+      Contoh: nama Milo dan umur 3 menghasilkan 'Aku Milo, umur 3 tahun'.
+
+  - id: "d28"
+    judul: "Hanya Kata Panjang"
+    emoji: "📏"
+    tema: "Kombinasi"
+    tingkat: 12
+    cerita: |
+      Kancil menemukan kamus rahasia.
+      Dia hanya ingin melihat kata-kata yang panjangnya lebih dari n huruf.
+      Kata pendek dibuang.
+      Pakai list comprehension!
+      Baca satu kalimat, lalu satu angka n.
+      Cetak kata yang panjangnya lebih dari n, dipisah spasi.
+    input: "Baris 1: kalimat. Baris 2: angka n."
+    output: "Satu baris: kata dengan panjang lebih dari n, dipisah spasi."
+    contoh:
+      - input: "aku suka python\n3"
+        output: "suka python"
+      - input: "si kancil pintar\n5"
+        output: "kancil pintar"
+    tes:
+      - input: "aku suka python\n3"
+        output: "suka python"
+      - input: "si kancil pintar\n5"
+        output: "kancil pintar"
+      - input: "a bb ccc\n2"
+        output: "ccc"
+      - input: "kata\n4"
+        output: ""
+      - input: "belajar python itu seru\n4"
+        output: "belajar python"
+      - input: "satu\n4"
+        output: ""
+    solusi: |
+      kalimat = input()
+      n = int(input())
+      kata = kalimat.split()
+      panjang = [k for k in kata if len(k) > n]
+      for k in panjang:
+          print(k, end=' ')
+      print()
+    penjelasan: |
+      Baca kalimat dengan input() dan n dengan int(input()).
+      Pecah kalimat menjadi daftar kata dengan split() — setiap kata dipisah oleh spasi.
+      Sekarang pakai list comprehension untuk menyaring: [k for k in kata if len(k) > n].
+      Artinya: ambil setiap kata k dari daftar kata, tapi hanya kalau panjangnya lebih dari n.
+      len(k) menghitung jumlah huruf kata itu.
+      Kata yang pendek otomatis tidak masuk list baru.
+      Setelah itu, loop list panjang dan cetak setiap kata dengan end=' ' supaya satu baris dipisah spasi.
+      Terakhir print() kosong untuk pindah baris.
+      Contoh: 'aku suka python' dengan n = 3: 'aku' panjang 3 tidak lebih dari 3, jadi dibuang; 'suka' dan 'python' masuk.
+      Hasilnya 'suka python'.
+
+  - id: "d29"
+    judul: "Urutkan Kata dari Pendek"
+    emoji: "🔠"
+    tema: "String"
+    tingkat: 12
+    cerita: |
+      Perpustakaan ingin memasang kata kunci di dinding.
+      Kata-kata harus urut dari yang pendek ke yang panjang.
+      Baca satu kalimat.
+      Cetak kata-katanya urut dari pendek ke panjang, dipisah spasi.
+      Pakai sorted dengan key lambda!
+    input: "Satu baris: kalimat."
+    output: "Satu baris: kata urut dari pendek ke panjang, dipisah spasi."
+    contoh:
+      - input: "aku suka python"
+        output: "aku suka python"
+      - input: "si kancil pintar"
+        output: "si kancil pintar"
+    tes:
+      - input: "aku suka python"
+        output: "aku suka python"
+      - input: "si kancil pintar"
+        output: "si kancil pintar"
+      - input: "kancil suka makan"
+        output: "suka makan kancil"
+      - input: "a bb ccc"
+        output: "a bb ccc"
+      - input: "python itu keren"
+        output: "itu keren python"
+      - input: "belajar python seru"
+        output: "seru python belajar"
+    solusi: |
+      kalimat = input()
+      kata = kalimat.split()
+      urut = sorted(kata, key=lambda k: len(k))
+      print(' '.join(urut))
+    penjelasan: |
+      Baca kalimat dengan input() dan pecah menjadi daftar kata dengan split().
+      Sekarang urutkan dengan sorted.
+      Fungsi sorted mengembalikan daftar baru yang sudah urut.
+      Agar urut berdasarkan panjang, kita kasih key=lambda k: len(k).
+      Key adalah cara memberitahu sorted: 'urutkan berdasarkan apa'.
+      Lambda adalah fungsi mini satu baris: untuk setiap kata k, ambil len(k).
+      Jadi sorted membandingkan panjang setiap kata, bukan hurufnya.
+      Kata pendek dulu, kata panjang belakangan.
+      Kalau panjangnya sama, urutan aslinya tetap — itu namanya stable sort.
+      Terakhir gabungkan dengan ' '.join(urut) supaya kata-kata tercetak satu baris dipisah spasi.
+      Contoh: 'kancil suka makan' → panjang 6, 4, 5 → urut jadi suka, makan, kancil.

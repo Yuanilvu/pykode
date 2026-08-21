@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Misi {{ misi.judul }} — PyKode{% endblock %}
+{% block content %}
+
+<div class="breadcrumb">
+  <a href="{{ url_for('project') }}">🏗️ Proyek Besar</a> › Misi {{ misi.judul }}
+</div>
+
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px">
+    <h1 class="lesson-title" style="margin:0">{{ misi.emoji or '🏗️' }} Misi: {{ misi.judul }}</h1>
+    {% if done %}<span style="color:var(--success);font-weight:800">✅ Selesai (+{{ misi.xp }} XP)</span>{% endif %}
+  </div>
+  <div class="lesson-meta">Bab {{ misi.bab }} · ⏱️ ±{{ misi.menit }} menit · 💰 +{{ misi.xp }} XP</div>
+
+  <div class="materi">{{ render_markdown(misi.cerita) | safe }}</div>
+
+  <h3>🛠️ Tugasmu</h3>
+  <div class="materi">{{ render_markdown(misi.instruksi) | safe }}</div>
+
+  {% for c in misi.contoh %}
+  <div class="io-box">
+    <div class="io-label">Contoh {{ loop.index }}</div>
+    <pre><strong>Masukan:</strong>
+{{ c.input }}
+<strong>Hasil:</strong>
+{{ c.output }}</pre>
+  </div>
+  {% endfor %}
+
+  {% if misi.petunjuk %}
+  <button class="btn btn-ghost btn-sm" id="btn-hint">💡 Lihat Petunjuk</button>
+  <div class="hint-box" id="hint-box">
+    {% for h in misi.petunjuk %}<div>• {{ h }}</div>{% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="card">
+  <div class="editor-wrap" style="margin-bottom:10px">
+    <div class="editor-head"><span>🐍 Python — kode proyekmu (tersimpan otomatis saat benar)</span><span>Python 3</span></div>
+    <textarea id="code-editor" class="cm-editor">{{ starter or saved_code or "# Tulis kode proyekmu di sini 👇" }}</textarea>
+  </div>
+
+  <div style="margin-top:10px">
+    <label class="inline-label" for="stdin-input">Ketikan buat dicoba (opsional):</label>
+    <textarea id="stdin-input" class="stdin" placeholder="Tulis di sini (satu angka per baris)"></textarea>
+  </div>
+
+  <div class="editor-foot">
+    <button class="btn btn-outline" id="btn-run">▶ Jalankan</button>
+    <button class="btn btn-success" id="btn-submit">✅ Kirim Misi</button>
+    <span class="spacer"></span>
+    <span id="run-info" style="color:var(--muted);font-size:.85rem"></span>
+  </div>
+
+  <div id="run-output"></div>
+  <div id="submit-results"></div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var milestoneId = {{ misi.id | tojson }};
+  var editor = initEditor(document.getElementById('code-editor'));
+  var outBox = document.getElementById('run-output');
+  var resBox = document.getElementById('submit-results');
+
+  document.getElementById('btn-run').addEventListener('click', function () {
+    var btn = this;
+    outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
+    btn.disabled = true;
+    fetch('/api/run', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({code: editor.getValue(), stdin: document.getElementById('stdin-input').value})
+    }).then(r => r.json()).then(d => {
+      btn.disabled = false;
+      if (d.status === 'ok') {
+        outBox.innerHTML = '<div class="output-box ok">' + esc(d.stdout || '(tidak ada hasil)') + '</div>';
+        maybeFirstRun();
+      } else {
+        outBox.innerHTML = '<div class="output-box err">' + esc(d.stderr || 'Error') + '</div>';
+      }
+      document.getElementById('run-info').textContent = '⏱ ' + d.time_ms + ' ms';
+    }).catch(() => { btn.disabled = false; outBox.innerHTML = '<div class="output-box err">Gagal terhubung ke server.</div>'; });
+  });
+
+  document.getElementById('btn-submit').addEventListener('click', function () {
+    var btn = this;
+    resBox.innerHTML = '<div class="output-box">⏳ Menguji misi...</div>';
+    btn.disabled = true;
+    fetch('/api/project-submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({milestone_id: milestoneId, code: editor.getValue()})
+    }).then(r => r.json()).then(d => {
+      btn.disabled = false;
+      var html = '';
+      if (d.verdict === 'AC') {
+        html += '<div class="verdict-banner verdict-AC">🎉 MISI SELESAI! ' + d.passed + '/' + d.total + ' tes rahasia lolos' +
+                (d.xp_added ? ' — +' + d.xp_added + ' XP!' : '') + '</div>';
+        confetti();
+        if (d.new_badges && d.new_badges.length) d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
+        if (d.solusi) {
+          html += '<details style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">💡 Lihat contoh cara lain</summary><div class="output-box" style="margin-top:8px">' + esc(d.solusi) + '</div></details>';
+        }
+        html += '<div style="margin-top:12px"><a class="btn btn-primary" href="{{ url_for("project") }}">🏗️ Kembali ke Proyek</a></div>';
+      } else {
+        html += '<div class="verdict-banner verdict-WA">😅 Belum benar — ' + d.passed + '/' + d.total + ' tes rahasia lolos. Cek lagi, kamu pasti bisa!</div>';
+        d.results.forEach(function (r) {
+          if (r.status === 'salah') {
+            html += '<div class="result-row fail"><span class="tag">❌ Hasil salah</span><pre><strong>Masukan:</strong> ' + esc(r.input) + '\n<strong>Harusnya:</strong> ' + esc(r.expected) + '\n<strong>Kode kamu:</strong> ' + esc(r.got) + '</pre></div>';
+          } else if (r.status !== 'benar') {
+            html += '<div class="result-row fail"><span class="tag">⚠️ ' + esc(r.status) + '</span><pre>' + esc(r.stderr || '') + '</pre></div>';
+          }
+        });
+      }
+      resBox.innerHTML = html;
+    }).catch(() => { btn.disabled = false; resBox.innerHTML = '<div class="output-box err">Gagal terhubung ke server.</div>'; });
+  });
+})();
+</script>
+{% endblock %}

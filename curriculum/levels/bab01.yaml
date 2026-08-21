@@ -243,3 +243,78 @@ soal:
       - "Catatan rahasia ditulis setelah tanda #."
       - "Baris komentar tidak ikut tercetak."
       - "Dua print() untuk dua baris, urut sesuai contoh."
+
+  - id: "s1-4"
+    judul: "Yel-Yel Python"
+    sulit: "mudah"
+    cerita: |
+      Kelas Kancil mau membuat yel-yel Python untuk lomba kelas.
+      Setiap kelompok harus meneriakkan yel-yel yang sama.
+      Yel-yelnya dua baris:
+
+      Python juara!
+      Aku pasti bisa!
+
+      Cetak dua baris itu urut dari atas.
+    input: "Tidak ada input."
+    output: "Dua baris: Python juara!, lalu Aku pasti bisa!."
+    contoh:
+      - input: ""
+        output: "Python juara!\nAku pasti bisa!"
+      - input: ""
+        output: "Python juara!\nAku pasti bisa!"
+    tes:
+      - input: ""
+        output: "Python juara!\nAku pasti bisa!"
+      - input: ""
+        output: "Python juara!\nAku pasti bisa!"
+      - input: ""
+        output: "Python juara!\nAku pasti bisa!"
+      - input: ""
+        output: "Python juara!\nAku pasti bisa!"
+    solusi: |
+      print('Python juara!')
+      print('Aku pasti bisa!')
+    petunjuk:
+      - "Pakai dua perintah print()."
+      - "Satu print() mencetak satu baris."
+      - "Baris pertama dulu, baru baris kedua."
+
+  - id: "s1-5"
+    judul: "Lampu Lalu Lintas"
+    sulit: "sedang"
+    cerita: |
+      Kancil membuat game lampu lalu lintas di komputer.
+      Ada tiga warna lampu: hijau, kuning, dan merah.
+      Tapi lampu kuning belum jadi. Kancil menulisnya sebagai catatan saja.
+      Catatan tidak boleh ikut tercetak di layar.
+      Cetak dua baris ini:
+
+      Lampu hijau menyala
+      Lampu merah menyala
+
+      Sembunyikan 'Lampu kuning menyala' di dalam komentar.
+    input: "Tidak ada input."
+    output: "Dua baris: Lampu hijau menyala, lalu Lampu merah menyala."
+    contoh:
+      - input: ""
+        output: "Lampu hijau menyala\nLampu merah menyala"
+      - input: ""
+        output: "Lampu hijau menyala\nLampu merah menyala"
+    tes:
+      - input: ""
+        output: "Lampu hijau menyala\nLampu merah menyala"
+      - input: ""
+        output: "Lampu hijau menyala\nLampu merah menyala"
+      - input: ""
+        output: "Lampu hijau menyala\nLampu merah menyala"
+      - input: ""
+        output: "Lampu hijau menyala\nLampu merah menyala"
+    solusi: |
+      print('Lampu hijau menyala')
+      # Lampu kuning menyala
+      print('Lampu merah menyala')
+    petunjuk:
+      - "Baris catatan diawali tanda #."
+      - "Python mengabaikan semua yang ada di belakang #."
+      - "Tulis komentar di antara dua print(). Output tidak berubah."

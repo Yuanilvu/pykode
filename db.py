@@ -56,6 +56,16 @@ CREATE TABLE IF NOT EXISTS submissions (
     status TEXT NOT NULL,
     created_at TEXT DEFAULT (datetime('now'))
 );
+CREATE TABLE IF NOT EXISTS project_progress (
+    user_id INTEGER NOT NULL,
+    milestone_id TEXT NOT NULL,
+    done_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (user_id, milestone_id)
+);
+CREATE TABLE IF NOT EXISTS project_code (
+    user_id INTEGER PRIMARY KEY,
+    code TEXT NOT NULL DEFAULT ''
+);
 """
 
 
@@ -262,3 +272,39 @@ def leaderboard(limit=10):
         rows = conn.execute(
             "SELECT username, xp, streak FROM users ORDER BY xp DESC LIMIT ?", (limit,)).fetchall()
         return [dict(r) for r in rows]
+
+
+# ---------- proyek besar ----------
+
+def milestone_done(user_id, milestone_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT 1 FROM project_progress WHERE user_id = ? AND milestone_id = ?",
+            (user_id, milestone_id)).fetchone() is not None
+
+
+def mark_milestone_done(user_id, milestone_id):
+    with get_conn() as conn:
+        conn.execute("INSERT OR IGNORE INTO project_progress (user_id, milestone_id) VALUES (?, ?)",
+                     (user_id, milestone_id))
+
+
+def milestones_done_ids(user_id):
+    with get_conn() as conn:
+        return {r["milestone_id"] for r in conn.execute(
+            "SELECT milestone_id FROM project_progress WHERE user_id = ?", (user_id,))}
+
+
+def get_project_code(user_id):
+    with get_conn() as conn:
+        row = conn.execute("SELECT code FROM project_code WHERE user_id = ?",
+                           (user_id,)).fetchone()
+        return row["code"] if row else ""
+
+
+def save_project_code(user_id, code):
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT INTO project_code (user_id, code) VALUES (?, ?) "
+            "ON CONFLICT(user_id) DO UPDATE SET code = excluded.code",
+            (user_id, code))

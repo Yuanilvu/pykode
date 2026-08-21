@@ -409,3 +409,99 @@ soal:
       - "Hitung suara dengan pola: if nama in suara, tambah 1. Kalau belum, mulai dari 1."
       - "Jelajahi suara.items() untuk mencari nilai terbesar."
       - "Simpan pemenang sementara. Ganti hanya kalau ada suara yang lebih banyak."
+
+  - id: "s7-4"
+    judul: "Koleksi Stiker"
+    sulit: "mudah"
+    cerita: |
+      Kancil suka mengoleksi stiker.
+      Setiap stiker punya nama tokoh.
+      Ada stiker yang dobel.
+      Kancil ingin tahu stiker tokoh apa saja yang dia punya.
+      Baca banyak stiker, lalu nama-nama tokohnya.
+      Lalu baca satu nama yang dicari.
+      Kalau ada, cetak 'ada'.
+      Kalau tidak, cetak 'tidak ada'.
+    input: "Baris 1: n (banyak stiker). n baris berikutnya: nama tokoh. Baris terakhir: nama yang dicari."
+    output: "Satu baris: ada atau tidak ada"
+    contoh:
+      - input: "3\nKancil\nBuaya\nRusa\nKancil"
+        output: "ada"
+      - input: "2\nKancil\nBuaya\nHarimau"
+        output: "tidak ada"
+    tes:
+      - input: "3\nKancil\nBuaya\nRusa\nKancil"
+        output: "ada"
+      - input: "2\nKancil\nBuaya\nHarimau"
+        output: "tidak ada"
+      - input: "1\nKancil\nKancil"
+        output: "ada"
+      - input: "4\nA\nB\nC\nD\nE"
+        output: "tidak ada"
+      - input: "3\nX\nX\nY\nX"
+        output: "ada"
+      - input: "2\nMilo\nMimi\nMimi"
+        output: "ada"
+    solusi: |
+      n = int(input())
+      stiker = set()
+      for i in range(n):
+          stiker.add(input())
+      tanya = input()
+      if tanya in stiker:
+          print('ada')
+      else:
+          print('tidak ada')
+    petunjuk:
+      - "Buat set kosong. Tambahkan setiap nama tokoh dengan add()."
+      - "Duplikat otomatis dibuang oleh set."
+      - "Cek dengan in: kalau ada cetak 'ada', kalau tidak cetak 'tidak ada'."
+
+  - id: "s7-5"
+    judul: "Jualan Kue Kancil"
+    sulit: "sedang"
+    cerita: |
+      Kancil jualan kue di kantin.
+      Dia mencatat siapa saja yang beli.
+      Beberapa teman membeli lebih dari sekali.
+      Kancil ingin tahu total kue yang dibeli setiap teman.
+      Baca banyak catatan, lalu tiap catatan: nama teman dan jumlah kue.
+      Cetak nama teman dan jumlah totalnya.
+      Satu teman satu baris.
+    input: "Baris 1: n (banyak catatan). n baris berikutnya: nama teman dan jumlah kue (dipisah spasi)."
+    output: "Beberapa baris: <nama>: <total>, urut sesuai kemunculan pertama."
+    contoh:
+      - input: "3\nBudi 2\nSari 3\nBudi 1"
+        output: "Budi: 3\nSari: 3"
+      - input: "2\nRina 5\nRina 2"
+        output: "Rina: 7"
+    tes:
+      - input: "3\nBudi 2\nSari 3\nBudi 1"
+        output: "Budi: 3\nSari: 3"
+      - input: "2\nRina 5\nRina 2"
+        output: "Rina: 7"
+      - input: "1\nTono 4"
+        output: "Tono: 4"
+      - input: "4\nA 1\nB 2\nA 3\nB 4"
+        output: "A: 4\nB: 6"
+      - input: "3\nX 10\nY 20\nY 5"
+        output: "X: 10\nY: 25"
+      - input: "2\nKancil 1\nBuaya 1"
+        output: "Kancil: 1\nBuaya: 1"
+    solusi: |
+      n = int(input())
+      total = {}
+      for i in range(n):
+          baris = input().split()
+          nama = baris[0]
+          jml = int(baris[1])
+          if nama in total:
+              total[nama] = total[nama] + jml
+          else:
+              total[nama] = jml
+      for k, v in total.items():
+          print(k + ':', v)
+    petunjuk:
+      - "Simpan total per teman di dict: total[nama]."
+      - "Kalau nama sudah ada, tambahkan: total[nama] = total[nama] + jml."
+      - "Cetak dengan loop for k, v in total.items()."

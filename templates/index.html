@@ -28,6 +28,22 @@
 
 <div class="section-title">📚 Pilih Bab</div>
 <div class="bab-grid">
+  {% if project %}
+  <a class="bab-card" href="{{ url_for('project') }}" style="border:2px dashed var(--primary); background:linear-gradient(135deg,#eff6ff,#eef2ff)">
+    <div class="bab-head">
+      <span class="bab-emoji">{{ project.emoji }}</span>
+      <div>
+        <div class="bab-title" style="color:var(--primary-dark)">Proyek Besar</div>
+        <div class="bab-sub">{{ project.judul }}</div>
+      </div>
+    </div>
+    <div class="bab-meta">
+      <span>{{ n_project_done }}/{{ project.misi|length }} misi</span>
+      <span>{{ project_pct }}%</span>
+    </div>
+    <div class="progress"><i style="width:{{ project_pct }}%; background:{{ project.warna }}"></i></div>
+  </a>
+  {% endif %}
   {% for b in babs %}
   <a class="bab-card {% if b.complete %}bab-done{% endif %}" href="{{ url_for('lesson', lesson_id=babs[loop.index0].pelajaran[0].id) if babs[loop.index0].pelajaran else '#' }}">
     <div class="bab-head">

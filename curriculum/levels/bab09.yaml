@@ -409,3 +409,91 @@ soal:
       - "Letakkan try/except di dalam perulangan, satu nilai per putaran."
       - "Pakai variabel penanda (misalnya rusak) supaya program tahu ada data yang gagal."
       - "Rata-rata = total dibagi n, dicetak hanya kalau tidak ada data rusak."
+
+  - id: "s9-4"
+    judul: "Mesin Kuadrat"
+    sulit: "mudah"
+    cerita: |
+      Di kelas komputer, ada mesin penghitung kuadrat.
+      Kamu mengetik angka, mesin mencetak angka itu dikali dirinya sendiri.
+      Tapi kalau yang diketik bukan angka, mesin jangan mati.
+      Cetak 'Bukan angka!' saja.
+      Baca satu ketikan.
+      Kalau angka, cetak kuadratnya.
+      Kalau bukan, cetak 'Bukan angka!'.
+    input: "Satu baris: ketikan (bisa angka, bisa bukan angka)."
+    output: "Satu baris: kuadratnya, atau 'Bukan angka!'."
+    contoh:
+      - input: "4"
+        output: "16"
+      - input: "abc"
+        output: "Bukan angka!"
+    tes:
+      - input: "4"
+        output: "16"
+      - input: "abc"
+        output: "Bukan angka!"
+      - input: "7"
+        output: "49"
+      - input: "0"
+        output: "0"
+      - input: "12"
+        output: "144"
+      - input: "x1"
+        output: "Bukan angka!"
+    solusi: |
+      try:
+          n = int(input())
+          print(n * n)
+      except ValueError:
+          print('Bukan angka!')
+    petunjuk:
+      - "Bungkus int(input()) dan perhitungannya di dalam try."
+      - "Kalau ketikan bukan angka, int() memicu ValueError."
+      - "except ValueError mencetak 'Bukan angka!'."
+
+  - id: "s9-5"
+    judul: "Kalkulator Pintar"
+    sulit: "sedang"
+    cerita: |
+      Kancil membuat kalkulator pintar di rumah.
+      Kalkulator itu membagi dua angka.
+      Kalau ada ketikan yang bukan angka, cetak 'Input bukan angka!'.
+      Kalau angka kedua nol, cetak 'Tidak bisa dibagi nol!'.
+      Kalau aman, cetak hasil baginya.
+      Baca dua ketikan, lalu kerjakan.
+    input: "Dua baris: angka pertama, lalu angka kedua."
+    output: "Satu baris: hasil bagi (bisa desimal), 'Input bukan angka!', atau 'Tidak bisa dibagi nol!'."
+    contoh:
+      - input: "10\n2"
+        output: "5.0"
+      - input: "a\n2"
+        output: "Input bukan angka!"
+    tes:
+      - input: "10\n2"
+        output: "5.0"
+      - input: "a\n2"
+        output: "Input bukan angka!"
+      - input: "8\n0"
+        output: "Tidak bisa dibagi nol!"
+      - input: "9\n4"
+        output: "2.25"
+      - input: "10\nb"
+        output: "Input bukan angka!"
+      - input: "0\n5"
+        output: "0.0"
+    solusi: |
+      a = input()
+      b = input()
+      try:
+          a = int(a)
+          b = int(b)
+          print(a / b)
+      except ValueError:
+          print('Input bukan angka!')
+      except ZeroDivisionError:
+          print('Tidak bisa dibagi nol!')
+    petunjuk:
+      - "Ubah kedua ketikan menjadi angka dengan int()."
+      - "Letakkan pengubahan dan pembagian di dalam try."
+      - "except ValueError menangkap ketikan bukan angka, except ZeroDivisionError menangkap pembagian nol."

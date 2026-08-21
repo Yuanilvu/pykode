@@ -388,3 +388,84 @@ soal:
       - "Baca tiga input berurutan: nama, umur, lalu tinggi."
       - "Umur dibaca dengan int(input()). Tinggi dengan float(input())."
       - "Cetak tiga baris. Contoh: print('Nama:', nama) dan print('Tinggi:', int(tinggi), 'cm')."
+
+  - id: "s2-4"
+    judul: "Nama dan Kelas"
+    sulit: "mudah"
+    cerita: |
+      Sekolah Kancil mengadakan pendataan siswa baru.
+      Setiap siswa mengetik nama lalu mengetik kelasnya.
+      Komputer harus mencetak dua baris: nama dan kelas.
+      Contohnya, Kancil mengetik 'Budi' lalu '7A'.
+      Hasilnya:
+
+      Nama: Budi
+      Kelas: 7A
+
+      Baca dua ketikan berurutan, lalu cetak dua baris itu.
+    input: "Dua baris: nama (tulisan), lalu kelas (tulisan)."
+    output: "Dua baris: Nama: <nama>, lalu Kelas: <kelas>."
+    contoh:
+      - input: "Budi\n7A"
+        output: "Nama: Budi\nKelas: 7A"
+      - input: "Siti\n8B"
+        output: "Nama: Siti\nKelas: 8B"
+    tes:
+      - input: "Budi\n7A"
+        output: "Nama: Budi\nKelas: 7A"
+      - input: "Siti\n8B"
+        output: "Nama: Siti\nKelas: 8B"
+      - input: "Kancil\n9C"
+        output: "Nama: Kancil\nKelas: 9C"
+      - input: "Rina\n7A"
+        output: "Nama: Rina\nKelas: 7A"
+      - input: "Andi\n8A"
+        output: "Nama: Andi\nKelas: 8A"
+    solusi: |
+      nama = input()
+      kelas = input()
+      print('Nama:', nama)
+      print('Kelas:', kelas)
+    petunjuk:
+      - "Baca nama dengan input(). Simpan ke variabel."
+      - "Baca kelas dengan input() kedua. Simpan juga."
+      - "Cetak dengan print('Nama:', nama) dan print('Kelas:', kelas)."
+
+  - id: "s2-5"
+    judul: "Tinggi Badan"
+    sulit: "sedang"
+    cerita: |
+      Puskesmas sekolah mengukur tinggi badan siswa.
+      Hasil pengukurannya angka desimal, misalnya 150.7.
+      Petugas ingin mencetak dua hal: tinggi aslinya dan tinggi bulatnya.
+      Bagian desimal dibuang dengan int(). Contoh: 150.7 menjadi 150.
+      Baca satu angka desimal, lalu cetak dua baris:
+
+      Tinggi: 150.7
+      Tinggi bulat: 150
+    input: "Satu baris: tinggi badan (float)."
+    output: "Dua baris: Tinggi: <angka asli>, lalu Tinggi bulat: <angka bulat>."
+    contoh:
+      - input: "150.7"
+        output: "Tinggi: 150.7\nTinggi bulat: 150"
+      - input: "99.9"
+        output: "Tinggi: 99.9\nTinggi bulat: 99"
+    tes:
+      - input: "150.7"
+        output: "Tinggi: 150.7\nTinggi bulat: 150"
+      - input: "99.9"
+        output: "Tinggi: 99.9\nTinggi bulat: 99"
+      - input: "7.0"
+        output: "Tinggi: 7.0\nTinggi bulat: 7"
+      - input: "0.5"
+        output: "Tinggi: 0.5\nTinggi bulat: 0"
+      - input: "158.7"
+        output: "Tinggi: 158.7\nTinggi bulat: 158"
+    solusi: |
+      t = float(input())
+      print('Tinggi:', t)
+      print('Tinggi bulat:', int(t))
+    petunjuk:
+      - "Baca tinggi dengan float(input()) supaya jadi angka desimal."
+      - "Cetak isi variabelnya di baris pertama."
+      - "int(t) membuang bagian desimal. Cetak di baris kedua."

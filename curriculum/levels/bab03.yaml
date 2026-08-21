@@ -401,3 +401,76 @@ soal:
       - "Simpan nama di variabel, lalu pakai f-string untuk mencetak kalimat."
       - "Jumlah huruf didapat dari len(nama)."
       - "Huruf besar pakai nama.upper(). Huruf kecil pakai nama.lower()."
+
+  - id: "s3-4"
+    judul: "Dua Buku"
+    sulit: "mudah"
+    cerita: |
+      Kancil ke toko buku. Dia membeli dua buku.
+      Buku pertama harganya 3000 rupiah. Buku kedua 4000 rupiah.
+      Kasir menghitung totalnya: 3000 + 4000 = 7000.
+      Bantuin kasir: baca harga dua buku, lalu cetak totalnya.
+      Cetak dengan f-string, persis: Total: 7000
+    input: "Dua baris: harga buku pertama (int), lalu harga buku kedua (int)."
+    output: "Satu baris: Total: lalu jumlah kedua harga."
+    contoh:
+      - input: "3000\n4000"
+        output: "Total: 7000"
+      - input: "1500\n2500"
+        output: "Total: 4000"
+    tes:
+      - input: "3000\n4000"
+        output: "Total: 7000"
+      - input: "1500\n2500"
+        output: "Total: 4000"
+      - input: "500\n500"
+        output: "Total: 1000"
+      - input: "10000\n2500"
+        output: "Total: 12500"
+      - input: "0\n999"
+        output: "Total: 999"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      print(f'Total: {a + b}')
+    petunjuk:
+      - "Baca dua harga dengan int(input())."
+      - "Total = a + b. Boleh langsung ditulis di dalam kurung kurawal."
+      - "Cetak dengan print(f'Total: {a + b}')."
+
+  - id: "s3-5"
+    judul: "Kata Ajaib"
+    sulit: "sedang"
+    cerita: |
+      Kancil menemukan mesin kata ajaib di laboratorium komputer.
+      Kita memasukkan satu kata, mesin mencetak tiga hal:
+      kata huruf besar semua, jumlah hurufnya, dan dua kali jumlah hurufnya.
+      Contoh kata 'Python' punya 6 huruf. Dua kalinya 12.
+      Baca satu kata, lalu cetak tiga baris persis seperti contoh.
+    input: "Satu baris: sebuah kata (tulisan)."
+    output: "Tiga baris: Kata: <KATA BESAR>, Panjang: <n>, Dua kali panjang: <2n>."
+    contoh:
+      - input: "Python"
+        output: "Kata: PYTHON\nPanjang: 6\nDua kali panjang: 12"
+      - input: "Halo"
+        output: "Kata: HALO\nPanjang: 4\nDua kali panjang: 8"
+    tes:
+      - input: "Python"
+        output: "Kata: PYTHON\nPanjang: 6\nDua kali panjang: 12"
+      - input: "Halo"
+        output: "Kata: HALO\nPanjang: 4\nDua kali panjang: 8"
+      - input: "kancil"
+        output: "Kata: KANCIL\nPanjang: 6\nDua kali panjang: 12"
+      - input: "A"
+        output: "Kata: A\nPanjang: 1\nDua kali panjang: 2"
+      - input: "Seru"
+        output: "Kata: SERU\nPanjang: 4\nDua kali panjang: 8"
+    solusi: |
+      kata = input()
+      print(f'Kata: {kata.upper()}')
+      print(f'Panjang: {len(kata)}')
+      print(f'Dua kali panjang: {len(kata) * 2}')
+    petunjuk:
+      - "Simpan kata di variabel. Pakai f-string untuk mencetak."
+      - "Huruf besar semua: kata.upper(). Jumlah huruf: len(kata)."
+      - "Dua kali panjang dihitung langsung di dalam kurung kurawal: len(kata) * 2."

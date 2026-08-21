@@ -426,3 +426,91 @@ soal:
       - "Angka 1 bukan prima. Angka 2 adalah prima."
       - "Cek pembagian dari 2 sampai n-1 dengan for dan %."
       - "Kalau ada angka yang habis membagi n, langsung return False."
+
+  - id: "s8-4"
+    judul: "Mesin Pengganda"
+    sulit: "mudah"
+    cerita: |
+      Kancil menemukan mesin ajaib di laboratorium sekolah.
+      Mesin itu menggandakan angka: angka 3 jadi 6, angka 5 jadi 10.
+      Kamu diminta membuat fungsi bernama dua_kali.
+      Fungsi itu menerima satu angka dan mengembalikan angka dikali dua.
+      Baca satu angka, lalu cetak hasilnya.
+    input: "Satu baris: angka."
+    output: "Satu baris: angka dikali dua."
+    contoh:
+      - input: "3"
+        output: "6"
+      - input: "5"
+        output: "10"
+    tes:
+      - input: "3"
+        output: "6"
+      - input: "5"
+        output: "10"
+      - input: "0"
+        output: "0"
+      - input: "7"
+        output: "14"
+      - input: "100"
+        output: "200"
+      - input: "1"
+        output: "2"
+    solusi: |
+      def dua_kali(n):
+          return n * 2
+
+      x = int(input())
+      print(dua_kali(x))
+    petunjuk:
+      - "Buat fungsi: def dua_kali(n): lalu return n * 2."
+      - "Baca angka dengan int(input())."
+      - "Cetak dengan print(dua_kali(x))."
+
+  - id: "s8-5"
+    judul: "Total Belanja Buku"
+    sulit: "sedang"
+    cerita: |
+      Bu Guru mengirim Kancil ke toko buku.
+      Dia membeli beberapa buku.
+      Setiap buku harganya beda.
+      Kancil ingin tahu total harga semuanya.
+      Buat fungsi bernama total yang menerima list harga dan mengembalikan jumlahnya.
+      Baca banyak buku, lalu harga tiap buku.
+      Cetak 'Total: <jumlah>'.
+    input: "Baris 1: n (banyak buku). n baris berikutnya: harga buku."
+    output: "Satu baris: Total: <jumlah>."
+    contoh:
+      - input: "3\n5000\n3000\n2000"
+        output: "Total: 10000"
+      - input: "2\n10000\n5000"
+        output: "Total: 15000"
+    tes:
+      - input: "3\n5000\n3000\n2000"
+        output: "Total: 10000"
+      - input: "2\n10000\n5000"
+        output: "Total: 15000"
+      - input: "1\n7000"
+        output: "Total: 7000"
+      - input: "4\n1000\n2000\n3000\n4000"
+        output: "Total: 10000"
+      - input: "3\n500\n500\n500"
+        output: "Total: 1500"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "Total: 15"
+    solusi: |
+      def total(harga):
+          s = 0
+          for h in harga:
+              s = s + h
+          return s
+
+      n = int(input())
+      belanja = []
+      for i in range(n):
+          belanja.append(int(input()))
+      print('Total:', total(belanja))
+    petunjuk:
+      - "Fungsi total(harga) menjumlahkan isi list dengan for."
+      - "Kumpulkan semua harga ke list dengan append()."
+      - "Cetak 'Total:' lalu hasil pemanggilan total(belanja)."

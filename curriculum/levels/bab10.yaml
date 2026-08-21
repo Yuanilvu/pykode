@@ -420,3 +420,90 @@ soal:
       - "Gunakan .split() untuk memecah kalimat menjadi daftar kata."
       - "Mulai dengan kata pertama sebagai kandidat terpanjang."
       - "Pakai perbandingan > (bukan >=) supaya kata pertama yang menang saat seri."
+
+  - id: "s10-4"
+    judul: "Karpet Bintang"
+    sulit: "mudah"
+    cerita: |
+      Kancil membantu Bu Guru menghias kelas.
+      Mereka membuat karpet dari bintang!
+      Karpet itu berbentuk persegi: baris dan kolomnya sama banyak.
+      Baca satu angka n.
+      Cetak n baris, tiap baris berisi n bintang.
+      Pakai dua perulangan: satu untuk baris, satu untuk kolom.
+    input: "Satu baris: angka n."
+    output: "n baris: tiap baris berisi n bintang."
+    contoh:
+      - input: "3"
+        output: "***\n***\n***"
+      - input: "1"
+        output: "*"
+    tes:
+      - input: "3"
+        output: "***\n***\n***"
+      - input: "1"
+        output: "*"
+      - input: "2"
+        output: "**\n**"
+      - input: "5"
+        output: "*****\n*****\n*****\n*****\n*****"
+      - input: "4"
+        output: "****\n****\n****\n****"
+      - input: "6"
+        output: "******\n******\n******\n******\n******\n******"
+    solusi: |
+      n = int(input())
+      for i in range(n):
+          for j in range(n):
+              print('*', end='')
+          print()
+    petunjuk:
+      - "Loop luar berjalan n kali untuk baris."
+      - "Di dalamnya, loop dalam mencetak n bintang dengan end=''."
+      - "Setelah loop dalam selesai, panggil print() untuk pindah baris."
+
+  - id: "s10-5"
+    judul: "Urutkan Nama Peserta"
+    sulit: "sedang"
+    cerita: |
+      Panitia lomba menulis nama peserta di papan.
+      Bu Guru minta nama-nama itu diurutkan dari yang pendek ke yang panjang.
+      Kamu tidak boleh pakai .sort() — harus manual!
+      Baca banyak nama, lalu nama-namanya.
+      Cetak nama urut dari pendek ke panjang.
+      Satu nama satu baris.
+    input: "Baris 1: n (banyak nama). n baris berikutnya: nama."
+    output: "n baris: nama urut dari pendek ke panjang."
+    contoh:
+      - input: "3\nkancil\naku\nsaya"
+        output: "aku\nsaya\nkancil"
+      - input: "2\nbudi\nsari"
+        output: "budi\nsari"
+    tes:
+      - input: "3\nkancil\naku\nsaya"
+        output: "aku\nsaya\nkancil"
+      - input: "2\nbudi\nsari"
+        output: "budi\nsari"
+      - input: "1\ntono"
+        output: "tono"
+      - input: "4\nb\nbb\nbbb\nbbbb"
+        output: "b\nbb\nbbb\nbbbb"
+      - input: "3\npython\nsaya\naku"
+        output: "aku\nsaya\npython"
+      - input: "3\nxyz\nab\nabcd"
+        output: "ab\nxyz\nabcd"
+    solusi: |
+      n = int(input())
+      nama = []
+      for i in range(n):
+          nama.append(input())
+      for i in range(n):
+          for j in range(n - 1):
+              if len(nama[j]) > len(nama[j + 1]):
+                  nama[j], nama[j + 1] = nama[j + 1], nama[j]
+      for x in nama:
+          print(x)
+    petunjuk:
+      - "Simpan semua nama di dalam list."
+      - "Pakai dua for untuk bubble sort, bandingkan dengan len()."
+      - "Tukar kalau nama kiri lebih panjang dari nama kanan."

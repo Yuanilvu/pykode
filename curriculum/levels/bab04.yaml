@@ -434,3 +434,82 @@ soal:
       - "Habis dibagi 4 artinya t % 4 == 0."
       - "Gabungkan syaratnya: (habis dibagi 4 DAN tidak habis dibagi 100) ATAU habis dibagi 400."
       - "Cetak 'Kabisat' kalau syarat gabungan benar. Selain itu cetak 'Bukan kabisat'."
+
+  - id: "s4-4"
+    judul: "Suhu Hari Ini"
+    sulit: "mudah"
+    cerita: |
+      Pagi ini Kancil melihat termometer di sekolah.
+      Kalau suhunya kurang dari 20 derajat, udara terasa dingin.
+      Kalau 20 derajat atau lebih, udara terasa hangat.
+      Kancil ingin komputer memutuskan: 'Dingin' atau 'Hangat'.
+      Baca satu angka suhu, lalu cetak jawabannya.
+    input: "Satu baris: suhu (int)."
+    output: "Satu baris: Dingin atau Hangat."
+    contoh:
+      - input: "15"
+        output: "Dingin"
+      - input: "25"
+        output: "Hangat"
+    tes:
+      - input: "15"
+        output: "Dingin"
+      - input: "25"
+        output: "Hangat"
+      - input: "20"
+        output: "Hangat"
+      - input: "0"
+        output: "Dingin"
+      - input: "35"
+        output: "Hangat"
+    solusi: |
+      s = int(input())
+      if s < 20:
+          print('Dingin')
+      else:
+          print('Hangat')
+    petunjuk:
+      - "Baca suhu dengan int(input()) dan simpan di variabel."
+      - "Pakai if s < 20 untuk kondisi dingin."
+      - "Selain itu (20 ke atas) masuk ke else dan cetak 'Hangat'."
+
+  - id: "s4-5"
+    judul: "Wahana Bianglala"
+    sulit: "sedang"
+    cerita: |
+      Di pasar malam ada wahana bianglala raksasa.
+      Aturannya: anak boleh naik kalau umurnya 10 tahun atau lebih.
+      Tinggi badannya juga harus 130 cm atau lebih.
+      Dua syarat itu harus terpenuhi semua.
+      Baca umur lalu tinggi, cetak 'Boleh naik' atau 'Belum boleh'.
+    input: "Dua baris: umur (int), lalu tinggi badan (int)."
+    output: "Satu baris: Boleh naik atau Belum boleh."
+    contoh:
+      - input: "12\n140"
+        output: "Boleh naik"
+      - input: "9\n140"
+        output: "Belum boleh"
+    tes:
+      - input: "12\n140"
+        output: "Boleh naik"
+      - input: "9\n140"
+        output: "Belum boleh"
+      - input: "10\n130"
+        output: "Boleh naik"
+      - input: "12\n129"
+        output: "Belum boleh"
+      - input: "15\n150"
+        output: "Boleh naik"
+      - input: "10\n129"
+        output: "Belum boleh"
+    solusi: |
+      umur = int(input())
+      tinggi = int(input())
+      if umur >= 10 and tinggi >= 130:
+          print('Boleh naik')
+      else:
+          print('Belum boleh')
+    petunjuk:
+      - "Baca umur dan tinggi dengan int(input())."
+      - "Gabung dua syarat dengan and: umur >= 10 and tinggi >= 130."
+      - "Kalau syarat gabungan benar cetak 'Boleh naik'. Selain itu cetak 'Belum boleh'."

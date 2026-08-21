@@ -1,0 +1,3190 @@
+proyek:
+  judul: "Sistem Informasi Sekolah Mini"
+  emoji: "🏫"
+  warna: "#0ea5e9"
+  deskripsi: "Buat aplikasi sekolah sungguhan! Tiap misi = fitur baru. Dari papan nama sampai data siswa lengkap."
+  misi:
+    - id: "m1"
+      judul: "Papan Nama Sekolah"
+      emoji: "🏷️"
+      bab: 1
+      menit: 10
+      xp: 60
+      cerita: |
+        Kamu akan bikin aplikasi sekolah sendiri! Aplikasi ini akan makin pintar
+        di tiap misi. Di misi pertama, kita buat **papan nama** aplikasinya.
+
+        Program hanya mencetak judul dan menu. Belum bisa dipilih — nanti
+        di misi berikutnya!
+      instruksi: |
+        Cetak persis seperti ini, baris demi baris:
+
+        ```
+        === SISTEM INFORMASI SEKOLAH ===
+        Selamat datang di aplikasi sekolah!
+
+        Menu:
+        1. Lihat nama sekolah
+        2. Keluar
+        ```
+
+        - Pakai satu `print()` untuk tiap baris.
+        - Baris kosong di tengah pakai `print()` tanpa isi.
+        - Perhatikan tanda sama dengan (===) di baris pertama!
+      contoh:
+        - input: ""
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Selamat datang di aplikasi sekolah!
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+      tes:
+        - input: ""
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Selamat datang di aplikasi sekolah!
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+        - input: "1"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Selamat datang di aplikasi sekolah!
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+        - input: "9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Selamat datang di aplikasi sekolah!
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        print('Selamat datang di aplikasi sekolah!')
+        print()
+        print('Menu:')
+        print('1. Lihat nama sekolah')
+        print('2. Keluar')
+      petunjuk:
+        - "Tulis print() untuk tiap baris yang mau dicetak."
+        - "Baris kosong dicetak dengan print() tanpa isi."
+        - "Jangan lupa tanda kutip di setiap teks."
+
+    - id: "m2"
+      judul: "Nama Sekolahmu"
+      emoji: "✏️"
+      bab: 2
+      menit: 10
+      xp: 60
+      cerita: |
+        Papan nama sudah jadi! Sekarang aplikasi minta nama sekolah
+        dari kamu.
+
+        Kamu mengetik nama sekolahnya, lalu aplikasi menyimpannya
+        di variabel dan menyapanya.
+      instruksi: |
+        Ubah programmu jadi seperti ini:
+
+        1. Cetak judul `=== SISTEM INFORMASI SEKOLAH ===` (tetap).
+        2. Tampilkan pertanyaan: `Nama sekolahmu: `
+        3. Baca ketikan dengan `input()` dan simpan di variabel `sekolah`.
+        4. Cetak: `Sekolah: ` lalu isi variabelnya (contoh: `Sekolah: SD Nusantara`).
+        5. Cetak baris kosong, lalu menu seperti misi 1.
+
+        Pertanyaan di langkah 2 memakai `input('Nama sekolahmu: ')` —
+        teks di dalam kurung akan tampil dulu, lalu program menunggu ketikanmu.
+      contoh:
+        - input: "SD Nusantara"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Nusantara
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+      tes:
+        - input: "SD Nusantara"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Nusantara
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+        - input: "SD Harapan Jaya"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Harapan Jaya
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+        - input: "SD Ceria"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Ceria
+
+            Menu:
+            1. Lihat nama sekolah
+            2. Keluar
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        print('Sekolah:', sekolah)
+        print()
+        print('Menu:')
+        print('1. Lihat nama sekolah')
+        print('2. Keluar')
+      petunjuk:
+        - "Simpan ketikan dari input() ke variabel sekolah."
+        - "Gunakan print('Sekolah:', sekolah) untuk mencetak teks dan isi variabel."
+        - "Baris pertama (judul) tetap sama seperti misi 1."
+    - id: "m3"
+      judul: "Kartu Siswa"
+      emoji: "📇"
+      bab: 3
+      menit: 10
+      xp: 80
+      cerita: |
+        Kartu siswa itu penting. Semua siswa di sekolah punya kartu.
+        Kartu berisi nama dan kelas. Sekarang aplikasimu bisa bikin kartu siswa.
+        Kamu mengetik nama dan kelas. Aplikasi mencetak kartunya.
+        Kita pakai f-string. f-string itu cara mencetak teks berisi variabel.
+        Simbolnya kurung kurawal {}. Ayo bikin kartu pertamamu!
+
+      instruksi: |
+        Ubah programmu jadi seperti ini:
+        
+        1. Cetak judul `=== SISTEM INFORMASI SEKOLAH ===` (tetap).
+        2. Tanya `Nama sekolahmu: ` lalu cetak `Sekolah: ` dan isinya (tetap dari misi 2).
+        3. Tanya `Nama siswa: ` dengan `input()` dan simpan di variabel `nama`.
+        4. Tanya `Kelas: ` dan simpan di variabel `kelas`.
+        5. Cetak kartu siswa dengan f-string, persis seperti ini:
+        
+        ```
+        Nama: Budi
+        Kelas: 5A
+        ```
+        
+        f-string diawali huruf `f`. Isi variabel ditulis di dalam kurung kurawal `{}`:
+        
+        ```python
+        print(f'Nama: {nama}')
+        print(f'Kelas: {kelas}')
+        ```
+        
+        Menu lama belum berfungsi. Nanti di misi berikutnya kita buat menunya jalan!
+
+      contoh:
+        - input: "SD Nusantara\nBudi\n5A"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Nusantara
+            Nama siswa: Kelas: Nama: Budi
+            Kelas: 5A
+
+        - input: "SD Harapan Jaya\nSiti\n6B"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Harapan Jaya
+            Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+
+      tes:
+        - input: "SD Nusantara\nBudi\n5A"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Nusantara
+            Nama siswa: Kelas: Nama: Budi
+            Kelas: 5A
+
+        - input: "SD Harapan Jaya\nSiti\n6B"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Harapan Jaya
+            Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+
+        - input: "SD Ceria\nRina\n7C"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Ceria
+            Nama siswa: Kelas: Nama: Rina
+            Kelas: 7C
+
+        - input: "SD Nusantara\nAndi\n4A"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Sekolah: SD Nusantara
+            Nama siswa: Kelas: Nama: Andi
+            Kelas: 4A
+
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        print('Sekolah:', sekolah)
+        nama = input('Nama siswa: ')
+        kelas = input('Kelas: ')
+        print(f'Nama: {nama}')
+        print(f'Kelas: {kelas}')
+
+      petunjuk:
+        - "Simpan ketikan dari input() ke variabel nama dan kelas."
+        - "f-string diawali huruf f, contoh: f'Nama: {nama}'."
+        - "Isi variabel ditulis di dalam kurung kurawal {}."
+    - id: "m4"
+      judul: "Menu Beneran"
+      emoji: "🕹️"
+      bab: 4
+      menit: 10
+      xp: 80
+      cerita: |
+        Menu sudah ada sejak misi 1. Tapi belum bisa dipilih.
+        Sekarang menu jadi beneran! Kamu mengetik angka pilihan.
+        Program menjalankan pilihanmu. Pakai if, elif, dan else.
+        if itu cara program memilih. Kalau angkanya tidak ada di menu,
+        program mencetak Pilihan tidak ada. Ayo coba semua pilihannya!
+
+      instruksi: |
+        Menu sekarang bisa dipilih! Ubah programmu jadi seperti ini:
+        
+        1. Cetak judul `=== SISTEM INFORMASI SEKOLAH ===` (tetap).
+        2. Tanya `Nama sekolahmu: ` dan simpan di variabel `sekolah` (tetap).
+        3. Cetak menu persis ini:
+        
+        ```
+        Menu:
+        1. Lihat nama sekolah
+        2. Kartu siswa
+        3. Keluar
+        ```
+        
+        4. Tanya pilihan dengan `input('Pilih menu (1-3): ')` dan simpan di variabel `pilihan`.
+        5. Pakai if, elif, dan else seperti ini:
+        
+        ```python
+        pilihan = input('Pilih menu (1-3): ')
+        if pilihan == '1':
+            print('Sekolah:', sekolah)
+        elif pilihan == '2':
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            print(f'Nama: {nama}')
+            print(f'Kelas: {kelas}')
+        elif pilihan == '3':
+            print('Sampai jumpa!')
+        else:
+            print('Pilihan tidak ada.')
+        ```
+        
+        Pilihan 1 mencetak nama sekolah. Pilihan 2 mencetak kartu siswa (sama seperti misi 3).
+        Pilihan 3 mencetak `Sampai jumpa!`. Angka lain mencetak `Pilihan tidak ada.`
+
+      contoh:
+        - input: "SD Nusantara\n1"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sekolah: SD Nusantara
+
+        - input: "SD Harapan Jaya\n2\nSiti\n6B"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+
+      tes:
+        - input: "SD Nusantara\n1"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sekolah: SD Nusantara
+
+        - input: "SD Harapan Jaya\n2\nSiti\n6B"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+
+        - input: "SD Ceria\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+        - input: "SD Nusantara\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Pilihan tidak ada.
+
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        print('Menu:')
+        print('1. Lihat nama sekolah')
+        print('2. Kartu siswa')
+        print('3. Keluar')
+        pilihan = input('Pilih menu (1-3): ')
+        if pilihan == '1':
+            print('Sekolah:', sekolah)
+        elif pilihan == '2':
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            print(f'Nama: {nama}')
+            print(f'Kelas: {kelas}')
+        elif pilihan == '3':
+            print('Sampai jumpa!')
+        else:
+            print('Pilihan tidak ada.')
+
+      petunjuk:
+        - "Bandingkan pilihan dengan ==, contoh: if pilihan == '1':"
+        - "Tiap cabang if/elif/else diakhiri titik dua. Baris di dalamnya menjorok ke dalam."
+        - "Else dipakai untuk semua pilihan lain."
+    - id: "m5"
+      judul: "Menu Berulang"
+      emoji: "🔁"
+      bab: 5
+      menit: 12
+      xp: 100
+      cerita: |
+        Menu di misi 4 hanya jalan sekali. Selesai memilih, program berhenti.
+        Padahal pengguna mau memilih lagi. Pakai while True.
+        while True artinya ulangi terus. break artinya berhenti.
+        Pilihan 3 memakai break. Jadi program berhenti kalau kamu memilih Keluar.
+        Menu tampil lagi setiap selesai aksi. Ayo coba!
+
+      instruksi: |
+        Menu di misi 4 hanya jalan sekali. Sekarang buat menu berulang!
+        
+        1. Tanya `Nama sekolahmu: ` dulu (di luar perulangan, tetap).
+        2. Tulis `while True:` lalu bungkus semua baris menu ke dalamnya.
+           Baris di dalamnya menjorok ke dalam.
+        3. Pilihan 3 mencetak `Sampai jumpa!` lalu `break`.
+        
+        ```python
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Keluar')
+            pilihan = input('Pilih menu (1-3): ')
+            if pilihan == '1':
+                print('Sekolah:', sekolah)
+            elif pilihan == '2':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == '3':
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+        ```
+        
+        `while True` artinya ulangi terus. `break` menghentikan perulangan.
+        Teks menu dan prompt tetap sama seperti misi 4.
+
+      contoh:
+        - input: "SD Nusantara\n1\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+      tes:
+        - input: "SD Nusantara\n1\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+        - input: "SD Ceria\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+        - input: "SD Nusantara\n9\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Pilihan tidak ada.
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+        - input: "SD Nusantara\n2\nAndi\n4A\n1\n3"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Nama siswa: Kelas: Nama: Andi
+            Kelas: 4A
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Keluar
+            Pilih menu (1-3): Sampai jumpa!
+
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Keluar')
+            pilihan = input('Pilih menu (1-3): ')
+            if pilihan == '1':
+                print('Sekolah:', sekolah)
+            elif pilihan == '2':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == '3':
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+
+      petunjuk:
+        - "Baris di dalam while True harus menjorok (indentasi) ke dalam."
+        - "break menghentikan perulangan. Letakkan di pilihan 3."
+        - "Menu dicetak di dalam perulangan. Jadi menu tampil lagi setiap selesai memilih."
+    - id: "m6"
+      judul: "Daftar Siswa"
+      emoji: "📋"
+      bab: 6
+      menit: 12
+      xp: 100
+      cerita: |
+        Sekolah makin ramai. Satu kartu tidak cukup.
+        Aplikasi harus menyimpan banyak siswa. List bisa menyimpan banyak data.
+        Setiap siswa ditambah, masuk ke list. Lalu list ditampilkan dengan nomor urut.
+        len() menghitung isi list. Sekarang aplikasimu punya daftar siswa sungguhan.
+        Ayo isi daftarnya!
+
+      instruksi: |
+        Sekarang aplikasi bisa menyimpan banyak siswa. Pakai list!
+        
+        1. Buat list kosong di awal program: `daftar = []`
+        2. Ganti menu jadi persis ini:
+        
+        ```
+        Menu:
+        1. Lihat nama sekolah
+        2. Kartu siswa
+        3. Tambah siswa
+        4. Lihat daftar siswa
+        5. Keluar
+        ```
+        
+        3. Tanya pilihan dengan `input('Pilih menu (1-5): ')`.
+        4. Pilihan 3 (Tambah siswa): tanya `Nama siswa: ` dan `Kelas: `,
+           lalu simpan ke list:
+        
+        ```python
+        daftar.append(f'{nama} ({kelas})')
+        ```
+        
+        5. Pilihan 4 (Lihat daftar siswa): cetak tiap siswa dengan nomor urut,
+           lalu cetak jumlah siswa:
+        
+        ```python
+        no = 1
+        for siswa in daftar:
+            print(f'{no}. {siswa}')
+            no = no + 1
+        print('Jumlah siswa:', len(daftar))
+        ```
+        
+        Contoh hasilnya:
+        
+        ```
+        1. Budi (5A)
+        2. Siti (6B)
+        Jumlah siswa: 2
+        ```
+        
+        6. Keluar sekarang pilihan 5: cetak `Sampai jumpa!` lalu `break`.
+           Pilihan 1 dan 2 tetap sama seperti misi 5.
+
+      contoh:
+        - input: "SD Nusantara\n1\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+      tes:
+        - input: "SD Nusantara\n1\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+        - input: "SD Ceria\n3\nBudi\n5A\n4\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Nama siswa: Kelas: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): 1. Budi (5A)
+            Jumlah siswa: 1
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+        - input: "SD Nusantara\n3\nSiti\n6B\n3\nRina\n7C\n4\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Nama siswa: Kelas: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Nama siswa: Kelas: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): 1. Siti (6B)
+            2. Rina (7C)
+            Jumlah siswa: 2
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+        - input: "SD Nusantara\n9\n5"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Pilihan tidak ada.
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Keluar
+            Pilih menu (1-5): Sampai jumpa!
+
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        daftar = []
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Keluar')
+            pilihan = input('Pilih menu (1-5): ')
+            if pilihan == '1':
+                print('Sekolah:', sekolah)
+            elif pilihan == '2':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == '3':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                daftar.append(f'{nama} ({kelas})')
+            elif pilihan == '4':
+                no = 1
+                for siswa in daftar:
+                    print(f'{no}. {siswa}')
+                    no = no + 1
+                print('Jumlah siswa:', len(daftar))
+            elif pilihan == '5':
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+
+      petunjuk:
+        - "Buat list kosong dengan daftar = [] di awal program."
+        - "daftar.append(...) menambah data ke list."
+        - "len(daftar) menghitung jumlah siswa di dalam list."
+    - id: "m7"
+      judul: "Data Siswa Lengkap"
+      emoji: "🗂️"
+      bab: 7
+      menit: 12
+      xp: 100
+      cerita: |
+        Data siswa sekarang makin lengkap. Setiap siswa punya nama, kelas, dan nilai. Kamu butuh cara menyimpan semuanya. Dictionary bisa menyimpan banyak data sekaligus. Dictionary pakai kunci dan isi. Kuncinya nama siswa. Isinya kelas dan nilai. Ayo lengkapi data siswa di sekolahmu!
+      instruksi: |
+        Ubah programmu jadi seperti ini:
+
+        1. Data siswa sekarang dictionary. Ganti `daftar = []` dengan:
+
+        ```python
+        siswa = {'Budi': {'kelas': '5A', 'nilai': 85}}
+        ```
+
+        2. Ganti menu jadi persis ini:
+
+        ```
+        Menu:
+        1. Lihat nama sekolah
+        2. Kartu siswa
+        3. Tambah siswa
+        4. Lihat daftar siswa
+        5. Detail siswa
+        6. Keluar
+        ```
+
+        3. Tanya pilihan dengan `input('Pilih menu (1-6): ')`.
+
+        4. Pilihan 3 (Tambah siswa): tanya `Nama siswa: `, `Kelas: `, lalu `Nilai: `. Simpan ke dictionary:
+
+        ```python
+        siswa[nama] = {'kelas': kelas, 'nilai': int(nilai)}
+        ```
+
+        5. Pilihan 4 (Lihat daftar siswa): cetak tiap siswa seperti ini:
+
+        ```python
+        for nama in siswa:
+            data = siswa[nama]
+            print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+        ```
+
+        Hasilnya:
+
+        ```
+        Budi - 5A - nilai 85
+        ```
+
+        6. Pilihan 5 (Detail siswa): tanya `Nama yang dicari: `. Kalau ada, cetak datanya. Kalau tidak ada, cetak `Siswa tidak ditemukan.`
+
+        7. Keluar sekarang pilihan 6: cetak `Sampai jumpa!` lalu `break`. Pilihan 1 dan 2 tetap sama seperti misi 6.
+      contoh:
+        - input: "SD Nusantara\n1\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n4\n5\nBudi\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Nama yang dicari: Budi - 5A - nilai 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+      tes:
+        - input: "SD Nusantara\n1\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n4\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Nama yang dicari: Budi - 5A - nilai 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+        - input: "SD Nusantara\n5\nRina\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Nama yang dicari: Siswa tidak ditemukan.
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+        - input: "SD Nusantara\n9\n6"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Pilihan tidak ada.
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Keluar
+            Pilih menu (1-6): Sampai jumpa!
+      solusi: |
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        siswa = {'Budi': {'kelas': '5A', 'nilai': 85}}
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Detail siswa')
+            print('6. Keluar')
+            pilihan = input('Pilih menu (1-6): ')
+            if pilihan == '1':
+                print('Sekolah:', sekolah)
+            elif pilihan == '2':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == '3':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                nilai = input('Nilai: ')
+                siswa[nama] = {'kelas': kelas, 'nilai': int(nilai)}
+            elif pilihan == '4':
+                for nama in siswa:
+                    data = siswa[nama]
+                    print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+            elif pilihan == '5':
+                cari = input('Nama yang dicari: ')
+                if cari in siswa:
+                    data = siswa[cari]
+                    print(f'{cari} - {data["kelas"]} - nilai {data["nilai"]}')
+                else:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == '6':
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+      petunjuk:
+        - "Dictionary ditulis dengan kurung kurawal: {'kunci': isi}."
+        - "Baca isi dictionary dengan siswa[nama]."
+        - "Cek kunci dengan: if cari in siswa:"
+    - id: "m8"
+      judul: "Fungsi Ajaib"
+      emoji: "🧩"
+      bab: 8
+      menit: 12
+      xp: 120
+      cerita: |
+        Programmu makin panjang. Banyak kode berulang di dalamnya. Fungsi bisa merapikan program. Fungsi itu kode dengan nama. Kamu panggil namanya, kodenya jalan. Fungsi juga bisa menghitung dan mengembalikan hasil. Sekarang kita bikin fungsi untuk tiap kerjaan. Program jadi rapi dan pendek. Ayo rapikan programmu!
+      instruksi: |
+        Bikin fungsi untuk tiap kerjaan. Fungsi ditulis dengan `def`.
+
+        1. Tambah fungsi di awal program (sebelum judul):
+
+        ```python
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            nilai = input('Nilai: ')
+            siswa[nama] = {'kelas': kelas, 'nilai': int(nilai)}
+
+        def lihat_siswa():
+            for nama in siswa:
+                data = siswa[nama]
+                print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+
+        def hitung_rata(nilai_list):
+            total = 0
+            for n in nilai_list:
+                total = total + n
+            return total / len(nilai_list)
+        ```
+
+        2. Ganti menu jadi persis ini:
+
+        ```
+        Menu:
+        1. Lihat nama sekolah
+        2. Kartu siswa
+        3. Tambah siswa
+        4. Lihat daftar siswa
+        5. Detail siswa
+        6. Rata-rata nilai
+        7. Keluar
+        ```
+
+        3. Tanya pilihan dengan `input('Pilih menu (1-7): ')`.
+
+        4. Pilihan 3 tinggal panggil `tambah_siswa()`. Pilihan 4 panggil `lihat_siswa()`.
+
+        5. Pilihan 6 (Rata-rata nilai): kumpulkan semua nilai, lalu panggil `hitung_rata`:
+
+        ```python
+        daftar_nilai = []
+        for nama in siswa:
+            daftar_nilai.append(siswa[nama]['nilai'])
+        rata = hitung_rata(daftar_nilai)
+        print(f'Rata-rata nilai: {rata:.1f}')
+        ```
+
+        Hasilnya: `Rata-rata nilai: 85.0`. `:.1f` artinya satu angka desimal.
+
+        6. Keluar sekarang pilihan 7. Pilihan 1, 2, dan 5 tetap sama seperti misi 7.
+      contoh:
+        - input: "SD Nusantara\n1\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n6\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Rata-rata nilai: 87.5
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+      tes:
+        - input: "SD Nusantara\n1\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n4\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama yang dicari: Budi - 5A - nilai 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\n5\nRina\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama yang dicari: Siswa tidak ditemukan.
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\n6\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Rata-rata nilai: 85.0
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n6\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Rata-rata nilai: 87.5
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+      solusi: |
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            nilai = input('Nilai: ')
+            siswa[nama] = {'kelas': kelas, 'nilai': int(nilai)}
+
+
+        def lihat_siswa():
+            for nama in siswa:
+                data = siswa[nama]
+                print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+
+
+        def hitung_rata(nilai_list):
+            total = 0
+            for n in nilai_list:
+                total = total + n
+            return total / len(nilai_list)
+
+
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        siswa = {'Budi': {'kelas': '5A', 'nilai': 85}}
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Detail siswa')
+            print('6. Rata-rata nilai')
+            print('7. Keluar')
+            pilihan = input('Pilih menu (1-7): ')
+            if pilihan == '1':
+                print('Sekolah:', sekolah)
+            elif pilihan == '2':
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == '3':
+                tambah_siswa()
+            elif pilihan == '4':
+                lihat_siswa()
+            elif pilihan == '5':
+                cari = input('Nama yang dicari: ')
+                if cari in siswa:
+                    data = siswa[cari]
+                    print(f'{cari} - {data["kelas"]} - nilai {data["nilai"]}')
+                else:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == '6':
+                daftar_nilai = []
+                for nama in siswa:
+                    daftar_nilai.append(siswa[nama]['nilai'])
+                rata = hitung_rata(daftar_nilai)
+                print(f'Rata-rata nilai: {rata:.1f}')
+            elif pilihan == '7':
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+      petunjuk:
+        - "Fungsi ditulis dengan def nama_fungsi():."
+        - "return mengirim hasil ke pemanggilnya."
+        - "Panggil fungsi dengan tambah_siswa()."
+    - id: "m9"
+      judul: "Program Kebal Error"
+      emoji: "🛡️"
+      bab: 9
+      menit: 12
+      xp: 120
+      cerita: |
+        Program keren harus kuat. Kalau pengguna mengetik huruf di tempat angka, program bisa rusak. Try dan except bisa menangkap kesalahan. Program tidak berhenti. Program minta ketikan ulang. Sekarang aplikasimu tidak mudah rusak. Coba ketik huruf di tempat angka. Program tetap baik-baik saja. Ayo perkuat programmu!
+      instruksi: |
+        Programmu harus kuat dari ketikan aneh. Pakai try dan except.
+
+        1. Nilai harus angka. Ganti isi fungsi `tambah_siswa` jadi:
+
+        ```python
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            while True:
+                nilai = input('Nilai: ')
+                try:
+                    nilai = int(nilai)
+                    break
+                except ValueError:
+                    print('Nilai harus angka!')
+            siswa[nama] = {'kelas': kelas, 'nilai': nilai}
+        ```
+
+        Kalau ketikan bukan angka, cetak `Nilai harus angka!` lalu tanya ulang.
+
+        2. Pilihan menu juga harus angka. Ganti cara baca pilihan:
+
+        ```python
+        pilihan = input('Pilih menu (1-7): ')
+        try:
+            pilihan = int(pilihan)
+        except ValueError:
+            print('Pilih angka ya!')
+            continue
+        ```
+
+        Kalau bukan angka, cetak `Pilih angka ya!` lalu ulangi menu.
+
+        3. Sekarang bandingkan pilihan dengan angka: `if pilihan == 1:` (tanpa tanda kutip). Menu dan pilihan lain tetap sama seperti misi 8.
+      contoh:
+        - input: "SD Nusantara\nabc\n1\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Pilih angka ya!
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\nabc\n90\n4\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nilai: Nilai harus angka!
+            Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+      tes:
+        - input: "SD Nusantara\n1\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n4\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama yang dicari: Budi - 5A - nilai 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\n6\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Rata-rata nilai: 85.0
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\nabc\n90\n4\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Nama siswa: Kelas: Nilai: Nilai harus angka!
+            Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+        - input: "SD Nusantara\nabc\n1\n7"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Pilih angka ya!
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Keluar
+            Pilih menu (1-7): Sampai jumpa!
+      solusi: |
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            while True:
+                nilai = input('Nilai: ')
+                try:
+                    nilai = int(nilai)
+                    break
+                except ValueError:
+                    print('Nilai harus angka!')
+            siswa[nama] = {'kelas': kelas, 'nilai': nilai}
+
+
+        def lihat_siswa():
+            for nama in siswa:
+                data = siswa[nama]
+                print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+
+
+        def hitung_rata(nilai_list):
+            total = 0
+            for n in nilai_list:
+                total = total + n
+            return total / len(nilai_list)
+
+
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        siswa = {'Budi': {'kelas': '5A', 'nilai': 85}}
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Detail siswa')
+            print('6. Rata-rata nilai')
+            print('7. Keluar')
+            pilihan = input('Pilih menu (1-7): ')
+            try:
+                pilihan = int(pilihan)
+            except ValueError:
+                print('Pilih angka ya!')
+                continue
+            if pilihan == 1:
+                print('Sekolah:', sekolah)
+            elif pilihan == 2:
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == 3:
+                tambah_siswa()
+            elif pilihan == 4:
+                lihat_siswa()
+            elif pilihan == 5:
+                cari = input('Nama yang dicari: ')
+                if cari in siswa:
+                    data = siswa[cari]
+                    print(f'{cari} - {data["kelas"]} - nilai {data["nilai"]}')
+                else:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 6:
+                daftar_nilai = []
+                for nama in siswa:
+                    daftar_nilai.append(siswa[nama]['nilai'])
+                rata = hitung_rata(daftar_nilai)
+                print(f'Rata-rata nilai: {rata:.1f}')
+            elif pilihan == 7:
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+      petunjuk:
+        - "Baris yang bisa error ditaruh di dalam try."
+        - "Kalau error, kode di dalam except yang jalan."
+        - "while True di dalam fungsi membuat tanya ulang terus."
+    - id: "m10"
+      judul: "Peringkat dan Pencarian"
+      emoji: "🏆"
+      bab: 10
+      menit: 15
+      xp: 150
+      cerita: |
+        Semua siswa punya nilai. Nilai siapa yang paling tinggi? Kamu bisa mengurutkan siswa dari nilai tertinggi. Itu namanya sorting. Sorting itu cara mengurutkan data. Kita pakai bubble sort. Bubble sort membandingkan dua data dan menukarnya. Kamu juga bisa mencari siswa dengan perulangan. Ayo urutkan dan cari siswa!
+      instruksi: |
+        Tambahkan menu peringkat nilai dan cari siswa.
+
+        1. Ganti menu jadi persis ini:
+
+        ```
+        Menu:
+        1. Lihat nama sekolah
+        2. Kartu siswa
+        3. Tambah siswa
+        4. Lihat daftar siswa
+        5. Detail siswa
+        6. Rata-rata nilai
+        7. Peringkat nilai
+        8. Cari siswa
+        9. Keluar
+        ```
+
+        2. Tanya pilihan dengan `input('Pilih menu (1-9): ')`.
+
+        3. Pilihan 7 (Peringkat nilai): urutkan dari nilai tertinggi ke terendah. Pakai bubble sort:
+
+        ```python
+        urutan = list(siswa.keys())
+        n = len(urutan)
+        for i in range(n):
+            for j in range(n - 1):
+                if siswa[urutan[j]]['nilai'] < siswa[urutan[j + 1]]['nilai']:
+                    urutan[j], urutan[j + 1] = urutan[j + 1], urutan[j]
+        no = 1
+        for nama in urutan:
+            print(f'{no}. {nama} - {siswa[nama]["nilai"]}')
+            no = no + 1
+        ```
+
+        Hasilnya:
+
+        ```
+        1. Siti - 90
+        2. Budi - 85
+        ```
+
+        4. Pilihan 8 (Cari siswa): cari nama pakai perulangan. Kalau ketemu, cetak datanya. Kalau tidak, cetak `Siswa tidak ditemukan.`
+
+        5. Keluar sekarang pilihan 9. Pilihan lain tetap sama seperti misi 9.
+      contoh:
+        - input: "SD Nusantara\n1\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n7\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): 1. Siti - 90
+            2. Budi - 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+      tes:
+        - input: "SD Nusantara\n1\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n4\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama yang dicari: Budi - 5A - nilai 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n6\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Rata-rata nilai: 85.0
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n3\nRina\n7C\n75\n7\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): 1. Siti - 90
+            2. Budi - 85
+            3. Rina - 75
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n8\nBudi\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama yang dicari: Budi - 5A - nilai 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+      solusi: |
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            while True:
+                nilai = input('Nilai: ')
+                try:
+                    nilai = int(nilai)
+                    break
+                except ValueError:
+                    print('Nilai harus angka!')
+            siswa[nama] = {'kelas': kelas, 'nilai': nilai}
+
+
+        def lihat_siswa():
+            for nama in siswa:
+                data = siswa[nama]
+                print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+
+
+        def hitung_rata(nilai_list):
+            total = 0
+            for n in nilai_list:
+                total = total + n
+            return total / len(nilai_list)
+
+
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        siswa = {'Budi': {'kelas': '5A', 'nilai': 85}}
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Detail siswa')
+            print('6. Rata-rata nilai')
+            print('7. Peringkat nilai')
+            print('8. Cari siswa')
+            print('9. Keluar')
+            pilihan = input('Pilih menu (1-9): ')
+            try:
+                pilihan = int(pilihan)
+            except ValueError:
+                print('Pilih angka ya!')
+                continue
+            if pilihan == 1:
+                print('Sekolah:', sekolah)
+            elif pilihan == 2:
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == 3:
+                tambah_siswa()
+            elif pilihan == 4:
+                lihat_siswa()
+            elif pilihan == 5:
+                cari = input('Nama yang dicari: ')
+                if cari in siswa:
+                    data = siswa[cari]
+                    print(f'{cari} - {data["kelas"]} - nilai {data["nilai"]}')
+                else:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 6:
+                daftar_nilai = []
+                for nama in siswa:
+                    daftar_nilai.append(siswa[nama]['nilai'])
+                rata = hitung_rata(daftar_nilai)
+                print(f'Rata-rata nilai: {rata:.1f}')
+            elif pilihan == 7:
+                urutan = list(siswa.keys())
+                n = len(urutan)
+                for i in range(n):
+                    for j in range(n - 1):
+                        if siswa[urutan[j]]['nilai'] < siswa[urutan[j + 1]]['nilai']:
+                            urutan[j], urutan[j + 1] = urutan[j + 1], urutan[j]
+                no = 1
+                for nama in urutan:
+                    print(f'{no}. {nama} - {siswa[nama]["nilai"]}')
+                    no = no + 1
+            elif pilihan == 8:
+                cari = input('Nama yang dicari: ')
+                ketemu = False
+                for nama in siswa:
+                    if nama == cari:
+                        data = siswa[nama]
+                        print(f'{nama} - {data["kelas"]} - nilai {data["nilai"]}')
+                        ketemu = True
+                if not ketemu:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 9:
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+      petunjuk:
+        - "Bubble sort membandingkan dua data, lalu menukar kalau salah urut."
+        - "range(n) membuat angka 0 sampai n-1."
+        - "Cari pakai for dan if: for nama in siswa: if nama == cari:"
+    - id: "m11"
+      judul: "Class Siswa"
+      emoji: "🎓"
+      bab: 11
+      menit: 15
+      xp: 150
+      cerita: |
+        Setiap siswa punya nama, kelas, dan nilai. Semua itu milik satu siswa. Class bisa menggabungkan data jadi satu. Class itu cetakan. Dari cetakan, kamu bikin benda. Benda itu punya data dan cara sendiri. Kita bikin class Siswa. Setiap siswa jadi benda dari class Siswa. Ayo bikin class pertamamu!
+      instruksi: |
+        Bikin class Siswa. Class menggabungkan data dan cara kerja.
+
+        1. Tambah class di awal program:
+
+        ```python
+        class Siswa:
+            def __init__(self, nama, kelas, nilai):
+                self.nama = nama
+                self.kelas = kelas
+                self.nilai = nilai
+
+            def tampilkan(self):
+                print(f'Nama: {self.nama}')
+                print(f'Kelas: {self.kelas}')
+                print(f'Nilai: {self.nilai}')
+        ```
+
+        `__init__` menyimpan data. Method `tampilkan` mencetak data siswa.
+
+        2. Ganti data siswa jadi list berisi benda Siswa:
+
+        ```python
+        daftar = [Siswa('Budi', '5A', 85)]
+        ```
+
+        3. Pilihan 3 (Tambah siswa): simpan benda Siswa baru:
+
+        ```python
+        daftar.append(Siswa(nama, kelas, nilai))
+        ```
+
+        4. Pilihan 4 (Lihat daftar siswa): cetak tiap benda:
+
+        ```python
+        for s in daftar:
+            print(f'{s.nama} - {s.kelas} - nilai {s.nilai}')
+        ```
+
+        5. Pilihan 5 (Detail siswa) dan 8 (Cari siswa): kalau ketemu, panggil `s.tampilkan()`.
+
+        6. Nilai diambil dengan titik: `s.nilai`. Pilihan 6 dan 7 pakai `s.nilai` juga. Menu dan pilihan lain tetap sama seperti misi 10.
+      contoh:
+        - input: "SD Nusantara\n1\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama yang dicari: Nama: Budi
+            Kelas: 5A
+            Nilai: 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+      tes:
+        - input: "SD Nusantara\n1\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n4\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama yang dicari: Nama: Budi
+            Kelas: 5A
+            Nilai: 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n6\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Rata-rata nilai: 85.0
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n7\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): 1. Siti - 90
+            2. Budi - 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+        - input: "SD Nusantara\n8\nRina\n9"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Nama yang dicari: Siswa tidak ditemukan.
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Keluar
+            Pilih menu (1-9): Sampai jumpa!
+      solusi: |
+        class Siswa:
+            def __init__(self, nama, kelas, nilai):
+                self.nama = nama
+                self.kelas = kelas
+                self.nilai = nilai
+
+            def tampilkan(self):
+                print(f'Nama: {self.nama}')
+                print(f'Kelas: {self.kelas}')
+                print(f'Nilai: {self.nilai}')
+
+
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            while True:
+                nilai = input('Nilai: ')
+                try:
+                    nilai = int(nilai)
+                    break
+                except ValueError:
+                    print('Nilai harus angka!')
+            daftar.append(Siswa(nama, kelas, nilai))
+
+
+        def lihat_siswa():
+            for s in daftar:
+                print(f'{s.nama} - {s.kelas} - nilai {s.nilai}')
+
+
+        def hitung_rata(nilai_list):
+            total = 0
+            for n in nilai_list:
+                total = total + n
+            return total / len(nilai_list)
+
+
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        daftar = [Siswa('Budi', '5A', 85)]
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Detail siswa')
+            print('6. Rata-rata nilai')
+            print('7. Peringkat nilai')
+            print('8. Cari siswa')
+            print('9. Keluar')
+            pilihan = input('Pilih menu (1-9): ')
+            try:
+                pilihan = int(pilihan)
+            except ValueError:
+                print('Pilih angka ya!')
+                continue
+            if pilihan == 1:
+                print('Sekolah:', sekolah)
+            elif pilihan == 2:
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == 3:
+                tambah_siswa()
+            elif pilihan == 4:
+                lihat_siswa()
+            elif pilihan == 5:
+                cari = input('Nama yang dicari: ')
+                ketemu = False
+                for s in daftar:
+                    if s.nama == cari:
+                        s.tampilkan()
+                        ketemu = True
+                if not ketemu:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 6:
+                daftar_nilai = []
+                for s in daftar:
+                    daftar_nilai.append(s.nilai)
+                rata = hitung_rata(daftar_nilai)
+                print(f'Rata-rata nilai: {rata:.1f}')
+            elif pilihan == 7:
+                urutan = list(daftar)
+                n = len(urutan)
+                for i in range(n):
+                    for j in range(n - 1):
+                        if urutan[j].nilai < urutan[j + 1].nilai:
+                            urutan[j], urutan[j + 1] = urutan[j + 1], urutan[j]
+                no = 1
+                for s in urutan:
+                    print(f'{no}. {s.nama} - {s.nilai}')
+                    no = no + 1
+            elif pilihan == 8:
+                cari = input('Nama yang dicari: ')
+                ketemu = False
+                for s in daftar:
+                    if s.nama == cari:
+                        s.tampilkan()
+                        ketemu = True
+                if not ketemu:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 9:
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+      petunjuk:
+        - "Class dibuat dengan class Nama: lalu def __init__(self, ...):."
+        - "self menyimpan data milik benda itu."
+        - "Bikin benda baru dengan Siswa('Budi', '5A', 85)."
+    - id: "m12"
+      judul: "Data Tersimpan Aman"
+      emoji: "💾"
+      bab: 12
+      menit: 15
+      xp: 200
+      cerita: |
+        Data siswa hilang kalau program ditutup. Sayang sekali! File bisa menyimpan data. Data disimpan ke file, dibaca lagi nanti. Program juga bisa mengurutkan dengan sorted dan lambda. Lambda itu fungsi kecil sekali pakai. List comprehension membuat list dengan cepat. Sekarang data siswa aman di file. Ayo simpan datamu!
+      instruksi: |
+        Simpan data ke file supaya tidak hilang.
+
+        1. Menu baru jadi persis ini:
+
+        ```
+        Menu:
+        1. Lihat nama sekolah
+        2. Kartu siswa
+        3. Tambah siswa
+        4. Lihat daftar siswa
+        5. Detail siswa
+        6. Rata-rata nilai
+        7. Peringkat nilai
+        8. Cari siswa
+        9. Simpan data
+        10. Muat data
+        11. Keluar
+        ```
+
+        2. Tanya pilihan dengan `input('Pilih menu (1-11): ')`.
+
+        3. Saat program mulai, coba muat file `data_siswa.txt` kalau ada:
+
+        ```python
+        try:
+            with open('data_siswa.txt') as f:
+                daftar = []
+                for baris in f:
+                    nama, kelas, nilai = baris.strip().split('|')
+                    daftar.append(Siswa(nama, kelas, int(nilai)))
+        except FileNotFoundError:
+            pass
+        ```
+
+        4. Pilihan 9 (Simpan data): tulis ke file:
+
+        ```python
+        with open('data_siswa.txt', 'w') as f:
+            for s in daftar:
+                f.write(f'{s.nama}|{s.kelas}|{s.nilai}
+        ')
+        print('Data tersimpan!')
+        ```
+
+        5. Pilihan 10 (Muat data): baca file lagi, lalu cetak `Data dimuat!`.
+
+        6. Pilihan 7 (Peringkat nilai): pakai sorted dengan lambda:
+
+        ```python
+        urutan = sorted(daftar, key=lambda s: s.nilai, reverse=True)
+        ```
+
+        7. Pilihan 4 (Lihat daftar siswa): pakai list comprehension:
+
+        ```python
+        laporan = [f'{s.nama} - {s.kelas} - nilai {s.nilai}' for s in daftar]
+        for baris in laporan:
+            print(baris)
+        ```
+
+        8. Keluar sekarang pilihan 11. Pilihan lain tetap sama seperti misi 11.
+      contoh:
+        - input: "SD Nusantara\n1\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n9\n10\n4\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Data tersimpan!
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Data dimuat!
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+      tes:
+        - input: "SD Nusantara\n1\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sekolah: SD Nusantara
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Harapan Jaya\n2\nSiti\n6B\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Nama siswa: Kelas: Nama: Siti
+            Kelas: 6B
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Ceria\n3\nSiti\n6B\n90\n4\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Nusantara\n5\nBudi\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Nama yang dicari: Nama: Budi
+            Kelas: 5A
+            Nilai: 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Nusantara\n6\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Rata-rata nilai: 85.0
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n7\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): 1. Siti - 90
+            2. Budi - 85
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+        - input: "SD Nusantara\n3\nSiti\n6B\n90\n9\n10\n4\n11"
+          output: |
+            === SISTEM INFORMASI SEKOLAH ===
+            Nama sekolahmu: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Nama siswa: Kelas: Nilai: Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Data tersimpan!
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Data dimuat!
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Budi - 5A - nilai 85
+            Siti - 6B - nilai 90
+            Menu:
+            1. Lihat nama sekolah
+            2. Kartu siswa
+            3. Tambah siswa
+            4. Lihat daftar siswa
+            5. Detail siswa
+            6. Rata-rata nilai
+            7. Peringkat nilai
+            8. Cari siswa
+            9. Simpan data
+            10. Muat data
+            11. Keluar
+            Pilih menu (1-11): Sampai jumpa!
+      solusi: |
+        class Siswa:
+            def __init__(self, nama, kelas, nilai):
+                self.nama = nama
+                self.kelas = kelas
+                self.nilai = nilai
+
+            def tampilkan(self):
+                print(f'Nama: {self.nama}')
+                print(f'Kelas: {self.kelas}')
+                print(f'Nilai: {self.nilai}')
+
+
+        def tambah_siswa():
+            nama = input('Nama siswa: ')
+            kelas = input('Kelas: ')
+            while True:
+                nilai = input('Nilai: ')
+                try:
+                    nilai = int(nilai)
+                    break
+                except ValueError:
+                    print('Nilai harus angka!')
+            daftar.append(Siswa(nama, kelas, nilai))
+
+
+        def lihat_siswa():
+            for s in daftar:
+                print(f'{s.nama} - {s.kelas} - nilai {s.nilai}')
+
+
+        def hitung_rata(nilai_list):
+            total = 0
+            for n in nilai_list:
+                total = total + n
+            return total / len(nilai_list)
+
+
+        print('=== SISTEM INFORMASI SEKOLAH ===')
+        sekolah = input('Nama sekolahmu: ')
+        daftar = [Siswa('Budi', '5A', 85)]
+        try:
+            with open('data_siswa.txt') as f:
+                daftar = []
+                for baris in f:
+                    nama, kelas, nilai = baris.strip().split('|')
+                    daftar.append(Siswa(nama, kelas, int(nilai)))
+        except FileNotFoundError:
+            pass
+        while True:
+            print('Menu:')
+            print('1. Lihat nama sekolah')
+            print('2. Kartu siswa')
+            print('3. Tambah siswa')
+            print('4. Lihat daftar siswa')
+            print('5. Detail siswa')
+            print('6. Rata-rata nilai')
+            print('7. Peringkat nilai')
+            print('8. Cari siswa')
+            print('9. Simpan data')
+            print('10. Muat data')
+            print('11. Keluar')
+            pilihan = input('Pilih menu (1-11): ')
+            try:
+                pilihan = int(pilihan)
+            except ValueError:
+                print('Pilih angka ya!')
+                continue
+            if pilihan == 1:
+                print('Sekolah:', sekolah)
+            elif pilihan == 2:
+                nama = input('Nama siswa: ')
+                kelas = input('Kelas: ')
+                print(f'Nama: {nama}')
+                print(f'Kelas: {kelas}')
+            elif pilihan == 3:
+                tambah_siswa()
+            elif pilihan == 4:
+                laporan = [f'{s.nama} - {s.kelas} - nilai {s.nilai}' for s in daftar]
+                for baris in laporan:
+                    print(baris)
+            elif pilihan == 5:
+                cari = input('Nama yang dicari: ')
+                ketemu = False
+                for s in daftar:
+                    if s.nama == cari:
+                        s.tampilkan()
+                        ketemu = True
+                if not ketemu:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 6:
+                daftar_nilai = [s.nilai for s in daftar]
+                rata = hitung_rata(daftar_nilai)
+                print(f'Rata-rata nilai: {rata:.1f}')
+            elif pilihan == 7:
+                urutan = sorted(daftar, key=lambda s: s.nilai, reverse=True)
+                no = 1
+                for s in urutan:
+                    print(f'{no}. {s.nama} - {s.nilai}')
+                    no = no + 1
+            elif pilihan == 8:
+                cari = input('Nama yang dicari: ')
+                ketemu = False
+                for s in daftar:
+                    if s.nama == cari:
+                        s.tampilkan()
+                        ketemu = True
+                if not ketemu:
+                    print('Siswa tidak ditemukan.')
+            elif pilihan == 9:
+                with open('data_siswa.txt', 'w') as f:
+                    for s in daftar:
+                        f.write(f'{s.nama}|{s.kelas}|{s.nilai}\n')
+                print('Data tersimpan!')
+            elif pilihan == 10:
+                with open('data_siswa.txt') as f:
+                    daftar = []
+                    for baris in f:
+                        nama, kelas, nilai = baris.strip().split('|')
+                        daftar.append(Siswa(nama, kelas, int(nilai)))
+                print('Data dimuat!')
+            elif pilihan == 11:
+                print('Sampai jumpa!')
+                break
+            else:
+                print('Pilihan tidak ada.')
+      petunjuk:
+        - "open('data_siswa.txt', 'w') untuk menulis. open('data_siswa.txt') untuk membaca."
+        - "lambda s: s.nilai artinya ambil nilai dari benda s."
+        - "List comprehension ditulis di dalam kurung siku: [x for x in daftar]."

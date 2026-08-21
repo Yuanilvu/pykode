@@ -407,3 +407,87 @@ soal:
       - "Pecah kalimat jadi daftar kata dengan .split()."
       - "Gunakan k.startswith(awalan) untuk mengecek awal kata."
       - "Hitung kata yang lolos dengan len() pada hasil comprehension."
+
+  - id: "s12-4"
+    judul: "Kuadrat Kilat"
+    sulit: "mudah"
+    cerita: |
+      Kancil ikut lomba hitung cepat.
+      Dia harus menyebut kuadrat semua angka dari 1 sampai n secepat mungkin.
+      Untung ada list comprehension!
+      Baca satu angka n.
+      Cetak kuadrat angka 1 sampai n dalam satu baris, dipisah spasi.
+    input: "Satu baris: angka n."
+    output: "Satu baris: kuadrat angka 1 sampai n, dipisah spasi."
+    contoh:
+      - input: "4"
+        output: "1 4 9 16"
+      - input: "2"
+        output: "1 4"
+    tes:
+      - input: "4"
+        output: "1 4 9 16"
+      - input: "2"
+        output: "1 4"
+      - input: "1"
+        output: "1"
+      - input: "6"
+        output: "1 4 9 16 25 36"
+      - input: "5"
+        output: "1 4 9 16 25"
+      - input: "3"
+        output: "1 4 9"
+    solusi: |
+      n = int(input())
+      kuadrat = [x * x for x in range(1, n + 1)]
+      for x in kuadrat:
+          print(x, end=' ')
+      print()
+    petunjuk:
+      - "Pakai [x * x for x in range(1, n + 1)]."
+      - "List comprehension langsung membuat semua kuadrat."
+      - "Cetak dengan for dan end=' ' supaya sebaris."
+
+  - id: "s12-5"
+    judul: "Penyaring Genap"
+    sulit: "sedang"
+    cerita: |
+      Kancil mengumpulkan skor game teman-temannya.
+      Dia hanya ingin melihat skor yang genap.
+      Skor ganjil dibuang.
+      Pakai filter dengan lambda supaya cepat!
+      Baca banyak skor, lalu skor-skor itu.
+      Cetak hanya skor genap dalam satu baris, dipisah spasi.
+    input: "Baris 1: n (banyak skor). n baris berikutnya: skor."
+    output: "Satu baris: skor genap saja, dipisah spasi."
+    contoh:
+      - input: "4\n3\n8\n5\n2"
+        output: "8 2"
+      - input: "3\n1\n3\n5"
+        output: ""
+    tes:
+      - input: "4\n3\n8\n5\n2"
+        output: "8 2"
+      - input: "3\n1\n3\n5"
+        output: ""
+      - input: "2\n4\n4"
+        output: "4 4"
+      - input: "1\n7"
+        output: ""
+      - input: "5\n10\n15\n20\n25\n30"
+        output: "10 20 30"
+      - input: "3\n2\n4\n6"
+        output: "2 4 6"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      genap = list(filter(lambda x: x % 2 == 0, a))
+      for x in genap:
+          print(x, end=' ')
+      print()
+    petunjuk:
+      - "Simpan semua skor ke list."
+      - "filter(lambda x: x % 2 == 0, a) menyaring skor genap."
+      - "Ubah hasil filter jadi list dengan list(), lalu cetak sebaris."

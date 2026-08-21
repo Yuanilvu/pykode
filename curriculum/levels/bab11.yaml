@@ -460,3 +460,98 @@ soal:
       - "Pakai .split() untuk memisahkan nama dan nilai dalam satu baris input."
       - "Nilai yang dibaca dari input masih teks — ubah dengan int() dulu."
       - "Method status() memakai if untuk memutuskan Lulus atau Tidak Lulus."
+
+  - id: "s11-4"
+    judul: "Kucing Meong"
+    sulit: "mudah"
+    cerita: |
+      Kancil punya kucing peliharaan bernama Milo.
+      Milo suka memperkenalkan dirinya sendiri.
+      Buat class Kucing dengan attribute nama.
+      Method meong() mengembalikan teks 'Meong! Aku <nama>'.
+      Baca satu nama kucing, buat objectnya, lalu cetak hasil meong().
+    input: "Satu baris: nama kucing."
+    output: "Satu baris: Meong! Aku <nama>."
+    contoh:
+      - input: "Milo"
+        output: "Meong! Aku Milo"
+      - input: "Putih"
+        output: "Meong! Aku Putih"
+    tes:
+      - input: "Milo"
+        output: "Meong! Aku Milo"
+      - input: "Putih"
+        output: "Meong! Aku Putih"
+      - input: "Kancil"
+        output: "Meong! Aku Kancil"
+      - input: "Tono"
+        output: "Meong! Aku Tono"
+      - input: "Mimi"
+        output: "Meong! Aku Mimi"
+      - input: "Oyen"
+        output: "Meong! Aku Oyen"
+    solusi: |
+      class Kucing:
+          def __init__(self, nama):
+              self.nama = nama
+
+          def meong(self):
+              return 'Meong! Aku ' + self.nama
+
+      nama = input()
+      k = Kucing(nama)
+      print(k.meong())
+    petunjuk:
+      - "Class Kucing punya __init__ yang menyimpan self.nama."
+      - "Method meong() mengembalikan teks, bukan mencetak langsung."
+      - "Buat object dengan Kucing(nama), lalu print(k.meong())."
+
+  - id: "s11-5"
+    judul: "Kotak Paket"
+    sulit: "sedang"
+    cerita: |
+      Kancil membantu di toko paket.
+      Setiap paket berbentuk kotak dengan panjang, lebar, dan tinggi.
+      Bu Guru ingin tahu volume kotak: panjang dikali lebar dikali tinggi.
+      Buat class Kotak dengan tiga attribute.
+      Method volume() mengembalikan hasil kalinya.
+      Baca tiga angka, lalu cetak 'Volume: <hasil>'.
+    input: "Tiga baris: panjang, lebar, lalu tinggi."
+    output: "Satu baris: Volume: <hasil>."
+    contoh:
+      - input: "2\n3\n4"
+        output: "Volume: 24"
+      - input: "5\n5\n5"
+        output: "Volume: 125"
+    tes:
+      - input: "2\n3\n4"
+        output: "Volume: 24"
+      - input: "5\n5\n5"
+        output: "Volume: 125"
+      - input: "1\n1\n1"
+        output: "Volume: 1"
+      - input: "10\n2\n3"
+        output: "Volume: 60"
+      - input: "2\n2\n2"
+        output: "Volume: 8"
+      - input: "3\n4\n5"
+        output: "Volume: 60"
+    solusi: |
+      class Kotak:
+          def __init__(self, p, l, t):
+              self.p = p
+              self.l = l
+              self.t = t
+
+          def volume(self):
+              return self.p * self.l * self.t
+
+      p = int(input())
+      l = int(input())
+      t = int(input())
+      kotak = Kotak(p, l, t)
+      print('Volume:', kotak.volume())
+    petunjuk:
+      - "__init__ menyimpan panjang, lebar, dan tinggi ke attribute."
+      - "Method volume() mengalikan ketiga attribute."
+      - "Baca tiga input dengan int() lalu buat object Kotak."

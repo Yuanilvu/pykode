@@ -386,3 +386,85 @@ soal:
       - "Pakai for i in range(1, n + 1)."
       - "Kalau i kelipatan 3, pakai continue untuk melewatinya."
       - "Cetak i. Kalau i kelipatan 7, pakai break untuk berhenti."
+
+  - id: "s5-4"
+    judul: "Ubin Persegi"
+    sulit: "mudah"
+    cerita: |
+      Kancil membantu ayah memasang ubin di halaman.
+      Ubinnya berbentuk persegi. Ubin pertama luasnya 1 x 1.
+      Ubin kedua 2 x 2. Ubin ketiga 3 x 3. Begitu seterusnya.
+      Baca angka N, lalu cetak luas tiap ubin dari 1 sampai N,
+      satu per baris.
+    input: "Satu angka N (1-20)."
+    output: "N baris: luas ubin ke-1 sampai ke-N (angka kuadrat)."
+    contoh:
+      - input: "3"
+        output: "1\n4\n9"
+      - input: "5"
+        output: "1\n4\n9\n16\n25"
+    tes:
+      - input: "3"
+        output: "1\n4\n9"
+      - input: "1"
+        output: "1"
+      - input: "5"
+        output: "1\n4\n9\n16\n25"
+      - input: "4"
+        output: "1\n4\n9\n16"
+      - input: "2"
+        output: "1\n4"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print(i * i)
+    petunjuk:
+      - "Pakai for i in range(1, n + 1)."
+      - "Luas ubin ke-i adalah i dikali i."
+      - "Cetak i * i di dalam loop. Setiap putaran mencetak satu baris."
+
+  - id: "s5-5"
+    judul: "Berburu Angka Tujuh"
+    sulit: "sedang"
+    cerita: |
+      Angka 7 adalah angka keberuntungan Kancil.
+      Dia mendapat setumpuk kartu bertuliskan angka.
+      Kancil membaca kartu satu per satu dari atas.
+      Begitu ketemu angka 7, dia berhenti dan bersorak.
+      Kalau sampai habis tidak ada 7, dia sedih.
+      Baca banyak kartu, lalu angka tiap kartu. Cetak 'Ketemu angka 7'
+      kalau ada angka 7. Kalau tidak ada, cetak 'Tidak ada angka 7'.
+    input: "Baris 1: N (banyak kartu). N baris berikutnya: angka tiap kartu."
+    output: "Satu baris: Ketemu angka 7 atau Tidak ada angka 7."
+    contoh:
+      - input: "3\n4\n7\n9"
+        output: "Ketemu angka 7"
+      - input: "3\n1\n2\n3"
+        output: "Tidak ada angka 7"
+    tes:
+      - input: "3\n4\n7\n9"
+        output: "Ketemu angka 7"
+      - input: "3\n1\n2\n3"
+        output: "Tidak ada angka 7"
+      - input: "1\n7"
+        output: "Ketemu angka 7"
+      - input: "4\n8\n6\n7\n2"
+        output: "Ketemu angka 7"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "Tidak ada angka 7"
+    solusi: |
+      n = int(input())
+      ketemu = False
+      for i in range(n):
+          x = int(input())
+          if x == 7:
+              ketemu = True
+              break
+      if ketemu:
+          print('Ketemu angka 7')
+      else:
+          print('Tidak ada angka 7')
+    petunjuk:
+      - "Pakai variabel ketemu = False sebagai penanda awal."
+      - "Di dalam for, kalau x == 7, ubah ketemu jadi True lalu break."
+      - "Setelah loop, periksa ketemu untuk mencetak hasilnya."

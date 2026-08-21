@@ -383,3 +383,82 @@ soal:
       - "Urutkan list dengan sort() dulu. Yang terbesar ada di belakang."
       - "Elemen terakhir ada di index -1. Satu sebelumnya di -2. Begitu seterusnya."
       - "Cetak skor[-1], skor[-2], skor[-3]. Masing-masing di baris sendiri."
+
+  - id: "s6-4"
+    judul: "Skor Panahan"
+    sulit: "mudah"
+    cerita: |
+      Kancil mengikuti lomba panahan. Dia memanah N kali.
+      Skor tiap panahan dicatat berurutan di dalam list.
+      Kancil penasaran dengan skor panahan pertama dan terakhirnya.
+      Baca N, lalu N skor. Simpan di list.
+      Cetak skor pertama di baris pertama dan skor terakhir di baris kedua.
+    input: "Baris 1: N (banyak skor). N baris berikutnya: skor tiap panahan."
+    output: "Baris 1: skor pertama. Baris 2: skor terakhir."
+    contoh:
+      - input: "3\n10\n20\n30"
+        output: "10\n30"
+      - input: "4\n7\n8\n9\n10"
+        output: "7\n10"
+    tes:
+      - input: "3\n10\n20\n30"
+        output: "10\n30"
+      - input: "4\n7\n8\n9\n10"
+        output: "7\n10"
+      - input: "1\n5"
+        output: "5\n5"
+      - input: "2\n100\n200"
+        output: "100\n200"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "1\n5"
+    solusi: |
+      n = int(input())
+      skor = []
+      for i in range(n):
+          skor.append(int(input()))
+      print(skor[0])
+      print(skor[-1])
+    petunjuk:
+      - "Buat list kosong, lalu isi dengan append di dalam loop."
+      - "Elemen pertama ada di index 0: skor[0]."
+      - "Elemen terakhir ada di index -1: skor[-1]. Cetak keduanya berurutan."
+
+  - id: "s6-5"
+    judul: "Judul Buku Terpanjang"
+    sulit: "sedang"
+    cerita: |
+      Perpustakaan sekolah mendapat kiriman buku baru.
+      Kancil bertugas mencari judul buku yang paling panjang.
+      Dia mengetik judul buku satu per satu ke komputer.
+      Komputer harus memilih judul dengan huruf paling banyak.
+      Baca N, lalu N judul. Cetak judul yang paling panjang.
+    input: "Baris 1: N (banyak judul). N baris berikutnya: judul tiap buku."
+    output: "Satu baris: judul dengan huruf paling banyak."
+    contoh:
+      - input: "3\nBuku\nPython\nAku"
+        output: "Python"
+      - input: "4\napel\nmangga\njeruk\nsalak"
+        output: "mangga"
+    tes:
+      - input: "3\nBuku\nPython\nAku"
+        output: "Python"
+      - input: "4\napel\nmangga\njeruk\nsalak"
+        output: "mangga"
+      - input: "1\nPensil"
+        output: "Pensil"
+      - input: "2\nMeja\nKursi"
+        output: "Kursi"
+      - input: "3\nAI\nPython\nGo"
+        output: "Python"
+    solusi: |
+      n = int(input())
+      terpanjang = ''
+      for i in range(n):
+          judul = input()
+          if len(judul) > len(terpanjang):
+              terpanjang = judul
+      print(terpanjang)
+    petunjuk:
+      - "Buat variabel terpanjang = '' sebelum loop."
+      - "Bandingkan dengan len(): kalau len(judul) lebih besar, ganti terpanjang."
+      - "Cetak terpanjang setelah loop selesai."
