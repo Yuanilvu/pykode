@@ -4,6 +4,7 @@ Materi ala Mimo + Online Judge + Drill logika + gamifikasi.
 """
 import functools
 import os
+import time
 
 from flask import (Flask, flash, g, jsonify, redirect, render_template,
                    request, session, url_for)
@@ -19,6 +20,57 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("PYKODE_SECRET", "pykode-dev-secret-ganti-ini")
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
 app.jinja_env.globals["render_markdown"] = curriculum.render_markdown
+
+# Middleware subpath — akses via https://yan.tail51a905.ts.net/pykode/ (Funnel port 443)
+# Tailscale serve strip prefix-nya, jadi URL absolut (url_for, fetch, redirect) harus diprefix manual.
+import re
+
+class SubPathMiddleware:
+    def __init__(self, app, prefix="/pykode", host_suffix="tail51a905.ts.net"):
+        self.app = app
+        self.prefix = prefix
+        self.host_suffix = host_suffix
+
+    def __call__(self, environ, start_response):
+        host = environ.get("HTTP_HOST", "")
+        via_funnel = host.endswith(self.host_suffix)
+        if via_funnel:
+            # Lewat funnel: path sudah distrip Tailscale — cukup set SCRIPT_NAME
+            environ["SCRIPT_NAME"] = (environ.get("SCRIPT_NAME", "") + self.prefix).rstrip("/")
+        else:
+            # Akses langsung (localhost/LAN): strip prefix manual kalau ada
+            path = environ.get("PATH_INFO", "")
+            if path.startswith(self.prefix):
+                environ["SCRIPT_NAME"] = (environ.get("SCRIPT_NAME", "") + self.prefix).rstrip("/")
+                environ["PATH_INFO"] = path[len(self.prefix):] or "/"
+
+        content_type = [None]
+
+        def start_response_wrapper(status, headers, exc_info=None):
+            for k, v in headers:
+                if k.lower() == "content-type" and content_type[0] is None:
+                    content_type[0] = v
+            if via_funnel:
+                headers = [
+                    (k, self.prefix + v)
+                    if (k.lower() == "location" and v.startswith("/") and not v.startswith(self.prefix))
+                    else (k, v)
+                    for k, v in headers
+                ]
+            return start_response(status, headers, exc_info)
+
+        app_iter = self.app(environ, start_response_wrapper)
+        if via_funnel and content_type[0] and "text/html" in content_type[0]:
+            # Buffer + rewrite path absolut hardcoded (fetch, href, src, action)
+            body = b"".join(app_iter)
+            text = body.decode("utf-8", "replace")
+            text = re.sub(r"""(fetch\(\s*['"])/""", r"\g<1>" + self.prefix + "/", text)
+            text = re.sub(r"""(href|src|action)="/(?!pykode/|buku-kas/)""",
+                          r"\g<1>=\"" + self.prefix + "/", text)
+            return [text.encode("utf-8")]
+        return app_iter
+
+app.wsgi_app = SubPathMiddleware(app.wsgi_app)
 db.init_db()  # idempoten — aman dipanggil saat import (gunicorn) & saat dev
 
 # ---------- Konstanta ----------
@@ -87,12 +139,40 @@ def rank_for(xp):
 
 
 # ---------- Auth ----------
+# Anti brute-force: 5x salah dalam 5 menit -> kunci (per IP).
+# Counter di DATABASE (bukan memory) agar konsisten di semua worker gunicorn.
+def _login_locked(ip):
+    rec = db.login_failures_get(ip)
+    if not rec:
+        return False
+    count, first = rec
+    if count >= 5 and time.time() - first < 300:
+        return True
+    if time.time() - first >= 300:
+        db.login_failures_reset(ip)
+    return False
+
+
 def login_required(view):
     @functools.wraps(view)
     def wrapped(*args, **kwargs):
         if "user_id" not in session:
             flash("Masuk dulu yuk sebelum belajar! 😊", "info")
             return redirect(url_for("login", next=request.path))
+        return view(*args, **kwargs)
+    return wrapped
+
+
+def monitor_required(view):
+    """Halaman khusus akun pemantau (role='monitor', misal akun Ron)."""
+    @functools.wraps(view)
+    def wrapped(*args, **kwargs):
+        if "user_id" not in session:
+            flash("Masuk dulu yuk sebelum belajar! 😊", "info")
+            return redirect(url_for("login", next=request.path))
+        if g.user is None or g.user["role"] != "monitor":
+            flash("Halaman ini khusus pemantau. 😊", "info")
+            return redirect(url_for("index"))
         return view(*args, **kwargs)
     return wrapped
 
@@ -131,6 +211,7 @@ def index():
             "bab": b["bab"], "judul": b["judul"], "emoji": b["emoji"],
             "warna": b["warna"], "deskripsi": b["deskripsi"],
             "n_lessons": len(lessons), "n_problems": len(problems),
+            "pelajaran": lessons,  # dipakai template utk link bab -> pelajaran pertama
             "done": done, "total": total,
             "pct": round(100 * done / total) if total else 0,
             "complete": total > 0 and done == total,
@@ -144,11 +225,32 @@ def index():
     n_misi_total = len(proyek.get("misi") or []) if proyek else 0
     top = db.leaderboard(5)
     rank = rank_for(user["xp"])
+
+    # Target harian: 1 pelajaran + 2 drill
+    target_lessons = db.lessons_done_today(user["id"])
+    target_drills = db.drills_done_today(user["id"])
+    target_met = target_lessons >= 1 and target_drills >= 2
+    goal_bonus = 0
+    if target_met and not db.daily_goal_rewarded_today(user["id"]):
+        db.mark_daily_goal_rewarded(user["id"])
+        db.add_xp(user["id"], 10)
+        goal_bonus = 10
+        user = db.get_user(user["id"])
+    review_count = db.review_due_count(user["id"])
+    challenge = db.get_active_challenge()
+    chal_solved = 0
+    if challenge:
+        chal_solved = sum(1 for s in db.challenge_solves(challenge["id"])
+                          if s["user_id"] == user["id"])
     return render_template("index.html", babs=babs, badges=badges,
                            stats=stats, top=top, streak_bonus=bonus,
                            rank=rank, n_bab_done=n_bab_done, project=proyek,
                            n_project_done=n_misi_done,
-                           project_pct=round(100 * n_misi_done / n_misi_total) if n_misi_total else 0)
+                           project_pct=round(100 * n_misi_done / n_misi_total) if n_misi_total else 0,
+                           target_lessons=target_lessons, target_drills=target_drills,
+                           target_met=target_met, goal_bonus=goal_bonus,
+                           review_count=review_count, challenge=challenge,
+                           chal_solved=chal_solved)
 
 
 @app.route("/lesson/<lesson_id>")
@@ -246,12 +348,19 @@ def login():
     if request.method == "POST":
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
+        ip = request.remote_addr or "?"
+        if _login_locked(ip):
+            flash("Terlalu banyak percobaan gagal. Coba lagi 5 menit lagi ya! 🔒", "danger")
+            return render_template("login.html")
         user = db.get_user_by_username(username)
         if user and check_password_hash(user["password_hash"], password):
             session.clear()
             session["user_id"] = user["id"]
+            db.login_failures_reset(ip)
             nxt = request.args.get("next", "")
             return redirect(nxt if nxt.startswith("/") and not nxt.startswith("//") else url_for("index"))
+        now = time.time()
+        db.login_failures_add(ip, now)
         flash("Nama pengguna atau kata sandi salah.", "danger")
     return render_template("login.html")
 
@@ -343,7 +452,19 @@ def api_submit():
     soal = found["data"]
     result = judge(code, soal.get("tes") or [])
     status = "AC" if result["verdict"] == "AC" else "WA"
-    db.record_submission(g.user["id"], problem_id, status)
+    db.record_submission(g.user["id"], problem_id, status, code)
+
+    # Review cerdas: salah -> jadwalkan ulang; benar -> beres
+    if status == "WA":
+        db.review_upsert_wa(g.user["id"], problem_id)
+    else:
+        db.review_mark_done(g.user["id"], problem_id)
+
+    # Tantangan mingguan: AC soal tantangan -> catat
+    if status == "AC":
+        chal = db.get_active_challenge()
+        if chal and problem_id in chal["problem_ids"]:
+            db.record_challenge_solve(g.user["id"], chal["id"], problem_id)
 
     xp_added, new_badges, first_solve = 0, [], False
     deteksi = {}
@@ -589,11 +710,88 @@ def api_playground_delete():
 
 # ---------- Monitor ----------
 @app.route("/monitor")
-@login_required
+@monitor_required
 def monitor():
     data = db.monitor_data()
     stats = curriculum.stats()
     return render_template("monitor.html", users=data, stats=stats)
+
+
+@app.route("/monitor/<int:user_id>")
+@monitor_required
+def monitor_detail(user_id):
+    data = db.student_detail(user_id)
+    if not data:
+        flash("Siswa tidak ditemukan.", "danger")
+        return redirect(url_for("monitor"))
+    for s in data["stuck"]:
+        p = curriculum.get_problem(s["problem_id"])
+        s["judul"] = p["data"]["judul"] if p else s["problem_id"]
+        s["bab"] = p["bab"]["bab"] if p else "?"
+    for r in data["recent"]:
+        p = curriculum.get_problem(r["problem_id"])
+        r["judul"] = p["data"]["judul"] if p else r["problem_id"]
+        r["bab"] = p["bab"]["bab"] if p else "?"
+    per_bab = []
+    for b in curriculum.get_babs():
+        lessons = b.get("pelajaran") or []
+        problems = b.get("soal") or []
+        per_bab.append({
+            "bab": b["bab"], "judul": b["judul"], "emoji": b["emoji"],
+            "l_done": sum(1 for l in lessons if l["id"] in data["done_lessons"]),
+            "l_total": len(lessons),
+            "p_done": sum(1 for p in problems if p["id"] in data["solved"]),
+            "p_total": len(problems),
+        })
+    stats = curriculum.stats()
+    return render_template("student_detail.html", s=data, per_bab=per_bab, stats=stats)
+
+
+# ---------- Review cerdas ----------
+@app.route("/review")
+@login_required
+def review():
+    items = []
+    for pid in db.review_due_ids(g.user["id"]):
+        p = curriculum.get_problem(pid)
+        if p:
+            items.append({"id": pid, "judul": p["data"]["judul"],
+                          "bab": p["bab"]["bab"], "sulit": p["data"].get("sulit")})
+    return render_template("review.html", items=items)
+
+
+# ---------- Tantangan mingguan ----------
+@app.route("/challenge")
+@login_required
+def challenge():
+    chal = db.get_active_challenge()
+    if not chal:
+        return render_template("challenge.html", challenge=None, problems=[],
+                               user_solved=set(), standings=[])
+    problems = []
+    for pid in chal["problem_ids"]:
+        p = curriculum.get_problem(pid)
+        problems.append({"id": pid,
+                         "judul": p["data"]["judul"] if p else pid,
+                         "sulit": p["data"].get("sulit") if p else "?",
+                         "bab": p["bab"]["bab"] if p else "?"})
+    solves = db.challenge_solves(chal["id"])
+    user_solved = {s["problem_id"] for s in solves if s["user_id"] == g.user["id"]}
+    agg = {}
+    for s in solves:
+        a = agg.setdefault(s["user_id"], {"solved": 0, "first": None})
+        a["solved"] += 1
+        if a["first"] is None or s["solved_at"] < a["first"]:
+            a["first"] = s["solved_at"]
+    standings = []
+    for uid, a in agg.items():
+        u = db.get_user(uid)
+        if u:
+            standings.append({"username": u["username"], "solved": a["solved"],
+                              "first": a["first"]})
+    standings.sort(key=lambda x: (-x["solved"], x["first"] or "9999"))
+    return render_template("challenge.html", challenge=chal, problems=problems,
+                           user_solved=user_solved, standings=standings)
 
 
 # ---------- Badges ----------
@@ -655,6 +853,14 @@ def _check_badges(user_id):
                 db.add_xp(user_id, BADGES[bid]["xp"])
                 new_badges.append({"id": bid, **BADGES[bid]})
     return new_badges
+
+
+@app.route("/sw.js")
+def service_worker():
+    """Service worker PWA — disajikan dari root supaya scope-nya mencakup seluruh app."""
+    from flask import Response
+    with open(os.path.join(BASE_DIR, "static", "sw.js"), encoding="utf-8") as f:
+        return Response(f.read(), mimetype="application/javascript")
 
 
 @app.errorhandler(413)

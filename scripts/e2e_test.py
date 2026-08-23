@@ -7,8 +7,14 @@ user kancil/tikus; kalau sudah ada, sebagian test akan gagal.)
 """
 import http.cookiejar
 import json
+import os
+import sys
 import urllib.parse
 import urllib.request
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import curriculum  # noqa: E402
+import db  # noqa: E402
 
 BASE = "http://127.0.0.1:8000"
 PASS, FAIL = 0, 0
@@ -137,9 +143,9 @@ check("submit salah -> deteksi muncul", d["verdict"] == "WA" and d.get("deteksi"
 check("deteksi sebut baris ke-2", "Baris ke-2" in d["deteksi"]["pesan"])
 
 print("== PERBAIKI KODE ==")
-# Bug bab 1 butuh SEMUA pelajaran bab 1 selesai (1-2 & 1-3 belum)
-for lid in ("1-2", "1-3"):
-    c.post_json("/api/lesson-done", {"lesson_id": lid})
+# Bug bab 1 butuh SEMUA pelajaran bab 1 selesai — ikuti kurikulum (adaptif)
+for l in (curriculum.get_bab(1).get("pelajaran") or []):
+    c.post_json("/api/lesson-done", {"lesson_id": l["id"]})
 st, body = c.post_json("/api/bug-submit", {"bug_id": "b1-1", "code": "print('Halo')\nprint('Budi')\nprint('Ayo belajar Python!')"})
 d = json.loads(body)
 check("bug b1-1 benar -> AC +40 XP + badge montir", d["verdict"] == "AC" and d["xp_added"] == 40
@@ -159,7 +165,41 @@ check("playground load -> judul & kode sama", d["ok"] and d["judul"] == "Karya P
 
 print("== MONITOR ==")
 st, body = c.get("/monitor")
-check("monitor page -> 200 & ada user", st == 200 and "kancil" in body)
+check("monitor diblokir utk siswa -> balik ke beranda",
+      st == 200 and "Monitor Belajar" not in body and "Halo, kancil!" in body)
+# Promosikan kancil jadi monitor (simulasi akun pemantau, misal Ron)
+db.set_role("kancil", "monitor")
+st, body = c.get("/monitor")
+check("monitor utk akun monitor -> 200 & tampil user siswa",
+      st == 200 and "Monitor Belajar" in body and "tikus" in body)
+
+print("== FITUR BARU ==")
+st, body = c.get("/review")
+check("review -> 200", st == 200 and "Review Cerdas" in body)
+st, body = c.get("/challenge")
+check("challenge -> 200 (empty state)", st == 200 and "Tantangan Mingguan" in body)
+st, body = c.get("/sw.js")
+check("sw.js -> 200 & JS", st == 200 and "Service Worker" in body)
+st, body = c.get("/static/manifest.json")
+check("manifest -> 200", st == 200 and "PyKode" in body)
+kancil_id = db.get_user_by_username("kancil")["id"]
+st, body = c.get(f"/monitor/{kancil_id}")
+check("monitor detail -> 200 & ada kode area", st == 200 and "Progres per Bab" in body)
+st, body = c.get("/")
+check("index -> kartu target harian", st == 200 and "Target Harian" in body)
+
+print("== ANTI BRUTE FORCE ==")
+c2 = Client()
+last = ""
+for i in range(13):
+    try:
+        st, body = c2.post_form("/login", {"username": "kancil", "password": "salah"})
+        last = body
+    except Exception as e:
+        last = str(e)
+check("brute-force terkunci setelah 13x gagal", "Terlalu banyak percobaan" in last)
+# Reset lockout supaya test lain (e2e_project_test) yang jalan setelahnya tidak ikut terkunci (IP sama).
+db.login_failures_reset("127.0.0.1")
 
 print(f"\nRESULT: {PASS} pass, {FAIL} fail")
 exit(1 if FAIL else 0)

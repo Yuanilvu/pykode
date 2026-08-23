@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
     xp INTEGER DEFAULT 0,
     streak INTEGER DEFAULT 0,
     last_active TEXT,
+    role TEXT NOT NULL DEFAULT 'siswa',
     created_at TEXT DEFAULT (datetime('now'))
 );
 CREATE TABLE IF NOT EXISTS lessons_done (
@@ -81,30 +82,118 @@ CREATE TABLE IF NOT EXISTS playground_works (
     code TEXT NOT NULL DEFAULT '',
     updated_at TEXT DEFAULT (datetime('now'))
 );
+CREATE TABLE IF NOT EXISTS reviews (
+    user_id INTEGER NOT NULL,
+    problem_id TEXT NOT NULL,
+    wrong_count INTEGER NOT NULL DEFAULT 1,
+    next_due TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'waiting',
+    PRIMARY KEY (user_id, problem_id)
+);
+CREATE TABLE IF NOT EXISTS weekly_challenge (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    week_start TEXT NOT NULL UNIQUE,
+    problem_ids TEXT NOT NULL,
+    created_at TEXT DEFAULT (datetime('now')),
+    status TEXT NOT NULL DEFAULT 'active'
+);
+CREATE TABLE IF NOT EXISTS weekly_challenge_solves (
+    user_id INTEGER NOT NULL,
+    challenge_id INTEGER NOT NULL,
+    problem_id TEXT NOT NULL,
+    solved_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (user_id, challenge_id, problem_id)
+);
+CREATE TABLE IF NOT EXISTS daily_goals (
+    user_id INTEGER NOT NULL,
+    goal_date TEXT NOT NULL,
+    rewarded INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, goal_date)
+);
+CREATE TABLE IF NOT EXISTS login_failures (
+    ip TEXT PRIMARY KEY,
+    count INTEGER NOT NULL DEFAULT 0,
+    first_ts REAL NOT NULL
+);
 """
 
 
+from contextlib import contextmanager
+
+
+@contextmanager
 def get_conn():
+    """Buka koneksi SQLite. Dipakai via `with get_conn() as conn:`.
+
+    Commit otomatis saat sukses, rollback saat error, dan KONEKSI SELALU
+    DITUTUP (perbaikan FD leak — `with sqlite3.connect()` TIDAK menutup
+    koneksi, hanya commit/rollback).
+    """
     os.makedirs(DATA_DIR, exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
-    return conn
+    conn.execute("PRAGMA journal_mode = WAL")
+    conn.execute("PRAGMA busy_timeout = 5000")
+    try:
+        yield conn
+        conn.commit()
+    except BaseException:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
 
 
 def init_db():
     with get_conn() as conn:
         conn.executescript(SCHEMA)
+        # Migrasi DB lama: kolom role belum ada di database yang dibuat sebelum fitur monitor.
+        cols = [r["name"] for r in conn.execute("PRAGMA table_info(users)")]
+        if "role" not in cols:
+            conn.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'siswa'")
+        # Migrasi: submissions sekarang menyimpan kode terakhir (untuk detail monitor).
+        scol = [r["name"] for r in conn.execute("PRAGMA table_info(submissions)")]
+        if "code" not in scol:
+            conn.execute("ALTER TABLE submissions ADD COLUMN code TEXT DEFAULT ''")
+
+
+# ---------- anti brute-force (shared antar worker) ----------
+
+def login_failures_get(ip):
+    """(count, first_ts) atau None."""
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT count, first_ts FROM login_failures WHERE ip = ?", (ip,)).fetchone()
+        return (row["count"], row["first_ts"]) if row else None
+
+
+def login_failures_add(ip, now):
+    with get_conn() as conn:
+        conn.execute(
+            """INSERT INTO login_failures (ip, count, first_ts) VALUES (?, 1, ?)
+               ON CONFLICT(ip) DO UPDATE SET count = count + 1""", (ip, now))
+
+
+def login_failures_reset(ip):
+    with get_conn() as conn:
+        conn.execute("DELETE FROM login_failures WHERE ip = ?", (ip,))
 
 
 # ---------- users ----------
 
-def create_user(username, password_hash):
+def create_user(username, password_hash, role="siswa"):
     with get_conn() as conn:
         cur = conn.execute(
-            "INSERT INTO users (username, password_hash) VALUES (?, ?)",
-            (username, password_hash))
+            "INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)",
+            (username, password_hash, role))
         return cur.lastrowid
+
+
+def set_role(username, role):
+    """Ubah role user (misal: jadikan monitor)."""
+    with get_conn() as conn:
+        conn.execute("UPDATE users SET role = ? WHERE username = ?", (role, username))
 
 
 def get_user_by_username(username):
@@ -214,10 +303,10 @@ def problem_state(user_id, problem_id):
                 "solved_at": row["solved_at"] if row else None}
 
 
-def record_submission(user_id, problem_id, status):
+def record_submission(user_id, problem_id, status, code=""):
     with get_conn() as conn:
-        conn.execute("INSERT INTO submissions (user_id, problem_id, status) VALUES (?, ?, ?)",
-                     (user_id, problem_id, status))
+        conn.execute("INSERT INTO submissions (user_id, problem_id, status, code) VALUES (?, ?, ?, ?)",
+                     (user_id, problem_id, status, code))
         conn.execute(
             "INSERT INTO problems_solved (user_id, problem_id, attempts) VALUES (?, ?, 1) "
             "ON CONFLICT(user_id, problem_id) DO UPDATE SET attempts = attempts + 1",
@@ -285,7 +374,8 @@ def award_badge(user_id, badge_id):
 def leaderboard(limit=10):
     with get_conn() as conn:
         rows = conn.execute(
-            "SELECT username, xp, streak FROM users ORDER BY xp DESC LIMIT ?", (limit,)).fetchall()
+            "SELECT username, xp, streak FROM users WHERE role != 'monitor' "
+            "ORDER BY xp DESC LIMIT ?", (limit,)).fetchall()
         return [dict(r) for r in rows]
 
 
@@ -395,12 +485,15 @@ def delete_playground_work(user_id, work_id):
 
 
 # ---------- monitor (pantauan kakak) ----------
-
 def monitor_data():
-    """Data progres semua user untuk halaman Monitor & script ntfy."""
+    """Data progres semua user (siswa) untuk halaman Monitor & script ntfy.
+
+    User ber-role monitor (misal akun pemantau) tidak ikut ditampilkan.
+    """
     with get_conn() as conn:
         users = conn.execute(
-            "SELECT id, username, xp, streak, last_active FROM users ORDER BY xp DESC"
+            "SELECT id, username, xp, streak, last_active FROM users "
+            "WHERE role != 'monitor' ORDER BY xp DESC"
         ).fetchall()
         result = []
         for u in users:
@@ -432,10 +525,162 @@ def monitor_data():
                 "WHERE user_id=? AND solved=0 AND attempts>=5 ORDER BY attempts DESC",
                 (uid,)).fetchall()]
             result.append({
-                "username": u["username"], "xp": u["xp"], "streak": u["streak"],
+                "id": u["id"], "username": u["username"], "xp": u["xp"], "streak": u["streak"],
                 "last_active": u["last_active"], "lessons": lessons, "solved": solved,
                 "drills": drills, "milestones": milestones, "bugs": bugs,
                 "works": works, "week_sub": week_sub, "wrong_24h": wrong_24h,
                 "stuck": stuck,
             })
         return result
+
+
+# ---------- review cerdas (spaced repetition) ----------
+
+def review_upsert_wa(user_id, problem_id):
+    """Soal gagal -> naikkan wrong_count, jadwalkan ulang (1/3/7 hari)."""
+    from datetime import date, timedelta
+    today = date.today()
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT wrong_count FROM reviews WHERE user_id=? AND problem_id=?",
+            (user_id, problem_id)).fetchone()
+        wrong = (row["wrong_count"] if row else 0) + 1
+        interval = 1 if wrong <= 1 else (3 if wrong == 2 else 7)
+        due = (today + timedelta(days=interval)).isoformat()
+        conn.execute(
+            "INSERT INTO reviews (user_id, problem_id, wrong_count, next_due, status) "
+            "VALUES (?, ?, ?, ?, 'waiting') "
+            "ON CONFLICT(user_id, problem_id) DO UPDATE SET "
+            "wrong_count = excluded.wrong_count, next_due = excluded.next_due, status = 'waiting'",
+            (user_id, problem_id, wrong, due))
+
+
+def review_mark_done(user_id, problem_id):
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE reviews SET status='done' WHERE user_id=? AND problem_id=?",
+            (user_id, problem_id))
+
+
+def review_due_ids(user_id):
+    """Id soal yang perlu diulang hari ini (belum solved, belum done)."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT r.problem_id FROM reviews r "
+            "LEFT JOIN problems_solved p ON p.user_id=r.user_id AND p.problem_id=r.problem_id "
+            "WHERE r.user_id=? AND r.status='waiting' AND r.next_due <= date('now') "
+            "AND (p.solved IS NULL OR p.solved=0)",
+            (user_id,)).fetchall()
+        return [r["problem_id"] for r in rows]
+
+
+def review_due_count(user_id):
+    return len(review_due_ids(user_id))
+
+
+def drills_done_today(user_id):
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) c FROM drills_done WHERE user_id=? AND date(solved_at)=date('now')",
+            (user_id,)).fetchone()
+        return row["c"]
+
+
+# ---------- target harian ----------
+
+def daily_goal_rewarded_today(user_id):
+    from datetime import date
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT rewarded FROM daily_goals WHERE user_id=? AND goal_date=?",
+            (user_id, date.today().isoformat())).fetchone()
+        return bool(row and row["rewarded"])
+
+
+def mark_daily_goal_rewarded(user_id):
+    from datetime import date
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO daily_goals (user_id, goal_date, rewarded) VALUES (?, ?, 1)",
+            (user_id, date.today().isoformat()))
+
+
+# ---------- tantangan mingguan ----------
+
+def get_active_challenge():
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT * FROM weekly_challenge WHERE status='active' ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+        if not row:
+            return None
+        d = dict(row)
+        d["problem_ids"] = [p for p in (d.get("problem_ids") or "").split(",") if p]
+        return d
+
+
+def create_weekly_challenge(week_start, problem_ids):
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO weekly_challenge (week_start, problem_ids) VALUES (?, ?)",
+            (week_start, ",".join(problem_ids)))
+
+
+def challenge_solves(challenge_id):
+    """Set (user_id, problem_id) yang sudah solved di tantangan ini."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT user_id, problem_id, solved_at FROM weekly_challenge_solves WHERE challenge_id=?",
+            (challenge_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def record_challenge_solve(user_id, challenge_id, problem_id):
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO weekly_challenge_solves (user_id, challenge_id, problem_id) "
+            "VALUES (?, ?, ?)", (user_id, challenge_id, problem_id))
+
+
+def close_challenge(challenge_id):
+    with get_conn() as conn:
+        conn.execute("UPDATE weekly_challenge SET status='closed' WHERE id=?", (challenge_id,))
+
+
+# ---------- detail siswa (monitor) ----------
+
+def student_detail(user_id):
+    """Data detail satu siswa untuk halaman Monitor -> Detail."""
+    with get_conn() as conn:
+        u = conn.execute("SELECT * FROM users WHERE id=?", (user_id,)).fetchone()
+        if not u:
+            return None
+        stuck = [dict(r) for r in conn.execute(
+            "SELECT problem_id, attempts FROM problems_solved "
+            "WHERE user_id=? AND solved=0 AND attempts>=3 ORDER BY attempts DESC",
+            (user_id,)).fetchall()]
+        # kode terakhir per soal yang mentok
+        for s in stuck:
+            row = conn.execute(
+                "SELECT code, status, created_at FROM submissions "
+                "WHERE user_id=? AND problem_id=? ORDER BY id DESC LIMIT 1",
+                (user_id, s["problem_id"])).fetchone()
+            s["code"] = row["code"] if row else ""
+            s["status"] = row["status"] if row else ""
+            s["last_at"] = row["created_at"] if row else ""
+        recent = [dict(r) for r in conn.execute(
+            "SELECT problem_id, status, created_at FROM submissions "
+            "WHERE user_id=? ORDER BY id DESC LIMIT 15", (user_id,)).fetchall()]
+        # progres per bab (pelajaran + soal)
+        bab_rows = conn.execute(
+            "SELECT l.lesson_id FROM lessons_done l WHERE l.user_id=?", (user_id,)).fetchall()
+        done_lessons = {r["lesson_id"] for r in bab_rows}
+        solved_rows = conn.execute(
+            "SELECT problem_id FROM problems_solved WHERE user_id=? AND solved=1",
+            (user_id,)).fetchall()
+        solved = {r["problem_id"] for r in solved_rows}
+        return {
+            "id": u["id"], "username": u["username"], "xp": u["xp"], "streak": u["streak"],
+            "last_active": u["last_active"], "stuck": stuck, "recent": recent,
+            "done_lessons": done_lessons, "solved": solved,
+        }
