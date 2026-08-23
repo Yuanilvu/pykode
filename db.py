@@ -162,6 +162,13 @@ CREATE TABLE IF NOT EXISTS project2_code (
     user_id INTEGER PRIMARY KEY,
     code TEXT NOT NULL DEFAULT ''
 );
+CREATE TABLE IF NOT EXISTS study_time (
+    user_id INTEGER NOT NULL,
+    tanggal TEXT NOT NULL,
+    detik INTEGER NOT NULL DEFAULT 0,
+    last_ts REAL NOT NULL DEFAULT 0,
+    PRIMARY KEY (user_id, tanggal)
+);
 """
 
 
@@ -211,6 +218,16 @@ def init_db():
                 conn.execute("ALTER TABLE submissions ADD COLUMN code TEXT DEFAULT ''")
             except sqlite3.OperationalError:
                 pass
+        # Migrasi: kolom deteksi menyalin (ketikan, detik, sinyal, alasan).
+        for col, ddl in (("ketikan", "INTEGER DEFAULT 0"),
+                         ("detik", "REAL DEFAULT 0"),
+                         ("sinyal", "INTEGER DEFAULT 0"),
+                         ("alasan_sinyal", "TEXT DEFAULT ''")):
+            if col not in scol:
+                try:
+                    conn.execute(f"ALTER TABLE submissions ADD COLUMN {col} {ddl}")
+                except sqlite3.OperationalError:
+                    pass
 
 
 # ---------- anti brute-force (shared antar worker) ----------
@@ -358,14 +375,40 @@ def problem_state(user_id, problem_id):
                 "solved_at": row["solved_at"] if row else None}
 
 
-def record_submission(user_id, problem_id, status, code=""):
+def record_submission(user_id, problem_id, status, code="", ketikan=0, detik=0.0,
+                      sinyal=0, alasan_sinyal=""):
     with get_conn() as conn:
-        conn.execute("INSERT INTO submissions (user_id, problem_id, status, code) VALUES (?, ?, ?, ?)",
-                     (user_id, problem_id, status, code))
+        conn.execute(
+            "INSERT INTO submissions (user_id, problem_id, status, code, ketikan, detik, sinyal, alasan_sinyal) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (user_id, problem_id, status, code, ketikan, detik, sinyal, alasan_sinyal))
         conn.execute(
             "INSERT INTO problems_solved (user_id, problem_id, attempts) VALUES (?, ?, 1) "
             "ON CONFLICT(user_id, problem_id) DO UPDATE SET attempts = attempts + 1",
             (user_id, problem_id))
+
+
+def get_flagged_submissions(user_id, limit=20):
+    """Submission dengan sinyal menyalin (sinyal > 0), terbaru dulu."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT problem_id, status, sinyal, alasan_sinyal, created_at "
+            "FROM submissions WHERE user_id = ? AND sinyal > 0 "
+            "ORDER BY id DESC LIMIT ?", (user_id, limit)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def other_users_ac_code(problem_id, exclude_user_id):
+    """Kode AC user lain untuk soal yang sama (terbaru per user)."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT s.user_id, s.code, u.username FROM submissions s "
+            "JOIN users u ON u.id = s.user_id "
+            "WHERE s.problem_id = ? AND s.status = 'AC' AND s.user_id != ? "
+            "AND s.id IN (SELECT MAX(id) FROM submissions WHERE problem_id = ? "
+            "AND status = 'AC' GROUP BY user_id)",
+            (problem_id, exclude_user_id, problem_id)).fetchall()
+        return [dict(r) for r in rows]
 
 
 def mark_problem_solved(user_id, problem_id):
@@ -626,6 +669,72 @@ def exams_history(user_id, limit=10):
             "SELECT * FROM exams WHERE user_id = ? ORDER BY id DESC LIMIT ?",
             (user_id, limit)).fetchall()
         return [dict(r) for r in rows]
+
+
+# ---------- waktu belajar (study time) ----------
+
+def study_time_beat(user_id, tanggal, now_ts):
+    """Heartbeat: tambah detik belajar sejak beat terakhir (maks 150 dtk).
+
+    Return total detik hari ini.
+    """
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT detik, last_ts FROM study_time WHERE user_id = ? AND tanggal = ?",
+            (user_id, tanggal)).fetchone()
+        if row and row["last_ts"] > 0:
+            gap = now_ts - row["last_ts"]
+            if 0 < gap <= 150:
+                conn.execute(
+                    "UPDATE study_time SET detik = detik + ?, last_ts = ? "
+                    "WHERE user_id = ? AND tanggal = ?",
+                    (int(gap), now_ts, user_id, tanggal))
+                return row["detik"] + int(gap)
+        conn.execute(
+            "INSERT INTO study_time (user_id, tanggal, detik, last_ts) VALUES (?, ?, 0, ?) "
+            "ON CONFLICT(user_id, tanggal) DO UPDATE SET last_ts = excluded.last_ts",
+            (user_id, tanggal, now_ts))
+        return row["detik"] if row else 0
+
+
+def study_time_today(user_id, tanggal):
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT detik FROM study_time WHERE user_id = ? AND tanggal = ?",
+            (user_id, tanggal)).fetchone()
+        return row["detik"] if row else 0
+
+
+def study_time_week(user_id, n_days=7):
+    """[{tanggal, detik}] untuk n hari terakhir (termasuk hari tanpa data = 0)."""
+    from datetime import date, timedelta
+    with get_conn() as conn:
+        rows = {r["tanggal"]: r["detik"] for r in conn.execute(
+            "SELECT tanggal, detik FROM study_time WHERE user_id = ?", (user_id,))}
+    out = []
+    today = date.today()
+    for i in range(n_days - 1, -1, -1):
+        d = (today - timedelta(days=i)).isoformat()
+        out.append({"tanggal": d, "detik": rows.get(d, 0)})
+    return out
+
+
+def study_time_all_today(tanggal):
+    """{user_id: detik} untuk semua user hari ini."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT user_id, detik FROM study_time WHERE tanggal = ?", (tanggal,)).fetchall()
+        return {r["user_id"]: r["detik"] for r in rows}
+
+
+def sinyal_count_today(user_id):
+    """Jumlah submission bersinyal (menyalin) hari ini."""
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) n FROM submissions "
+            "WHERE user_id = ? AND sinyal > 0 AND created_at >= datetime('now', '-24 hours')",
+            (user_id,)).fetchone()
+        return row["n"] if row else 0
 
 
 # ---------- leaderboard ----------

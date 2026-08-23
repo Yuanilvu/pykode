@@ -172,7 +172,9 @@
     fetch(PYKODE_BASE + '/api/submit', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({problem_id: problemId, code: getCode()})
+      body: JSON.stringify({problem_id: problemId, code: getCode(),
+                            ketikan: window.__ketikan || 0,
+                            detik: Math.round((Date.now() - (window.__start || Date.now())) / 1000)})
     }).then(r => r.json()).then(d => {
       btnSubmit.disabled = false; btnRun.disabled = false;
       renderResults(d);

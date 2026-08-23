@@ -278,6 +278,39 @@ d = json.loads(body)
 check("ujian diselesaikan", d.get("ok") is True)
 st, body = c_t.get(f"/exam/results/{exam['id']}")
 check("hasil ujian tampil (1/3)", st == 200 and "Hasil Ujian" in body and "1/3" in body)
+
+print("== WAKTU BELAJAR & DETEKSI MENYALIN ==")
+st, body = c_t.post_json("/api/heartbeat", {})
+d = json.loads(body)
+check("heartbeat -> ok", d.get("ok") is True)
+# simulasi jeda 60 detik lalu beat lagi -> detik bertambah
+import time as _time
+now = _time.time()
+with db.get_conn() as conn:
+    conn.execute("UPDATE study_time SET last_ts = ? WHERE user_id = ?",
+                 (now - 60, tikus_id))
+st, body = c_t.post_json("/api/heartbeat", {})
+d = json.loads(body)
+check("heartbeat akumulasi ~60 detik", d.get("detik", 0) >= 55)
+# deteksi paste: kode panjang, ketikan sedikit
+kode_panjang = "x = " + " + ".join(f"angka{i}" for i in range(60)) + "\nprint(x)\n"
+st, body = c.post_json("/api/submit", {"problem_id": "s13-1", "code": kode_panjang,
+                                       "ketikan": 8, "detik": 2})
+d = json.loads(body)
+fl = db.get_flagged_submissions(kancil_id)
+check("paste terdeteksi (sinyal 1)", any(f["sinyal"] == 1 for f in fl))
+# kode identik antar user: kancil AC dulu, tikus kirim kode sama persis
+sol = curriculum.get_problem("s13-2")["data"]["solusi"]
+c.post_json("/api/submit", {"problem_id": "s13-2", "code": sol, "ketikan": 400, "detik": 120})
+st, body = c_t.post_json("/api/submit", {"problem_id": "s13-2", "code": sol, "ketikan": 400, "detik": 120})
+d = json.loads(body)
+fl_t = db.get_flagged_submissions(tikus_id)
+check("kode identik terdeteksi (sinyal 2)", any(f["sinyal"] == 2 for f in fl_t))
+# monitor menampilkan waktu belajar + sinyal
+st, body = c.get("/monitor")
+check("monitor -> waktu belajar tampil", st == 200 and "mnt hari ini" in body)
+st, body = c.get(f"/monitor/{kancil_id}")
+check("detail -> chart waktu & sinyal", "Waktu Belajar" in body and "Sinyal Menyalin" in body)
 st, body = c.get("/")
 check("index -> kartu target harian", st == 200 and "Target Harian" in body)
 

@@ -815,6 +815,42 @@ def api_problem_plan():
     return jsonify({"ok": True, "cek": _cek_rencana(rencana, found["data"])})
 
 
+def _normalize_code(code):
+    """Kode tanpa spasi/komentar — untuk deteksi kode identik."""
+    c = re.sub(r"#.*", "", code or "")
+    return re.sub(r"\s+", "", c)
+
+
+def _scan_cheat(code, ketikan, detik, user_id, problem_id):
+    """Deteksi pola menyalin/AI. Return (sinyal, alasan). 0=normal, 1=paste/cepat, 2=identik."""
+    n = len(code or "")
+    if n >= 250:
+        if ketikan < n * 0.25:
+            return 1, (f"Kode {n} karakter tapi hanya {ketikan} ketikan — "
+                       f"seperti di-paste, bukan diketik.")
+        if detik >= 5 and n / detik >= 6:
+            return 1, (f"Kecepatan {n / detik:.0f} karakter/detik untuk kode {n} karakter "
+                       f"— mustahil diketik manual.")
+    norm = _normalize_code(code)
+    if len(norm) >= 30:
+        for other in db.other_users_ac_code(problem_id, user_id):
+            if _normalize_code(other["code"]) == norm:
+                return 2, f"Kode identik dengan {other['username']} (soal sama)."
+    return 0, ""
+
+
+@app.route("/api/heartbeat", methods=["POST"])
+@login_required
+def api_heartbeat():
+    """Heartbeat waktu belajar — dipanggil frontend tiap ~45 detik."""
+    if g.user["role"] == "monitor":
+        return jsonify({"ok": True, "detik": 0})
+    from datetime import date
+    now_ts = time.time()
+    total = db.study_time_beat(g.user["id"], date.today().isoformat(), now_ts)
+    return jsonify({"ok": True, "detik": total})
+
+
 @app.route("/api/submit", methods=["POST"])
 @login_required
 def api_submit():
@@ -827,7 +863,12 @@ def api_submit():
     soal = found["data"]
     result = judge(code, soal.get("tes") or [])
     status = "AC" if result["verdict"] == "AC" else "WA"
-    db.record_submission(g.user["id"], problem_id, status, code)
+    ketikan = int(body.get("ketikan") or 0)
+    detik = float(body.get("detik") or 0)
+    sinyal, alasan = _scan_cheat(code, ketikan, detik, g.user["id"], problem_id)
+    db.record_submission(g.user["id"], problem_id, status, code,
+                         ketikan=ketikan, detik=detik,
+                         sinyal=sinyal, alasan_sinyal=alasan)
 
     # Review cerdas: salah -> jadwalkan ulang; benar -> beres
     if status == "WA":
@@ -1271,6 +1312,11 @@ def api_playground_delete():
 def monitor():
     data = db.monitor_data()
     stats = curriculum.stats()
+    from datetime import date
+    belajar = db.study_time_all_today(date.today().isoformat())
+    for u in data:
+        u["belajar_hari_ini"] = belajar.get(u["id"], 0)
+        u["sinyal_hari_ini"] = db.sinyal_count_today(u["id"])
     return render_template("monitor.html", users=data, stats=stats)
 
 
@@ -1380,10 +1426,18 @@ def monitor_detail(user_id):
                   for lvl in (25, 50, 75, 100)]
     weak = _weak_skills(skills)
     drill_saran = _drill_suggestions([w["bab"] for w in weak]) if weak else []
+    # Waktu belajar 7 hari + sinyal menyalin
+    belajar = db.study_time_week(user_id, 7)
+    belajar_max = max([b["detik"] for b in belajar] + [1])
+    flagged = db.get_flagged_submissions(user_id)
+    for f in flagged:
+        p = curriculum.get_problem(f["problem_id"])
+        f["judul"] = p["data"]["judul"] if p else f["problem_id"]
     return render_template("student_detail.html", s=data, per_bab=per_bab, stats=stats,
                            penjelasan=penjelasan, rencana=rencana,
                            skills=top, radar_pts=radar_pts, radar_grid=radar_grid,
-                           weak=weak, drill_saran=drill_saran)
+                           weak=weak, drill_saran=drill_saran,
+                           belajar=belajar, belajar_max=belajar_max, flagged=flagged)
 
 
 # ---------- Review cerdas ----------

@@ -20,6 +20,8 @@
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <span class="pill pill-xp">⭐ {{ u.xp }}</span>
       <span class="pill pill-streak">🔥 {{ u.streak }}</span>
+      <span class="pill" style="background:#e0f2fe;color:#075985">⏱ {{ u.belajar_hari_ini // 60 }} mnt hari ini</span>
+      {% if u.sinyal_hari_ini %}<span class="pill" style="background:#fef2f2;color:#991b1b">🕵️ {{ u.sinyal_hari_ini }} sinyal menyalin</span>{% endif %}
       {% if u.wrong_24h >= 5 %}<span class="pill" style="background:#fee2e2;color:#991b1b">⚠️ {{ u.wrong_24h }} gagal 24 jam</span>{% endif %}
     </div>
   </div>

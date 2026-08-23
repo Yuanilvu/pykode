@@ -17,6 +17,44 @@
   </div>
 </div>
 
+<div class="section-title">⏱ Waktu Belajar (7 Hari Terakhir)</div>
+<div class="card">
+  <div style="display:flex;align-items:flex-end;gap:10px;height:110px;padding:6px 0">
+    {% for b in belajar %}
+    <div style="flex:1;text-align:center">
+      <div style="font-size:.75rem;color:var(--muted)">{{ b.detik // 60 }}m</div>
+      <div style="background:#6366f1;border-radius:6px 6px 0 0;margin:3px auto 0;max-width:34px;height:{{ (b.detik * 80 // belajar_max) if belajar_max else 0 }}px;{% if b.detik == 0 %}background:#e2e8f0;height:4px{% endif %}"></div>
+      <div style="font-size:.65rem;color:var(--muted);margin-top:2px">{{ b.tanggal[5:] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin:6px 0 0">
+    Total hari ini: <strong>{{ belajar[-1].detik // 60 }} menit</strong> ({{ belajar[-1].detik % 60 }} detik) —
+    dihitung dari aktivitas nyata di aplikasi (tab terbuka & terlihat).
+  </p>
+</div>
+
+{% if flagged %}
+<div class="section-title">🕵️ Sinyal Menyalin / AI</div>
+<div class="card" style="border-left:4px solid #dc2626">
+  {% for f in flagged %}
+  <div style="padding:8px 0;border-bottom:1px solid var(--border)">
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px">
+      <strong>🧩 {{ f.judul }}</strong>
+      <span style="color:var(--muted);font-size:.8rem">{{ f.created_at }}</span>
+    </div>
+    <div style="margin-top:4px;font-size:.9rem">
+      {% if f.sinyal == 2 %}🔴 <strong>Kode identik dengan user lain</strong>{% else %}🟠 <strong>Pola paste / kecepatan tidak wajar</strong>{% endif %}
+      — {{ f.alasan_sinyal }}
+    </div>
+  </div>
+  {% endfor %}
+  <p style="color:var(--muted);font-size:.8rem;margin:8px 0 0">
+    Ini pola yang MUNGKIN menyalin — bukan vonis. Cek sendiri kodenya sebelum bicara ke anak. 🎯
+  </p>
+</div>
+{% endif %}
+
 <div class="section-title">🎯 Peta Kemampuan</div>
 <div class="card" style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
   <div style="text-align:center">

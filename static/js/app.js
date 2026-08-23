@@ -92,7 +92,12 @@ function initEditor(textarea) {
     })(k);
   });
 
-  return CodeMirror.fromTextArea(textarea, {
+  /* Telemetri ketikan (deteksi paste/menyalin): hitung tombol yang ditekan.
+     Dipakai backend untuk membedakan "diketik" vs "di-paste". */
+  window.__ketikan = window.__ketikan || 0;
+  textarea.addEventListener('keydown', function () { window.__ketikan++; });
+
+  var cm = CodeMirror.fromTextArea(textarea, {
     mode: 'python',
     lineNumbers: true,
     indentUnit: 4,
@@ -101,6 +106,9 @@ function initEditor(textarea) {
     lineWrapping: false,
     extraKeys: extraKeys
   });
+  /* CodeMirror pakai textarea tersembunyi sendiri — hitung ketikan di sana. */
+  cm.getWrapperElement().addEventListener('keydown', function () { window.__ketikan++; });
+  return cm;
 }
 
 /* Badge "Hello, Dunia!" — cukup sekali per halaman */
@@ -179,4 +187,25 @@ document.querySelectorAll('.quiz-item').forEach(function (item) {
 document.getElementById('btn-hint')?.addEventListener('click', function () {
   document.getElementById('hint-box').classList.add('show');
   this.remove();
+});
+
+/* ===== Waktu belajar (heartbeat) + telemetri ketikan =====
+   - __start: waktu halaman dibuka (dipakai hitung detik di submit)
+   - heartbeat tiap 45 detik selama tab terlihat → server akumulasi waktu belajar
+   - saat tab disembunyikan/ditutup → kirim beat terakhir (sendBeacon) */
+window.__start = Date.now();
+window.__ketikan = 0;
+
+function sendBeat() {
+  if (document.hidden) return;
+  fetch(PYKODE_BASE + '/api/heartbeat', { method: 'POST' }).catch(function () {});
+}
+setInterval(sendBeat, 45000);
+document.addEventListener('visibilitychange', function () {
+  if (document.hidden) {
+    try { navigator.sendBeacon(PYKODE_BASE + '/api/heartbeat'); } catch (e) {}
+  }
+});
+window.addEventListener('pagehide', function () {
+  try { navigator.sendBeacon(PYKODE_BASE + '/api/heartbeat'); } catch (e) {}
 });
