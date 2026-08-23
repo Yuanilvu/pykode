@@ -136,6 +136,9 @@
         html += '<div class="verdict-banner" style="background:#eff6ff;color:#1e40af">🕵️ <strong>Detektif Kesalahan:</strong><br>' +
                 esc(d.deteksi.pesan).replace(/\n/g, '<br>') + '<br>💡 ' + esc(d.deteksi.saran) + '</div>';
       }
+      if (d.mentok && d.mentok.ada) {
+        html += crashBanner(d.mentok);
+      }
     }
     html += '<div class="results">';
     d.results.forEach(function (r) {

@@ -28,6 +28,23 @@ function confetti() {
   }
 }
 
+/* Banner "Aku Mentok" — program error + langkah bantuan (dari payload mentok) */
+function crashBanner(m) {
+  if (!m || !m.ada) return '';
+  var steps = '';
+  (m.langkah || []).forEach(function (s) {
+    if (s.url) {
+      steps += ' <a class="btn btn-outline btn-sm" href="' + esc(s.url) + '">' + esc(s.teks) + '</a>';
+    } else if (s.scroll) {
+      steps += ' <span class="btn btn-outline btn-sm" style="cursor:pointer" onclick="var el=document.getElementById(\'' + esc(s.scroll) + '\'); if(el){el.classList.add(\'show\'); el.scrollIntoView({behavior:\'smooth\'})}">' + esc(s.teks) + '</span>';
+    } else {
+      steps += ' <span class="btn btn-outline btn-sm" style="cursor:pointer" onclick="var el=document.getElementById(\'code-editor\'); if(el) el.scrollIntoView({behavior:\'smooth\'})">' + esc(s.teks) + '</span>';
+    }
+  });
+  return '<div class="verdict-banner" style="background:#fef2f2;color:#b91c1c;border:1px solid #fecaca">💥 <strong>Programmu error!</strong><br>' +
+         esc(m.pesan).replace(/\n/g, '<br>') + '<div style="margin-top:8px">' + steps + '</div></div>';
+}
+
 function initEditor(textarea) {
   if (!window.CodeMirror || !textarea) return { getValue: function () { return textarea.value; } };
 

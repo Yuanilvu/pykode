@@ -90,13 +90,17 @@ d = json.loads(body)
 check("run print(2+3) -> ok & stdout 5", d["status"] == "ok" and d["stdout"].strip() == "5")
 st, body = c.post_json("/api/run", {"code": "print('x'"})
 d = json.loads(body)
-check("run kode error -> status error & pesan ramah", d["status"] == "error" and "syntax" in d["stderr"].lower())
+check("run kode error -> status error & pesan ramah", d["status"] == "error" and "kesalahan penulisan" in d["stderr"])
 st, body = c.post_json("/api/run", {"code": "while True: pass"})
 d = json.loads(body)
 check("run infinite loop -> timeout", d["status"] == "timeout")
 st, body = c.post_json("/api/run", {"code": "n = int(input())\nprint(n * 2)", "stdin": "21"})
 d = json.loads(body)
 check("run dengan input -> 42", d["status"] == "ok" and d["stdout"].strip() == "42")
+st, body = c.post_json("/api/run", {"code": "print(hasi)"})
+d = json.loads(body)
+check("run error -> pesan ramah SPESIFIK (sebut nama variabel)", d["status"] == "error"
+      and "tidak kenal nama 'hasi'" in d["stderr"])
 
 print("== SUBMIT ==")
 st, body = c.post_json("/api/first-run", {})
@@ -105,6 +109,12 @@ check("badge hello_world baru (+10 XP)", d["new"] is True and d["xp_added"] == 1
 st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print('salah nih')"})
 d = json.loads(body)
 check("submit salah -> WA, 0/2", d["verdict"] == "WA" and d["passed"] == 0 and d["total"] == 2)
+st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print(hasi)"})
+d = json.loads(body)
+check("submit crash -> mentok: pesan ramah + langkah bantuan", d["status"] == "WA"
+      and d.get("mentok", {}).get("ada") is True
+      and "tidak kenal nama" in d["mentok"]["pesan"]
+      and len(d["mentok"].get("langkah", [])) >= 2)
 st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print('Halo Python!')"})
 d = json.loads(body)
 check("submit benar -> AC +50 XP + badge pemula", d["verdict"] == "AC" and d["xp_added"] == 50

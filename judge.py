@@ -9,6 +9,7 @@ Menjalankan kode user secara terisolasi:
 - Output dibatasi panjangnya
 """
 import os
+import re
 import resource
 import shutil
 import subprocess
@@ -32,14 +33,16 @@ def _limit_setup():
 
 
 def _friendly_error(err: str) -> str:
-    """Terjemahkan traceback Python jadi pesan ramah anak SMP."""
+    """Terjemahkan traceback Python jadi pesan ramah anak SMP.
+
+    Pesan dibuat SPESIFIK — menyebut nama variabel/kunci/angka yang
+    bermasalah dari pesan error aslinya, plus nomor baris.
+    """
     err = (err or "").strip()
     if not err:
         return "Program berhenti dengan error (tanpa pesan)."
-    # Ambil pesan error terakhir dari traceback
     lines = [l for l in err.splitlines() if l.strip()]
     msg = lines[-1] if lines else err
-    # Cari baris nomor (File "main.py", line N)
     line_no = None
     for l in lines:
         if 'main.py", line' in l:
@@ -50,18 +53,52 @@ def _friendly_error(err: str) -> str:
             break
     loc = f" (baris {line_no})" if line_no else ""
 
+    # --- Error spesifik dengan detail dari pesan aslinya ---
+    m = re.search(r"NameError: name '([^']+)' is not defined", msg)
+    if m:
+        return (f"Python tidak kenal nama '{m.group(1)}'. Cek ejaannya — "
+                f"huruf besar/kecil beda arti! Atau variabel itu belum pernah dibuat."
+                f"{loc}")
+    m = re.search(r"KeyError: '([^']+)'", msg)
+    if m:
+        return (f"Kunci '{m.group(1)}' tidak ada di kamus (dictionary). "
+                f"Cek ejaan kunci yang kamu pakai.{loc}")
+    m = re.search(r"ValueError: invalid literal for int\(\) with base 10: '([^']*)'", msg)
+    if m:
+        return (f"int() tidak bisa mengubah '{m.group(1)}' jadi angka. "
+                f"Pastikan yang diketik benar-benar angka, bukan huruf.{loc}")
+    m = re.search(r"IndexError: (.*)", msg)
+    if m:
+        return (f"Kamu mengambil posisi yang tidak ada di daftar ({m.group(1)}). "
+                f"Ingat: daftar mulai dari posisi 0!{loc}")
+    m = re.search(r"TypeError: (.*)", msg)
+    if m:
+        return (f"Operasi tidak cocok: {m.group(1)}. "
+                f"Cek jenis nilai (teks/angka) di variabelmu.{loc}")
+    m = re.search(r"AttributeError: (.*)", msg)
+    if m:
+        return (f"{m.group(1)}. Cek: mungkin kamu memakai cara yang salah "
+                f"pada tipe datanya (teks, angka, atau daftar).{loc}")
+    m = re.search(r"SyntaxError: (.*)", msg)
+    if m:
+        return (f"Ada kesalahan penulisan kode: {m.group(1)}. "
+                f"Cek tanda kurung, titik dua, dan tanda kutip yang belum ditutup.{loc}")
+    m = re.search(r"IndentationError: (.*)", msg)
+    if m:
+        return (f"Spasi di awal baris bermasalah ({m.group(1)}). "
+                f"Python sangat peduli spasi — pastikan barisnya sejajar.{loc}")
+    m = re.search(r"RecursionError: (.*)", msg)
+    if m:
+        return (f"Fungsi memanggil dirinya sendiri terus tanpa berhenti ({m.group(1)}). "
+                f"Cek kondisi berhentinya.{loc}")
+
+    # --- Error umum tanpa detail spesifik ---
     mapping = [
-        ("SyntaxError", "Ada kesalahan penulisan kode (syntax error). Cek tanda kurung, titik dua, atau tanda kutip yang belum ditutup."),
-        ("IndentationError", "Masalah indentasi/spasi. Di Python, spasi di awal baris itu penting! Pastikan rapi dan konsisten."),
-        ("NameError", "Ada nama (variabel/fungsi) yang belum dikenal. Cek ejaannya — Python beda besar-kecil huruf!"),
-        ("TypeError", "Tipe data tidak cocok. Contoh: angka digabung dengan teks tanpa diubah dulu."),
-        ("IndexError", "Posisi ini tidak ada di daftar. Ingat, daftar mulai dari posisi 0 ya!"),
-        ("KeyError", "Kunci ini tidak ada di dictionary. Cek ejaan kunci yang kamu pakai."),
-        ("ValueError", "Nilai tidak cocok. Contoh: mengubah 'abc' menjadi angka."),
-        ("ZeroDivisionError", "Tidak bisa membagi dengan nol!"),
-        ("EOFError", "Program minta ketikan, tapi tidak ada ketikan yang diberikan."),
+        ("ZeroDivisionError", "Tidak bisa membagi dengan nol! Cek penyebutnya (angka pembaginya)."),
+        ("EOFError", "Program minta ketikan, tapi tidak ada ketikan. Cek jumlah input() vs data yang diberikan."),
         ("FileNotFoundError", "File yang dicari tidak ada. Cek nama file-nya."),
-        ("RecursionError", "Fungsi memanggil dirinya sendiri terus tanpa berhenti."),
+        ("ImportError", "Modul yang diminta tidak ada. Cek nama modulnya."),
+        ("PermissionError", "Tidak punya izin membuka file itu."),
     ]
     for keyword, friendly in mapping:
         if keyword in msg:

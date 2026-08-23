@@ -200,6 +200,40 @@ def pet_for(user):
 # ---------- Auth ----------
 # Anti brute-force: 5x salah dalam 5 menit -> kunci (per IP).
 # Counter di DATABASE (bukan memory) agar konsisten di semua worker gunicorn.
+def _lesson_url_for_bab(bab_num):
+    """URL pelajaran pertama dari suatu bab (untuk saran 'baca lagi')."""
+    b = curriculum.get_bab(bab_num)
+    pl = (b.get("pelajaran") or []) if b else []
+    return url_for("lesson", lesson_id=pl[0]["id"]) if pl else None
+
+
+def _lesson_url_for_problem(problem_id):
+    for b in curriculum.get_babs():
+        if any(p["id"] == problem_id for p in (b.get("soal") or [])):
+            return _lesson_url_for_bab(b["bab"])
+    return None
+
+
+def _mentok_payload(results, lesson_url=None, hint_scroll=False):
+    """Kalau kode CRASH (error/timeout) saat submit — susun panduan 'Aku Mentok'.
+
+    Return {"ada": True, "pesan": pesan ramah, "langkah": [tombol bantuan]}
+    atau {"ada": False} kalau semua tes 'salah output' (bukan crash).
+    """
+    for r in results:
+        if r["status"] in ("error", "timeout"):
+            langkah = []
+            if lesson_url:
+                langkah.append({"teks": "📖 Baca lagi pelajaran bab ini", "url": lesson_url})
+            if hint_scroll:
+                langkah.append({"teks": "💡 Lihat petunjuk soal", "scroll": "hint-box"})
+            langkah.append({"teks": "🔁 Perbaiki & coba lagi", "coba": True})
+            return {"ada": True,
+                    "pesan": r.get("stderr") or "Programmu error saat dijalankan.",
+                    "langkah": langkah}
+    return {"ada": False}
+
+
 def _notify_duel_winner(username):
     """Kirim notifikasi ntfy saat duel hari ini dimenangkan (fire-and-forget)."""
     import urllib.request
@@ -620,6 +654,7 @@ def api_submit():
 
     xp_added, new_badges, first_solve = 0, [], False
     deteksi = {}
+    mentok = {"ada": False}
     if status == "AC":
         state = db.problem_state(g.user["id"], problem_id)
         first_solve = not state["solved"]
@@ -630,9 +665,13 @@ def api_submit():
         new_badges = _check_badges(g.user["id"])
     else:
         deteksi = detective.analyze(code, soal.get("tes") or [], result["results"])
+        mentok = _mentok_payload(result["results"],
+                                 lesson_url=_lesson_url_for_problem(problem_id),
+                                 hint_scroll=True)
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_solve": first_solve, "new_badges": new_badges,
-                    "deteksi": deteksi, "duel_bonus": duel_bonus})
+                    "deteksi": deteksi, "duel_bonus": duel_bonus,
+                    "mentok": mentok})
 
 
 @app.route("/api/drill-submit", methods=["POST"])
@@ -648,6 +687,7 @@ def api_drill_submit():
     status = "AC" if result["verdict"] == "AC" else "WA"
     xp_added, new_badges = 0, []
     deteksi = {}
+    mentok = {"ada": False}
     if status == "AC" and not db.drill_done(g.user["id"], drill_id):
         db.mark_drill_done(g.user["id"], drill_id)
         db.add_xp(g.user["id"], DRILL_XP)
@@ -655,9 +695,11 @@ def api_drill_submit():
         new_badges = _check_badges(g.user["id"])
     else:
         deteksi = detective.analyze(code, d.get("tes") or [], result["results"])
+        mentok = _mentok_payload(result["results"],
+                                 lesson_url=_lesson_url_for_bab(d.get("tingkat", 1)))
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "new_badges": new_badges, "penjelasan": d.get("penjelasan", ""),
-                    "deteksi": deteksi})
+                    "deteksi": deteksi, "mentok": mentok})
 
 
 def _milestone_unlocked(user_id, misi):
@@ -733,6 +775,7 @@ def api_project_submit():
     status = "AC" if result["verdict"] == "AC" else "WA"
     xp_added, new_badges, first_done = 0, [], False
     deteksi = {}
+    mentok = {"ada": False}
     if status == "AC":
         first_done = not db.milestone_done(g.user["id"], milestone_id)
         db.save_project_code(g.user["id"], code)
@@ -743,10 +786,12 @@ def api_project_submit():
         new_badges = _check_badges(g.user["id"])
     else:
         deteksi = detective.analyze(code, m.get("tes") or [], result["results"])
+        mentok = _mentok_payload(result["results"],
+                                 lesson_url=_lesson_url_for_bab(m.get("bab", 1)))
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_done": first_done, "new_badges": new_badges,
                     "solusi": m.get("solusi", "") if status == "AC" else "",
-                    "deteksi": deteksi})
+                    "deteksi": deteksi, "mentok": mentok})
 
 
 # ---------- Perbaiki Kode (bug) ----------
@@ -807,6 +852,7 @@ def api_bug_submit():
     db.record_bug_attempt(g.user["id"], bug_id)
     xp_added, new_badges, first_fix = 0, [], False
     deteksi = {}
+    mentok = {"ada": False}
     if status == "AC":
         state = db.bug_state(g.user["id"], bug_id)
         first_fix = not state["solved"]
@@ -817,9 +863,11 @@ def api_bug_submit():
         new_badges = _check_badges(g.user["id"])
     else:
         deteksi = detective.analyze(code, b.get("tes") or [], result["results"])
+        mentok = _mentok_payload(result["results"],
+                                 lesson_url=_lesson_url_for_bab(b.get("bab", 1)))
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_fix": first_fix, "new_badges": new_badges,
-                    "deteksi": deteksi})
+                    "deteksi": deteksi, "mentok": mentok})
 
 
 # ---------- Rumah Kode (playground) ----------
