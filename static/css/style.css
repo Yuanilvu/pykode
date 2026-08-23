@@ -309,3 +309,27 @@ textarea.stdin { width: 100%; min-height: 70px; border: 1px solid var(--border);
 .goal-card { border-left: 4px solid var(--success); }
 .goal-item { font-weight: 700; padding: 4px 10px; border-radius: 999px; background: #f1f5f9; color: var(--muted); }
 .goal-done { background: #dcfce7; color: #166534; }
+
+/* ---- Kode si Robot Pendamping ---- */
+.pet-strip { display: flex; align-items: center; gap: 14px; text-decoration: none; margin-bottom: 14px; }
+.pet-strip:hover { border-color: var(--primary); }
+.pet-emoji { font-size: 2.6rem; line-height: 1; }
+
+/* Heatmap 8 minggu */
+.heatmap { display: flex; gap: 4px; margin-top: 12px; overflow-x: auto; }
+.heat-col { display: flex; flex-direction: column; gap: 4px; }
+.heat-cell { width: 14px; height: 14px; border-radius: 3px; background: #e2e8f0; }
+.heat-0 { background: #e2e8f0; }
+.heat-1 { background: #c7d2fe; }
+.heat-2 { background: #a5b4fc; }
+.heat-3 { background: #818cf8; }
+.heat-4 { background: #6366f1; }
+
+/* Grid badge */
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.badge-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px 12px; text-align: center; }
+.badge-emoji { font-size: 2.4rem; }
+.badge-nama { font-weight: 700; margin-top: 6px; }
+.badge-desc { font-size: .8rem; color: var(--muted); margin-top: 4px; min-height: 32px; }
+.badge-xp { font-size: .8rem; color: var(--success); font-weight: 700; margin-top: 6px; }
+.badge-locked { opacity: .55; filter: grayscale(.6); }

@@ -13,6 +13,16 @@
   </div>
 </div>
 
+<a class="card pet-strip" href="{{ url_for('pet') }}">
+  <span class="pet-emoji">{{ pet.emoji }}</span>
+  <span style="flex:1">
+    <strong>{{ pet.nama }}</strong>
+    <span style="color:var(--muted);font-size:.85rem">Level {{ pet.level }}/{{ pet.total_level }}</span>
+    <div style="font-size:.9rem">{{ pet.mood[0] }} {{ pet.mood[1] }}</div>
+  </span>
+  <span class="btn btn-outline btn-sm">Temenin Kode 🤖</span>
+</a>
+
 <div class="stat-row">
   <div class="stat-box"><span class="num">⭐ {{ g_user.xp }}</span><span class="lbl">XP</span></div>
   <div class="stat-box"><span class="num">🔥 {{ g_user.streak }}</span><span class="lbl">Streak</span></div>

@@ -17,12 +17,14 @@
   <a class="logo" href="{{ url_for('index') }}">🐍 PyKode</a>
   <div class="navlinks">
     <a href="{{ url_for('index') }}">Belajar</a>
+    <a href="{{ url_for('pet') }}">Kode 🤖</a>
     <a href="{{ url_for('project') }}">Proyek 🏗️</a>
     <a href="{{ url_for('bugs') }}">Bug 🐛</a>
     <a href="{{ url_for('playground') }}">Kode 🏠</a>
     <a href="{{ url_for('drills') }}">Drill 🧠</a>
     <a href="{{ url_for('review') }}">Review 🔁</a>
     <a href="{{ url_for('challenge') }}">Tantangan 🏆</a>
+    <a href="{{ url_for('badges_page') }}">Badge 🏅</a>
     <a href="{{ url_for('leaderboard') }}">Papan Skor</a>
     {% if g_user and g_user['role'] == 'monitor' %}
     <a href="{{ url_for('monitor') }}">Monitor 📊</a>

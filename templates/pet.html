@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Kode — Robot Pendamping{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>🤖 Kode, Robot Pendampingmu</h1>
+    <p>Dia tumbuh setiap kali kamu belajar. Rajin belajar = Kode makin hebat!</p>
+  </div>
+</div>
+
+<div class="card" style="text-align:center;padding:28px">
+  <div style="font-size:5rem;line-height:1">{{ pet.emoji }}</div>
+  <h2 style="margin:8px 0 2px">{{ pet.nama }}
+    <span style="font-size:.85rem;color:var(--muted)">Level {{ pet.level }}/{{ pet.total_level }}</span>
+  </h2>
+  <div style="font-size:1.2rem;margin-top:4px">{{ pet.mood[0] }} {{ pet.mood[1] }}</div>
+  <p style="color:var(--muted);margin:6px 0 0">{{ pet.pesan }}</p>
+  <div class="progress" style="max-width:420px;margin:14px auto 6px">
+    <i style="width:{{ pet.progress }}%;background:var(--primary)"></i>
+  </div>
+  <div style="color:var(--muted);font-size:.85rem">
+    {% if pet.next %}
+    Menuju <strong>{{ pet.next[1] }} {{ pet.next[2] }}</strong> — butuh {{ pet.next[0] }} XP
+    {% else %}
+    Level maksimal tercapai! Luar biasa! 🎉
+    {% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <strong>💬 Pesan Kode hari ini</strong>
+  <p style="margin:8px 0 0">{{ pet.motivasi }}</p>
+</div>
+
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+    <strong>🔥 Peta Semangat 8 Minggu</strong>
+    <span style="color:var(--muted);font-size:.85rem">{{ act_days }} hari aktif · {{ total_act }} aktivitas</span>
+  </div>
+  <div class="heatmap">
+    {% for w in range(8) %}
+    <div class="heat-col">
+      {% for cell in weeks[w] %}
+      <div class="heat-cell heat-{{ cell.level }}" title="{{ cell.date }}: {{ cell.count }} aktivitas"></div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  <div style="color:var(--muted);font-size:.8rem;margin-top:8px">
+    Sedikit <span class="heat-cell heat-1" style="display:inline-block;vertical-align:middle"></span>
+    sampai banyak <span class="heat-cell heat-4" style="display:inline-block;vertical-align:middle"></span>
+    — makin pekat, makin rajin! Jaga jangan sampai kosong ya!
+  </div>
+</div>
+
+<div class="card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+  <span><strong>🏅 Badge</strong> — {{ badges_owned }}/{{ total_badges }} terkumpul</span>
+  <a class="btn btn-outline btn-sm" href="{{ url_for('badges_page') }}">Lihat Semua Badge</a>
+</div>
+
+{% endblock %}

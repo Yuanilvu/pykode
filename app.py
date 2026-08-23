@@ -5,6 +5,7 @@ Materi ala Mimo + Online Judge + Drill logika + gamifikasi.
 import functools
 import os
 import time
+from datetime import date
 
 from flask import (Flask, flash, g, jsonify, redirect, render_template,
                    request, session, url_for)
@@ -138,6 +139,63 @@ def rank_for(xp):
     return cur
 
 
+# ---------- Kode si Robot Pendamping ----------
+PET_LEVELS = [
+    (0, "Telur Kode", "🥚", "Terus belajar, dan Kode akan menetas!"),
+    (50, "Robot Bayi", "🐣", "Baru menetas! Lanjutkan biar tumbuh besar!"),
+    (150, "Robot Kecil", "🤖", "Mulai bisa jalan-jalan di dunia kode!"),
+    (400, "Robot Terbang", "🛸", "Bisa terbang! Kamu hebat!"),
+    (800, "Robot Pahlawan", "🦸", "Melindungi dunia dari bug!"),
+    (1400, "Robot Legendaris", "👑", "Legenda! Tidak ada yang bisa mengalahkanmu!"),
+]
+MOTIVASI = [
+    "Kode yang bagus lahir dari mencoba berkali-kali. Kamu pasti bisa!",
+    "Setiap ahli pernah jadi pemula. Lanjutkan!",
+    "Bug itu bukan musuh — itu teka-teki yang menantimu!",
+    "Sedikit setiap hari, jadinya banyak. Kamu hebat!",
+    "Error bukan akhir, itu petunjuk! Baca pesannya baik-baik.",
+    "Pikiranmu seperti otot — makin dilatih makin kuat.",
+    "Tidak apa-apa pelan. Yang penting jangan berhenti!",
+    "Kamu lebih pintar dari kemarin. Itu yang penting!",
+]
+
+
+def pet_for(user):
+    """Info Kode si Robot: level, mood, pesan motivasi harian."""
+    xp, streak = user["xp"], user["streak"]
+    today = date.today().isoformat()
+    cur = PET_LEVELS[0]
+    for level in PET_LEVELS:
+        if xp >= level[0]:
+            cur = level
+        else:
+            break
+    next_level = None
+    idx = PET_LEVELS.index(cur)
+    if idx + 1 < len(PET_LEVELS):
+        next_level = PET_LEVELS[idx + 1]
+    progress = 0
+    if next_level:
+        span = next_level[0] - cur[0]
+        progress = min(100, int((xp - cur[0]) / span * 100)) if span else 100
+    else:
+        progress = 100
+    if streak >= 7:
+        mood = ("🐉", "Kamu luar biasa! 7 hari berturut-turut!")
+    elif streak >= 3:
+        mood = ("🔥", "Api semangatmu menyala!")
+    elif user["last_active"] == today:
+        mood = ("😄", "Asyik, kamu belajar hari ini!")
+    else:
+        mood = ("🥱", "Aku nungguin kamu belajar hari ini... ayo main kode!")
+    motd = MOTIVASI[date.today().toordinal() % len(MOTIVASI)]
+    return {
+        "nama": cur[1], "emoji": cur[2], "pesan": cur[3], "level": idx + 1,
+        "total_level": len(PET_LEVELS), "next": next_level, "progress": progress,
+        "mood": mood, "motivasi": motd,
+    }
+
+
 # ---------- Auth ----------
 # Anti brute-force: 5x salah dalam 5 menit -> kunci (per IP).
 # Counter di DATABASE (bukan memory) agar konsisten di semua worker gunicorn.
@@ -250,7 +308,9 @@ def index():
                            target_lessons=target_lessons, target_drills=target_drills,
                            target_met=target_met, goal_bonus=goal_bonus,
                            review_count=review_count, challenge=challenge,
-                           chal_solved=chal_solved)
+                           chal_solved=chal_solved,
+                           pet=pet_for(user), n_badges=len(badges),
+                           total_badges=len(BADGES))
 
 
 @app.route("/lesson/<lesson_id>")
@@ -320,6 +380,42 @@ def leaderboard():
         r["rank_emoji"] = ["🥇", "🥈", "🥉"][i] if i < 3 else f"{i+1}."
         r["rank"] = rank_for(r["xp"])
     return render_template("leaderboard.html", rows=rows)
+
+
+@app.route("/pet")
+@login_required
+def pet():
+    """Kode si Robot Pendamping — mascot yang tumbuh bersama XP & streak."""
+    pet = pet_for(g.user)
+    heatmap = []
+    act = db.activity_dates(g.user["id"], 56)
+    for i in range(55, -1, -1):
+        d = date.today() - __import__("datetime").timedelta(days=i)
+        iso = d.isoformat()
+        c = act.get(iso, 0)
+        heatmap.append({"date": iso, "count": c,
+                        "level": min(4, c) if c else 0,
+                        "weekday": d.weekday(), "week": i // 7})
+    weeks = {}
+    for cell in heatmap:
+        weeks.setdefault(cell["week"], []).append(cell)
+    total_act = sum(act.values())
+    return render_template("pet.html", pet=pet, weeks=weeks,
+                           total_act=total_act, act_days=len(act),
+                           badges_owned=len(db.awarded_badges(g.user["id"])),
+                           total_badges=len(BADGES))
+
+
+@app.route("/badges")
+@login_required
+def badges_page():
+    owned = db.awarded_badges(g.user["id"])
+    badges = [{"id": bid, "nama": b["nama"], "emoji": b["emoji"],
+               "desc": b["desc"], "xp": b["xp"], "owned": bid in owned}
+              for bid, b in BADGES.items()]
+    badges.sort(key=lambda b: (not b["owned"], b["id"]))
+    return render_template("badges.html", badges=badges,
+                           owned=len(owned), total=len(BADGES))
 
 
 # ---------- Auth routes ----------

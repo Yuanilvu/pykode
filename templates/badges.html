@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Koleksi Badge{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>🏅 Koleksi Badge</h1>
+    <p>{{ owned }}/{{ total }} terkumpul. Badge yang belum kamu punya masih misteri... 🕵️</p>
+  </div>
+</div>
+
+<div class="badge-grid">
+  {% for b in badges %}
+  <div class="badge-card {% if not b.owned %}badge-locked{% endif %}">
+    <div class="badge-emoji">{{ b.emoji if b.owned else '❓' }}</div>
+    <div class="badge-nama">{{ b.nama if b.owned else '???' }}</div>
+    <div class="badge-desc">{{ b.desc if b.owned else 'Masih misteri — terus belajar untuk membukanya!' }}</div>
+    {% if b.owned %}<div class="badge-xp">+{{ b.xp }} XP</div>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

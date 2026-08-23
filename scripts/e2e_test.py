@@ -188,6 +188,12 @@ check("monitor detail -> 200 & ada kode area", st == 200 and "Progres per Bab" i
 st, body = c.get("/")
 check("index -> kartu target harian", st == 200 and "Target Harian" in body)
 
+print("== KODE SI ROBOT (mascot) & BADGE ==")
+st, body = c.get("/pet")
+check("pet -> 200 & nama robot", st == 200 and "Kode, Robot Pendamping" in body and "Peta Semangat" in body)
+st, body = c.get("/badges")
+check("badges -> 200 & koleksi", st == 200 and "Koleksi Badge" in body and "Hello, Dunia!" in body)
+
 print("== ANTI BRUTE FORCE ==")
 c2 = Client()
 last = ""

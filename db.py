@@ -369,6 +369,25 @@ def award_badge(user_id, badge_id):
         return cur.rowcount > 0
 
 
+def activity_dates(user_id, days=56):
+    """Tanggal aktif (YYYY-MM-DD) dalam N hari terakhir → jumlah aktivitas.
+
+    Dipakai heatmap streak: gabungan pelajaran, drill, soal AC, dan submission.
+    """
+    with get_conn() as conn:
+        rows = conn.execute("""
+            SELECT d, COUNT(*) c FROM (
+                SELECT date(done_at) d FROM lessons_done WHERE user_id = ?
+                UNION ALL SELECT date(solved_at) FROM drills_done WHERE user_id = ?
+                UNION ALL SELECT date(solved_at) FROM problems_solved
+                    WHERE user_id = ? AND solved = 1
+                UNION ALL SELECT date(created_at) FROM submissions WHERE user_id = ?
+            ) WHERE d >= date('now', ?)
+            GROUP BY d
+        """, (user_id, user_id, user_id, user_id, f"-{days - 1} days")).fetchall()
+        return {r["d"]: r["c"] for r in rows}
+
+
 # ---------- leaderboard ----------
 
 def leaderboard(limit=10):
