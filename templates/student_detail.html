@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Detail {{ s.username }} — Monitor{% endblock %}
+{% block content %}
+
+<div class="breadcrumb">
+  <a href="{{ url_for('monitor') }}">📊 Monitor</a> › {{ s.username }}
+</div>
+
+<div class="hero" style="background:linear-gradient(135deg,#334155,#0f172a)">
+  <div>
+    <h1>👤 {{ s.username }}</h1>
+    <p>Terakhir aktif: {{ s.last_active or '—' }} · ⭐ {{ s.xp }} XP · 🔥 {{ s.streak }} hari</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big">{{ s.xp }}</div>
+    <div>XP</div>
+  </div>
+</div>
+
+<div class="section-title">📚 Progres per Bab</div>
+<div class="bab-grid">
+  {% for b in per_bab %}
+  <div class="bab-card" style="cursor:default">
+    <div class="bab-head">
+      <span class="bab-emoji">{{ b.emoji }}</span>
+      <div>
+        <div class="bab-title">Bab {{ b.bab }}: {{ b.judul }}</div>
+        <div class="bab-sub">📖 {{ b.l_done }}/{{ b.l_total }} pelajaran · 🎯 {{ b.p_done }}/{{ b.p_total }} soal</div>
+      </div>
+    </div>
+    <div class="progress"><i style="width:{{ ((b.l_done + b.p_done) * 100 // (b.l_total + b.p_total)) if (b.l_total + b.p_total) else 0 }}%; background:#6366f1"></i></div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if s.stuck %}
+<div class="section-title">⚠️ Soal yang Mungkin Mentok</div>
+{% for st in s.stuck %}
+<div class="card">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <h2 style="margin:0;font-size:1.05rem">🧩 {{ st.judul }} <span style="color:var(--muted);font-size:.85rem">({{ st.problem_id }}, bab {{ st.bab }})</span></h2>
+    <span class="pill" style="background:#fee2e2;color:#991b1b">dicoba {{ st.attempts }}x, belum berhasil</span>
+  </div>
+  <div style="margin-top:10px;color:var(--muted);font-size:.85rem">Kode terakhir ({{ st.last_at or '—' }}, {{ st.status }}):</div>
+  <pre style="background:#0f172a;color:#e2e8f0;border-radius:10px;padding:12px;margin:8px 0 0;overflow:auto;max-height:220px">{{ st.code or '(tidak ada kode tersimpan)' }}</pre>
+  <div style="margin-top:10px"><a class="btn btn-outline btn-sm" href="{{ url_for('problem', problem_id=st.problem_id) }}">Buka soal →</a></div>
+</div>
+{% endfor %}
+{% else %}
+<div class="card" style="text-align:center;color:var(--muted)">✅ Tidak ada soal yang mentok. Bagus!</div>
+{% endif %}
+
+<div class="section-title">🕒 15 Submission Terakhir</div>
+<div class="card">
+  {% if s.recent %}
+  <div class="table-wrap">
+  <table class="lb-table">
+    <tr><th>Soal</th><th>Bab</th><th>Status</th><th>Waktu</th></tr>
+    {% for r in s.recent %}
+    <tr>
+      <td>{{ r.judul }} <span style="color:var(--muted);font-size:.8rem">({{ r.problem_id }})</span></td>
+      <td>{{ r.bab }}</td>
+      <td>{% if r.status == 'AC' %}<span style="color:var(--success);font-weight:700">✅ Benar</span>{% else %}<span style="color:#dc2626;font-weight:700">❌ Salah</span>{% endif %}</td>
+      <td>{{ r.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% else %}
+  <p style="color:var(--muted);text-align:center;margin:0">Belum ada submission.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

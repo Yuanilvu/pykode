@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Review Cerdas — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#0f766e,#134e4a)">
+  <div>
+    <h1>🔁 Review Cerdas</h1>
+    <p>Soal yang pernah kamu jawab salah, muncul lagi di sini supaya tidak lupa. Ulangi sampai benar — otakmu akan mengingatnya lebih lama!</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big">{{ items|length }}</div>
+    <div>soal hari ini</div>
+  </div>
+</div>
+
+{% if items %}
+<div class="bab-grid">
+  {% for p in items %}
+  <a class="bab-card" href="{{ url_for('problem', problem_id=p.id) }}">
+    <div class="bab-head">
+      <span class="bab-emoji">🔁</span>
+      <div>
+        <div class="bab-title">Bab {{ p.bab }}: {{ p.judul }}</div>
+        <div class="bab-sub">Soal level {{ p.sulit }} — kamu pernah salah, sekarang saatnya buktikan! 💪</div>
+      </div>
+    </div>
+    <div class="bab-meta"><span>Kerjakan →</span><span>{{ p.id }}</span></div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card" style="text-align:center;color:var(--muted);padding:30px">
+  <div style="font-size:2.5rem">🎉</div>
+  <p>Tidak ada soal yang perlu diulang hari ini. Kamu hebat!</p>
+</div>
+{% endif %}
+
+{% endblock %}

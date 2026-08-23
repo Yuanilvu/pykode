@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Tantangan Mingguan — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#7c3aed,#312e81)">
+  <div>
+    <h1>🏆 Tantangan Mingguan</h1>
+    <p>5 soal serentak! Siapa paling banyak selesai, paling cepat — dialah Juara Minggu Ini. Semua soal baru muncul setiap Senin.</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big">⚔️</div>
+    <div>Rob vs cinhcinp</div>
+  </div>
+</div>
+
+{% if not challenge %}
+<div class="card" style="text-align:center;color:var(--muted);padding:30px">
+  <div style="font-size:2.5rem">🕐</div>
+  <p>Tantangan minggu ini belum dimulai. Nanti muncul otomatis tiap Senin — pantau terus!</p>
+</div>
+{% else %}
+
+<div class="section-title">🎯 Soal Tantangan ({{ challenge.problem_ids|length }} soal)</div>
+<div class="card">
+  {% for p in problems %}
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border,#e2e8f0)">
+    <div>
+      <strong>Bab {{ p.bab }} · {{ p.judul }}</strong>
+      <span class="diff-tag diff-{{ p.sulit }}" style="margin-left:8px">{{ p.sulit|capitalize }}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      {% if p.id in user_solved %}
+      <span style="color:var(--success);font-weight:800">✅ Selesai!</span>
+      {% else %}
+      <a class="btn btn-success btn-sm" href="{{ url_for('problem', problem_id=p.id) }}">Kerjakan →</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="section-title">📊 Papan Tantangan</div>
+<div class="card">
+  {% if standings %}
+  <div class="table-wrap">
+  <table class="lb-table">
+    <tr><th>#</th><th>Pengguna</th><th>Selesai</th><th>Selesai pertama kali</th></tr>
+    {% for r in standings %}
+    <tr {% if r.username == g_user.username %}class="me"{% endif %}>
+      <td>{{ ['🥇','🥈','🥉'][loop.index0] if loop.index0 < 3 else loop.index0 + 1 }}</td>
+      <td>{{ r.username }}</td>
+      <td>✅ {{ r.solved }}/{{ problems|length }}</td>
+      <td>{{ r.first or '—' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin:10px 0 0">Juara minggu ini diumumkan tiap Minggu lewat notifikasi + bonus XP. 🏅</p>
+  {% else %}
+  <p style="color:var(--muted);text-align:center;margin:0">Belum ada yang menyelesaikan soal. Jadi yang pertama! 🚀</p>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
