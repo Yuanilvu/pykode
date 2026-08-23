@@ -2189,3 +2189,145 @@ drill:
       hasil = hasil * int(input()) memperbarui hasil setiap kali.
       Setelah loop selesai, cetak dengan print('Hasil kali:', hasil).
       Contoh: 2, 3, 4. Hasil jadi 2, lalu 6, lalu 24.
+
+  - id: "d45"
+    judul: "Kasir Keliling"
+    emoji: "🧮"
+    tema: "Dunia Nyata"
+    tingkat: 13
+    cerita: |
+      Kancil jualan kue keliling.
+      Dia mencatat harga tiap kue yang terjual.
+      Baris pertama: berapa kue terjual.
+      Lalu harga tiap kue satu per satu.
+      Bantu Kancil menjumlahkan semua!
+    input: "Baris 1: n (jumlah kue). n baris berikutnya: harga kue."
+    output: "Satu baris: Total: <jumlah>."
+    contoh:
+      - input: "3\n1000\n2000\n500"
+        output: "Total: 3500"
+      - input: "2\n500\n500"
+        output: "Total: 1000"
+    tes:
+      - input: "3\n1000\n2000\n500"
+        output: "Total: 3500"
+      - input: "2\n500\n500"
+        output: "Total: 1000"
+      - input: "1\n7500"
+        output: "Total: 7500"
+      - input: "0"
+        output: "Total: 0"
+      - input: "4\n250\n250\n250\n250"
+        output: "Total: 1000"
+      - input: "3\n10000\n20000\n30000"
+        output: "Total: 60000"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          total = total + int(input())
+      print('Total:', total)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Siapkan total mulai dari 0.
+      Pakai for i in range(n) untuk membaca n harga.
+      Setiap putaran, tambahkan harga ke total.
+      total = total + int(input()) membaca dan menambah sekaligus.
+      Kalau n = 0, loop tidak jalan dan total tetap 0.
+      Cetak hasilnya dengan print('Total:', total).
+
+  - id: "d46"
+    judul: "Suhu Seminggu"
+    emoji: "🌡️"
+    tema: "Dunia Nyata"
+    tingkat: 13
+    cerita: |
+      Kancil mencatat suhu pagi selama 7 hari.
+      Setiap hari satu angka.
+      Bantu Kancil menghitung rata-rata suhunya.
+      Lalu cari suhu terbesar.
+      Rata-rata dibulatkan ke angka bulat terdekat.
+    input: "7 baris: suhu setiap hari."
+    output: "Baris 1: Rata-rata: <angka bulat>. Baris 2: Terbesar: <angka>."
+    contoh:
+      - input: "30\n31\n29\n28\n30\n32\n31"
+        output: "Rata-rata: 30\nTerbesar: 32"
+      - input: "25\n25\n25\n25\n25\n25\n25"
+        output: "Rata-rata: 25\nTerbesar: 25"
+    tes:
+      - input: "30\n31\n29\n28\n30\n32\n31"
+        output: "Rata-rata: 30\nTerbesar: 32"
+      - input: "25\n25\n25\n25\n25\n25\n25"
+        output: "Rata-rata: 25\nTerbesar: 25"
+      - input: "0\n1\n2\n3\n4\n5\n6"
+        output: "Rata-rata: 3\nTerbesar: 6"
+      - input: "40\n41\n42\n43\n44\n45\n46"
+        output: "Rata-rata: 43\nTerbesar: 46"
+      - input: "-5\n-3\n-1\n0\n2\n4\n6"
+        output: "Rata-rata: 0\nTerbesar: 6"
+      - input: "10\n20\n10\n20\n10\n20\n10"
+        output: "Rata-rata: 14\nTerbesar: 20"
+    solusi: |
+      total = 0
+      terbesar = -1000
+      for i in range(7):
+          s = int(input())
+          total = total + s
+          if s > terbesar:
+              terbesar = s
+      print('Rata-rata:', int(round(total / 7)))
+      print('Terbesar:', terbesar)
+    penjelasan: |
+      Baca 7 angka dengan for i in range(7).
+      Jumlahkan semua ke total.
+      Simpan angka terbesar dengan if s > terbesar.
+      Rata-rata = total dibagi 7. Bulatkan dengan round().
+      int() mengubahnya jadi angka bulat.
+      Cetak rata-rata dulu, lalu terbesar.
+      Contoh: 30+31+29+28+30+32+31 = 211. 211/7 = 30,1. Jadi 30.
+
+  - id: "d47"
+    judul: "Menabung Tanpa Sisa"
+    emoji: "🐷"
+    tema: "Dunia Nyata"
+    tingkat: 13
+    cerita: |
+      Kancil mau beli sepatu baru.
+      Baris pertama: harga sepatu.
+      Baris kedua: uang tabungan tiap bulan.
+      Butuh berapa bulan?
+      Kalau hasilnya ada sisa, bulatkan ke atas.
+      Contoh: target 10.000, nabung 3.000.
+      10.000 dibagi 3.000 = 3,3. Berarti 4 bulan.
+    input: "Baris 1: harga sepatu (target). Baris 2: tabungan per bulan."
+    output: "Satu baris: butuh <bulan> bulan."
+    contoh:
+      - input: "120000\n10000"
+        output: "butuh 12 bulan"
+      - input: "100000\n30000"
+        output: "butuh 4 bulan"
+    tes:
+      - input: "120000\n10000"
+        output: "butuh 12 bulan"
+      - input: "100000\n30000"
+        output: "butuh 4 bulan"
+      - input: "5000\n10000"
+        output: "butuh 1 bulan"
+      - input: "25000\n8000"
+        output: "butuh 4 bulan"
+      - input: "999\n1000"
+        output: "butuh 1 bulan"
+      - input: "70000\n7000"
+        output: "butuh 10 bulan"
+    solusi: |
+      target = int(input())
+      perbulan = int(input())
+      bulan = (target + perbulan - 1) // perbulan
+      print('butuh', bulan, 'bulan')
+    penjelasan: |
+      Baca target dan tabungan per bulan.
+      Rumus pembulatan ke atas: (target + perbulan - 1) // perbulan.
+      Contoh: 10000 dan 3000. (10000 + 2999) // 3000 = 4.
+      Kalau hasilnya pas, trik ini tidak mengubah apa pun.
+      120000 dan 10000: (120000 + 9999) // 10000 = 12.
+      Cetak dengan print('butuh', bulan, 'bulan').

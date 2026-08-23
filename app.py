@@ -79,6 +79,7 @@ LESSON_XP = 30
 QUIZ_XP = 5
 DRILL_XP = 40
 PROBLEM_XP = {"mudah": 50, "sedang": 100, "sulit": 150}
+DUEL_BONUS = 30
 RANKS = [
     (0, "Pemula", "🌱"),
     (300, "Penjelajah", "🧭"),
@@ -199,6 +200,16 @@ def pet_for(user):
 # ---------- Auth ----------
 # Anti brute-force: 5x salah dalam 5 menit -> kunci (per IP).
 # Counter di DATABASE (bukan memory) agar konsisten di semua worker gunicorn.
+def _notify_duel_winner(username):
+    """Kirim notifikasi ntfy saat duel hari ini dimenangkan (fire-and-forget)."""
+    import urllib.request
+    msg = (f"⚔️ Duel Hari Ini: {username} MENANG! "
+           f"Bonus +{DUEL_BONUS} XP. Ayo cek duel besok!")
+    req = urllib.request.Request("https://ntfy.sh/pykodeYuan",
+                                 data=msg.encode(), method="POST")
+    urllib.request.urlopen(req, timeout=5)
+
+
 def _login_locked(ip):
     rec = db.login_failures_get(ip)
     if not rec:
@@ -418,6 +429,37 @@ def badges_page():
                            owned=len(owned), total=len(BADGES))
 
 
+@app.route("/duel")
+@login_required
+def duel():
+    """Duel Harian — satu soal untuk semua siswa; yang AC pertama menang."""
+    import random
+    d = db.get_today_duel()
+    if not d:
+        pool = [p["id"] for b in curriculum.get_babs() for p in (b.get("soal") or [])]
+        pid = random.choice(pool) if pool else "s1-1"
+        d = db.create_duel(date.today().isoformat(), pid)
+    problem = curriculum.get_problem(d["problem_id"])
+    solvers = db.duel_solvers(d["id"])
+    winner = db.get_user(d["winner_id"]) if d["winner_id"] else None
+    scores = db.duel_scores()
+    history = db.duel_history(7)
+    streaks = {s["id"]: 0 for s in scores}
+    for h in history:  # history sudah urut terbaru -> lama
+        if not h["winner"]:
+            break
+        uid = next((s["id"] for s in scores if s["username"] == h["winner"]), None)
+        if uid is None:
+            break
+        streaks[uid] += 1
+    me = {"solved": any(s["user_id"] == g.user["id"] for s in solvers),
+          "winner": winner and winner["id"] == g.user["id"]}
+    return render_template("duel.html", duel=d,
+                           problem=problem["data"] if problem else None,
+                           solvers=solvers, winner=winner, scores=scores,
+                           history=history, streaks=streaks, me=me)
+
+
 # ---------- Auth routes ----------
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -562,6 +604,20 @@ def api_submit():
         if chal and problem_id in chal["problem_ids"]:
             db.record_challenge_solve(g.user["id"], chal["id"], problem_id)
 
+    # Duel Harian: AC soal duel -> catat; pemenang pertama dapat bonus XP
+    duel_bonus = 0
+    if status == "AC":
+        duel = db.get_today_duel()
+        if duel and duel["problem_id"] == problem_id:
+            r = db.duel_solve(duel["id"], g.user["id"])
+            if r == "winner":
+                duel_bonus = DUEL_BONUS
+                db.add_xp(g.user["id"], duel_bonus)
+                try:
+                    _notify_duel_winner(g.user["username"])
+                except Exception:
+                    pass
+
     xp_added, new_badges, first_solve = 0, [], False
     deteksi = {}
     if status == "AC":
@@ -576,7 +632,7 @@ def api_submit():
         deteksi = detective.analyze(code, soal.get("tes") or [], result["results"])
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_solve": first_solve, "new_badges": new_badges,
-                    "deteksi": deteksi})
+                    "deteksi": deteksi, "duel_bonus": duel_bonus})
 
 
 @app.route("/api/drill-submit", methods=["POST"])

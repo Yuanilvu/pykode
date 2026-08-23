@@ -115,6 +115,19 @@ CREATE TABLE IF NOT EXISTS login_failures (
     count INTEGER NOT NULL DEFAULT 0,
     first_ts REAL NOT NULL
 );
+CREATE TABLE IF NOT EXISTS duels (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    duel_date TEXT NOT NULL UNIQUE,
+    problem_id TEXT NOT NULL,
+    winner_id INTEGER,
+    created_at TEXT DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS duel_solves (
+    duel_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    solved_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (duel_id, user_id)
+);
 """
 
 
@@ -386,6 +399,62 @@ def activity_dates(user_id, days=56):
             GROUP BY d
         """, (user_id, user_id, user_id, user_id, f"-{days - 1} days")).fetchall()
         return {r["d"]: r["c"] for r in rows}
+
+
+# ---------- duel harian ----------
+
+def get_today_duel():
+    with get_conn() as conn:
+        return conn.execute("SELECT * FROM duels WHERE duel_date = date('now')").fetchone()
+
+
+def create_duel(duel_date, problem_id):
+    with get_conn() as conn:
+        conn.execute("INSERT OR IGNORE INTO duels (duel_date, problem_id) VALUES (?, ?)",
+                     (duel_date, problem_id))
+        return conn.execute("SELECT * FROM duels WHERE duel_date = ?", (duel_date,)).fetchone()
+
+
+def duel_solve(duel_id, user_id):
+    """Catat solve duel. Return 'winner' (solve pertama), 'ok' (bukan pertama), 'solved' (duplikat)."""
+    with get_conn() as conn:
+        cur = conn.execute("INSERT OR IGNORE INTO duel_solves (duel_id, user_id) VALUES (?, ?)",
+                           (duel_id, user_id))
+        if cur.rowcount == 0:
+            return "solved"
+        row = conn.execute("SELECT winner_id FROM duels WHERE id = ?", (duel_id,)).fetchone()
+        if row["winner_id"] is None:
+            conn.execute("UPDATE duels SET winner_id = ? WHERE id = ?", (user_id, duel_id))
+            return "winner"
+        return "ok"
+
+
+def duel_solvers(duel_id):
+    with get_conn() as conn:
+        rows = conn.execute("""
+            SELECT s.user_id, u.username, s.solved_at FROM duel_solves s
+            JOIN users u ON u.id = s.user_id
+            WHERE s.duel_id = ? ORDER BY s.solved_at""", (duel_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def duel_scores():
+    with get_conn() as conn:
+        rows = conn.execute("""
+            SELECT u.id, u.username, COUNT(d.id) AS wins FROM users u
+            LEFT JOIN duels d ON d.winner_id = u.id
+            WHERE u.role != 'monitor'
+            GROUP BY u.id ORDER BY wins DESC, u.username""").fetchall()
+        return [dict(r) for r in rows]
+
+
+def duel_history(limit=7):
+    with get_conn() as conn:
+        rows = conn.execute("""
+            SELECT d.duel_date, d.problem_id, u.username AS winner
+            FROM duels d LEFT JOIN users u ON u.id = d.winner_id
+            ORDER BY d.duel_date DESC LIMIT ?""", (limit,)).fetchall()
+        return [dict(r) for r in rows]
 
 
 # ---------- leaderboard ----------

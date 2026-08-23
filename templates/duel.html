@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Duel Harian{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>⚔️ Duel Harian</h1>
+    <p>Satu soal untuk semua. Yang paling cepat jawab benar = pemenang!</p>
+  </div>
+</div>
+
+{% if winner %}
+<div class="flash flash-success" style="text-align:center;font-size:1.1rem">
+  🏆 {{ winner.username }} MENANG duel hari ini! Bonus +30 XP!
+  {% if me.winner %}Itu kamu! Keren! 🎉{% elif me.solved %}Kamu sudah jawab — besok rebut lagi ya!{% endif %}
+</div>
+{% else %}
+<div class="flash" style="text-align:center">
+  🔥 Belum ada pemenang hari ini. Siapa yang paling cepat?!
+</div>
+{% endif %}
+
+<div class="card" style="text-align:center;padding:24px">
+  {% if problem %}
+  <div style="font-size:3rem">{{ problem.get('judul', '')[:1] }}</div>
+  <h2 style="margin:6px 0">{{ problem.judul }}</h2>
+  <p style="color:var(--muted)">{{ problem.cerita[:120] }}{% if problem.cerita|length > 120 %}...{% endif %}</p>
+  <div style="margin-top:10px">
+    <a class="btn" href="{{ url_for('problem', problem_id=problem.id) }}">🚀 Kerjakan Soal Duel</a>
+  </div>
+  {% else %}
+  <p>Soal duel sedang disiapkan...</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <strong>📋 Status Hari Ini</strong>
+  <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+    {% if solvers %}
+      {% for s in solvers %}
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:#f1f5f9">
+        <span>{{ s.username }} {% if winner and winner.id == s.user_id %}🏆{% endif %}</span>
+        <span style="color:var(--muted);font-size:.85rem">✅ jawab benar · {{ s.solved_at[:16] }}</span>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div style="color:var(--muted)">Belum ada yang menjawab. Kamu bisa jadi yang pertama! 🚀</div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <strong>🏅 Papan Skor Duel</strong>
+  <table style="width:100%;margin-top:8px;border-collapse:collapse">
+    <tr style="color:var(--muted);font-size:.85rem">
+      <th style="text-align:left;padding:6px">Pemain</th>
+      <th style="text-align:center;padding:6px">Menang</th>
+      <th style="text-align:center;padding:6px">Streak 🔥</th>
+    </tr>
+    {% for s in scores %}
+    <tr>
+      <td style="padding:6px">
+        {% if loop.index == 1 %}🥇{% elif loop.index == 2 %}🥈{% endif %}
+        {{ s.username }}
+      </td>
+      <td style="text-align:center;padding:6px;font-weight:700">{{ s.wins }}</td>
+      <td style="text-align:center;padding:6px">
+        {% if streaks[s.id] >= 2 %}🔥{{ streaks[s.id] }}x{% elif streaks[s.id] == 1 %}🔥{% else %}—{% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="3" style="color:var(--muted);padding:6px">Belum ada pemenang. Duel pertama menantimu!</td></tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <strong>📜 Riwayat 7 Duel Terakhir</strong>
+  <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px">
+    {% for h in history %}
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:10px;background:#f1f5f9">
+      <span style="font-size:.85rem">{{ h.duel_date }} · soal {{ h.problem_id }}</span>
+      <span>{% if h.winner %}{{ h.winner }} 🏆{% else %}⏳ belum ada pemenang{% endif %}</span>
+    </div>
+    {% endfor %}
+    {% if not history %}
+    <div style="color:var(--muted)">Ini duel pertama! Sejarah dibuat hari ini. 😎</div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

@@ -163,6 +163,23 @@ st, body = c.post_json("/api/playground-load", {"work_id": d["work_id"]})
 d = json.loads(body)
 check("playground load -> judul & kode sama", d["ok"] and d["judul"] == "Karya Pertama" and d["code"] == "print('halo')")
 
+print("== DUEL HARIAN ==")
+st, body = c.get("/duel")
+check("duel -> 200 & judul", st == 200 and "Duel Harian" in body)
+duel = db.get_today_duel()
+dprob = curriculum.get_problem(duel["problem_id"])["data"]
+st, body = c.post_json("/api/submit", {"problem_id": duel["problem_id"], "code": dprob["solusi"]})
+d = json.loads(body)
+check("duel: AC pertama -> menang +30 bonus", d["status"] == "AC" and d.get("duel_bonus") == 30)
+c_t = Client()
+st, body = c_t.post_form("/login", {"username": "tikus", "password": "1234"})
+check("duel: tikus login", "Halo, tikus!" in body)
+st, body = c_t.post_json("/api/submit", {"problem_id": duel["problem_id"], "code": dprob["solusi"]})
+d = json.loads(body)
+check("duel: AC kedua -> bukan pemenang (0 bonus)", d["status"] == "AC" and d.get("duel_bonus") == 0)
+st, body = c.get("/duel")
+check("duel page -> pemenang kancil tampil", st == 200 and "kancil" in body)
+
 print("== MONITOR ==")
 st, body = c.get("/monitor")
 check("monitor diblokir utk siswa -> balik ke beranda",

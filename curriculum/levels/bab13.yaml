@@ -1,0 +1,356 @@
+bab: 13
+judul: "Python di Dunia Nyata"
+emoji: "🛒"
+warna: "#f59e0b"
+deskripsi: "Bikin program yang kepake sehari-hari: belanja, suhu, tabungan!"
+
+pelajaran:
+  - id: "13-1"
+    judul: "Kasir Cilik"
+    menit: 5
+    materi: |
+      Kamu lagi jaga warung. Ada pembeli beli 3 permen.
+      Satu permen harganya 500 rupiah. Berapa totalnya?
+
+      Python bisa bantu hitung cepat. Kita baca angka
+      dari ketikan pakai `int(input())`.
+
+      ## Kenapa pakai int?
+
+      Tulisan dari input itu teks, bukan angka.
+      `int()` mengubah teks jadi angka.
+      Kalau tidak dibungkus `int()`, Python tidak bisa menghitung.
+
+      ## Hitung total belanja
+
+      `harga = int(input())` membaca harga.
+      `jumlah = int(input())` membaca jumlah.
+      Lalu kalikan pakai tanda `*`.
+
+      Ceritanya seperti ini: harga 500, jumlah 3.
+      500 × 3 = 1500. Tepat seperti di warung sungguhan!
+
+      Coba dua contoh di bawah ini ya!
+    contoh:
+      - kode: |
+          harga = 500
+          jumlah = 3
+          total = harga * jumlah
+          print(total)
+        penjelasan: "500 dikali 3 hasilnya 1500. Angka dicetak di layar."
+      - kode: |
+          harga = 2000
+          jumlah = 2
+          total = harga * jumlah
+          print('Total:', total)
+        penjelasan: "print dengan koma menambahkan kata 'Total:' lalu hasilnya."
+    kuis:
+      - soal: "Mengapa input() harus dibungkus int()?"
+        pilihan:
+          - "Supaya tulisannya jadi bagus"
+          - "Supaya teks berubah jadi angka yang bisa dihitung"
+          - "Supaya programnya lebih cepat"
+          - "Tidak perlu, input() sudah angka"
+        jawaban: 1
+        penjelasan: "Input dari ketikan itu teks. int() mengubahnya jadi angka."
+      - soal: "harga = 500, jumlah = 4. Berapa totalnya?"
+        pilihan:
+          - "504"
+          - "5004"
+          - "2000"
+          - "450"
+        jawaban: 2
+        penjelasan: "500 × 4 = 2000. Tanda * artinya kali."
+
+  - id: "13-2"
+    judul: "Suhu Panas Dingin"
+    menit: 6
+    materi: |
+      Kulkas di rumah menampilkan suhu dalam Celcius.
+      Tapi termometer Ibu pakai Fahrenheit.
+      Kita bisa buat program pengubah suhu!
+
+      ## Rumus konversi
+
+      Fahrenheit = Celcius × 9 ÷ 5 + 32
+
+      Contoh: Celcius 100 derajat (air mendidih).
+      100 × 9 = 900. 900 ÷ 5 = 180. 180 + 32 = 212.
+      Jadi 100 Celcius = 212 Fahrenheit.
+
+      ## Angka pecahan
+
+      Hasil 9 ÷ 5 bisa menghasilkan angka pecahan, seperti 98.6.
+      Biar rapi, kita bulatkan pakai `round()`.
+      Lalu `int()` mengubahnya jadi angka bulat.
+
+      `f = int(round(c * 9 / 5 + 32))`
+
+      Urutan hitung: kali dan bagi dulu, lalu tambah.
+      Python mengikuti aturan matematika.
+    contoh:
+      - kode: |
+          c = 100
+          f = int(round(c * 9 / 5 + 32))
+          print(f)
+        penjelasan: "100 Celcius diubah jadi 212 Fahrenheit. Angka bulat dicetak."
+      - kode: |
+          c = 0
+          f = int(round(c * 9 / 5 + 32))
+          print('Fahrenheit:', f)
+        penjelasan: "0 Celcius adalah suhu air membeku. Hasilnya 32 Fahrenheit."
+    kuis:
+      - soal: "Rumus Celcius ke Fahrenheit yang benar?"
+        pilihan:
+          - "F = C + 32"
+          - "F = C × 9 ÷ 5 + 32"
+          - "F = C × 5 ÷ 9 + 32"
+          - "F = 32 - C × 9 ÷ 5"
+        jawaban: 1
+        penjelasan: "Kali 9, bagi 5, lalu tambah 32. Itu rumusnya."
+      - soal: "Kenapa pakai round()?"
+        pilihan:
+          - "Biar programnya lebih cepat"
+          - "Biar angka pecahan dibulatkan jadi rapi"
+          - "Biar inputnya dibaca"
+          - "Biar angkanya jadi teks"
+        jawaban: 1
+        penjelasan: "Hasil bagi bisa pecahan. round() membulatkannya."
+
+  - id: "13-3"
+    judul: "Uang Kembalian"
+    menit: 7
+    materi: |
+      Kamu belanja 8.000 rupiah. Kamu bayar 10.000.
+      Berapa kembaliannya? 2.000, benar!
+
+      Python bisa hitung kembalian dan memecah uang.
+
+      ## Kembalian
+
+      `kembalian = bayar - total`
+
+      ## Pecahan uang
+
+      Ada dua alat ajaib: `//` dan `%`.
+      `//` membagi lalu membuang sisa. Namanya bagi bulat.
+      `%` mengambil sisa baginya. Namanya sisa bagi (modulo).
+
+      Contoh: 2000 // 5000 = 0 (tidak cukup satu lembar lima ribuan).
+      2000 % 5000 = 2000 (sisanya tetap 2000).
+
+      Contoh lain: 12000 // 5000 = 2. Berarti dua lembar lima ribuan.
+      12000 % 5000 = 2000. Sisanya 2000 rupiah.
+
+      Jadi untuk tahu jumlah lembar lima ribuan:
+      `lembar = kembalian // 5000`
+    contoh:
+      - kode: |
+          total = 8000
+          bayar = 10000
+          kembalian = bayar - total
+          print(kembalian)
+          print(kembalian // 5000)
+        penjelasan: "Kembalian 2000. 2000 // 5000 = 0, jadi tidak ada lembar lima ribuan."
+      - kode: |
+          total = 15000
+          bayar = 20000
+          k = bayar - total
+          print('Kembalian:', k)
+          print('Lembar 5000:', k // 5000)
+        penjelasan: "Kembalian 5000. 5000 // 5000 = 1, jadi satu lembar."
+    kuis:
+      - soal: "12000 // 5000 hasilnya berapa?"
+        pilihan:
+          - "2"
+          - "2000"
+          - "2,4"
+          - "3"
+        jawaban: 0
+        penjelasan: "Bagi bulat: 12000 dibagi 5000 = 2, sisanya dibuang."
+      - soal: "12000 % 5000 hasilnya berapa?"
+        pilihan:
+          - "2"
+          - "7000"
+          - "2000"
+          - "0"
+        jawaban: 2
+        penjelasan: "Sisa bagi: 12000 - (2 × 5000) = 2000."
+
+  - id: "13-4"
+    judul: "Tabungan Impian"
+    menit: 7
+    materi: |
+      Kancil ingin beli sepatu baru seharga 120.000.
+      Tiap bulan dia menabung 10.000.
+      Butuh berapa bulan? 12 bulan, benar!
+
+      ## Hitung bulan
+
+      `bulan = target // perbulan`
+
+      Tapi hati-hati! Kalau hasilnya tidak pas, ada sisa.
+      Contoh: target 10.000, nabung 3.000.
+      10.000 // 3.000 = 3. Tapi 3 bulan cuma 9.000.
+      Masih kurang 1.000! Berarti butuh 4 bulan.
+
+      ## Membulatkan ke atas
+
+      Ada trik membulatkan pembagian ke atas tanpa `math`:
+
+      `bulan = (target + perbulan - 1) // perbulan`
+
+      Coba: (10000 + 3000 - 1) // 3000 = 12999 // 3000 = 4.
+      Hasilnya 4. Pas!
+
+      Trik ini bekerja untuk angka apa pun.
+      Tambah perbulan - 1, lalu bagi bulat.
+    contoh:
+      - kode: |
+          target = 10000
+          perbulan = 3000
+          bulan = (target + perbulan - 1) // perbulan
+          print(bulan)
+        penjelasan: "10000 dibagi 3000 sebenarnya 3,3. Trik ini membulatkan jadi 4 bulan."
+      - kode: |
+          target = 120000
+          perbulan = 10000
+          bulan = (target + perbulan - 1) // perbulan
+          print('Butuh', bulan, 'bulan')
+        penjelasan: "120000 dibagi 10000 pas 12. Hasilnya 12 bulan."
+    kuis:
+      - soal: "target 10000, perbulan 3000. Berapa bulan?"
+        pilihan:
+          - "3"
+          - "4"
+          - "5"
+          - "33"
+        jawaban: 1
+        penjelasan: "3 bulan cuma 9000, kurang. Jadi 4 bulan."
+      - soal: "Kenapa harus tambah perbulan - 1?"
+        pilihan:
+          - "Supaya hasilnya lebih besar"
+          - "Supaya pembagian dibulatkan ke atas kalau ada sisa"
+          - "Supaya angkanya jadi teks"
+          - "Supaya programnya lebih cepat"
+        jawaban: 1
+        penjelasan: "Trik ini mengubah sisa kecil jadi satu bulan tambahan."
+
+soal:
+  - id: "s13-1"
+    judul: "Total Belanja Kancil"
+    sulit: "mudah"
+    cerita: |
+      Kancil jaga warung Ibu. Ada pembeli yang beli permen.
+      Baris pertama berisi harga satu permen.
+      Baris kedua berisi jumlah permen yang dibeli.
+      Bantu Kancil menghitung total belanjanya!
+      Cetak angkanya saja.
+    input: "Baris 1: harga satu permen. Baris 2: jumlah permen."
+    output: "Satu baris: total belanja."
+    contoh:
+      - input: "2500\n4"
+        output: "10000"
+      - input: "1000\n1"
+        output: "1000"
+    tes:
+      - input: "2500\n4"
+        output: "10000"
+      - input: "1000\n1"
+        output: "1000"
+      - input: "500\n10"
+        output: "5000"
+      - input: "999\n3"
+        output: "2997"
+      - input: "0\n5"
+        output: "0"
+      - input: "7500\n2"
+        output: "15000"
+    solusi: |
+      harga = int(input())
+      jumlah = int(input())
+      print(harga * jumlah)
+    petunjuk:
+      - "Baca dua angka dengan int(input())."
+      - "Kalikan harga dengan jumlah pakai *."
+      - "Cetak hasil kalinya dengan print()."
+
+  - id: "s13-2"
+    judul: "Suhu dari Kulkas"
+    sulit: "sedang"
+    cerita: |
+      Kulkas Kancil menunjukkan suhu dalam Celcius.
+      Ibu Kancil mau tahu suhunya dalam Fahrenheit.
+      Rumusnya: Fahrenheit = Celcius × 9 ÷ 5 + 32.
+      Bulatkan hasilnya dengan round().
+      Bantu Kancil mengubah suhu! Cetak angkanya saja.
+    input: "Satu baris: suhu dalam Celcius."
+    output: "Satu baris: suhu dalam Fahrenheit (angka bulat)."
+    contoh:
+      - input: "0"
+        output: "32"
+      - input: "100"
+        output: "212"
+    tes:
+      - input: "0"
+        output: "32"
+      - input: "100"
+        output: "212"
+      - input: "37"
+        output: "99"
+      - input: "-40"
+        output: "-40"
+      - input: "21"
+        output: "70"
+      - input: "5"
+        output: "41"
+    solusi: |
+      c = int(input())
+      f = int(round(c * 9 / 5 + 32))
+      print(f)
+    petunjuk:
+      - "Baca suhu dengan int(input())."
+      - "Hitung pakai rumus: c * 9 / 5 + 32."
+      - "Bulatkan dengan round(), ubah ke int(), lalu cetak."
+
+  - id: "s13-3"
+    judul: "Kembalian Pecahan"
+    sulit: "sulit"
+    cerita: |
+      Kancil belanja di toko Bu Rusa.
+      Baris pertama: total belanja.
+      Baris kedua: uang yang dibayar.
+      Bu Rusa harus memberi kembalian.
+      Dia juga mau tahu: ada berapa lembar lima ribuan
+      dari kembalian itu? Cetak kembalian di baris pertama.
+      Cetak jumlah lembar lima ribuan di baris kedua.
+    input: "Baris 1: total belanja. Baris 2: uang yang dibayar."
+    output: "Baris 1: kembalian. Baris 2: jumlah lembar lima ribuan."
+    contoh:
+      - input: "15000\n20000"
+        output: "5000\n1"
+      - input: "8000\n10000"
+        output: "2000\n0"
+    tes:
+      - input: "15000\n20000"
+        output: "5000\n1"
+      - input: "1000\n10000"
+        output: "9000\n1"
+      - input: "8000\n10000"
+        output: "2000\n0"
+      - input: "27500\n50000"
+        output: "22500\n4"
+      - input: "5000\n5000"
+        output: "0\n0"
+      - input: "12000\n20000"
+        output: "8000\n1"
+    solusi: |
+      total = int(input())
+      bayar = int(input())
+      kembalian = bayar - total
+      print(kembalian)
+      print(kembalian // 5000)
+    petunjuk:
+      - "Baca dua angka: total dan uang bayar."
+      - "Kembalian = bayar - total. Cetak dulu."
+      - "Jumlah lembar lima ribuan = kembalian // 5000. Cetak di baris kedua."
