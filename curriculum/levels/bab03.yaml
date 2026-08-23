@@ -69,6 +69,22 @@ pelajaran:
           - "24"
         jawaban: 2
         penjelasan: "Yang di dalam kurung dikerjakan dulu: 2 + 3 = 5. Lalu 5 * 4 = 20."
+      - soal: "Berapa hasil 10 + 2 * 3?"
+        pilihan:
+          - "36"
+          - "16"
+          - "12"
+          - "32"
+        jawaban: 1
+        penjelasan: "Kali dulu: 2 * 3 = 6. Lalu 10 + 6 = 16."
+      - soal: "Berapa hasil 100 / 4?"
+        pilihan:
+          - "25"
+          - "25.0"
+          - "25 sisa 0"
+          - "error"
+        jawaban: 1
+        penjelasan: "Pembagian selalu memberi angka desimal. 100 / 4 = 25.0."
 
   - id: "3-2"
     judul: "Kalimat Ajaib: f-string"
@@ -141,6 +157,22 @@ pelajaran:
           - "error"
         jawaban: 1
         penjelasan: "Di dalam kurung kurawal boleh ada hitungan. Python menghitung dulu: 1500 + 2500 = 4000."
+      - soal: "Kode ini mencetak apa?\n\numur = 13\nprint(f'Umurku {umur} tahun')"
+        pilihan:
+          - "Umurku {umur} tahun"
+          - "Umurku 13 tahun"
+          - "Umurku umur tahun"
+          - "error"
+        jawaban: 1
+        penjelasan: "f-string mengganti {umur} dengan isi variabelnya, yaitu 13."
+      - soal: "Kode ini mencetak apa?\n\nharga = 2500\nprint(f'Harga: {harga * 2}')"
+        pilihan:
+          - "Harga: 2500 * 2"
+          - "Harga: 5000"
+          - "Harga: harga * 2"
+          - "error"
+        jawaban: 1
+        penjelasan: "Di dalam kurung kurawal boleh ada hitungan. 2500 * 2 = 5000."
 
   - id: "3-3"
     judul: "Rakit Kalimat & Ukur Panjang"
@@ -213,6 +245,22 @@ pelajaran:
           - "error"
         jawaban: 1
         penjelasan: "len() menghitung jumlah karakter: P-y-t-h-o-n ada 6 huruf."
+      - soal: "Berapa hasil len('Aku' + ' hebat')?"
+        pilihan:
+          - "8"
+          - "9"
+          - "10"
+          - "error"
+        jawaban: 1
+        penjelasan: "'Aku' + ' hebat' jadi 'Aku hebat'. Hitung karakternya: A-k-u-spasi-h-e-b-a-t = 9."
+      - soal: "Kode ini mencetak apa?\n\nprint(str(7) + ' hari')"
+        pilihan:
+          - "7 hari"
+          - "error"
+          - "14"
+          - "'7' hari"
+        jawaban: 0
+        penjelasan: "str(7) mengubah angka 7 jadi tulisan '7'. Lalu disambung dengan ' hari' jadi '7 hari'."
 
   - id: "3-4"
     judul: "Besar atau Kecil"
@@ -285,6 +333,88 @@ pelajaran:
           - "sebenarnya sama saja"
         jawaban: 1
         penjelasan: "Python membedakan huruf besar dan kecil. upper() dan lower() bisa dipakai untuk menyamakan."
+      - soal: "Kode ini mencetak apa?\n\nprint('pyKode'.upper())"
+        pilihan:
+          - "pyKode"
+          - "PYKODE"
+          - "pykode"
+          - "error"
+        jawaban: 1
+        penjelasan: "upper() membuat semua huruf jadi besar: PYKODE."
+      - soal: "Kode ini mencetak apa?\n\nkata = 'Seru'\nprint(kata.lower())\nprint(kata)"
+        pilihan:
+          - "seru lalu seru"
+          - "seru lalu Seru"
+          - "Seru lalu seru"
+          - "error"
+        jawaban: 1
+        penjelasan: "lower() membuat tulisan baru 'seru'. Tulisan di variabel kata tetap 'Seru'."
+
+  - id: "3-5"
+    judul: "Mengulang Teks dengan Bintang"
+    menit: 6
+    materi: |
+      Tahu fotokopi? Satu kertas bisa digandakan berkali-kali.
+      Di Python, tulisan juga bisa digandakan! Pakai tanda bintang `*`.
+
+      `'ha' * 3` hasilnya `'hahaha'`. Tanda `*` mengulang tulisan sebanyak
+      angka di belakangnya.
+
+      ## Buat apa mengulang teks?
+
+      - Membuat garis pemisah: `'=' * 10` hasilnya `==========`. Bagus
+        untuk memisahkan bagian di layar.
+      - Membuat efek suara di game: `'Tuk ' * 3` hasilnya `Tuk Tuk Tuk`.
+      - Membuat pola dekorasi: `'*' * 5` hasilnya `*****`.
+
+      ## Aturannya
+
+      Angka pengulang harus bilangan bulat. `'ha' * 2` boleh.
+      Tapi `'ha' * 2.5` error! Python tidak bisa mengulang setengah kali.
+
+      Urutan tidak masalah: `3 * 'ha'` hasilnya sama dengan `'ha' * 3`.
+      Dua-duanya `'hahaha'`.
+
+      Beda dengan tanda `+` yang menyambung, tanda `*` menggandakan.
+      Sambung dan gandakan bisa dipakai bareng:
+      `'Ayo ' * 2 + 'semangat!'` hasilnya `'Ayo Ayo semangat!'`.
+
+      Mengulang teks itu seperti mesin stempel. Satu cap, berkali-kali dipakai.
+      Coba ganti angka dan tulisannya di contoh, lalu jalankan!
+    contoh:
+      - kode: |
+          print('ha' * 3)
+        penjelasan: "Tanda * mengulang tulisan. 'ha' diulang 3 kali jadi 'hahaha'."
+      - kode: |
+          print('=' * 8)
+          print('Ayo ' * 2 + 'semangat!')
+        penjelasan: "'=' diulang 8 kali jadi garis. Lalu 'Ayo ' diulang 2 kali dan disambung."
+    kuis:
+      - soal: "Kode ini mencetak apa?\n\nprint('ha' * 3)"
+        pilihan:
+          - "hahaha"
+          - "ha3"
+          - "ha ha ha"
+          - "error"
+        jawaban: 0
+        penjelasan: "Tanda * mengulang tulisan 3 kali: 'ha' + 'ha' + 'ha' = 'hahaha'."
+      - soal: "Kode ini mencetak apa?\n\nprint('=' * 5)"
+        pilihan:
+          - "=5"
+          - "====="
+          - "=====5"
+          - "error"
+        jawaban: 1
+        penjelasan: "'=' diulang 5 kali. Hasilnya lima tanda sama dengan."
+      - soal: "Mengapa 'ha' * 2.5 error?"
+        pilihan:
+          - "karena 2.5 bukan bilangan bulat"
+          - "karena 'ha' terlalu pendek"
+          - "karena tanda * hanya untuk angka besar"
+          - "sebenarnya tidak error"
+        jawaban: 0
+        penjelasan: "Pengulang harus bilangan bulat. Tidak bisa mengulang setengah kali."
+
 
 soal:
   - id: "s3-1"
@@ -474,3 +604,151 @@ soal:
       - "Simpan kata di variabel. Pakai f-string untuk mencetak."
       - "Huruf besar semua: kata.upper(). Jumlah huruf: len(kata)."
       - "Dua kali panjang dihitung langsung di dalam kurung kurawal: len(kata) * 2."
+
+  - id: "s3-6"
+    judul: "Luas Halaman"
+    sulit: "sedang"
+    cerita: |
+      Kancil membantu ayah mengukur halaman rumah. Halamannya berbentuk
+      persegi panjang. Luasnya dihitung dengan panjang kali lebar.
+      Kalau panjangnya 4 meter dan lebarnya 5 meter, luasnya 20 meter
+      persegi. Baca panjang lalu lebar. Cetak luasnya dengan f-string:
+      'Luas: 20'. Bantuin Kancil menghitung, ya!
+    input: "Dua baris: panjang (int), lalu lebar (int)."
+    output: "Satu baris: Luas: lalu hasil panjang kali lebar."
+    contoh:
+      - input: "4\n5"
+        output: "Luas: 20"
+      - input: "7\n3"
+        output: "Luas: 21"
+    tes:
+      - input: "4\n5"
+        output: "Luas: 20"
+      - input: "7\n3"
+        output: "Luas: 21"
+      - input: "10\n10"
+        output: "Luas: 100"
+      - input: "2\n9"
+        output: "Luas: 18"
+      - input: "6\n6"
+        output: "Luas: 36"
+    solusi: |
+      p = int(input())
+      l = int(input())
+      print(f'Luas: {p * l}')
+    petunjuk:
+      - "Baca panjang dan lebar dengan int(input())."
+      - "Luas = panjang kali lebar, ditulis p * l."
+      - "Cetak dengan f-string: print(f'Luas: {p * l}')."
+
+  - id: "s3-7"
+    judul: "Kartu Pemain Game"
+    sulit: "sulit"
+    cerita: |
+      Kancil membuat kartu pemain untuk game buatannya. Pemain mengetik
+      nama dan umur. Komputer mencetak tiga baris: nama huruf besar
+      semua, jumlah huruf nama, dan umur tahun depan. Contoh: nama
+      'Kancil' punya 6 huruf. Kalau umurnya 13, tahun depan 14. Baca
+      nama lalu umur. Cetak tiga baris persis seperti contoh.
+    input: "Dua baris: nama (tulisan), lalu umur (int)."
+    output: "Tiga baris: Pemain: <NAMA>, Huruf nama: <n>, Umur tahun depan: <umur+1>."
+    contoh:
+      - input: "Kancil\n13"
+        output: "Pemain: KANCIL\nHuruf nama: 6\nUmur tahun depan: 14"
+      - input: "budi\n12"
+        output: "Pemain: BUDI\nHuruf nama: 4\nUmur tahun depan: 13"
+    tes:
+      - input: "Kancil\n13"
+        output: "Pemain: KANCIL\nHuruf nama: 6\nUmur tahun depan: 14"
+      - input: "budi\n12"
+        output: "Pemain: BUDI\nHuruf nama: 4\nUmur tahun depan: 13"
+      - input: "SITI\n15"
+        output: "Pemain: SITI\nHuruf nama: 4\nUmur tahun depan: 16"
+      - input: "Rina\n10"
+        output: "Pemain: RINA\nHuruf nama: 4\nUmur tahun depan: 11"
+      - input: "Andi\n14"
+        output: "Pemain: ANDI\nHuruf nama: 4\nUmur tahun depan: 15"
+    solusi: |
+      nama = input()
+      umur = int(input())
+      print(f'Pemain: {nama.upper()}')
+      print(f'Huruf nama: {len(nama)}')
+      print(f'Umur tahun depan: {umur + 1}')
+    petunjuk:
+      - "Simpan nama di variabel. Baca umur dengan int(input())."
+      - "Huruf besar semua: nama.upper(). Jumlah huruf: len(nama)."
+      - "Umur tahun depan dihitung di dalam f-string: {umur + 1}."
+  - id: "s3-8"
+    judul: "Bagi Jajan Rata"
+    sulit: "sedang"
+    cerita: |
+      Kancil membawa jajan untuk dibagi ke teman-temannya.
+      Dia ingin tiap teman dapat bagian sama rata.
+      Jumlah jajan dibagi jumlah teman. Hasilnya bisa
+      angka desimal, jadi jangan dibulatkan. Baca jumlah
+      jajan lalu jumlah teman. Cetak dengan f-string:
+      'Tiap teman: 2.5'. Bantuin Kancil, ya!
+    input: "Dua baris: jumlah jajan (int), lalu jumlah teman (int)."
+    output: "Satu baris: Tiap teman: lalu hasil bagi (bisa desimal)."
+    contoh:
+      - input: "10\n4"
+        output: "Tiap teman: 2.5"
+      - input: "100\n4"
+        output: "Tiap teman: 25.0"
+    tes:
+      - input: "10\n4"
+        output: "Tiap teman: 2.5"
+      - input: "100\n4"
+        output: "Tiap teman: 25.0"
+      - input: "7\n2"
+        output: "Tiap teman: 3.5"
+      - input: "9\n3"
+        output: "Tiap teman: 3.0"
+      - input: "15\n4"
+        output: "Tiap teman: 3.75"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      print(f'Tiap teman: {a / b}')
+    petunjuk:
+      - "Baca dua angka dengan int(input()). Simpan di a dan b."
+      - "Hasil bagi = a / b. Pakai tanda garis miring."
+      - "Cetak dengan f-string: print(f'Tiap teman: {a / b}')."
+  - id: "s3-9"
+    judul: "Nama Lengkap Keren"
+    sulit: "sulit"
+    cerita: |
+      Kancil membuat kartu nama keren untuk teman-temannya.
+      Kartu berisi nama depan dan nama belakang. Lalu nama
+      dengan huruf besar semua. Terakhir jumlah semua huruf
+      dari dua kata itu. Contoh: 'kancil' dan 'pintar'.
+      Jumlah hurufnya 12. Baca dua kata berurutan. Cetak
+      tiga baris persis seperti contoh.
+    input: "Dua baris: nama depan (tulisan), lalu nama belakang (tulisan)."
+    output: "Tiga baris: Nama: <depan> <belakang>, Huruf besar: <DEPAN> <BELAKANG>, Total huruf: <n>."
+    contoh:
+      - input: "kancil\npintar"
+        output: "Nama: kancil pintar\nHuruf besar: KANCIL PINTAR\nTotal huruf: 12"
+      - input: "budi\nsantoso"
+        output: "Nama: budi santoso\nHuruf besar: BUDI SANTOSO\nTotal huruf: 11"
+    tes:
+      - input: "kancil\npintar"
+        output: "Nama: kancil pintar\nHuruf besar: KANCIL PINTAR\nTotal huruf: 12"
+      - input: "budi\nsantoso"
+        output: "Nama: budi santoso\nHuruf besar: BUDI SANTOSO\nTotal huruf: 11"
+      - input: "siti\namina"
+        output: "Nama: siti amina\nHuruf besar: SITI AMINA\nTotal huruf: 9"
+      - input: "raka\npratama"
+        output: "Nama: raka pratama\nHuruf besar: RAKA PRATAMA\nTotal huruf: 11"
+      - input: "a\nb"
+        output: "Nama: a b\nHuruf besar: A B\nTotal huruf: 2"
+    solusi: |
+      a = input()
+      b = input()
+      print(f'Nama: {a} {b}')
+      print(f'Huruf besar: {a.upper()} {b.upper()}')
+      print(f'Total huruf: {len(a) + len(b)}')
+    petunjuk:
+      - "Simpan dua kata di variabel a dan b."
+      - "Huruf besar semua: a.upper() dan b.upper()."
+      - "Total huruf = len(a) + len(b). Hitung di dalam f-string."

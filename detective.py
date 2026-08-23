@@ -48,6 +48,37 @@ def analyze(code: str, tes: list, results: list) -> dict:
                 "saran": "Jawaban harus dihitung dari ketikan (input()). Cek: apakah "
                          "kamu sudah membaca ketikan dan memakainya?"}
 
+    # 3b. Kode tidak membaca ketikan padahal soal butuh ketikan
+    if "input(" not in code and any(t.get("input", "") for t in tes):
+        return {"ada": True,
+                "pesan": "Soal ini butuh ketikan, tapi program kamu tidak membaca ketikan.",
+                "saran": "Tambahkan input() untuk membaca ketikan, lalu pakai isinya. "
+                         "Contoh: n = int(input())"}
+
+    # 3c. Ketikan tidak pernah diubah jadi angka (int) padahal dipakai berhitung
+    if ("input(" in code and "int(input(" not in code
+            and re.search(r"[+\-*/%]", code)
+            and any(_is_number(e) for e in exp_all)):
+        return {"ada": True,
+                "pesan": "Ketikanmu masih berbentuk teks, tapi dipakai untuk berhitung.",
+                "saran": "Ubah dulu jadi angka: int(input()). Teks '5' dikali 2 jadi "
+                         "'55', bukan 10!"}
+
+    # 3d. Ada for/while di level atas + print() di level atas -> cetak hanya sekali
+    if (re.search(r"^for .*:", code, re.M) or re.search(r"^while .*:", code, re.M)) \
+            and re.search(r"^print\(", code, re.M) \
+            and len(got_all[0].split("\n")) < len(exp_all[0].split("\n")):
+        return {"ada": True,
+                "pesan": "print() kamu berada DI LUAR perulangan, jadi hanya dicetak sekali.",
+                "saran": "Masukkan print() ke dalam perulangan (beri indentasi 4 spasi) "
+                         "supaya dicetak setiap putaran."}
+
+    # 3e. range(1, n) — angka terakhir tidak pernah tercetak
+    if re.search(r"range\(\s*1\s*,\s*n\s*\)", code) and len(got_all[0].split("\n")) < len(exp_all[0].split("\n")):
+        return {"ada": True,
+                "pesan": "range(1, n) berhenti SEBELUM n — angka terakhir tidak pernah dicetak.",
+                "saran": "Ganti menjadi range(1, n + 1) supaya n ikut tercetak."}
+
     # 4. Analisis baris pada test gagal pertama
     g = got_all[0]
     e = exp_all[0]

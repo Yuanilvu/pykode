@@ -70,6 +70,22 @@ pelajaran:
           - "x: 7"
         jawaban: 2
         penjelasan: "print dengan koma mencetak tulisan 'Nilai:' lalu isi variabel x, yaitu 7."
+      - soal: "Kode ini mencetak apa?\n\nx = 5\nx = 8\nprint(x)"
+        pilihan:
+          - "5"
+          - "8"
+          - "5 dan 8"
+          - "error"
+        jawaban: 1
+        penjelasan: "Variabel menyimpan nilai terakhir. Kotak x diisi ulang jadi 8, lalu dicetak 8."
+      - soal: "Kode ini mencetak apa?\n\na = 3\nb = a\nprint(b)"
+        pilihan:
+          - "3"
+          - "a"
+          - "b"
+          - "error"
+        jawaban: 0
+        penjelasan: "Isi kotak a disalin ke kotak b. Jadi b berisi 3, lalu dicetak 3."
 
   - id: "2-2"
     judul: "Jenis-Jenis Isi Kotak"
@@ -136,6 +152,22 @@ pelajaran:
           - "-5"
         jawaban: 1
         penjelasan: "Yang dibungkus tanda kutip adalah tulisan, walau isinya angka."
+      - soal: "Manakah yang merupakan angka desimal (float)?"
+        pilihan:
+          - "7"
+          - "'3.5'"
+          - "3.5"
+          - "False"
+        jawaban: 2
+        penjelasan: "3.5 memakai titik, jadi float. '3.5' pakai tanda kutip, jadi tulisan."
+      - soal: "Manakah pernyataan yang benar?"
+        pilihan:
+          - "'123' itu angka"
+          - "123 itu tulisan"
+          - "'123' itu tulisan, 123 itu angka"
+          - "'123' dan 123 sama saja"
+        jawaban: 2
+        penjelasan: "Yang memakai tanda kutip adalah tulisan. '123' tulisan, 123 angka."
 
   - id: "2-3"
     judul: "Bertanya ke User: input()"
@@ -207,6 +239,22 @@ pelajaran:
           - "float(umur)"
         jawaban: 1
         penjelasan: "int(input()) mengubah hasil ketikan yang berupa tulisan menjadi angka bulat."
+      - soal: "Kamu mengetik Budi. Apa isi variabel nama setelah kode ini?\n\nnama = input()"
+        pilihan:
+          - "tulisan 'Budi'"
+          - "angka 0"
+          - "error"
+          - "kosong"
+        jawaban: 0
+        penjelasan: "input() menyimpan ketikanmu sebagai tulisan. Jadi isi nama adalah 'Budi'."
+      - soal: "Apa yang terjadi saat program sampai di baris ini?\n\nnama = input('Siapa namamu? ')"
+        pilihan:
+          - "Tulisan 'Siapa namamu? ' muncul, lalu program menunggu ketikan"
+          - "Program langsung selesai"
+          - "Program error"
+          - "Tidak ada yang muncul"
+        jawaban: 0
+        penjelasan: "Tulisan di dalam kurung input() muncul di layar dulu. Lalu program menunggu ketikanmu."
 
   - id: "2-4"
     judul: "Mengubah Tipe: int() & float()"
@@ -280,6 +328,100 @@ pelajaran:
           - "karena int() cuma bisa dipakai di input()"
         jawaban: 1
         penjelasan: "Tulisan '3.7' punya titik desimal. Pakai float('3.7') dulu, baru boleh diubah lagi."
+      - soal: "Berapa hasil float(5)?"
+        pilihan:
+          - "5"
+          - "5.0"
+          - "error"
+          - "'5'"
+        jawaban: 1
+        penjelasan: "float() menambahkan titik nol di belakangnya. Angka 5 jadi 5.0."
+      - soal: "Berapa hasil int(-3.7)?"
+        pilihan:
+          - "-4"
+          - "-3"
+          - "3"
+          - "error"
+        jawaban: 1
+        penjelasan: "int() membuang bagian desimal. -3.7 menjadi -3, bukan dibulatkan ke -4."
+
+  - id: "2-5"
+    judul: "Menukar Isi Dua Kotak"
+    menit: 7
+    materi: |
+      Punya dua gelas? Satu berisi susu, satu berisi jus. Kamu mau menukar isinya.
+      Gelas susu harus berisi jus. Gelas jus harus berisi susu.
+
+      Bisa? Tidak bisa langsung dituang. Kalau susu dituang ke gelas jus, isinya tercampur!
+
+      ## Butuh gelas ketiga
+
+      Caranya: siapkan gelas kosong ketiga. Tuang susu ke gelas kosong itu.
+      Sekarang gelas susu kosong. Tuang jus ke gelas susu.
+      Terakhir, tuang susu dari gelas ketiga ke gelas jus. Selesai!
+
+      ## Di Python sama saja
+
+      Variabel itu seperti gelas. Untuk menukar isi dua variabel, kita butuh
+      variabel ketiga. Namanya bebas, misalnya `temp`. Temp artinya sementara.
+
+      ```
+      temp = a
+      a = b
+      b = temp
+      ```
+
+      Baris pertama: isi a dipindah ke temp. Baris kedua: isi b dipindah ke a.
+      Baris ketiga: isi temp (yang tadinya milik a) dipindah ke b.
+      Sekarang isi a dan b bertukar!
+
+      Teknik ini dipakai di banyak program: mengurutkan angka, mengacak kartu,
+      sampai memutar lagu. Semua butuh menukar isi variabel.
+
+      Coba jalankan contohnya, lalu ganti angka a dan b. Lihat hasilnya bertukar!
+    contoh:
+      - kode: |
+          a = 5
+          b = 3
+          temp = a
+          a = b
+          b = temp
+          print(a, b)
+        penjelasan: "Isi a dan b bertukar: a jadi 3, b jadi 5. Temp menahannya sementara."
+      - kode: |
+          pulpen = 'biru'
+          pensil = 'merah'
+          temp = pulpen
+          pulpen = pensil
+          pensil = temp
+          print(pulpen, pensil)
+        penjelasan: "Isi pulpen dan pensil bertukar: pulpen jadi merah, pensil jadi biru."
+    kuis:
+      - soal: "Kode ini mencetak apa?\n\na = 4\nb = 9\ntemp = a\na = b\nb = temp\nprint(a, b)"
+        pilihan:
+          - "4 9"
+          - "9 4"
+          - "temp 4"
+          - "error"
+        jawaban: 1
+        penjelasan: "temp menahan 4. Lalu a diisi 9, b diisi 4. Jadi tercetak 9 4."
+      - soal: "Kenapa kita butuh variabel temp saat menukar?"
+        pilihan:
+          - "supaya program lebih panjang"
+          - "supaya isi a tidak hilang saat ditimpa isi b"
+          - "karena Python wajib memakainya"
+          - "supaya angkanya bertambah"
+        jawaban: 1
+        penjelasan: "Kalau a langsung diisi b, isi a yang lama hilang. Temp menyimpannya dulu."
+      - soal: "Kode ini mencetak apa?\n\nx = 1\ny = 2\ntemp = x\nx = y\ny = temp\nprint(x, y)"
+        pilihan:
+          - "1 2"
+          - "2 1"
+          - "1 1"
+          - "error"
+        jawaban: 1
+        penjelasan: "Isi x dan y bertukar: x jadi 2, y jadi 1. Tercetak 2 1."
+
 
 soal:
   - id: "s2-1"
@@ -469,3 +611,155 @@ soal:
       - "Baca tinggi dengan float(input()) supaya jadi angka desimal."
       - "Cetak isi variabelnya di baris pertama."
       - "int(t) membuang bagian desimal. Cetak di baris kedua."
+
+  - id: "s2-6"
+    judul: "Dua Angka Ajaib"
+    sulit: "sedang"
+    cerita: |
+      Di game kesukaan Kancil ada teka-teki angka ajaib. Dua angka
+      muncul di layar. Pemain harus menjumlahkannya untuk membuka pintu
+      harta karun. Angka pertama 3, angka kedua 5. Jumlahnya 8.
+      Bantuin Kancil: baca dua angka, lalu cetak jumlahnya. Cetak
+      dengan kata 'Jumlah:' lalu angka hasilnya.
+    input: "Dua baris: angka pertama (int), lalu angka kedua (int)."
+    output: "Satu baris: Jumlah: lalu hasil penjumlahan."
+    contoh:
+      - input: "3\n5"
+        output: "Jumlah: 8"
+      - input: "10\n20"
+        output: "Jumlah: 30"
+    tes:
+      - input: "3\n5"
+        output: "Jumlah: 8"
+      - input: "10\n20"
+        output: "Jumlah: 30"
+      - input: "0\n0"
+        output: "Jumlah: 0"
+      - input: "100\n250"
+        output: "Jumlah: 350"
+      - input: "7\n8"
+        output: "Jumlah: 15"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      print('Jumlah:', a + b)
+    petunjuk:
+      - "Baca dua angka dengan int(input())."
+      - "Simpan di variabel a dan b."
+      - "Cetak dengan print('Jumlah:', a + b)."
+
+  - id: "s2-7"
+    judul: "Ucapan Ulang Tahun"
+    sulit: "sulit"
+    cerita: |
+      Kancil membuat program kejutan ulang tahun. Program bertanya
+      nama dan umur. Lalu mencetak kalimat ucapan. Kalau Budi mengetik
+      umur 13, program bilang tahun depan umurnya 14. Hitung umur
+      tahun depan dengan menambah satu. Cetak kalimat lengkap: 'Halo
+      Budi! Tahun depan umurmu 14 tahun.' Baca nama dulu, lalu umur.
+      Cetak persis seperti contoh.
+    input: "Dua baris: nama (tulisan), lalu umur (int)."
+    output: "Satu baris: Halo <nama>! Tahun depan umurmu <umur+1> tahun."
+    contoh:
+      - input: "Budi\n13"
+        output: "Halo Budi! Tahun depan umurmu 14 tahun."
+      - input: "Siti\n12"
+        output: "Halo Siti! Tahun depan umurmu 13 tahun."
+    tes:
+      - input: "Budi\n13"
+        output: "Halo Budi! Tahun depan umurmu 14 tahun."
+      - input: "Siti\n12"
+        output: "Halo Siti! Tahun depan umurmu 13 tahun."
+      - input: "Kancil\n15"
+        output: "Halo Kancil! Tahun depan umurmu 16 tahun."
+      - input: "Rina\n10"
+        output: "Halo Rina! Tahun depan umurmu 11 tahun."
+      - input: "Andi\n14"
+        output: "Halo Andi! Tahun depan umurmu 15 tahun."
+    solusi: |
+      nama = input()
+      umur = int(input())
+      print('Halo', nama + '!', 'Tahun depan umurmu', umur + 1, 'tahun.')
+    petunjuk:
+      - "Baca nama dengan input(). Baca umur dengan int(input())."
+      - "Umur tahun depan = umur + 1."
+      - "Cetak dengan koma: print('Halo', nama + '!', 'Tahun depan umurmu', umur + 1, 'tahun.')."
+  - id: "s2-8"
+    judul: "Sisa Uang Saku"
+    sulit: "sedang"
+    cerita: |
+      Kancil menerima uang saku dari Ibu. Hari ini dia
+      membeli jajan di kantin. Dia ingin tahu sisa uangnya.
+      Program membaca uang saku lalu harga jajan. Lalu
+      mencetak tiga baris: uang saku, harga jajan, dan
+      sisa uang. Sisa dihitung dengan mengurangkan harga
+      jajan dari uang saku. Bantuin Kancil, ya!
+    input: "Dua baris: uang saku (int), lalu harga jajan (int)."
+    output: "Tiga baris: Uang saku: <uang>, Harga jajan: <harga>, Sisa: <sisa>."
+    contoh:
+      - input: "10000\n3500"
+        output: "Uang saku: 10000\nHarga jajan: 3500\nSisa: 6500"
+      - input: "5000\n5000"
+        output: "Uang saku: 5000\nHarga jajan: 5000\nSisa: 0"
+    tes:
+      - input: "10000\n3500"
+        output: "Uang saku: 10000\nHarga jajan: 3500\nSisa: 6500"
+      - input: "5000\n5000"
+        output: "Uang saku: 5000\nHarga jajan: 5000\nSisa: 0"
+      - input: "15000\n12300"
+        output: "Uang saku: 15000\nHarga jajan: 12300\nSisa: 2700"
+      - input: "2000\n1500"
+        output: "Uang saku: 2000\nHarga jajan: 1500\nSisa: 500"
+      - input: "8000\n250"
+        output: "Uang saku: 8000\nHarga jajan: 250\nSisa: 7750"
+    solusi: |
+      u = int(input())
+      h = int(input())
+      print('Uang saku:', u)
+      print('Harga jajan:', h)
+      print('Sisa:', u - h)
+    petunjuk:
+      - "Baca dua angka dengan int(input()). Simpan di variabel u dan h."
+      - "Sisa = u dikurangi h."
+      - "Cetak tiga baris berurutan, persis seperti contoh."
+  - id: "s2-9"
+    judul: "Rekap Jajan Tiga Hari"
+    sulit: "sulit"
+    cerita: |
+      Kancil mencatat uang jajannya selama tiga hari:
+      Senin, Selasa, dan Rabu. Ibu ingin melihat rekapnya.
+      Program membaca tiga angka berurutan. Lalu mencetak
+      empat baris: uang Senin, uang Selasa, uang Rabu,
+      dan total ketiganya. Total dihitung dengan
+      menjumlahkan ketiga angka. Bantuin Kancil membuat
+      rekapnya!
+    input: "Tiga baris: uang Senin (int), uang Selasa (int), uang Rabu (int)."
+    output: "Empat baris: Senin: <a>, Selasa: <b>, Rabu: <c>, Total: <a+b+c>."
+    contoh:
+      - input: "3000\n4000\n5000"
+        output: "Senin: 3000\nSelasa: 4000\nRabu: 5000\nTotal: 12000"
+      - input: "1000\n1000\n1000"
+        output: "Senin: 1000\nSelasa: 1000\nRabu: 1000\nTotal: 3000"
+    tes:
+      - input: "3000\n4000\n5000"
+        output: "Senin: 3000\nSelasa: 4000\nRabu: 5000\nTotal: 12000"
+      - input: "1000\n1000\n1000"
+        output: "Senin: 1000\nSelasa: 1000\nRabu: 1000\nTotal: 3000"
+      - input: "5000\n0\n5000"
+        output: "Senin: 5000\nSelasa: 0\nRabu: 5000\nTotal: 10000"
+      - input: "2500\n2500\n2500"
+        output: "Senin: 2500\nSelasa: 2500\nRabu: 2500\nTotal: 7500"
+      - input: "999\n1\n0"
+        output: "Senin: 999\nSelasa: 1\nRabu: 0\nTotal: 1000"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      print('Senin:', a)
+      print('Selasa:', b)
+      print('Rabu:', c)
+      print('Total:', a + b + c)
+    petunjuk:
+      - "Baca tiga angka dengan int(input()). Simpan di a, b, c."
+      - "Total = a + b + c."
+      - "Cetak empat baris berurutan. Baris terakhir memakai total."

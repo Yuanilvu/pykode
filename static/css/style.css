@@ -262,11 +262,50 @@ textarea.stdin { width: 100%; min-height: 70px; border: 1px solid var(--border);
 }
 
 /* ---------- Responsive ---------- */
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrap table { min-width: 100%; }
+.table-wrap th, .table-wrap td { white-space: nowrap; }
+
+@media (max-width: 768px) {
+  .container { padding: 14px 12px 60px; }
+  .hero h1 { font-size: 1.35rem; }
+  .hero .rank-big { font-size: 2rem; }
+  .stat-box { min-width: 72px; padding: 8px 12px; }
+  .badge-grid { grid-template-columns: repeat(2, 1fr); }
+  .materi { font-size: .97rem; }
+  .materi pre.block-code { font-size: .82rem; padding: 12px; }
+  .btn { min-height: 44px; }
+  .btn-sm { min-height: 36px; }
+}
+
 @media (max-width: 640px) {
   .topnav { padding: 8px 12px; gap: 8px; }
+  .logo { font-size: 1.15rem; }
+  .navlinks { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap;
+              padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .navlinks a { padding: 6px 10px; font-size: .85rem; white-space: nowrap; }
   .navuser { width: 100%; justify-content: flex-end; }
-  .hero { padding: 18px; }
+  .hero { padding: 18px; flex-direction: column; align-items: flex-start; }
   .bab-grid { grid-template-columns: 1fr; }
-  .editor-wrap .CodeMirror { height: 220px; }
+  .editor-wrap .CodeMirror { height: 220px; font-size: 13px; }
+  .editor-wrap.short .CodeMirror { height: 130px; }
   .lesson-nav .btn { flex: 1; text-align: center; }
+  .result-row { flex-direction: column; gap: 4px; }
+  .result-row .tag { min-width: 0; }
+  .form-field input { font-size: 16px; }
+  .quiz-opt { padding: 12px 12px; }
+  .auth-card { margin: 20px auto; }
+  .lesson-title { font-size: 1.25rem; }
+  .drill-card { padding: 12px 14px; gap: 10px; }
+  .drill-card .d-emoji { font-size: 1.4rem; }
+  .example-box pre { font-size: .8rem; }
+  .output-box { font-size: .82rem; }
+  .toast { width: 92vw; max-width: none; }
+  .editor-foot .btn { flex: 1; min-height: 44px; }
+  .section-title { font-size: 1rem; }
 }
+
+/* Kartu target harian */
+.goal-card { border-left: 4px solid var(--success); }
+.goal-item { font-weight: 700; padding: 4px 10px; border-radius: 999px; background: #f1f5f9; color: var(--muted); }
+.goal-done { background: #dcfce7; color: #166534; }

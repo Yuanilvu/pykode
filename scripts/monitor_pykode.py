@@ -9,12 +9,14 @@ Dipanggil cron tiap hari 18:00 (via Hermes cron, no_agent):
 Topic ntfy: pykodeYuan. Ganti di konstanta kalau mau.
 """
 import os
+import random
 import sys
 import urllib.request
 from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+import curriculum  # noqa: E402
 import db  # noqa: E402
 
 NTFY_TOPIC = "pykodeYuan"
@@ -66,6 +68,59 @@ def digest_mingguan(data):
     send_ntfy("📊 Ringkasan mingguan PyKode", "\n".join(lines))
 
 
+def weekly_challenge_create(today):
+    """Senin: buat Tantangan Mingguan (3 soal mudah + 2 sedang, deterministik per minggu)."""
+    if db.get_active_challenge():
+        return  # sudah ada tantangan aktif
+    mudah = [s["id"] for b in curriculum.get_babs() for s in (b.get("soal") or [])
+             if s.get("sulit") == "mudah"]
+    sedang = [s["id"] for b in curriculum.get_babs() for s in (b.get("soal") or [])
+              if s.get("sulit") == "sedang"]
+    if len(mudah) < 3 or len(sedang) < 2:
+        return
+    rng = random.Random(today.isoformat())  # seed -> pilihan stabil sepanjang minggu
+    picked = rng.sample(mudah, 3) + rng.sample(sedang, 2)
+    db.create_weekly_challenge(today.isoformat(), picked)
+    send_ntfy("🏆 Tantangan Mingguan dimulai!",
+              "5 soal baru sudah keluar (3 mudah + 2 sedang). Siapa paling banyak "
+              "selesai paling cepat jadi Juara Minggu Ini! Buka PyKode → Tantangan.",
+              priority="default")
+
+
+def weekly_challenge_finalize(today):
+    """Minggu: tutup tantangan, umumkan juara, beri bonus XP."""
+    chal = db.get_active_challenge()
+    if not chal:
+        return
+    db.close_challenge(chal["id"])
+    solves = db.challenge_solves(chal["id"])
+    agg = {}
+    for s in solves:
+        a = agg.setdefault(s["user_id"], {"solved": 0, "first": None})
+        a["solved"] += 1
+        if a["first"] is None or s["solved_at"] < a["first"]:
+            a["first"] = s["solved_at"]
+    if not agg:
+        send_ntfy("🏆 Tantangan mingguan berakhir",
+                  "Sayangnya minggu ini tidak ada yang mengikuti tantangan. "
+                  "Tantangan baru muncul Senin — ayo coba lagi!", priority="default")
+        return
+    ranked = sorted(agg.items(), key=lambda kv: (-kv[1]["solved"], kv[1]["first"] or "9999"))
+    winner_id, winner_a = ranked[0]
+    winner = db.get_user(winner_id)
+    lines = [f"🏆 Juara Tantangan Mingguan: {winner['username']} "
+             f"({winner_a['solved']} soal)! +20 XP"]
+    for uid, a in ranked:
+        u = db.get_user(uid)
+        if not u:
+            continue
+        bonus = 20 if uid == winner_id else 5
+        db.add_xp(uid, bonus)
+        medal = "🥇" if uid == winner_id else "👏"
+        lines.append(f"{medal} {u['username']}: {a['solved']} soal (+{bonus} XP)")
+    send_ntfy("🏆 Hasil Tantangan Mingguan", "\n".join(lines), priority="default")
+
+
 def main():
     if "--test" in sys.argv:
         send_ntfy("🧪 Tes PyKode Monitor",
@@ -76,7 +131,11 @@ def main():
         return
     data = db.monitor_data()
     alert_frustrasi(data)
-    if date.today().weekday() == 6:  # Minggu
+    today = date.today()
+    if today.weekday() == 0:  # Senin
+        weekly_challenge_create(today)
+    if today.weekday() == 6:  # Minggu
+        weekly_challenge_finalize(today)
         digest_mingguan(data)
     print("monitor selesai")
 

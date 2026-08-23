@@ -1419,3 +1419,773 @@ drill:
       Kalau panjangnya sama, urutan aslinya tetap — itu namanya stable sort.
       Terakhir gabungkan dengan ' '.join(urut) supaya kata-kata tercetak satu baris dipisah spasi.
       Contoh: 'kancil suka makan' → panjang 6, 4, 5 → urut jadi suka, makan, kancil.
+
+  - id: "d30"
+    judul: "Segitiga Kanan"
+    emoji: "📐"
+    tema: "Pola Bintang"
+    tingkat: 5
+    cerita: |
+      Kancil menggambar segitiga dari bintang di buku catatan.
+      Kali ini bintangnya rapat ke kanan!
+      Baris 1 berisi 1 bintang di posisi paling kanan.
+      Baris 2 berisi 2 bintang, dan seterusnya.
+      Baca angka n.
+      Cetak n baris segitiga.
+      Baris ke-i: spasi dulu, lalu i bintang.
+    input: "Satu baris: angka n."
+    output: "n baris: baris ke-i punya n-i spasi, lalu i bintang."
+    contoh:
+      - input: "3"
+        output: "  *\n **\n***"
+      - input: "1"
+        output: "*"
+    tes:
+      - input: "3"
+        output: "  *\n **\n***"
+      - input: "1"
+        output: "*"
+      - input: "2"
+        output: " *\n**"
+      - input: "4"
+        output: "   *\n  **\n ***\n****"
+      - input: "5"
+        output: "    *\n   **\n  ***\n ****\n*****"
+      - input: "6"
+        output: "     *\n    **\n   ***\n  ****\n *****\n******"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print(' ' * (n - i) + '*' * i)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Segitiga ini punya n baris, dan bintangnya rapat ke kanan.
+      Untuk baris ke-i, kita butuh spasi dulu baru bintang.
+      Spasi di kiri sebanyak n - i. Makin ke bawah, makin sedikit.
+      Bintang sebanyak i. Baris terakhir penuh bintang tanpa spasi.
+      Pakai for dengan range(1, n + 1) supaya i berjalan dari 1 sampai n.
+      Cetak dengan print(' ' * (n - i) + '*' * i).
+      Tanda kali pada teks mengulang teks: ' ' * 2 membuat dua spasi.
+      Untuk n = 4: baris 1 = 3 spasi + 1 bintang, baris 2 = 2 spasi + 2 bintang,
+      baris 3 = 1 spasi + 3 bintang, baris 4 = 0 spasi + 4 bintang.
+      Hasilnya segitiga yang rapi ke kanan.
+
+  - id: "d31"
+    judul: "Kotak Bintang Ajaib"
+    emoji: "⬜"
+    tema: "Pola Bintang"
+    tingkat: 5
+    cerita: |
+      Kancil ingin membuat bingkai foto dari bintang.
+      Bingkainya berbentuk kotak.
+      Tepi kotak penuh bintang, bagian dalam kosong.
+      Baca angka n.
+      Cetak kotak n kali n.
+      Baris tepi semua bintang.
+      Baris tengah: bintang di kiri dan kanan, spasi di tengah.
+    input: "Satu baris: angka n."
+    output: "n baris kotak: tepi penuh bintang, dalamnya spasi."
+    contoh:
+      - input: "3"
+        output: "***\n* *\n***"
+      - input: "1"
+        output: "*"
+    tes:
+      - input: "3"
+        output: "***\n* *\n***"
+      - input: "1"
+        output: "*"
+      - input: "2"
+        output: "**\n**"
+      - input: "4"
+        output: "****\n*  *\n*  *\n****"
+      - input: "5"
+        output: "*****\n*   *\n*   *\n*   *\n*****"
+      - input: "6"
+        output: "******\n*    *\n*    *\n*    *\n*    *\n******"
+    solusi: |
+      n = int(input())
+      for i in range(n):
+          if i == 0 or i == n - 1:
+              print('*' * n)
+          else:
+              print('*' + ' ' * (n - 2) + '*')
+    penjelasan: |
+      Baca n dengan int(input()).
+      Kotak punya n baris, dan tiap baris berisi n karakter.
+      Baris pertama dan baris terakhir penuh bintang.
+      Baris di tengah: bintang di kiri, spasi di tengah, bintang di kanan.
+      Pakai for dengan range(n) supaya i berjalan dari 0 sampai n - 1.
+      Di dalam loop, cek dengan if apakah i baris tepi.
+      Kalau i == 0 atau i == n - 1, cetak '*' * n.
+      Kalau bukan, cetak '*' + ' ' * (n - 2) + '*'.
+      Tanda plus menggabungkan teks: bintang, spasi, bintang.
+      Spasi di tengah sebanyak n - 2.
+      Untuk n = 4: baris 1 '****', baris 2 '*  *', baris 3 '*  *', baris 4 '****'.
+      Kalau n = 1, baris itu satu-satunya, jadi cukup satu bintang.
+
+  - id: "d32"
+    judul: "Cari Posisi Angka"
+    emoji: "🔍"
+    tema: "List"
+    tingkat: 6
+    cerita: |
+      Kancil menyimpan angka mainannya di dalam list.
+      Sekarang dia lupa angka itu ada di posisi berapa.
+      Baca banyak angka n, lalu n angka.
+      Lalu baca satu angka yang dicari.
+      Cetak posisinya dalam list.
+      Kalau tidak ketemu, cetak -1.
+      Posisi pertama dihitung mulai 0.
+    input: "Baris 1: n. n baris berikutnya: angka. Baris terakhir: angka yang dicari."
+    output: "Satu baris: posisi angka, atau -1 kalau tidak ketemu."
+    contoh:
+      - input: "4\n3\n7\n1\n9\n7"
+        output: "1"
+      - input: "3\n5\n6\n7\n8"
+        output: "-1"
+    tes:
+      - input: "4\n3\n7\n1\n9\n7"
+        output: "1"
+      - input: "3\n5\n6\n7\n8"
+        output: "-1"
+      - input: "1\n4\n4"
+        output: "0"
+      - input: "5\n2\n4\n6\n8\n10\n5"
+        output: "-1"
+      - input: "3\n10\n20\n30\n20"
+        output: "1"
+      - input: "2\n7\n9\n9"
+        output: "1"
+    solusi: |
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      cari = int(input())
+      pos = -1
+      for i in range(n):
+          if angka[i] == cari:
+              pos = i
+              break
+      print(pos)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Buat list kosong bernama angka.
+      Ulangi n kali: baca satu angka dengan int(input()) lalu simpan dengan angka.append(...).
+      Setelah semua angka masuk, baca angka yang dicari dengan int(input()).
+      Siapkan variabel pos dengan nilai -1. Nilai ini dipakai kalau tidak ketemu.
+      Loop pakai index: for i in range(n).
+      Setiap putaran, cek apakah angka[i] sama dengan cari.
+      Kalau sama, simpan i ke pos lalu hentikan loop dengan break.
+      Break menghentikan loop lebih awal karena sudah ketemu.
+      Kalau tidak pernah ketemu, pos tetap -1.
+      Terakhir cetak pos dengan print(pos).
+      Contoh: angka [3, 7, 1, 9] dan cari 7. Di index 1 ketemu, jadi cetak 1.
+      Kalau cari 5, tidak ketemu, jadi cetak -1.
+
+  - id: "d33"
+    judul: "Hitung Bilangan Genap"
+    emoji: "🧮"
+    tema: "List"
+    tingkat: 6
+    cerita: |
+      Kancil membagi kelerengnya ke dalam dua kotak.
+      Kotak pertama untuk kelereng bernomor genap.
+      Baca banyak kelereng n, lalu n nomor.
+      Hitung ada berapa nomor genap.
+      Cetak banyaknya.
+      Bilangan genap habis dibagi 2.
+    input: "Baris 1: n. n baris berikutnya: nomor."
+    output: "Satu baris: banyaknya nomor genap."
+    contoh:
+      - input: "5\n2\n3\n4\n5\n6"
+        output: "3"
+      - input: "3\n1\n3\n5"
+        output: "0"
+    tes:
+      - input: "5\n2\n3\n4\n5\n6"
+        output: "3"
+      - input: "3\n1\n3\n5"
+        output: "0"
+      - input: "1\n8"
+        output: "1"
+      - input: "4\n7\n7\n7\n7"
+        output: "0"
+      - input: "6\n1\n2\n3\n4\n5\n6"
+        output: "3"
+      - input: "2\n10\n12"
+        output: "2"
+    solusi: |
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      hitung = 0
+      for a in angka:
+          if a % 2 == 0:
+              hitung = hitung + 1
+      print(hitung)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Buat list kosong bernama angka.
+      Ulangi n kali: baca satu nomor dengan int(input()) lalu simpan dengan angka.append(...).
+      Siapkan variabel hitung mulai dari 0. Ini penampung banyaknya genap.
+      Loop seluruh list: for a in angka.
+      Setiap anggota a diperiksa dengan if a % 2 == 0.
+      Tanda % memberi sisa bagi. Kalau sisa baginya 0, berarti genap.
+      Kalau genap, tambahkan 1 ke hitung.
+      Setelah loop selesai, hitung berisi banyaknya nomor genap.
+      Cetak dengan print(hitung).
+      Contoh: nomor 2, 3, 4, 5, 6. Yang genap 2, 4, 6. Jadi cetak 3.
+      Kalau semua nomor ganjil, hitung tetap 0.
+
+  - id: "d34"
+    judul: "Juara Kelas"
+    emoji: "🏅"
+    tema: "Dict"
+    tingkat: 7
+    cerita: |
+      Bu Guru mencatat nilai ulangan semua anak.
+      Kancil ingin tahu siapa juara kelas.
+      Juara adalah anak dengan nilai tertinggi.
+      Baca banyak anak n, lalu n baris: nama dan nilai.
+      Cetak nama anak dengan nilai tertinggi.
+    input: "Baris 1: n. n baris berikutnya: nama dan nilai, dipisah spasi."
+    output: "Satu baris: nama anak dengan nilai tertinggi."
+    contoh:
+      - input: "3\nBudi 80\nSari 95\nTono 70"
+        output: "Sari"
+      - input: "2\nRina 88\nAyu 92"
+        output: "Ayu"
+    tes:
+      - input: "3\nBudi 80\nSari 95\nTono 70"
+        output: "Sari"
+      - input: "2\nRina 88\nAyu 92"
+        output: "Ayu"
+      - input: "1\nMila 100"
+        output: "Mila"
+      - input: "4\nA 50\nB 60\nC 70\nD 65"
+        output: "C"
+      - input: "3\nX 10\nY 90\nZ 80"
+        output: "Y"
+      - input: "2\nKiki 75\nLala 75"
+        output: "Kiki"
+    solusi: |
+      n = int(input())
+      nilai = {}
+      for i in range(n):
+          baris = input().split()
+          nilai[baris[0]] = int(baris[1])
+      terbaik = ''
+      tertinggi = -1
+      for nama in nilai:
+          if nilai[nama] > tertinggi:
+              tertinggi = nilai[nama]
+              terbaik = nama
+      print(terbaik)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Buat dictionary kosong bernama nilai.
+      Ulangi n kali: baca satu baris dan pecah dengan split().
+      Bagian pertama baris[0] adalah nama, bagian kedua baris[1] adalah nilai.
+      Simpan ke dict: nilai[baris[0]] = int(baris[1]).
+      Sekarang setiap nama terhubung ke nilainya.
+      Siapkan terbaik kosong dan tertinggi -1.
+      Loop seluruh dict: for nama in nilai.
+      Kalau nilai[nama] lebih besar dari tertinggi, ganti tertinggi dan simpan nama ke terbaik.
+      Dengan begitu, nama dengan nilai tertinggi selalu tersimpan.
+      Contoh: Budi 80, Sari 95, Tono 70. Sari 95 paling tinggi, jadi cetak Sari.
+      Kalau nilai sama, yang pertama yang menang.
+
+  - id: "d35"
+    judul: "Fungsi Luas Persegi Panjang"
+    emoji: "📏"
+    tema: "Fungsi"
+    tingkat: 8
+    cerita: |
+      Kancil ingin membuat fungsi sendiri untuk menghitung luas.
+      Luas persegi panjang = panjang kali lebar.
+      Buat fungsi bernama luas.
+      Fungsi itu menerima panjang dan lebar.
+      Lalu mengembalikan hasil kalinya.
+      Baca panjang dan lebar.
+      Cetak 'Luas: <hasil>'.
+    input: "Dua baris: panjang, lalu lebar."
+    output: "Satu baris: Luas: <panjang kali lebar>."
+    contoh:
+      - input: "5\n3"
+        output: "Luas: 15"
+      - input: "4\n4"
+        output: "Luas: 16"
+    tes:
+      - input: "5\n3"
+        output: "Luas: 15"
+      - input: "4\n4"
+        output: "Luas: 16"
+      - input: "10\n2"
+        output: "Luas: 20"
+      - input: "7\n0"
+        output: "Luas: 0"
+      - input: "6\n5"
+        output: "Luas: 30"
+      - input: "1\n1"
+        output: "Luas: 1"
+    solusi: |
+      def luas(p, l):
+          return p * l
+
+      p = int(input())
+      l = int(input())
+      print('Luas:', luas(p, l))
+    penjelasan: |
+      Buat fungsi dengan def luas(p, l):.
+      Nama fungsi luas, dan p dan l adalah parameternya.
+      Parameter adalah nilai yang masuk saat fungsi dipanggil.
+      Di dalam fungsi, hitung p * l lalu kembalikan dengan return.
+      Return mengirim hasil keluar dari fungsi.
+      Di bagian utama, baca panjang dengan int(input()).
+      Lalu baca lebar dengan int(input()).
+      Panggil fungsi dengan print('Luas:', luas(p, l)).
+      Saat luas(p, l) dipanggil, nilai p dan l masuk ke parameter.
+      Fungsi menghitung lalu return mengirim hasilnya ke print.
+      Contoh: panjang 5 dan lebar 3, maka 5 * 3 = 15, cetak 'Luas: 15'.
+      Fungsi membuat kode rapi dan bisa dipakai berkali-kali.
+  - id: "d36"
+    judul: "Jumlah Deret"
+    emoji: "🔢"
+    tema: "Deret Angka"
+    tingkat: 3
+    cerita: |
+      Kancil iseng menjumlahkan angka dari 1 sampai n.
+      Satu per satu, lama sekali!
+      Kamu bantu dia pakai cara pintar.
+      Deret 1 sampai n punya rumus rahasia.
+      Jumlahnya n dikali (n + 1), lalu dibagi 2.
+      Baca satu angka n.
+      Hitung jumlahnya dengan rumus itu.
+      Cetak hasilnya.
+    input: "Satu baris: angka n."
+    output: "Satu baris: Jumlah: <hasil penjumlahan>."
+    contoh:
+      - input: "5"
+        output: "Jumlah: 15"
+      - input: "3"
+        output: "Jumlah: 6"
+    tes:
+      - input: "5"
+        output: "Jumlah: 15"
+      - input: "3"
+        output: "Jumlah: 6"
+      - input: "1"
+        output: "Jumlah: 1"
+      - input: "10"
+        output: "Jumlah: 55"
+      - input: "2"
+        output: "Jumlah: 3"
+      - input: "100"
+        output: "Jumlah: 5050"
+    solusi: |
+      n = int(input())
+      jumlah = int(n * (n + 1) / 2)
+      print('Jumlah:', jumlah)
+    penjelasan: |
+      Baca n dengan int(input()) supaya berbentuk angka.
+      Deret 1 sampai n jumlahnya memakai rumus: n dikali (n + 1), dibagi 2.
+      Tulis n * (n + 1) / 2 dalam kode.
+      Hasil baginya berbentuk angka desimal, misalnya 15.0.
+      Bungkus dengan int() supaya menjadi angka bulat 15.
+      Lalu cetak dengan print('Jumlah:', jumlah).
+      Contoh: n = 5, maka 5 * 6 / 2 = 15, jadi cetak 'Jumlah: 15'.
+      Rumus ini jauh lebih cepat daripada menjumlah satu per satu!
+
+  - id: "d37"
+    judul: "Jumlah Deret Genap"
+    emoji: "➕"
+    tema: "Deret Angka"
+    tingkat: 3
+    cerita: |
+      Kancil menghitung bilangan genap: 2, 4, 6, 8.
+      Dia ingin tahu jumlah semuanya sampai n.
+      Banyaknya bilangan genap sampai n adalah n dibagi 2.
+      Kalau banyaknya k, jumlahnya k dikali (k + 1).
+      Kamu bantu dia menghitung!
+      Baca n yang selalu genap.
+      Cetak jumlah bilangan genapnya.
+    input: "Satu baris: n (selalu genap)."
+    output: "Satu baris: Jumlah: <hasil>."
+    contoh:
+      - input: "6"
+        output: "Jumlah: 12"
+      - input: "4"
+        output: "Jumlah: 6"
+    tes:
+      - input: "6"
+        output: "Jumlah: 12"
+      - input: "4"
+        output: "Jumlah: 6"
+      - input: "10"
+        output: "Jumlah: 30"
+      - input: "2"
+        output: "Jumlah: 2"
+      - input: "8"
+        output: "Jumlah: 20"
+      - input: "12"
+        output: "Jumlah: 42"
+    solusi: |
+      n = int(input())
+      k = int(n / 2)
+      jumlah = k * (k + 1)
+      print('Jumlah:', jumlah)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Bilangan genap dari 2 sampai n banyaknya k = n dibagi 2.
+      Contoh: sampai 6 ada 3 bilangan genap: 2, 4, 6.
+      Jumlah deret genap memakai rumus: k dikali (k + 1).
+      Hitung k dulu dengan int(n / 2).
+      Lalu hitung jumlah = k * (k + 1).
+      Cetak dengan print('Jumlah:', jumlah).
+      Contoh: n = 6, k = 3, maka 3 * 4 = 12. Benar, 2 + 4 + 6 = 12.
+
+  - id: "d38"
+    judul: "Panjang Namaku"
+    emoji: "🏷️"
+    tema: "String"
+    tingkat: 3
+    cerita: |
+      OSIS membuat lencana nama untuk semua anggota.
+      Setiap lencana berisi nama dan banyak hurufnya.
+      Kamu bantu Kancil membuat programnya!
+      Baca nama dulu.
+      Hitung panjang nama dengan len().
+      Cetak kalimat lengkap seperti contoh.
+      Hasilnya harus persis sama.
+    input: "Satu baris: nama."
+    output: "Satu baris: Nama <nama> punya <jumlah huruf> huruf."
+    contoh:
+      - input: "Budi"
+        output: "Nama Budi punya 4 huruf."
+      - input: "Kancil"
+        output: "Nama Kancil punya 6 huruf."
+    tes:
+      - input: "Budi"
+        output: "Nama Budi punya 4 huruf."
+      - input: "Kancil"
+        output: "Nama Kancil punya 6 huruf."
+      - input: "Sari"
+        output: "Nama Sari punya 4 huruf."
+      - input: "Ayu"
+        output: "Nama Ayu punya 3 huruf."
+      - input: "Bagas"
+        output: "Nama Bagas punya 5 huruf."
+      - input: "Mila"
+        output: "Nama Mila punya 4 huruf."
+    solusi: |
+      nama = input()
+      print('Nama', nama, 'punya', len(nama), 'huruf.')
+    penjelasan: |
+      Baca nama dengan input() dan simpan ke variabel nama.
+      Nama tetap berbentuk teks, tidak perlu diubah jadi angka.
+      len(nama) menghitung banyak huruf di nama itu.
+      Contoh: len('Budi') hasilnya 4.
+      Cetak dengan print dan pisahkan bagian-bagiannya dengan koma.
+      Python menaruh satu spasi di antara bagian yang dipisah koma.
+      Jadi hasilnya 'Nama Budi punya 4 huruf.' persis seperti contoh.
+
+  - id: "d39"
+    judul: "Sapaan Nyaring"
+    emoji: "📢"
+    tema: "String"
+    tingkat: 3
+    cerita: |
+      OSIS mengadakan acara penyambutan siswa baru.
+      Kancil membuat program sapaan yang nyaring!
+      Semua huruf harus besar semua.
+      Kamu bantu dia!
+      Baca nama.
+      Ubah nama jadi huruf besar dengan upper().
+      Cetak sapaan lengkapnya.
+    input: "Satu baris: nama."
+    output: "Satu baris: HALO, <NAMA>!"
+    contoh:
+      - input: "Budi"
+        output: "HALO, BUDI!"
+      - input: "Sari"
+        output: "HALO, SARI!"
+    tes:
+      - input: "Budi"
+        output: "HALO, BUDI!"
+      - input: "Sari"
+        output: "HALO, SARI!"
+      - input: "Kancil"
+        output: "HALO, KANCIL!"
+      - input: "Ayu"
+        output: "HALO, AYU!"
+      - input: "Tono"
+        output: "HALO, TONO!"
+      - input: "Rina"
+        output: "HALO, RINA!"
+    solusi: |
+      nama = input()
+      print('HALO, ' + nama.upper() + '!')
+    penjelasan: |
+      Baca nama dengan input().
+      nama.upper() mengubah semua huruf menjadi besar.
+      Contoh: 'budi'.upper() menjadi 'BUDI'.
+      Gabungkan teks dengan tanda plus: 'HALO, ' + nama.upper() + '!'.
+      Tanda plus merangkai teks menjadi satu kalimat panjang.
+      Perhatikan koma dan tanda serunya, harus persis seperti contoh.
+      Kalau nama 'Kancil', hasilnya 'HALO, KANCIL!'.
+
+  - id: "d40"
+    judul: "Cek Kelipatan"
+    emoji: "🎯"
+    tema: "Logika Kondisi"
+    tingkat: 4
+    cerita: |
+      Kancil belajar perkalian di kelas.
+      Dia ingin tahu apakah satu angka kelipatan angka lain.
+      Angka 12 kelipatan 4, karena 12 habis dibagi 4.
+      Sisa baginya nol!
+      Kamu bantu dia.
+      Baca dua angka.
+      Cek sisa baginya.
+      Cetak hasilnya.
+    input: "Dua baris: angka pertama, lalu angka kedua."
+    output: "Satu baris: Kelipatan atau Bukan kelipatan."
+    contoh:
+      - input: "12\n4"
+        output: "Kelipatan"
+      - input: "10\n3"
+        output: "Bukan kelipatan"
+    tes:
+      - input: "12\n4"
+        output: "Kelipatan"
+      - input: "10\n3"
+        output: "Bukan kelipatan"
+      - input: "10\n5"
+        output: "Kelipatan"
+      - input: "7\n2"
+        output: "Bukan kelipatan"
+      - input: "100\n10"
+        output: "Kelipatan"
+      - input: "15\n4"
+        output: "Bukan kelipatan"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      if a % b == 0:
+          print('Kelipatan')
+      else:
+          print('Bukan kelipatan')
+    penjelasan: |
+      Baca dua angka dengan int(input()) dan simpan ke a dan b.
+      Tanda % memberi sisa bagi.
+      Kalau a habis dibagi b, sisa baginya nol.
+      Tulis syaratnya: a % b == 0.
+      Kalau syarat benar, cetak 'Kelipatan'.
+      Kalau salah, else mencetak 'Bukan kelipatan'.
+      Contoh: 12 % 4 = 0, jadi 12 kelipatan 4.
+      Sedangkan 10 % 3 = 1, jadi 10 bukan kelipatan 3.
+
+  - id: "d41"
+    judul: "Total Nilai"
+    emoji: "🧾"
+    tema: "Perulangan"
+    tingkat: 5
+    cerita: |
+      Bu Guru mengetik nilai ulangan ke komputer.
+      Kancil mau menjumlahkan semuanya dengan cepat.
+      Kamu bantu dia!
+      Baca banyak nilai n.
+      Lalu baca n nilai satu per satu.
+      Jumlahkan semuanya.
+      Cetak totalnya.
+    input: "Baris 1: n. n baris berikutnya: nilai."
+    output: "Satu baris: Total: <jumlah nilai>."
+    contoh:
+      - input: "3\n10\n20\n30"
+        output: "Total: 60"
+      - input: "2\n5\n7"
+        output: "Total: 12"
+    tes:
+      - input: "3\n10\n20\n30"
+        output: "Total: 60"
+      - input: "2\n5\n7"
+        output: "Total: 12"
+      - input: "1\n100"
+        output: "Total: 100"
+      - input: "4\n1\n2\n3\n4"
+        output: "Total: 10"
+      - input: "3\n50\n50\n50"
+        output: "Total: 150"
+      - input: "5\n7\n8\n9\n10\n11"
+        output: "Total: 45"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          total = total + int(input())
+      print('Total:', total)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Siapkan variabel total mulai dari 0. Ini penampung jumlah.
+      Pakai for i in range(n) supaya membaca tepat n kali.
+      Setiap putaran, baca satu nilai dan tambahkan ke total.
+      total = total + int(input()) menjumlahkan nilai baru ke total lama.
+      Setelah loop selesai, total berisi jumlah semua nilai.
+      Cetak dengan print('Total:', total).
+      Contoh: nilai 10, 20, 30. Total jadi 10, lalu 30, lalu 60.
+
+  - id: "d42"
+    judul: "Jumlah Digit"
+    emoji: "🔐"
+    tema: "Kombinasi"
+    tingkat: 6
+    cerita: |
+      Kancil menemukan brankas tua di rumah.
+      Kodenya berupa angka.
+      Kunci brankasnya adalah jumlah semua digitnya!
+      Contoh: kode 123, jumlahnya 1 + 2 + 3 = 6.
+      Kamu bantu Kancil membuka brankas.
+      Baca satu angka.
+      Jelajahi tiap digitnya.
+      Jumlahkan semua digit.
+      Cetak hasilnya.
+    input: "Satu baris: angka."
+    output: "Satu baris: Jumlah: <jumlah digit>."
+    contoh:
+      - input: "123"
+        output: "Jumlah: 6"
+      - input: "999"
+        output: "Jumlah: 27"
+    tes:
+      - input: "123"
+        output: "Jumlah: 6"
+      - input: "999"
+        output: "Jumlah: 27"
+      - input: "5"
+        output: "Jumlah: 5"
+      - input: "1000"
+        output: "Jumlah: 1"
+      - input: "2468"
+        output: "Jumlah: 20"
+      - input: "11111"
+        output: "Jumlah: 5"
+    solusi: |
+      n = input()
+      total = 0
+      for d in n:
+          total = total + int(d)
+      print('Jumlah:', total)
+    penjelasan: |
+      Baca angka dengan input() tanpa int().
+      Kenapa? Karena kita mau menjelajahi tiap digitnya seperti teks.
+      Siapkan total mulai dari 0.
+      Pakai for d in n, jadi d berisi satu digit setiap putaran.
+      Setiap digit masih berbentuk teks, ubah dulu dengan int(d).
+      Tambahkan ke total: total = total + int(d).
+      Setelah loop selesai, total berisi jumlah semua digit.
+      Cetak dengan print('Jumlah:', total).
+      Contoh: 123, digit 1 + 2 + 3 = 6, jadi cetak 'Jumlah: 6'.
+
+  - id: "d43"
+    judul: "Deret Fibonacci"
+    emoji: "🐚"
+    tema: "Kombinasi"
+    tingkat: 6
+    cerita: |
+      Kancil menemukan deret ajaib: 1, 1, 2, 3, 5, 8.
+      Setiap angka adalah jumlah dua angka sebelumnya.
+      Dia ingin mencetak n angka pertama deret ini.
+      Kamu bantu dia!
+      Baca satu angka n.
+      Cetak n angka Fibonacci pertama.
+      Setiap angka satu baris.
+    input: "Satu baris: n."
+    output: "n baris: angka Fibonacci pertama sampai ke-n, satu per baris."
+    contoh:
+      - input: "5"
+        output: "1\n1\n2\n3\n5"
+      - input: "3"
+        output: "1\n1\n2"
+    tes:
+      - input: "5"
+        output: "1\n1\n2\n3\n5"
+      - input: "3"
+        output: "1\n1\n2"
+      - input: "1"
+        output: "1"
+      - input: "7"
+        output: "1\n1\n2\n3\n5\n8\n13"
+      - input: "2"
+        output: "1\n1"
+      - input: "10"
+        output: "1\n1\n2\n3\n5\n8\n13\n21\n34\n55"
+    solusi: |
+      n = int(input())
+      a = 1
+      b = 1
+      for i in range(n):
+          print(a)
+          a, b = b, a + b
+    penjelasan: |
+      Baca n dengan int(input()).
+      Siapkan dua angka pertama: a = 1 dan b = 1.
+      Pakai for i in range(n) supaya mencetak tepat n angka.
+      Setiap putaran, cetak a dulu dengan print(a).
+      Lalu hitung angka berikutnya: angka baru = a + b.
+      Baris a, b = b, a + b memindahkan b ke a, dan a + b ke b.
+      Jadi putaran berikutnya mencetak angka selanjutnya.
+      Contoh n = 5: cetak 1, 1, 2, 3, 5.
+      Deret ini terkenal di alam, namanya deret Fibonacci!
+
+  - id: "d44"
+    judul: "Hasil Kali Deret"
+    emoji: "✨"
+    tema: "Kombinasi"
+    tingkat: 6
+    cerita: |
+      Bu Guru memberi lomba hitung cepat.
+      Kancil harus mengalikan banyak angka sekaligus.
+      Kamu bantu dia!
+      Baca banyak angka n.
+      Lalu baca n angka satu per satu.
+      Kalikan semuanya.
+      Cetak hasil kalinya.
+    input: "Baris 1: n. n baris berikutnya: angka."
+    output: "Satu baris: Hasil kali: <hasil perkalian>."
+    contoh:
+      - input: "3\n2\n3\n4"
+        output: "Hasil kali: 24"
+      - input: "2\n5\n6"
+        output: "Hasil kali: 30"
+    tes:
+      - input: "3\n2\n3\n4"
+        output: "Hasil kali: 24"
+      - input: "2\n5\n6"
+        output: "Hasil kali: 30"
+      - input: "1\n7"
+        output: "Hasil kali: 7"
+      - input: "4\n1\n1\n1\n1"
+        output: "Hasil kali: 1"
+      - input: "3\n10\n2\n3"
+        output: "Hasil kali: 60"
+      - input: "2\n8\n9"
+        output: "Hasil kali: 72"
+    solusi: |
+      n = int(input())
+      hasil = 1
+      for i in range(n):
+          hasil = hasil * int(input())
+      print('Hasil kali:', hasil)
+    penjelasan: |
+      Baca n dengan int(input()).
+      Siapkan variabel hasil mulai dari 1.
+      Kenapa 1? Karena angka berapa pun dikali 1 tetap sama.
+      Kalau mulai dari 0, hasilnya selalu 0!
+      Pakai for i in range(n) untuk membaca n angka.
+      Setiap putaran, kalikan hasil dengan angka baru.
+      hasil = hasil * int(input()) memperbarui hasil setiap kali.
+      Setelah loop selesai, cetak dengan print('Hasil kali:', hasil).
+      Contoh: 2, 3, 4. Hasil jadi 2, lalu 6, lalu 24.

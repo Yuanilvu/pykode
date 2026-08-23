@@ -40,6 +40,9 @@
     {% endfor %}
   </div>
   {% endif %}
+  <div style="margin-top:12px;text-align:right">
+    <a class="btn btn-outline btn-sm" href="{{ url_for('monitor_detail', user_id=u.id) }}">🔍 Detail {{ u.username }} — lihat kode & riwayat</a>
+  </div>
 </div>
 {% else %}
 <div class="flash flash-info">Belum ada pengguna lain. Ajak adekmu bikin akun! 🎉</div>

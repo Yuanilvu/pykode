@@ -65,6 +65,22 @@ pelajaran:
           - "error"
         jawaban: 2
         penjelasan: "Index 0 = apel, index 1 = mangga, index 2 = jeruk."
+      - soal: "Apa outputnya?\n\nnilai = [4, 8, 2]\nprint(nilai[1])"
+        pilihan:
+          - "4"
+          - "8"
+          - "2"
+          - "error"
+        jawaban: 1
+        penjelasan: "Index 1 adalah elemen kedua, yaitu 8."
+      - soal: "Apa outputnya?\n\nhobi = ['baca', 'main', 'renang']\nprint(hobi[0])"
+        pilihan:
+          - "baca"
+          - "main"
+          - "renang"
+          - "error"
+        jawaban: 0
+        penjelasan: "Index 0 adalah elemen pertama, yaitu 'baca'."
 
   - id: "6-2"
     judul: "Index Negatif dan Slicing"
@@ -123,6 +139,22 @@ pelajaran:
           - "[15, 20]"
         jawaban: 1
         penjelasan: "Mulai index 1 (10), berhenti sebelum index 3. Jadi [10, 15]."
+      - soal: "x = [1, 2, 3, 4, 5]. Hasil x[2:] adalah..."
+        pilihan:
+          - "[1, 2]"
+          - "[2, 3, 4, 5]"
+          - "[3, 4, 5]"
+          - "[3, 4]"
+        jawaban: 2
+        penjelasan: "x[2:] berarti mulai dari index 2 sampai akhir. Jadi [3, 4, 5]."
+      - soal: "x = [1, 2, 3, 4, 5]. Berapa isi x[-2]?"
+        pilihan:
+          - "4"
+          - "5"
+          - "2"
+          - "error"
+        jawaban: 0
+        penjelasan: "Index -2 adalah satu sebelum terakhir. Dari belakang: 5, lalu 4."
 
   - id: "6-3"
     judul: "Metode List: Tumbuhkan dan Urutkan"
@@ -197,6 +229,22 @@ pelajaran:
           - "error"
         jawaban: 0
         penjelasan: "sort() mengurutkan dari kecil ke besar. Hasilnya [1, 2, 3]."
+      - soal: "Apa outputnya?\n\nx = [7, 1, 9]\nx.sort()\nprint(x[0])"
+        pilihan:
+          - "7"
+          - "1"
+          - "9"
+          - "error"
+        jawaban: 1
+        penjelasan: "Setelah sort, x = [1, 7, 9]. x[0] adalah 1."
+      - soal: "Apa outputnya?\n\nx = [4, 9, 2]\nx.append(7)\nprint(len(x))"
+        pilihan:
+          - "3"
+          - "4"
+          - "7"
+          - "error"
+        jawaban: 1
+        penjelasan: "append menambah satu isi, jadi isinya 4. len(x) menghitungnya."
 
   - id: "6-4"
     judul: "Tuple dan Jelajah List"
@@ -260,6 +308,96 @@ pelajaran:
           - "error"
         jawaban: 0
         penjelasan: "for mengambil setiap elemen list berurutan: 4, lalu 7, lalu 9."
+      - soal: "Manakah yang TIDAK bisa dilakukan pada tuple?"
+        pilihan:
+          - "mengambil isi dengan index"
+          - "menjelajah dengan for"
+          - "mengubah isinya dengan append"
+          - "mencetak isinya"
+        jawaban: 2
+        penjelasan: "Tuple tidak bisa diubah. append hanya bisa dipakai di list."
+
+  - id: "6-5"
+    judul: "Berburu Nilai Terbesar"
+    menit: 8
+    materi: |
+      Guru mau memilih anak dengan nilai tertinggi di kelas. Guru tidak
+      menghafal semua nilai. Dia menunjuk anak pertama sebagai juara sementara.
+      Lalu membandingkan satu per satu. Kalau ada yang lebih besar, juaranya
+      diganti.
+
+      Di Python, cara itu bisa ditulis. Ini namanya mencari nilai terbesar
+      dengan loop. Kita tidak perlu menghitung sendiri!
+
+      ## Pola dasarnya
+
+      ```
+      nilai = [7, 9, 4, 8]
+      terbesar = nilai[0]
+      for x in nilai:
+          if x > terbesar:
+              terbesar = x
+      print(terbesar)
+      ```
+
+      Baris pertama: terbesar diisi elemen pertama, yaitu 7. Itu juara sementara.
+      Lalu loop memeriksa tiap elemen. 9 lebih besar dari 7, jadi juara diganti 9.
+      4 tidak lebih besar, dilewati. 8 juga tidak. Hasil akhir: 9!
+
+      ## Mau yang terkecil?
+
+      Ganti tanda `>` dengan `<`. Sekarang yang dicari yang paling kecil.
+      Sama caranya, beda arahnya. Seperti memilih pemain terpendek di barisan.
+
+      Kenapa harus pakai loop? Karena daftar bisa sangat panjang. Seribu nilai
+      pun tetap cepat. Kamu tidak perlu membacanya satu per satu.
+
+      Ingat: Python juga punya `max()` dan `min()` yang lebih singkat.
+      Tapi memahami cara kerjanya membuatmu lebih pintar. Kamu tahu apa yang
+      terjadi di dalamnya. Itulah bedanya pemain dan penonton!
+    contoh:
+      - kode: |
+          nilai = [7, 9, 4, 8]
+          terbesar = nilai[0]
+          for x in nilai:
+              if x > terbesar:
+                  terbesar = x
+          print(terbesar)
+        penjelasan: "terbesar mulai dari 7. 9 lebih besar, juara diganti. Hasilnya 9."
+      - kode: |
+          skor = [12, 5, 20, 8]
+          terkecil = skor[0]
+          for s in skor:
+              if s < terkecil:
+                  terkecil = s
+          print(terkecil)
+        penjelasan: "Tanda < mencari yang terkecil. Hasilnya 5."
+    kuis:
+      - soal: "Kode ini mencetak apa?\n\nnilai = [7, 9, 4]\nterbesar = nilai[0]\nfor x in nilai:\n    if x > terbesar:\n        terbesar = x\nprint(terbesar)"
+        pilihan:
+          - "7"
+          - "9"
+          - "4"
+          - "error"
+        jawaban: 1
+        penjelasan: "terbesar mulai 7. Lalu 9 lebih besar, juara diganti 9. 4 tidak mengalahkannya."
+      - soal: "Kenapa terbesar diisi nilai[0] dulu sebelum loop?"
+        pilihan:
+          - "supaya ada juara sementara untuk dibandingkan"
+          - "karena nilai[0] pasti yang terbesar"
+          - "supaya loop tidak jalan"
+          - "tidak perlu, boleh langsung loop"
+        jawaban: 0
+        penjelasan: "Tanpa juara sementara, tidak ada pembanding pertama. Elemen pertama jadi titik awal."
+      - soal: "Agar mencari nilai TERKECIL, tanda yang dipakai di if adalah..."
+        pilihan:
+          - ">"
+          - "<"
+          - "=="
+          - "!="
+        jawaban: 1
+        penjelasan: "Tanda < memilih elemen yang lebih kecil. Juara diganti kalau ada yang lebih kecil."
+
 
 soal:
   - id: "s6-1"
@@ -462,3 +600,179 @@ soal:
       - "Buat variabel terpanjang = '' sebelum loop."
       - "Bandingkan dengan len(): kalau len(judul) lebih besar, ganti terpanjang."
       - "Cetak terpanjang setelah loop selesai."
+
+  - id: "s6-6"
+    judul: "Cari Angka Kembar"
+    sulit: "sedang"
+    cerita: |
+      Kancil mendapat sekantong kelereng bernomor.
+      Bu Guru bertanya: kelereng nomor berapa yang paling banyak?
+      Kancil memilih satu nomor, lalu menghitung kelerengnya.
+      Kamu akan membaca daftar nomor kelereng, lalu satu nomor tebakan.
+      Hitung berapa kali nomor tebakan muncul di daftar.
+
+      Baca N, lalu N nomor kelereng, lalu angka X.
+      Cetak berapa kali X muncul.
+    input: "Baris 1: N (banyak kelereng). N baris berikutnya: nomor kelereng. Baris terakhir: X yang dicari."
+    output: "Satu angka: banyak kemunculan X."
+    contoh:
+      - input: "5\n3\n1\n3\n7\n3\n3"
+        output: "3"
+      - input: "4\n1\n2\n3\n4\n5"
+        output: "0"
+    tes:
+      - input: "5\n3\n1\n3\n7\n3\n3"
+        output: "3"
+      - input: "4\n1\n2\n3\n4\n5"
+        output: "0"
+      - input: "1\n9\n9"
+        output: "1"
+      - input: "6\n2\n2\n2\n2\n2\n2\n2"
+        output: "6"
+      - input: "3\n5\n5\n5\n4"
+        output: "0"
+      - input: "5\n1\n2\n1\n2\n1\n1"
+        output: "3"
+    solusi: |
+      n = int(input())
+      kelereng = []
+      for i in range(n):
+          kelereng.append(int(input()))
+      x = int(input())
+      hitung = 0
+      for a in kelereng:
+          if a == x:
+              hitung = hitung + 1
+      print(hitung)
+    petunjuk:
+      - "Simpan semua nomor ke list dengan append."
+      - "Baca X, lalu buat hitung = 0."
+      - "Jelajahi list dengan for. Kalau isinya sama dengan X, tambah hitung 1."
+
+  - id: "s6-7"
+    judul: "Barisan Terbalik"
+    sulit: "sulit"
+    cerita: |
+      Guru olahraga mencatat urutan lari siswa.
+      Yang dicatat pertama berarti pelari paling depan.
+      Sekarang ia ingin daftarnya dibalik:
+      yang terakhir jadi yang pertama.
+      Kamu punya list berisi urutan lari.
+      Cetak isi list dari belakang ke depan.
+
+      Baca N, lalu N angka urutan.
+      Cetak urutan terbalik, satu angka per baris.
+    input: "Baris 1: N (banyak angka). N baris berikutnya: angka urutan."
+    output: "N baris: angka urutan terbalik (dari belakang ke depan)."
+    contoh:
+      - input: "3\n1\n2\n3"
+        output: "3\n2\n1"
+      - input: "4\n10\n20\n30\n40"
+        output: "40\n30\n20\n10"
+    tes:
+      - input: "3\n1\n2\n3"
+        output: "3\n2\n1"
+      - input: "4\n10\n20\n30\n40"
+        output: "40\n30\n20\n10"
+      - input: "1\n7"
+        output: "7"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "5\n4\n3\n2\n1"
+      - input: "2\n100\n200"
+        output: "200\n100"
+      - input: "4\n3\n3\n3\n3"
+        output: "3\n3\n3\n3"
+    solusi: |
+      n = int(input())
+      urut = []
+      for i in range(n):
+          urut.append(int(input()))
+      for i in range(n - 1, -1, -1):
+          print(urut[i])
+    petunjuk:
+      - "Simpan semua angka ke list dengan append."
+      - "Pakai for i in range(n - 1, -1, -1) untuk mundur dari akhir."
+      - "Cetak urut[i] di dalam loop. Elemen terakhir juga bisa dipanggil dengan index -1."
+  - id: "s6-8"
+    judul: "Tiga Skor Pertama"
+    sulit: "sedang"
+    cerita: |
+      Kancil mengikuti lomba panahan dan mencatat semua
+      skornya di list. Ibu penasaran dengan tiga skor
+      pertamanya. Baca N (banyak skor), lalu N skor.
+      Simpan di list. Lalu cetak tiga skor pertama,
+      satu per baris. Pakai slicing untuk memotongnya!
+    input: "Baris 1: N (banyak skor, minimal 3). N baris berikutnya: skor tiap panahan."
+    output: "Tiga baris: skor pertama, kedua, dan ketiga."
+    contoh:
+      - input: "5\n10\n20\n30\n40\n50"
+        output: "10\n20\n30"
+      - input: "3\n7\n8\n9"
+        output: "7\n8\n9"
+    tes:
+      - input: "5\n10\n20\n30\n40\n50"
+        output: "10\n20\n30"
+      - input: "3\n7\n8\n9"
+        output: "7\n8\n9"
+      - input: "4\n100\n200\n300\n400"
+        output: "100\n200\n300"
+      - input: "6\n1\n2\n3\n4\n5\n6"
+        output: "1\n2\n3"
+      - input: "3\n5\n5\n5"
+        output: "5\n5\n5"
+    solusi: |
+      n = int(input())
+      skor = []
+      for i in range(n):
+          skor.append(int(input()))
+      for x in skor[:3]:
+          print(x)
+    petunjuk:
+      - "Isi list dengan append di dalam loop."
+      - "skor[:3] memotong tiga elemen pertama."
+      - "Jelajahi potongan itu dengan for, lalu cetak satu per satu."
+  - id: "s6-9"
+    judul: "Gabung Dua Antrean"
+    sulit: "sulit"
+    cerita: |
+      Dua kelas mengantre di kantin. Bu Kantin ingin
+      menggabungkan nomor antrean kedua kelas jadi satu
+      daftar. Lalu daftarnya diurutkan dari kecil ke
+      besar. Baca N, lalu N nomor antrean kelas satu.
+      Baca M, lalu M nomor antrean kelas dua. Gabungkan,
+      urutkan, lalu cetak semua nomor satu per baris.
+    input: "Baris 1: N. N baris berikutnya: nomor kelas satu. Baris berikutnya: M. M baris berikutnya: nomor kelas dua."
+    output: "Semua nomor gabungan yang sudah diurutkan, satu per baris."
+    contoh:
+      - input: "2\n3\n1\n3\n2\n5\n4"
+        output: "1\n2\n3\n4\n5"
+      - input: "1\n10\n1\n5"
+        output: "5\n10"
+    tes:
+      - input: "2\n3\n1\n3\n2\n5\n4"
+        output: "1\n2\n3\n4\n5"
+      - input: "1\n10\n1\n5"
+        output: "5\n10"
+      - input: "3\n1\n1\n1\n2\n1\n1"
+        output: "1\n1\n1\n1\n1"
+      - input: "2\n100\n200\n2\n50\n150"
+        output: "50\n100\n150\n200"
+      - input: "4\n9\n7\n5\n3\n1\n8"
+        output: "3\n5\n7\n8\n9"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      m = int(input())
+      b = []
+      for i in range(m):
+          b.append(int(input()))
+      gabung = a + b
+      gabung.sort()
+      for x in gabung:
+          print(x)
+    petunjuk:
+      - "Baca dan simpan dua list dengan append."
+      - "Gabungkan dengan tanda tambah: a + b."
+      - "Urutkan dengan sort(), lalu cetak semua isinya satu per baris."

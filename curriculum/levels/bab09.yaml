@@ -70,6 +70,24 @@ pelajaran:
           - "mengambil index yang tidak ada"
         jawaban: 0
         penjelasan: "Membagi dengan nol dilarang di Python, sama seperti di matematika."
+      - soal: "Kode '5' + 3 membuat error karena..."
+        pilihan:
+          - "teks dan angka tidak bisa ditambah"
+          - "angka 5 terlalu kecil"
+          - "tanda kutipnya salah"
+          - "tidak ada variabel"
+        jawaban: 0
+        penjelasan: "Teks dan angka beda jenis. Menambahkannya memicu TypeError."
+      - soal: "Mengambil isi list di posisi yang tidak ada memicu error..."
+        pilihan:
+          - "NameError"
+          - "IndexError"
+          - "ValueError"
+          - "TypeError"
+        jawaban: 1
+        penjelasan: "IndexError muncul saat posisi (index) yang diminta tidak ada di list."
+
+
 
   - id: "9-2"
     judul: "try/except: Jaring Pengaman"
@@ -143,6 +161,24 @@ pelajaran:
           - "membaca file yang hilang"
         jawaban: 1
         penjelasan: "ZeroDivisionError selalu datang dari pembagian dengan nol."
+      - soal: "except ValueError cocok untuk menangkap..."
+        pilihan:
+          - "nilai yang tidak cocok, seperti int('abc')"
+          - "nama variabel yang belum dibuat"
+          - "membagi dengan nol"
+          - "list yang kosong"
+        jawaban: 0
+        penjelasan: "ValueError muncul saat nilainya tidak cocok. 'abc' bukan angka."
+      - soal: "try: angka = int('abc') except ValueError: print('salah'). Outputnya..."
+        pilihan:
+          - "'salah'"
+          - "error"
+          - "'abc'"
+          - "tidak ada output"
+        jawaban: 0
+        penjelasan: "int('abc') gagal, jadi blok except jalan dan mencetak 'salah'."
+
+
 
   - id: "9-3"
     judul: "Membaca Pesan Error"
@@ -205,6 +241,24 @@ pelajaran:
           - "angka salah tipe"
         jawaban: 1
         penjelasan: "'is not defined' = belum didefinisikan. Variabel angka harus dibuat dulu."
+      - soal: "Traceback adalah..."
+        pilihan:
+          - "daftar jejak baris sebelum error"
+          - "nama program yang error"
+          - "hasil program yang benar"
+          - "tulisan di dalam program"
+        jawaban: 0
+        penjelasan: "Traceback menunjukkan baris-baris yang dilewati sebelum error terjadi."
+      - soal: "Pesan 'ValueError: invalid literal for int()' muncul saat..."
+        pilihan:
+          - "membagi dengan nol"
+          - "int() diberi teks yang bukan angka"
+          - "variabel belum dibuat"
+          - "index tidak ada"
+        jawaban: 1
+        penjelasan: "int() hanya bisa mengubah teks angka. Teks lain memicu ValueError."
+
+
 
   - id: "9-4"
     judul: "Debugging: Jadi Detektif"
@@ -270,6 +324,99 @@ pelajaran:
           - "tebak sekali dan langsung selesai"
         jawaban: 1
         penjelasan: "Tebak lokasi masalah, periksa dengan print, perbaiki, lalu jalankan lagi untuk cek."
+      - soal: "Bug adalah..."
+        pilihan:
+          - "serangga sungguhan"
+          - "kesalahan di dalam kode"
+          - "nama variabel"
+          - "program yang benar"
+        jawaban: 1
+        penjelasan: "Bug artinya kesalahan di kode. Debugging adalah memburunya."
+
+
+  - id: "9-5"
+    judul: "Menangkap Banyak Error"
+    menit: 7
+    materi: |
+      Satu try bisa memakai BANYAK except!
+      Setiap except menangkap jenis error yang berbeda.
+      Seperti pos jaga yang punya banyak pintu.
+      Setiap pintu untuk tamu yang berbeda.
+
+      ## Cara menulisnya
+
+      ```
+      try:
+          umur = int('dua belas')
+      except ValueError:
+          print('Bukan angka!')
+      except ZeroDivisionError:
+          print('Jangan bagi nol!')
+      ```
+
+      Python mencoba kode di dalam try.
+      Kalau error muncul, Python mencari except yang cocok.
+      ValueError ditangkap pintu pertama.
+      ZeroDivisionError ditangkap pintu kedua.
+      Hanya satu except yang jalan.
+
+      ## Kapan memakai ini?
+
+      Program sungguhan bisa kena banyak masalah.
+      Input salah ketik, angka nol, file hilang.
+      Dengan banyak except, setiap masalah
+      mendapat penanganan yang pas.
+
+      ## Yang perlu diingat
+
+      Kode di dalam try dijalankan dari atas.
+      Error pertama yang muncul itulah yang ditangkap.
+      Kode setelah baris error tidak dijalankan.
+      Kalau error tidak cocok dengan except mana pun,
+      program tetap berhenti.
+    contoh:
+      - kode: |
+          try:
+              hasil = 10 / 0
+          except ValueError:
+              print('Bukan angka!')
+          except ZeroDivisionError:
+              print('Jangan bagi nol!')
+        penjelasan: "10 / 0 memicu ZeroDivisionError, jadi pesan 'Jangan bagi nol!' yang muncul."
+      - kode: |
+          try:
+              umur = int('dua belas')
+          except ValueError:
+              print('Bukan angka!')
+          except ZeroDivisionError:
+              print('Jangan bagi nol!')
+        penjelasan: "int('dua belas') memicu ValueError, jadi pesan 'Bukan angka!' yang muncul."
+    kuis:
+      - soal: "Bolehkah satu try memakai lebih dari satu except?"
+        pilihan:
+          - "tidak boleh"
+          - "hanya dua except"
+          - "hanya kalau pakai else"
+          - "boleh, satu except untuk tiap jenis error"
+        jawaban: 3
+        penjelasan: "Boleh! Setiap except menangkap jenis error yang berbeda."
+      - soal: "try: 5 / 0 lalu except ValueError dan except ZeroDivisionError. Yang jalan adalah..."
+        pilihan:
+          - "except ValueError"
+          - "except ZeroDivisionError"
+          - "kedua except"
+          - "error baru"
+        jawaban: 1
+        penjelasan: "5 / 0 memicu ZeroDivisionError, jadi hanya except ZeroDivisionError yang jalan."
+      - soal: "Kalau error yang muncul tidak cocok dengan except mana pun, program akan..."
+        pilihan:
+          - "tetap jalan"
+          - "berhenti dengan error"
+          - "mencoba lagi"
+          - "mencetak None"
+        jawaban: 1
+        penjelasan: "Except yang tidak cocok tidak bisa menangkap error. Program tetap berhenti."
+
 
 soal:
   - id: "s9-1"
@@ -497,3 +644,214 @@ soal:
       - "Ubah kedua ketikan menjadi angka dengan int()."
       - "Letakkan pengubahan dan pembagian di dalam try."
       - "except ValueError menangkap ketikan bukan angka, except ZeroDivisionError menangkap pembagian nol."
+
+  - id: "s9-6"
+    judul: "Peti Harta Karun"
+    sulit: "sedang"
+    cerita: |
+      Kancil menemukan peti harta karun di gudang sekolah.
+      Di dalam peti ada deretan angka ajaib.
+      Setiap angka punya posisi.
+      Posisi pertama nomor 1, lalu 2, 3, dan seterusnya.
+      Kancil suka menebak angka di posisi tertentu.
+      Kalau posisinya tidak ada, programnya error dan mati.
+      Itu membuat Kancil sedih.
+
+      Bantu Kancil. Baca banyak angka, lalu angka-angkanya satu per satu.
+      Baca satu posisi.
+      Cetak angka di posisi itu.
+      Kalau posisinya tidak ada, cetak 'Posisi tidak ada!'.
+    input: "Baris 1: banyak angka (n). Lalu n baris angka. Terakhir satu posisi."
+    output: "Satu baris: angka di posisi itu, atau 'Posisi tidak ada!'."
+    contoh:
+      - input: "3\n10\n20\n30\n2"
+        output: "20"
+      - input: "2\n7\n8\n9"
+        output: "Posisi tidak ada!"
+    tes:
+      - input: "3\n10\n20\n30\n2"
+        output: "20"
+      - input: "2\n7\n8\n9"
+        output: "Posisi tidak ada!"
+      - input: "1\n99\n1"
+        output: "99"
+      - input: "4\n5\n15\n25\n35\n3"
+        output: "25"
+      - input: "3\n10\n20\n30\n4"
+        output: "Posisi tidak ada!"
+      - input: "3\n10\n20\n30\n3"
+        output: "30"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      pos = int(input())
+      try:
+          print(a[pos - 1])
+      except IndexError:
+          print('Posisi tidak ada!')
+    petunjuk:
+      - "Baca semua angka dulu, simpan di dalam list."
+      - "Posisi 1 artinya index 0. Pakai pos - 1."
+      - "Bungkus a[pos - 1] dengan try. except IndexError mencetak 'Posisi tidak ada!'."
+
+  - id: "s9-7"
+    judul: "Buku Tabungan Kena Tinta"
+    sulit: "sulit"
+    cerita: |
+      Kancil menabung uang jajan.
+      Suatu hari, buku tabungannya kena tinta.
+      Beberapa angka jadi tidak terbaca.
+      Ada angka yang jelas, ada yang rusak.
+      Kancil ingin tahu total uangnya.
+      Dia juga ingin tahu berapa angka yang rusak.
+
+      Baca banyak data, lalu data-datanya satu per satu.
+      Data yang angka dijumlahkan.
+      Data yang bukan angka dihitung sebagai rusak.
+      Kalau semua rusak, cetak 'Semua rusak!'.
+      Kalau tidak, cetak 'Total: <jumlah> Rusak: <banyak rusak>'.
+    input: "Baris 1: banyak data (n). Lalu n baris berisi data."
+    output: "Satu baris: 'Total: <n> Rusak: <m>', atau 'Semua rusak!'."
+    contoh:
+      - input: "3\n1\n2\n3"
+        output: "Total: 6 Rusak: 0"
+      - input: "2\na\nb"
+        output: "Semua rusak!"
+    tes:
+      - input: "3\n1\n2\n3"
+        output: "Total: 6 Rusak: 0"
+      - input: "2\na\nb"
+        output: "Semua rusak!"
+      - input: "3\n1\na\n3"
+        output: "Total: 4 Rusak: 1"
+      - input: "1\n10"
+        output: "Total: 10 Rusak: 0"
+      - input: "4\n5\na\nb\n2"
+        output: "Total: 7 Rusak: 2"
+      - input: "3\na\n1\nb"
+        output: "Total: 1 Rusak: 2"
+    solusi: |
+      n = int(input())
+      total = 0
+      rusak = 0
+      for i in range(n):
+          try:
+              total += int(input())
+          except ValueError:
+              rusak += 1
+      if rusak == n:
+          print('Semua rusak!')
+      else:
+          print('Total:', total, 'Rusak:', rusak)
+    petunjuk:
+      - "Coba ubah tiap data dengan int() di dalam try. except ValueError menandai data rusak."
+      - "Hitung data rusak di dalam perulangan. Jangan berhenti."
+      - "Kalau jumlah rusak sama dengan n, cetak 'Semua rusak!'."
+  - id: "s9-9"
+    judul: "Harta Karun Angka"
+    sulit: "sulit"
+    cerita: |
+      Kancil menemukan peta harta karun.
+      Di peta tertulis angka-angka tersembunyi.
+      Angka itu campur dengan kata-kata biasa.
+      Kancil harus menjumlahkan semua angka.
+      Tapi kata-kata biasa tidak boleh bikin program mati.
+      Baca satu baris berisi beberapa ketikan.
+      Jumlahkan yang berupa angka.
+      Hitung juga banyaknya.
+      Kalau tidak ada angka sama sekali, cetak 'Tidak ada angka'.
+    input: "Satu baris: beberapa ketikan dipisah spasi (campur angka dan bukan angka)."
+    output: "Kalau ada angka: baris 1 'Total: <jumlah>', baris 2 'Banyak: <banyak angka>'. Kalau tidak ada: 'Tidak ada angka'."
+    contoh:
+      - input: "3 ekor kancil 5 dan 2"
+        output: "Total: 10\nBanyak: 3"
+      - input: "satu dua tiga"
+        output: "Tidak ada angka"
+    tes:
+      - input: "3 ekor kancil 5 dan 2"
+        output: "Total: 10\nBanyak: 3"
+      - input: "satu dua tiga"
+        output: "Tidak ada angka"
+      - input: "10 20 30"
+        output: "Total: 60\nBanyak: 3"
+      - input: "a 1 b 2 c 3"
+        output: "Total: 6\nBanyak: 3"
+      - input: "7"
+        output: "Total: 7\nBanyak: 1"
+      - input: "x y z"
+        output: "Tidak ada angka"
+    solusi: |
+      data = input().split()
+      total = 0
+      banyak = 0
+      for x in data:
+          try:
+              total = total + int(x)
+              banyak = banyak + 1
+          except ValueError:
+              pass
+      if banyak == 0:
+          print('Tidak ada angka')
+      else:
+          print('Total:', total)
+          print('Banyak:', banyak)
+    petunjuk:
+      - "Pecah baris dengan split(). Loop setiap ketikan."
+      - "Coba int(x) di dalam try. Kalau gagal, except ValueError melewatinya."
+      - "Kalau tidak ada angka sama sekali, cetak 'Tidak ada angka'."
+
+  - id: "s9-8"
+    judul: "Bagi-Bagi Snack"
+    sulit: "sedang"
+    cerita: |
+      Kancil membagikan snack ke teman-teman.
+      Setiap bungkus dibagi rata ke beberapa anak.
+      Tapi catatan Kancil kadang rusak.
+      Ada angka yang tertulis aneh.
+      Kancil ingin program yang tetap jalan.
+      Baca banyak catatan.
+      Tiap catatan berisi dua ketikan.
+      Kalau ketikan bukan angka, cetak 'Bukan angka!'.
+      Kalau angka kedua nol, cetak 'Nol!'.
+      Kalau aman, cetak hasil baginya.
+    input: "Baris 1: n (banyak catatan). Lalu n baris: dua ketikan dipisah spasi."
+    output: "n baris: hasil bagi tiap catatan, 'Bukan angka!', atau 'Nol!'."
+    contoh:
+      - input: "2\n10 2\n8 0"
+        output: "5.0\nNol!"
+      - input: "1\nx 2"
+        output: "Bukan angka!"
+    tes:
+      - input: "2\n10 2\n8 0"
+        output: "5.0\nNol!"
+      - input: "1\nx 2"
+        output: "Bukan angka!"
+      - input: "2\n9 4\n1 3"
+        output: "2.25\n0.3333333333333333"
+      - input: "3\n6 2\n7 2\n0 5"
+        output: "3.0\n3.5\n0.0"
+      - input: "2\n5 0\n1 a"
+        output: "Nol!\nBukan angka!"
+      - input: "1\n100 8"
+        output: "12.5"
+    solusi: |
+      n = int(input())
+      for i in range(n):
+          data = input().split()
+          try:
+              a = int(data[0])
+              b = int(data[1])
+              if b == 0:
+                  print('Nol!')
+              else:
+                  print(a / b)
+          except ValueError:
+              print('Bukan angka!')
+    petunjuk:
+      - "Pecah tiap baris dengan split(). Ubah dua ketikan jadi angka dengan int()."
+      - "Bungkus pengubahan dan pembagian di dalam try. except ValueError mencetak 'Bukan angka!'."
+      - "Cek angka kedua dengan if b == 0 sebelum membagi."
+
+

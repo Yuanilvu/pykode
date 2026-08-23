@@ -80,6 +80,24 @@ pelajaran:
           - "kue1(rasa)"
         jawaban: 0
         penjelasan: "Attribute diambil dengan format object.attribute, yaitu kue1.rasa."
+      - soal: "Kode Kue() dipakai untuk..."
+        pilihan:
+          - "membuat object baru dari class Kue"
+          - "menghapus class Kue"
+          - "mencetak nama class"
+          - "mengganti rasa kue"
+        jawaban: 0
+        penjelasan: "Memanggil class dengan tanda kurung membuat object baru."
+      - soal: "Dua object dari satu class yang sama akan..."
+        pilihan:
+          - "punya attribute yang sama"
+          - "selalu berbeda isi"
+          - "error"
+          - "hanya satu yang jalan"
+        jawaban: 0
+        penjelasan: "Class adalah cetakan. Semua object hasil cetakan itu punya attribute yang sama."
+
+
 
   - id: "11-2"
     judul: "__init__: Resep Awal"
@@ -156,6 +174,24 @@ pelajaran:
           - "Kue(self, 'cokelat')"
         jawaban: 0
         penjelasan: "self tidak perlu diisi — Python mengisinya sendiri. Kita cukup mengisi rasa dan topping."
+      - soal: "Kata self di dalam class dipakai untuk..."
+        pilihan:
+          - "menyimpan attribute ke object itu"
+          - "membuat class baru"
+          - "mencetak ke layar"
+          - "mengulang kode"
+        jawaban: 0
+        penjelasan: "self adalah object itu sendiri. self.nama = nama menyimpan attribute ke object."
+      - soal: "class Kucing: def __init__(self, nama): self.nama = nama. Lalu k = Kucing('Milo'). Isi k.nama adalah..."
+        pilihan:
+          - "'Milo'"
+          - "'nama'"
+          - "kosong"
+          - "error"
+        jawaban: 0
+        penjelasan: "__init__ menyimpan parameter nama ke attribute self.nama. Jadi k.nama berisi 'Milo'."
+
+
 
   - id: "11-3"
     judul: "Method: Kemampuan Objek"
@@ -233,6 +269,24 @@ pelajaran:
           - "self itu wajib di Python versi lama"
         jawaban: 0
         penjelasan: "Lewat self, method tahu attribute milik object mana yang sedang diproses."
+      - soal: "Cara memanggil method bersuara() milik object k adalah..."
+        pilihan:
+          - "bersuara(k)"
+          - "k.bersuara()"
+          - "k.bersuara"
+          - "class.bersuara(k)"
+        jawaban: 1
+        penjelasan: "Method dipanggil lewat object dengan tanda titik dan kurung."
+      - soal: "class Kotak: def __init__(self, s): self.s = s; def luas(self): return self.s * self.s. Lalu print(Kotak(4).luas()) mencetak..."
+        pilihan:
+          - "8"
+          - "16"
+          - "4"
+          - "error"
+        jawaban: 1
+        penjelasan: "Method luas menghitung 4 * 4 = 16."
+
+
 
   - id: "11-4"
     judul: "__str__: Kartu Nama Objek"
@@ -311,6 +365,115 @@ pelajaran:
           - "menutup file"
         jawaban: 0
         penjelasan: "__str__ harus return teks; teks itulah yang ditampilkan oleh print()."
+      - soal: "Class tanpa __str__, lalu print(object) menampilkan..."
+        pilihan:
+          - "teks rapi"
+          - "alamat object yang aneh"
+          - "nama class saja"
+          - "error"
+        jawaban: 1
+        penjelasan: "Tanpa __str__, Python menampilkan alamat object seperti <__main__.Kucing object at 0x...>."
+
+
+  - id: "11-5"
+    judul: "Banyak Objek Sekaligus"
+    menit: 8
+    materi: |
+      Satu cetakan bisa membuat banyak kue.
+      Satu class juga bisa membuat banyak object!
+      Kamu bisa menyimpan object-object itu
+      di dalam list. Lalu mengurusnya sekaligus.
+
+      ## Membuat banyak object
+
+      ```
+      class Karakter:
+          def __init__(self, nama, hp):
+              self.nama = nama
+              self.hp = hp
+
+      k1 = Karakter('Kancil', 100)
+      k2 = Karakter('Rusa', 90)
+      ```
+
+      Setiap object punya data sendiri.
+      k1.nama berisi 'Kancil'. k2.nama berisi 'Rusa'.
+      Mereka tidak saling mengganggu.
+
+      ## Object di dalam list
+
+      ```
+      tim = [Karakter('Kancil', 100),
+             Karakter('Rusa', 90)]
+
+      for k in tim:
+          print(k.nama, k.hp)
+      ```
+
+      Ini seperti daftar pemain tim sepak bola!
+      Setiap pemain punya nama dan kekuatan sendiri.
+
+      ## Method mengubah attribute
+
+      Method bisa mengubah attribute object:
+      `self.hp = self.hp - 10`. Setiap object
+      menghitung hp-nya sendiri. Kancil kena
+      serang, Rusa tetap aman.
+
+      ## Kenapa penting?
+
+      Game, aplikasi, dan website menyimpan
+      banyak object sekaligus. Dengan list + class,
+      ratusan object bisa diurus hanya dengan
+      beberapa baris kode!
+    contoh:
+      - kode: |
+          class Karakter:
+              def __init__(self, nama, hp):
+                  self.nama = nama
+                  self.hp = hp
+
+          k1 = Karakter('Kancil', 100)
+          k2 = Karakter('Rusa', 90)
+          print(k1.nama, k1.hp)
+          print(k2.nama, k2.hp)
+        penjelasan: "Dua object dari satu class. Masing-masing punya nama dan hp sendiri."
+      - kode: |
+          class Karakter:
+              def __init__(self, nama, hp):
+                  self.nama = nama
+                  self.hp = hp
+
+          tim = [Karakter('Kancil', 100), Karakter('Rusa', 90)]
+          for k in tim:
+              print(k.nama, 'HP', k.hp)
+        penjelasan: "List berisi dua object. Loop mencetak nama dan hp setiap karakter."
+    kuis:
+      - soal: "Banyak object dari satu class yang sama..."
+        pilihan:
+          - "berbagi data yang sama persis"
+          - "punya data sendiri-sendiri"
+          - "tidak bisa dibuat"
+          - "harus punya nama yang sama"
+        jawaban: 1
+        penjelasan: "Setiap object punya attribute sendiri. Mengubah satu object tidak mengganggu yang lain."
+      - soal: "Object-object bisa disimpan di dalam..."
+        pilihan:
+          - "def"
+          - "list"
+          - "print"
+          - "return"
+        jawaban: 1
+        penjelasan: "Object bisa dimasukkan ke list seperti data lain. Lalu dijelajahi dengan for."
+      - soal: "class Kucing: def __init__(self, nama): self.nama = nama. Lalu a = Kucing('Milo') dan b = Kucing('Nana'). Isi a.nama adalah..."
+        pilihan:
+          - "'Nana'"
+          - "'Milo'"
+          - "'Milo Nana'"
+          - "error"
+        jawaban: 1
+        penjelasan: "Setiap object menyimpan nama sendiri. a.nama berisi 'Milo', b.nama berisi 'Nana'."
+
 
 soal:
   - id: "s11-1"
@@ -555,3 +718,252 @@ soal:
       - "__init__ menyimpan panjang, lebar, dan tinggi ke attribute."
       - "Method volume() mengalikan ketiga attribute."
       - "Baca tiga input dengan int() lalu buat object Kotak."
+
+  - id: "s11-6"
+    judul: "Kartu Karakter Game"
+    sulit: "sedang"
+    cerita: |
+      Kancil membuat game kecil.
+      Tiap pemain punya kartu karakter.
+      Kartu berisi nama dan HP (darah).
+      Kalau karakter diserang, HP berkurang 10.
+      HP tidak boleh kurang dari nol.
+      Kancil ingin mencetak kartu karakter setelah diserang.
+
+      Buat class Karakter dengan nama dan hp.
+      Method serang() mengurangi hp 10.
+      Method __str__ menampilkan '<nama> (HP <hp>)'.
+      Baca nama, hp awal, lalu banyak serangan.
+    input: "Tiga baris: nama, hp awal, lalu banyak serangan."
+    output: "Satu baris: <nama> (HP <hp>)."
+    contoh:
+      - input: "Milo\n50\n3"
+        output: "Milo (HP 20)"
+      - input: "Tono\n10\n2"
+        output: "Tono (HP 0)"
+    tes:
+      - input: "Milo\n50\n3"
+        output: "Milo (HP 20)"
+      - input: "Tono\n10\n2"
+        output: "Tono (HP 0)"
+      - input: "Kancil\n20\n5"
+        output: "Kancil (HP 0)"
+      - input: "Budi\n100\n1"
+        output: "Budi (HP 90)"
+      - input: "Sari\n30\n0"
+        output: "Sari (HP 30)"
+      - input: "Rina\n40\n4"
+        output: "Rina (HP 0)"
+    solusi: |
+      class Karakter:
+          def __init__(self, nama, hp):
+              self.nama = nama
+              self.hp = hp
+
+          def serang(self):
+              self.hp -= 10
+              if self.hp < 0:
+                  self.hp = 0
+
+          def __str__(self):
+              return self.nama + ' (HP ' + str(self.hp) + ')'
+
+      nama = input()
+      hp = int(input())
+      serangan = int(input())
+      k = Karakter(nama, hp)
+      for i in range(serangan):
+          k.serang()
+      print(k)
+    petunjuk:
+      - "Class Karakter punya __init__ yang menyimpan nama dan hp."
+      - "Method serang() mengurangi self.hp dengan 10. Jangan sampai negatif."
+      - "Method __str__ mengembalikan teks kartu: nama + ' (HP ' + str(hp) + ')'."
+
+  - id: "s11-7"
+    judul: "Celengan Digital"
+    sulit: "sulit"
+    cerita: |
+      Kancil buka celengan digital.
+      Ada dua cara: nabung atau ambil uang.
+      Kalau ambil lebih banyak dari saldo, Kancil tidak boleh.
+      Harus ada pesan 'Saldo kurang!'.
+      Di akhir, cetak saldo terakhir.
+
+      Buat class Bank dengan nama dan saldo.
+      Method nabung(uang) menambah saldo.
+      Method ambil(uang) mengurangi saldo kalau cukup.
+      Baca nama, saldo awal, banyak transaksi, lalu transaksinya.
+      Tiap transaksi: 'nabung <uang>' atau 'ambil <uang>'.
+    input: "Baris 1: nama. Baris 2: saldo awal. Baris 3: banyak transaksi (n). Lalu n baris transaksi."
+    output: "Pesan 'Saldo kurang!' kalau ada, lalu satu baris: <nama> punya Rp<saldo>."
+    contoh:
+      - input: "Kancil\n1000\n3\nnabung 500\nambil 200\nnabung 300"
+        output: "Kancil punya Rp1600"
+      - input: "Budi\n100\n2\nambil 200\nnabung 50"
+        output: "Saldo kurang!\nBudi punya Rp150"
+    tes:
+      - input: "Kancil\n1000\n3\nnabung 500\nambil 200\nnabung 300"
+        output: "Kancil punya Rp1600"
+      - input: "Budi\n100\n2\nambil 200\nnabung 50"
+        output: "Saldo kurang!\nBudi punya Rp150"
+      - input: "Sari\n500\n1\nambil 500"
+        output: "Sari punya Rp0"
+      - input: "Tono\n1000\n4\nambil 100\nambil 100\nambil 100\nambil 100"
+        output: "Tono punya Rp600"
+      - input: "Mina\n50\n2\nambil 60\nnabung 10"
+        output: "Saldo kurang!\nMina punya Rp60"
+      - input: "Umi\n2000\n3\nnabung 500\nambil 1000\nambil 1500"
+        output: "Umi punya Rp0"
+    solusi: |
+      class Bank:
+          def __init__(self, nama, saldo):
+              self.nama = nama
+              self.saldo = saldo
+
+          def nabung(self, uang):
+              self.saldo += uang
+
+          def ambil(self, uang):
+              if uang > self.saldo:
+                  print('Saldo kurang!')
+              else:
+                  self.saldo -= uang
+
+          def __str__(self):
+              return self.nama + ' punya Rp' + str(self.saldo)
+
+      nama = input()
+      saldo = int(input())
+      n = int(input())
+      b = Bank(nama, saldo)
+      for i in range(n):
+          p = input().split()
+          if p[0] == 'nabung':
+              b.nabung(int(p[1]))
+          else:
+              b.ambil(int(p[1]))
+      print(b)
+    petunjuk:
+      - "Class Bank punya method nabung() dan ambil()."
+      - "Di method ambil(), cek dulu apakah uang lebih besar dari saldo."
+      - "Pecah tiap transaksi dengan .split(). Panggil method yang sesuai dengan isinya."
+  - id: "s11-9"
+    judul: "Lomba Lari"
+    sulit: "sulit"
+    cerita: |
+      Sekolah mengadakan lomba lari.
+      Setiap kelas mengirim satu pelari.
+      Waktu tempuh tiap pelari dicatat.
+      Pelari dengan waktu terkecil jadi juara.
+      Kalau ada waktu yang sama, yang muncul lebih dulu yang menang.
+      Buat class Pelari.
+      Class itu punya nama dan waktu.
+      Method lebih_cepat() membandingkan dua pelari.
+      Baca banyak pelari, lalu nama dan waktunya.
+      Cetak nama pelari tercepat.
+    input: "Baris 1: n (banyak pelari). Lalu n baris: nama dan waktu (dipisah spasi)."
+    output: "Satu baris: nama pelari dengan waktu terkecil."
+    contoh:
+      - input: "3\nBudi 12\nSari 9\nRina 15"
+        output: "Sari"
+      - input: "2\nTono 10\nAyu 10"
+        output: "Tono"
+    tes:
+      - input: "3\nBudi 12\nSari 9\nRina 15"
+        output: "Sari"
+      - input: "2\nTono 10\nAyu 10"
+        output: "Tono"
+      - input: "1\nMila 20"
+        output: "Mila"
+      - input: "4\nA 5\nB 3\nC 7\nD 3"
+        output: "B"
+      - input: "3\nX 8\nY 8\nZ 8"
+        output: "X"
+      - input: "2\nUmi 1\nTono 100"
+        output: "Umi"
+    solusi: |
+      class Pelari:
+          def __init__(self, nama, waktu):
+              self.nama = nama
+              self.waktu = waktu
+
+          def lebih_cepat(self, lain):
+              return self.waktu < lain.waktu
+
+      n = int(input())
+      terbaik = None
+      for i in range(n):
+          data = input().split()
+          p = Pelari(data[0], int(data[1]))
+          if terbaik is None:
+              terbaik = p
+          elif p.lebih_cepat(terbaik):
+              terbaik = p
+      print(terbaik.nama)
+    petunjuk:
+      - "Class Pelari punya attribute nama dan waktu."
+      - "Method lebih_cepat(lain) mengembalikan True kalau waktu sendiri lebih kecil."
+      - "Simpan pelari tercepat sementara. Ganti hanya kalau ada yang lebih cepat."
+
+  - id: "s11-8"
+    judul: "Lampu Ajaib"
+    sulit: "sedang"
+    cerita: |
+      Kancil punya lampu ajaib dari laboratorium.
+      Setiap ditekan, lampu berganti nyala atau mati.
+      Kalau mati jadi nyala.
+      Kalau nyala jadi mati.
+      Kancil ingin tahu keadaan lampu setelah ditekan beberapa kali.
+      Buat class Lampu.
+      Method tekan() mengubah keadaan lampu.
+      Method __str__ mengembalikan 'nyala' atau 'mati'.
+      Baca banyak tekan.
+      Cetak keadaan lampu setelah semua tekan.
+    input: "Satu baris: banyak tekan."
+    output: "Satu baris: nyala atau mati"
+    contoh:
+      - input: "3"
+        output: "nyala"
+      - input: "2"
+        output: "mati"
+    tes:
+      - input: "3"
+        output: "nyala"
+      - input: "2"
+        output: "mati"
+      - input: "1"
+        output: "nyala"
+      - input: "0"
+        output: "mati"
+      - input: "5"
+        output: "nyala"
+      - input: "4"
+        output: "mati"
+    solusi: |
+      class Lampu:
+          def __init__(self):
+              self.nyala = False
+
+          def tekan(self):
+              if self.nyala:
+                  self.nyala = False
+              else:
+                  self.nyala = True
+
+          def __str__(self):
+              if self.nyala:
+                  return 'nyala'
+              return 'mati'
+
+      n = int(input())
+      lampu = Lampu()
+      for i in range(n):
+          lampu.tekan()
+      print(lampu)
+    petunjuk:
+      - "Class Lampu punya attribute nyala yang mulai dari False."
+      - "Method tekan() membalik keadaan: kalau nyala jadi mati, kalau mati jadi nyala."
+      - "Method __str__ mengembalikan 'nyala' atau 'mati'. Cetak object lampu."
+
+

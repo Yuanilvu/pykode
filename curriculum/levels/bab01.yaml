@@ -53,6 +53,22 @@ pelajaran:
           - "Error"
         jawaban: 1
         penjelasan: "Python menghitung dulu 3 + 4 = 7, baru mencetak hasilnya. Itu bedanya dengan teks!"
+      - soal: "Kode ini mencetak apa?\n\nprint('Satu')\nprint('Dua')"
+        pilihan:
+          - "Satu Dua"
+          - "Satu di baris pertama, Dua di baris kedua"
+          - "SatuDua"
+          - "error"
+        jawaban: 1
+        penjelasan: "Setiap print() mencetak satu baris. Jadi 'Satu' dulu, lalu 'Dua' di baris baru."
+      - soal: "Apa hasil dari print('2 + 3')?"
+        pilihan:
+          - "5"
+          - "2 + 3"
+          - "error"
+          - "23"
+        jawaban: 1
+        penjelasan: "Di dalam tanda kutip, 2 + 3 hanyalah teks. Jadi tercetak apa adanya."
 
   - id: "1-2"
     judul: "Python Si Penerjemah"
@@ -103,6 +119,22 @@ pelajaran:
           - "tidak ada gunanya"
         jawaban: 1
         penjelasan: "Pesan error membantu kita menemukan dan memperbaiki kesalahan. Itu bagian normal dari coding!"
+      - soal: "Kalau baris pertama error, apa yang terjadi pada baris kedua?"
+        pilihan:
+          - "tetap dijalankan"
+          - "tidak dijalankan, program berhenti"
+          - "dijalankan dua kali"
+          - "baris kedua jadi komentar"
+        jawaban: 1
+        penjelasan: "Python berhenti begitu menemukan error. Baris di bawahnya tidak sempat dijalankan."
+      - soal: "Manakah penulisan print yang SALAH?"
+        pilihan:
+          - "print('Halo')"
+          - "print(\"Halo\")"
+          - "print('Halo'')"
+          - "print('Halo!')"
+        jawaban: 2
+        penjelasan: "Tanda kutip harus sepasang. print('Halo'') punya tiga tanda kutip, jadi error."
 
   - id: "1-3"
     judul: "Komentar: Catatan Kecil"
@@ -153,6 +185,83 @@ pelajaran:
           - "tidak ada output"
         jawaban: 0
         penjelasan: "Di dalam tanda kutip, # hanyalah teks biasa. Komentar hanya berlaku di luar tanda kutip."
+      - soal: "Kode ini mencetak apa?\n\n# Selamat pagi\nprint('Halo')"
+        pilihan:
+          - "Selamat pagi"
+          - "Selamat pagi dan Halo"
+          - "Halo"
+          - "tidak ada"
+        jawaban: 2
+        penjelasan: "Baris komentar diabaikan Python. Yang tercetak hanya Halo."
+      - soal: "Kode ini mencetak apa?\n\nprint('A')\n# print('B')\nprint('C')"
+        pilihan:
+          - "A lalu B lalu C"
+          - "A lalu C"
+          - "C saja"
+          - "A saja"
+        jawaban: 1
+        penjelasan: "Baris # print('B') adalah komentar. Python mengabaikannya, jadi hanya A dan C yang tercetak."
+
+  - id: "1-4"
+    judul: "Mencetak Angka & Hitungan"
+    menit: 6
+    materi: |
+      Python tidak cuma mencetak tulisan. Dia juga bisa mencetak angka!
+
+      Coba tulis `print(7)`. Hasilnya angka 7 muncul di layar.
+      Tapi ada yang lebih seru: Python bisa menghitung dulu, baru mencetak hasilnya.
+
+      `print(3 + 4)` — Python menghitung 3 + 4 dulu. Hasilnya 7, lalu dicetak.
+      `print(2 * 5)` — tanda bintang artinya kali. Hasilnya 10.
+
+      ## Angka vs tulisan
+
+      `print(3 + 4)` mencetak 7. Tapi `print('3 + 4')` mencetak 3 + 4.
+      Kenapa beda? Karena tanda kutip membuat semuanya jadi tulisan.
+      Tanpa kutip, Python menganggapnya hitungan dan mengerjakannya dulu.
+
+      ## Boleh campur angka
+
+      Tanda hitung yang bisa dipakai di print: `+` tambah, `-` kurang, `*` kali.
+      Python selalu menghitung dulu, baru mencetak hasilnya.
+      Jadi `print(9 - 3)` hasilnya 6. Bukan tulisan "9 - 3".
+
+      Bayangkan print seperti papan tulis. Kamu menulis soalnya, Python menulis jawabannya.
+      Seru, kan? Coba ganti angka-angka di contoh dan lihat hasilnya!
+    contoh:
+      - kode: |
+          print(3 + 4)
+        penjelasan: "Python menghitung 3 + 4 = 7 dulu, baru mencetak hasilnya."
+      - kode: |
+          print(2 * 5)
+          print(9 - 3)
+        penjelasan: "Dua print: 2 * 5 = 10, lalu 9 - 3 = 6. Tanda * artinya kali."
+    kuis:
+      - soal: "Kode ini mencetak apa?\n\nprint(2 * 5)"
+        pilihan:
+          - "25"
+          - "10"
+          - "2 * 5"
+          - "error"
+        jawaban: 1
+        penjelasan: "Tanda * artinya kali. Python menghitung 2 * 5 = 10, lalu mencetaknya."
+      - soal: "Kode ini mencetak apa?\n\nprint(9 - 3)"
+        pilihan:
+          - "6"
+          - "9 - 3"
+          - "12"
+          - "error"
+        jawaban: 0
+        penjelasan: "Python mengurangkan dulu: 9 - 3 = 6. Lalu hasilnya dicetak."
+      - soal: "Mengapa print('3 + 4') mencetak 3 + 4, bukan 7?"
+        pilihan:
+          - "karena tanda kutip membuatnya jadi tulisan"
+          - "karena 3 + 4 memang 7"
+          - "karena print tidak bisa menghitung"
+          - "karena angkanya terlalu kecil"
+        jawaban: 0
+        penjelasan: "Tanda kutip mengubah semuanya jadi tulisan. Hitungan hanya terjadi di luar tanda kutip."
+
 
 soal:
   - id: "s1-1"
@@ -318,3 +427,152 @@ soal:
       - "Baris catatan diawali tanda #."
       - "Python mengabaikan semua yang ada di belakang #."
       - "Tulis komentar di antara dua print(). Output tidak berubah."
+
+  - id: "s1-6"
+    judul: "Poster Pengumuman"
+    sulit: "sedang"
+    cerita: |
+      Si Kancil ditunjuk membuat poster pengumuman lomba mewarnai.
+      Posternya harus rapi. Baris pertama berisi judul. Lalu ada satu
+      baris kosong. Baris terakhir berisi ajakan. Judulnya 'Lomba
+      Mewarnai'. Ajakannya 'Ayo ikut, ya!'. Baris kosong dibuat dengan
+      print() tanpa isi. Cetak tiga baris: judul, baris kosong, lalu
+      ajakan.
+    input: "Tidak ada input."
+    output: "Tiga baris: Lomba Mewarnai, satu baris kosong, lalu Ayo ikut, ya!."
+    contoh:
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+    tes:
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+      - input: ""
+        output: "Lomba Mewarnai\n\nAyo ikut, ya!"
+    solusi: |
+      print('Lomba Mewarnai')
+      print()
+      print('Ayo ikut, ya!')
+    petunjuk:
+      - "Baris kosong dibuat dengan print() tanpa isi."
+      - "Cetak judul dulu, lalu baris kosong, lalu ajakan."
+      - "Urutannya: print('Lomba Mewarnai'), print(), lalu print('Ayo ikut, ya!')."
+
+  - id: "s1-7"
+    judul: "Bintang Buat Kelas"
+    sulit: "sulit"
+    cerita: |
+      Kancil ingin menghias dinding kelas dengan gambar bintang besar.
+      Gambarnya terbuat dari tanda bintang. Bagian tengahnya paling
+      lebar, lima bintang. Lalu mengecil ke atas dan ke bawah. Hasilnya
+      seperti berlian. Cetak gambar ini persis: dua spasi lalu satu
+      bintang. Satu spasi lalu tiga bintang. Lima bintang tanpa spasi.
+      Lalu balik lagi sampai satu bintang. Perhatikan spasi di awal
+      baris!
+    input: "Tidak ada input."
+    output: "Lima baris bintang: 1, 3, 5, 3, 1 bintang. Baris atas dan bawah diawali spasi."
+    contoh:
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+    tes:
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+      - input: ""
+        output: "  *\n ***\n*****\n ***\n  *"
+    solusi: |
+      print('  *')
+      print(' ***')
+      print('*****')
+      print(' ***')
+      print('  *')
+    petunjuk:
+      - "Tiap baris dicetak dengan satu print()."
+      - "Spasi di awal baris ikut tercetak. Tulis di dalam tanda kutip."
+      - "Urutan bintang: 1, 3, 5, lalu turun lagi 3, 1."
+  - id: "s1-8"
+    judul: "Papan Sambutan Kelas"
+    sulit: "sedang"
+    cerita: |
+      Kelas Kancil kedatangan tamu dari sekolah lain.
+      Kancil diminta membuat papan sambutan di komputer.
+      Papannya berbentuk kotak. Bagian atas dan bawah
+      memakai tanda plus dan garis. Di tengah ada tulisan
+      Halo. Cetak kotak itu persis, lengkap dengan spasi
+      di dalamnya.
+    input: "Tidak ada input."
+    output: "Tiga baris kotak: garis atas, baris tengah, lalu garis bawah."
+    contoh:
+      - input: ""
+        output: "+------+\n| Halo |\n+------+"
+    tes:
+      - input: ""
+        output: "+------+\n| Halo |\n+------+"
+      - input: ""
+        output: "+------+\n| Halo |\n+------+"
+      - input: ""
+        output: "+------+\n| Halo |\n+------+"
+      - input: ""
+        output: "+------+\n| Halo |\n+------+"
+      - input: ""
+        output: "+------+\n| Halo |\n+------+"
+    solusi: |
+      print('+------+')
+      print('| Halo |')
+      print('+------+')
+    petunjuk:
+      - "Cetak tiga baris dengan tiga print()."
+      - "Garis atas dan bawah sama: tanda plus, enam garis, tanda plus."
+      - "Baris tengah: garis tegak, spasi, tulisan Halo, spasi, garis tegak."
+  - id: "s1-9"
+    judul: "Huruf K dari Bintang"
+    sulit: "sulit"
+    cerita: |
+      Kancil membuat huruf K raksasa dari tanda bintang
+      untuk hiasan dinding kelas. Huruf K punya dua kaki:
+      satu ke atas dan satu ke bawah. Bagian tengahnya
+      menyempit. Bentuknya seperti huruf K di buku tulis.
+      Cetak huruf K itu persis. Perhatikan spasi di
+      tengah tiap baris!
+    input: "Tidak ada input."
+    output: "Tujuh baris bintang membentuk huruf K."
+    contoh:
+      - input: ""
+        output: "*   *\n*  *\n* *\n**\n* *\n*  *\n*   *"
+    tes:
+      - input: ""
+        output: "*   *\n*  *\n* *\n**\n* *\n*  *\n*   *"
+      - input: ""
+        output: "*   *\n*  *\n* *\n**\n* *\n*  *\n*   *"
+      - input: ""
+        output: "*   *\n*  *\n* *\n**\n* *\n*  *\n*   *"
+      - input: ""
+        output: "*   *\n*  *\n* *\n**\n* *\n*  *\n*   *"
+      - input: ""
+        output: "*   *\n*  *\n* *\n**\n* *\n*  *\n*   *"
+    solusi: |
+      print('*   *')
+      print('*  *')
+      print('* *')
+      print('**')
+      print('* *')
+      print('*  *')
+      print('*   *')
+    petunjuk:
+      - "Tiap baris dicetak dengan satu print()."
+      - "Spasi di tengah makin sedikit sampai baris tengah."
+      - "Setelah baris tengah, spasi makin banyak lagi. Ikuti contoh persis."

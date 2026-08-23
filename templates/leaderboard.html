@@ -3,6 +3,7 @@
 {% block content %}
 <div class="section-title">🏆 Papan Skor</div>
 <div class="card">
+  <div class="table-wrap">
   <table class="lb-table">
     <tr><th>#</th><th>Pengguna</th><th>Pangkat</th><th>XP</th><th>Streak</th></tr>
     {% for r in rows %}
@@ -15,5 +16,6 @@
     </tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 {% endblock %}

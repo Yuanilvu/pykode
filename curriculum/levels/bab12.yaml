@@ -69,6 +69,24 @@ pelajaran:
           - "[0, 5]"
         jawaban: 0
         penjelasan: "range(5) berisi 0 sampai 4, dan comprehension menyalinnya apa adanya."
+      - soal: "Hasil dari [x + 1 for x in [10, 20]] adalah..."
+        pilihan:
+          - "[11, 21]"
+          - "[10, 20]"
+          - "[1, 2]"
+          - "[20, 40]"
+        jawaban: 0
+        penjelasan: "Setiap anggota ditambah 1. 10 jadi 11, 20 jadi 21."
+      - soal: "[x for x in range(1, 6) if x % 2 == 1] menghasilkan..."
+        pilihan:
+          - "[1, 3, 5]"
+          - "[2, 4]"
+          - "[1, 2, 3, 4, 5]"
+          - "[1, 5]"
+        jawaban: 0
+        penjelasan: "if x % 2 == 1 menyaring angka ganjil: 1, 3, 5."
+
+
 
   - id: "12-2"
     judul: "Lambda: Fungsi Kilat"
@@ -139,6 +157,24 @@ pelajaran:
           - "pakai variabel"
         jawaban: 1
         penjelasan: "Fungsi yang panjang dan sering dipakai lebih jelas ditulis dengan def."
+      - soal: "lambda x: x * 3 dipanggil dengan 4 menghasilkan..."
+        pilihan:
+          - "12"
+          - "7"
+          - "4"
+          - "34"
+        jawaban: 0
+        penjelasan: "Lambda mengalikan 4 dengan 3. Hasilnya 12."
+      - soal: "list(map(lambda x: x * 10, [1, 2, 3])) menghasilkan..."
+        pilihan:
+          - "[1, 2, 3]"
+          - "[10, 20, 30]"
+          - "[11, 12, 13]"
+          - "error"
+        jawaban: 1
+        penjelasan: "Lambda mengalikan tiap anggota dengan 10: 10, 20, 30."
+
+
 
   - id: "12-3"
     judul: "File I/O: Menyimpan Catatan"
@@ -217,6 +253,24 @@ pelajaran:
           - "huruf pertama file"
         jawaban: 1
         penjelasan: "readlines() memecah isi file menjadi list, satu anggota per baris."
+      - soal: "f.write('halo') dipakai untuk..."
+        pilihan:
+          - "menulis teks ke file"
+          - "membaca isi file"
+          - "menutup file"
+          - "menghapus file"
+        jawaban: 0
+        penjelasan: "write() menulis teks ke file yang sedang dibuka."
+      - soal: "Mode 'r' pada open() berarti..."
+        pilihan:
+          - "menulis file"
+          - "membaca file"
+          - "menghapus file"
+          - "menyalin file"
+        jawaban: 1
+        penjelasan: "'r' singkatan read (baca). Mode 'w' untuk menulis."
+
+
 
   - id: "12-4"
     judul: "Metode String Lanjutan"
@@ -284,6 +338,102 @@ pelajaran:
           - "'py'"
         jawaban: 1
         penjelasan: "'python' memang diawali 'py', jadi hasilnya True."
+      - soal: "'kancil'.isalpha() menghasilkan..."
+        pilihan:
+          - "True"
+          - "False"
+          - "error"
+          - "'kancil'"
+        jawaban: 0
+        penjelasan: "Semua karakter 'kancil' adalah huruf, jadi isalpha() memberi True."
+
+
+  - id: "12-5"
+    judul: "Membaca Baris demi Baris"
+    menit: 7
+    materi: |
+      File berisi banyak baris. Kadang kita hanya
+      mau memprosesnya satu per satu. Misalnya
+      menjumlahkan semua nilai di file nilai.txt.
+      Caranya: baca baris demi baris!
+
+      ## Cara paling mudah: for
+
+      ```
+      total = 0
+      with open('nilai.txt', 'r') as f:
+          for baris in f:
+              total = total + int(baris)
+      print(total)
+      ```
+
+      Loop `for baris in f` membaca file baris per baris.
+      Setiap putaran, `baris` berisi satu baris teks.
+      Kita ubah dengan int() lalu jumlahkan.
+
+      ## Mode a: menambah isi
+
+      Mode 'w' menghapus isi lama!
+      Kalau mau MENAMBAH di bagian akhir,
+      pakai mode 'a' (append):
+
+      ```
+      with open('catatan.txt', 'a') as f:
+          f.write('Baris baru!')
+      ```
+
+      ## Kenapa penting?
+
+      Membaca baris per baris itu cara program
+      membaca data besar: daftar nilai, log game,
+      sampai data pengguna. File tidak perlu
+      dibaca sekaligus. Komputer tetap kuat
+      walau filenya besar.
+    contoh:
+      - kode: |
+          with open('nilai.txt', 'w') as f:
+              f.write('90\n80\n100\n')
+          total = 0
+          with open('nilai.txt', 'r') as f:
+              for baris in f:
+                  total = total + int(baris)
+          print(total)
+        penjelasan: "Tiga nilai dibaca baris per baris lalu dijumlahkan: 90 + 80 + 100 = 270."
+      - kode: |
+          with open('catatan.txt', 'w') as f:
+              f.write('Baris satu\n')
+          with open('catatan.txt', 'a') as f:
+              f.write('Baris dua\n')
+          with open('catatan.txt', 'r') as f:
+              for baris in f:
+                  print(baris)
+        penjelasan: "Mode 'a' menambah baris baru di akhir file tanpa menghapus isi lama."
+    kuis:
+      - soal: "for baris in f membaca file..."
+        pilihan:
+          - "sekaligus semua isi"
+          - "baris per baris"
+          - "huruf per huruf"
+          - "tidak membaca apa pun"
+        jawaban: 1
+        penjelasan: "Setiap putaran loop, variabel baris berisi satu baris teks dari file."
+      - soal: "Mode 'a' pada open() berarti..."
+        pilihan:
+          - "menghapus file"
+          - "menambah isi di akhir file"
+          - "membaca file"
+          - "menyalin file"
+        jawaban: 1
+        penjelasan: "'a' singkatan append: menambah teks di bagian akhir tanpa menghapus isi lama."
+      - soal: "Mode 'w' pada open() akan..."
+        pilihan:
+          - "hanya membaca"
+          - "menambah isi"
+          - "menghapus isi lama lalu menulis yang baru"
+          - "mengganti nama file"
+        jawaban: 2
+        penjelasan: "'w' menimpa file: isi lama dihapus, lalu teks baru ditulis."
+
 
 soal:
   - id: "s12-1"
@@ -491,3 +641,196 @@ soal:
       - "Simpan semua skor ke list."
       - "filter(lambda x: x % 2 == 0, a) menyaring skor genap."
       - "Ubah hasil filter jadi list dengan list(), lalu cetak sebaris."
+
+  - id: "s12-6"
+    judul: "Kata Panjang"
+    sulit: "sedang"
+    cerita: |
+      Kancil ikut lomba merangkai kata.
+      Aturannya: hanya kata lebih dari 3 huruf yang boleh dipakai.
+      Kata pendek dibuang.
+      Kancil harus menyaring kalimat dengan cepat.
+      List comprehension bisa melakukannya sekali jalan.
+
+      Baca satu kalimat.
+      Cetak kata yang panjangnya lebih dari 3 huruf.
+      Satu baris, dipisah spasi.
+      Kalau tidak ada, tidak usah cetak apa-apa.
+    input: "Satu baris kalimat."
+    output: "Satu baris: kata yang panjangnya lebih dari 3 huruf, dipisah spasi."
+    contoh:
+      - input: "aku suka makan nasi"
+        output: "suka makan nasi"
+      - input: "ini"
+        output: ""
+    tes:
+      - input: "aku suka makan nasi"
+        output: "suka makan nasi"
+      - input: "ini"
+        output: ""
+      - input: "a bb ccc dddd"
+        output: "dddd"
+      - input: "kancil pintar"
+        output: "kancil pintar"
+      - input: "a python bc seru"
+        output: "python seru"
+      - input: "ai"
+        output: ""
+    solusi: |
+      kalimat = input()
+      kata = kalimat.split()
+      panjang = [k for k in kata if len(k) > 3]
+      for k in panjang:
+          print(k, end=' ')
+      print()
+    petunjuk:
+      - "Pecah kalimat jadi daftar kata dengan .split()."
+      - "Pakai list comprehension dengan syarat len(k) > 3."
+      - "Cetak isi list dengan for dan end=' ' supaya sebaris."
+
+  - id: "s12-7"
+    judul: "Celengan File"
+    sulit: "sulit"
+    cerita: |
+      Kancil menabung di celengan ajaib yang bisa menyimpan angka.
+      Celengan itu menyimpan uangnya ke dalam file.
+      Besoknya, Kancil membaca lagi file itu.
+      Dia ingin tahu total dan tabungan terbesarnya.
+
+      Baca banyak uang, lalu uang-uangnya.
+      Tulis ke file bernama 'data.txt'.
+      Baca lagi file itu.
+      Cetak 'Total: <jumlah>' lalu 'Terbesar: <angka terbesar>'.
+    input: "Baris 1: banyak uang (n). Lalu n baris berisi uang."
+    output: "Dua baris: 'Total: <jumlah>' lalu 'Terbesar: <angka terbesar>'."
+    contoh:
+      - input: "3\n5\n10\n15"
+        output: "Total: 30\nTerbesar: 15"
+      - input: "1\n7"
+        output: "Total: 7\nTerbesar: 7"
+    tes:
+      - input: "3\n5\n10\n15"
+        output: "Total: 30\nTerbesar: 15"
+      - input: "1\n7"
+        output: "Total: 7\nTerbesar: 7"
+      - input: "4\n2\n2\n2\n2"
+        output: "Total: 8\nTerbesar: 2"
+      - input: "2\n100\n1"
+        output: "Total: 101\nTerbesar: 100"
+      - input: "5\n3\n1\n4\n1\n5"
+        output: "Total: 14\nTerbesar: 5"
+      - input: "3\n9\n9\n9"
+        output: "Total: 27\nTerbesar: 9"
+    solusi: |
+      n = int(input())
+      with open('data.txt', 'w') as f:
+          for i in range(n):
+              f.write(input() + '\n')
+      with open('data.txt', 'r') as f:
+          isi = f.readlines()
+      angka = [int(b) for b in isi]
+      print('Total:', sum(angka))
+      print('Terbesar:', max(angka))
+    petunjuk:
+      - "Tulis tiap uang ke file dengan f.write() di dalam with open('data.txt', 'w')."
+      - "Baca lagi dengan f.readlines(). Ubah tiap baris jadi angka dengan int()."
+      - "sum() menjumlahkan semua. max() mencari yang terbesar."
+  - id: "s12-9"
+    judul: "Buku Tamu Ajaib"
+    sulit: "sulit"
+    cerita: |
+      Perpustakaan punya buku tamu.
+      Setiap pengunjung menulis namanya.
+      Bu Pustakawan ingin menyimpan nama-nama itu ke file.
+      Lalu membacanya lagi.
+      Dia hanya ingin nama yang panjang, lebih dari 3 huruf.
+      Baca banyak nama, lalu nama-namanya.
+      Tulis semua nama ke file bernama 'tamu.txt'.
+      Baca lagi file itu.
+      Cetak nama yang panjangnya lebih dari 3 huruf.
+      Kalau tidak ada, cetak 'Tidak ada'.
+    input: "Baris 1: n (banyak nama). n baris berikutnya: nama."
+    output: "Satu baris per nama yang panjangnya lebih dari 3 huruf, atau 'Tidak ada'."
+    contoh:
+      - input: "3\nbudi\nayu\nkancil"
+        output: "budi\nkancil"
+      - input: "2\nayu\nidi"
+        output: "Tidak ada"
+    tes:
+      - input: "3\nbudi\nayu\nkancil"
+        output: "budi\nkancil"
+      - input: "2\nayu\nidi"
+        output: "Tidak ada"
+      - input: "1\npython"
+        output: "python"
+      - input: "4\na\nbb\nccc\ndddd"
+        output: "dddd"
+      - input: "2\nsari\nrina"
+        output: "sari\nrina"
+      - input: "1\nabc"
+        output: "Tidak ada"
+    solusi: |
+      n = int(input())
+      with open('tamu.txt', 'w') as f:
+          for i in range(n):
+              f.write(input() + '\n')
+      with open('tamu.txt', 'r') as f:
+          isi = f.readlines()
+      panjang = [k.strip() for k in isi if len(k.strip()) > 3]
+      if len(panjang) == 0:
+          print('Tidak ada')
+      else:
+          for k in panjang:
+              print(k)
+    petunjuk:
+      - "Tulis tiap nama ke file dengan f.write() di dalam with open('tamu.txt', 'w')."
+      - "Baca lagi dengan f.readlines(). Tiap baris masih ada \n di akhir."
+      - "Pakai k.strip() untuk membersihkan. Saring dengan list comprehension."
+
+  - id: "s12-8"
+    judul: "Total Kuadrat"
+    sulit: "sedang"
+    cerita: |
+      Kancil ikut lomba hitung cepat lagi.
+      Kali ini harus menjumlahkan kuadrat.
+      Kuadrat angka 3 adalah 9.
+      Kuadrat angka 4 adalah 16.
+      Menghitung manual membuat Kancil pusing.
+      Untung ada lambda dan map!
+      Baca banyak angka, lalu angka-angkanya.
+      Kuadratkan tiap angka dengan lambda.
+      Jumlahkan semua kuadrat dengan sum().
+      Cetak 'Total:' lalu hasilnya.
+    input: "Baris 1: n (banyak angka). n baris berikutnya: angka."
+    output: "Satu baris: Total: <jumlah kuadrat semua angka>."
+    contoh:
+      - input: "3\n1\n2\n3"
+        output: "Total: 14"
+      - input: "2\n4\n5"
+        output: "Total: 41"
+    tes:
+      - input: "3\n1\n2\n3"
+        output: "Total: 14"
+      - input: "2\n4\n5"
+        output: "Total: 41"
+      - input: "1\n7"
+        output: "Total: 49"
+      - input: "4\n1\n1\n1\n1"
+        output: "Total: 4"
+      - input: "3\n2\n2\n2"
+        output: "Total: 12"
+      - input: "2\n0\n9"
+        output: "Total: 81"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      total = sum(map(lambda x: x * x, a))
+      print('Total:', total)
+    petunjuk:
+      - "Simpan semua angka di dalam list."
+      - "map(lambda x: x * x, a) menguadratkan tiap angka."
+      - "sum() menjumlahkan semuanya. Cetak 'Total:' lalu hasilnya."
+
+

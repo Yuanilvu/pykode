@@ -26,6 +26,33 @@
 <div class="flash flash-success">🔥 Bonus streak {{ streak_bonus }} XP! Lanjutkan semangatnya!</div>
 {% endif %}
 
+{% if goal_bonus > 0 %}
+<div class="flash flash-success">🎯 Target harian tercapai! Bonus +{{ goal_bonus }} XP. Keren!</div>
+{% endif %}
+
+<div class="card goal-card">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <strong>🎯 Target Harian</strong>
+    <span style="color:var(--muted);font-size:.85rem">1 pelajaran + 2 drill → bonus +10 XP</span>
+  </div>
+  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap">
+    <span class="goal-item {% if target_lessons >= 1 %}goal-done{% endif %}">📖 {{ target_lessons }}/1 pelajaran</span>
+    <span class="goal-item {% if target_drills >= 2 %}goal-done{% endif %}">🧠 {{ target_drills }}/2 drill</span>
+    <span class="goal-item {% if target_met %}goal-done{% endif %}">✅ {{ 'Tercapai! Ambil bonusnya!' if target_met else 'Belum — ayo semangat!' }}</span>
+  </div>
+  <div class="progress" style="margin-top:8px"><i style="width:{% if target_met %}100{% else %}{{ (target_lessons + target_drills / 2) * 50 }}{% endif %}%; background:var(--success)"></i></div>
+  <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">
+    {% if review_count > 0 %}
+    <a class="btn btn-outline btn-sm" href="{{ url_for('review') }}">🔁 Review {{ review_count }} soal menunggumu</a>
+    {% else %}
+    <span style="color:var(--muted);font-size:.85rem">🔁 Review cerdas: tidak ada yang perlu diulang hari ini 🎉</span>
+    {% endif %}
+    {% if challenge %}
+    <a class="btn btn-outline btn-sm" href="{{ url_for('challenge') }}">🏆 Tantangan Mingguan: {{ chal_solved }}/{{ challenge.problem_ids|length }} selesai</a>
+    {% endif %}
+  </div>
+</div>
+
 <div class="section-title">📚 Pilih Bab</div>
 <div class="bab-grid">
   {% if project %}
@@ -64,6 +91,7 @@
 
 <div class="section-title">🏆 Papan Skor Top 5</div>
 <div class="card">
+  <div class="table-wrap">
   <table class="lb-table">
     <tr><th>#</th><th>Pengguna</th><th>XP</th><th>Streak</th></tr>
     {% for r in top %}
@@ -75,6 +103,7 @@
     </tr>
     {% endfor %}
   </table>
+  </div>
   <p style="margin:10px 0 0; text-align:right"><a href="{{ url_for('leaderboard') }}">Lihat semua →</a></p>
 </div>
 

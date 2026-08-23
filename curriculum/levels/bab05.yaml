@@ -68,6 +68,22 @@ pelajaran:
           - "tidak pernah"
         jawaban: 1
         penjelasan: "range(3) = 3 putaran. Jadi 'Halo' tercetak 3 kali."
+      - soal: "Apa outputnya?\n\nfor i in range(2):\n    print('Hai')"
+        pilihan:
+          - "Hai tercetak 1 kali"
+          - "Hai tercetak 2 kali"
+          - "Hai tercetak 3 kali"
+          - "error"
+        jawaban: 1
+        penjelasan: "range(2) = 2 putaran. Jadi 'Hai' tercetak 2 kali."
+      - soal: "Berapa banyak angka yang dihasilkan range(6)?"
+        pilihan:
+          - "5"
+          - "6"
+          - "7"
+          - "0"
+        jawaban: 1
+        penjelasan: "range(6) memberi 0, 1, 2, 3, 4, 5. Totalnya 6 angka."
 
   - id: "5-2"
     judul: "range(a, b): Mulai dan Berhenti"
@@ -124,6 +140,22 @@ pelajaran:
           - "range(0, 5)"
         jawaban: 1
         penjelasan: "range(1, 6) memberi 1, 2, 3, 4, 5. Berhenti sebelum 6."
+      - soal: "range(3, 6) menghasilkan..."
+        pilihan:
+          - "3, 4, 5"
+          - "3, 4, 5, 6"
+          - "2, 3, 4, 5"
+          - "4, 5, 6"
+        jawaban: 0
+        penjelasan: "Mulai dari 3, berhenti sebelum 6. Hasilnya 3, 4, 5."
+      - soal: "range(7, 7) menghasilkan..."
+        pilihan:
+          - "7"
+          - "tidak ada angka (kosong)"
+          - "7 dan 7"
+          - "error"
+        jawaban: 1
+        penjelasan: "Mulai dari 7 dan berhenti sebelum 7. Jadi tidak ada satu angka pun."
 
   - id: "5-3"
     judul: "while: Ulang Sampai Cukup"
@@ -194,6 +226,22 @@ pelajaran:
           - "0 kali"
         jawaban: 1
         penjelasan: "n berisi 2 lalu 1 (dua putaran). Setelah n = 0, kondisi salah dan loop berhenti."
+      - soal: "Apa outputnya?\n\nn = 5\nwhile n > 2:\n    print(n)\n    n = n - 1"
+        pilihan:
+          - "5, 4, 3"
+          - "5, 4, 3, 2"
+          - "4, 3, 2"
+          - "5, 4"
+        jawaban: 0
+        penjelasan: "n = 5, 4, 3 tercetak. Begitu n = 2, kondisi 2 > 2 salah, loop berhenti."
+      - soal: "Apa outputnya?\n\nn = 1\nwhile n <= 3:\n    print(n)\n    n = n + 1"
+        pilihan:
+          - "1, 2, 3"
+          - "1, 2, 3, 4"
+          - "0, 1, 2"
+          - "3, 2, 1"
+        jawaban: 0
+        penjelasan: "n = 1, 2, 3 tercetak. Begitu n = 4, kondisi 4 <= 3 salah, loop berhenti."
 
   - id: "5-4"
     judul: "break dan continue: Rem dan Lompat"
@@ -266,6 +314,103 @@ pelajaran:
           - "1, 2"
         jawaban: 1
         penjelasan: "Saat i = 2, continue melewati print(2). Jadi hanya 1 dan 3 yang tercetak."
+      - soal: "Apa outputnya?\n\nfor i in range(1, 6):\n    if i == 4:\n        break\n    print(i)"
+        pilihan:
+          - "1, 2, 3"
+          - "1, 2, 3, 4"
+          - "1, 2, 3, 4, 5"
+          - "4"
+        jawaban: 0
+        penjelasan: "Saat i = 4, break menghentikan loop. Jadi hanya 1, 2, 3 yang tercetak."
+
+  - id: "5-5"
+    judul: "Menabung Angka: Akumulator"
+    menit: 7
+    materi: |
+      Punya celengan? Setiap hari kamu memasukkan satu koin. Lama-lama
+      celengan penuh. Jumlahnya terus bertambah.
+
+      Di Python, kita bisa membuat celengan angka. Namanya akumulator.
+      Akumulator itu variabel yang menampung kumpulan hasil. Dia ditambah
+      sedikit demi sedikit di dalam loop.
+
+      ## Pola dasarnya
+
+      ```
+      total = 0
+      for i in range(1, 6):
+          total = total + i
+      print(total)
+      ```
+
+      Baris `total = total + i` artinya: ambil isi total, tambahkan i,
+      lalu simpan lagi ke total. Seperti memasukkan koin ke celengan.
+
+      Mari kita telusuri. Total mulai 0.
+      Putaran 1: total = 0 + 1 = 1.
+      Putaran 2: total = 1 + 2 = 3.
+      Putaran 3: total = 3 + 3 = 6.
+      Putaran 4: total = 6 + 4 = 10.
+      Putaran 5: total = 10 + 5 = 15.
+      Jadi hasil akhirnya 15!
+
+      ## Bisa dipakai dengan while juga
+
+      Akumulator tidak harus for. while juga bisa:
+
+      ```
+      total = 0
+      n = 1
+      while n <= 3:
+          total = total + n
+          n = n + 1
+      ```
+
+      Total jadi 1, lalu 3, lalu 6. Begitu n = 4, loop berhenti.
+
+      Akumulator dipakai di mana-mana: menghitung total belanja, skor game,
+      sampai rata-rata nilai. Mulai dari nol, lalu menabung sedikit demi sedikit!
+    contoh:
+      - kode: |
+          total = 0
+          for i in range(1, 6):
+              total = total + i
+          print(total)
+        penjelasan: "total menabung tiap putaran: 0+1+2+3+4+5 = 15."
+      - kode: |
+          total = 0
+          n = 1
+          while n <= 3:
+              total = total + n
+              n = n + 1
+          print(total)
+        penjelasan: "Total jadi 1, lalu 3, lalu 6. while berhenti saat n jadi 4."
+    kuis:
+      - soal: "Kode ini mencetak apa?\n\ntotal = 0\nfor i in range(1, 5):\n    total = total + i\nprint(total)"
+        pilihan:
+          - "10"
+          - "15"
+          - "4"
+          - "error"
+        jawaban: 0
+        penjelasan: "total = 0+1+2+3+4 = 10. range(1, 5) memberi 1, 2, 3, 4."
+      - soal: "Apa arti baris total = total + i?"
+        pilihan:
+          - "mengganti total dengan i"
+          - "mengambil isi total, menambah i, lalu menyimpannya lagi"
+          - "menghapus total"
+          - "mencetak total"
+        jawaban: 1
+        penjelasan: "Baris itu menabung: isi total diambil, ditambah i, disimpan lagi ke total."
+      - soal: "Kode ini mencetak apa?\n\ntotal = 0\nfor i in range(1, 4):\n    total = total + 2\nprint(total)"
+        pilihan:
+          - "6"
+          - "3"
+          - "2"
+          - "8"
+        jawaban: 0
+        penjelasan: "Tiga putaran, tiap putaran total bertambah 2: 0 + 2 + 2 + 2 = 6."
+
 
 soal:
   - id: "s5-1"
@@ -468,3 +613,174 @@ soal:
       - "Pakai variabel ketemu = False sebagai penanda awal."
       - "Di dalam for, kalau x == 7, ubah ketemu jadi True lalu break."
       - "Setelah loop, periksa ketemu untuk mencetak hasilnya."
+
+  - id: "s5-6"
+    judul: "Berhenti di Nol"
+    sulit: "sedang"
+    cerita: |
+      Bu Guru memberi Kancil setumpuk kartu angka.
+      Tugasnya sederhana: jumlahkan semua angka.
+      Ada satu aturan: kartu 0 adalah tanda berhenti.
+      Begitu kartu 0 muncul, Kancil berhenti membaca.
+      Ia langsung menjumlahkan kartu yang sudah dibaca.
+
+      Bantu Kancil: baca angka satu per satu.
+      Kalau angkanya 0, berhenti.
+      Lalu cetak jumlah semua angka sebelum 0.
+    input: "Beberapa baris angka. Baris terakhir selalu 0."
+    output: "Satu angka: jumlah semua angka sebelum 0."
+    contoh:
+      - input: "3\n4\n0"
+        output: "7"
+      - input: "5\n0"
+        output: "5"
+    tes:
+      - input: "3\n4\n0"
+        output: "7"
+      - input: "5\n0"
+        output: "5"
+      - input: "0"
+        output: "0"
+      - input: "1\n2\n3\n4\n0"
+        output: "10"
+      - input: "7\n7\n7\n0"
+        output: "21"
+      - input: "10\n20\n0"
+        output: "30"
+    solusi: |
+      total = 0
+      while True:
+          x = int(input())
+          if x == 0:
+              break
+          total = total + x
+      print(total)
+    petunjuk:
+      - "Buat total = 0 sebelum loop."
+      - "Pakai while True. Di dalamnya baca angka dengan int(input())."
+      - "Kalau angka 0, pakai break. Kalau bukan, tambahkan ke total."
+
+  - id: "s5-7"
+    judul: "Tangga Bintang"
+    sulit: "sulit"
+    cerita: |
+      Kancil membantu menghias kelas dengan kertas bintang.
+      Hiasannya berbentuk tangga: baris pertama 1 bintang,
+      baris kedua 2 bintang, baris ketiga 3 bintang.
+      Makin ke bawah, makin banyak bintangnya.
+      Kancil harus membuat tangga dengan N baris.
+
+      Bantu Kancil: baca angka N.
+      Lalu cetak N baris bintang.
+      Baris ke-i berisi i bintang.
+      Pakai for di dalam for!
+    input: "Satu angka N (1-10)."
+    output: "N baris bintang. Baris ke-i berisi i bintang."
+    contoh:
+      - input: "3"
+        output: "*\n**\n***"
+      - input: "5"
+        output: "*\n**\n***\n****\n*****"
+    tes:
+      - input: "1"
+        output: "*"
+      - input: "2"
+        output: "*\n**"
+      - input: "3"
+        output: "*\n**\n***"
+      - input: "4"
+        output: "*\n**\n***\n****"
+      - input: "5"
+        output: "*\n**\n***\n****\n*****"
+      - input: "10"
+        output: "*\n**\n***\n****\n*****\n******\n*******\n********\n*********\n**********"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          for j in range(i):
+              print('*', end='')
+          print()
+    petunjuk:
+      - "Pakai for i in range(1, n + 1) untuk tiap baris."
+      - "Di dalamnya, pakai for j in range(i) untuk bintang."
+      - "Pakai end='' supaya bintang tidak pindah baris. Lalu print() kosong untuk baris baru."
+  - id: "s5-8"
+    judul: "Jumlah Kelipatan Tiga"
+    sulit: "sedang"
+    cerita: |
+      Kancil belajar berhitung kelipatan tiga.
+      Dia menjumlahkan semua kelipatan tiga dari 3
+      sampai N. Contoh: kalau N = 9, kelipatannya
+      3, 6, 9. Jumlahnya 18. Kalau N bukan kelipatan
+      tiga, kelipatan terakhir yang dihitung adalah
+      yang paling dekat di bawah N. Baca N, lalu
+      cetak jumlahnya.
+    input: "Satu angka N (3-100)."
+    output: "Satu angka: jumlah semua kelipatan 3 dari 3 sampai N."
+    contoh:
+      - input: "9"
+        output: "18"
+      - input: "10"
+        output: "18"
+    tes:
+      - input: "9"
+        output: "18"
+      - input: "10"
+        output: "18"
+      - input: "3"
+        output: "3"
+      - input: "12"
+        output: "30"
+      - input: "15"
+        output: "45"
+      - input: "5"
+        output: "3"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(3, n + 1, 3):
+          total = total + i
+      print(total)
+    petunjuk:
+      - "Buat total = 0 sebelum loop."
+      - "Pakai for i in range(3, n + 1, 3). Angka 3 di tengah adalah langkahnya."
+      - "Tambahkan i ke total di dalam loop. Cetak total setelah loop."
+  - id: "s5-9"
+    judul: "Pembagi Setia"
+    sulit: "sulit"
+    cerita: |
+      Bu Guru memberi Kancil satu angka dan satu tugas.
+      Tugasnya: temukan semua bilangan yang bisa membagi
+      angka itu tanpa sisa. Bilangan itu namanya pembagi.
+      Contoh: pembagi dari 6 adalah 1, 2, 3, dan 6.
+      Baca satu angka N, lalu cetak semua pembaginya
+      dari 1 sampai N, satu per baris.
+    input: "Satu angka N (1-100)."
+    output: "Beberapa baris: semua pembagi N, urut dari kecil ke besar."
+    contoh:
+      - input: "6"
+        output: "1\n2\n3\n6"
+      - input: "7"
+        output: "1\n7"
+    tes:
+      - input: "6"
+        output: "1\n2\n3\n6"
+      - input: "7"
+        output: "1\n7"
+      - input: "1"
+        output: "1"
+      - input: "12"
+        output: "1\n2\n3\n4\n6\n12"
+      - input: "10"
+        output: "1\n2\n5\n10"
+      - input: "100"
+        output: "1\n2\n4\n5\n10\n20\n25\n50\n100"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          if n % i == 0:
+              print(i)
+    petunjuk:
+      - "Pakai for i in range(1, n + 1) untuk mencoba semua bilangan."
+      - "n % i == 0 artinya i membagi n tanpa sisa."
+      - "Kalau syaratnya benar, cetak i. Satu pembagi per baris."

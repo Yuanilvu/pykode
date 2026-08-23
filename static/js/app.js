@@ -30,6 +30,51 @@ function confetti() {
 
 function initEditor(textarea) {
   if (!window.CodeMirror || !textarea) return { getValue: function () { return textarea.value; } };
+
+  /* Fitur bantu ngetik (auto-complete kecil):
+     1. Kutip/kurung langsung ditutup otomatis: ' " ( [ {
+     2. Enter setelah titik dua (:) langsung kasih indentasi baris baru */
+  var PAIRS = { "'": "'", '"': '"', '(': ')', '[': ']', '{': '}' };
+
+  function autoPair(cm, open) {
+    var close = PAIRS[open];
+    if (cm.somethingSelected()) {
+      cm.replaceSelection(open + cm.getSelection() + close);
+      return;
+    }
+    var cur = cm.getCursor();
+    var line = cm.getLine(cur.line);
+    // Kalau karakter berikutnya sudah penutupnya, cukup lompati saja.
+    if (line.charAt(cur.ch) === close) {
+      cm.setCursor({ line: cur.line, ch: cur.ch + 1 });
+      return;
+    }
+    cm.replaceSelection(open + close);
+    cm.setCursor({ line: cur.line, ch: cur.ch + 1 });
+  }
+
+  function smartEnter(cm) {
+    var cur = cm.getCursor();
+    var line = cm.getLine(cur.line);
+    var before = line.slice(0, cur.ch).replace(/\s+$/, '');
+    if (before.endsWith(':')) {
+      var indent = (line.match(/^\s*/) || [''])[0];
+      cm.replaceSelection('\n' + indent + '    ');
+      return;
+    }
+    cm.execCommand('newlineAndIndent');
+  }
+
+  var extraKeys = {
+    Tab: function (cm) { cm.replaceSelection('    ', 'end'); },
+    Enter: smartEnter
+  };
+  Object.keys(PAIRS).forEach(function (k) {
+    extraKeys[k] = (function (open) {
+      return function (cm) { autoPair(cm, open); };
+    })(k);
+  });
+
   return CodeMirror.fromTextArea(textarea, {
     mode: 'python',
     lineNumbers: true,
@@ -37,7 +82,7 @@ function initEditor(textarea) {
     tabSize: 4,
     indentWithTabs: false,
     lineWrapping: false,
-    extraKeys: { Tab: function (cm) { cm.replaceSelection('    ', 'end'); } }
+    extraKeys: extraKeys
   });
 }
 
@@ -46,7 +91,7 @@ var _firstRunChecked = false;
 function maybeFirstRun() {
   if (_firstRunChecked) return;
   _firstRunChecked = true;
-  fetch('/api/first-run', { method: 'POST' })
+  fetch(PYKODE_BASE + '/api/first-run', { method: 'POST' })
     .then(function (r) { return r.json(); })
     .then(function (d) {
       if (d.new) toast('Badge baru: 👋 Hello, Dunia! (+10 XP)', 'good');
@@ -60,7 +105,7 @@ document.querySelectorAll('.run-example').forEach(function (btn) {
     var out = box.querySelector('.example-out');
     out.textContent = '⏳ Menjalankan...';
     out.classList.add('show');
-    fetch('/api/run', {
+    fetch(PYKODE_BASE + '/api/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code: btn.dataset.code })
@@ -84,7 +129,7 @@ document.querySelectorAll('.quiz-item').forEach(function (item) {
       var qIndex = parseInt(item.dataset.q, 10);
       var lessonId = item.dataset.lesson;
       inputs.forEach(function (i) { i.disabled = true; });
-      fetch('/api/quiz', {
+      fetch(PYKODE_BASE + '/api/quiz', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lesson_id: lessonId, q_index: qIndex, answer: answer })

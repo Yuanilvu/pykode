@@ -66,6 +66,23 @@ pelajaran:
           - "nilai None dikembalikan"
         jawaban: 2
         penjelasan: "Memanggil kunci yang tidak ada menyebabkan KeyError."
+      - soal: "nilai = {'A': 80}. Lalu nilai['B'] = 90. Berapa len(nilai)?"
+        pilihan:
+          - "1"
+          - "2"
+          - "3"
+          - "error"
+        jawaban: 1
+        penjelasan: "Kunci 'B' belum ada, jadi otomatis ditambahkan. Sekarang ada 2 pasangan: A dan B."
+      - soal: "d = {} lalu d['a'] = 1 dan d['a'] = 2. Berapa len(d)?"
+        pilihan:
+          - "1"
+          - "2"
+          - "3"
+          - "error"
+        jawaban: 0
+        penjelasan: "Mengubah nilai kunci yang sudah ada tidak menambah pasangan baru. Isi d tetap satu: {'a': 2}."
+
 
   - id: "7-2"
     judul: "Menjelajah Dictionary"
@@ -139,6 +156,23 @@ pelajaran:
           - "string kosong"
         jawaban: 2
         penjelasan: "get() tidak error. Dia mengembalikan None kalau kunci tidak ada."
+      - soal: "d = {'a': 1, 'b': 2}. Lalu for k in d: print(k) mencetak..."
+        pilihan:
+          - "a, b"
+          - "1, 2"
+          - "a 1, b 2"
+          - "error"
+        jawaban: 0
+        penjelasan: "for langsung menjelajah KUNCI dict. Jadi yang tercetak a lalu b."
+      - soal: "d = {'a': 1, 'b': 2}. Hasil d.get('c', 0) adalah..."
+        pilihan:
+          - "error"
+          - "None"
+          - "0"
+          - "'c'"
+        jawaban: 2
+        penjelasan: "Kunci 'c' tidak ada, jadi get memakai nilai cadangan 0."
+
 
   - id: "7-3"
     judul: "Set: Koleksi Tanpa Duplikat"
@@ -202,6 +236,23 @@ pelajaran:
           - "error"
         jawaban: 1
         penjelasan: "Angka 2 yang dobel dihitung sekali. Isi uniknya 1, 2, 3 = 3 buah."
+      - soal: "s = {1, 2, 3}. Lalu s.add(2). Berapa len(s)?"
+        pilihan:
+          - "2"
+          - "3"
+          - "4"
+          - "error"
+        jawaban: 1
+        penjelasan: "Angka 2 sudah ada di set. add(2) tidak menambah apa pun. Isinya tetap 3."
+      - soal: "a = {1, 2} dan b = {2, 3}. Isi a & b adalah..."
+        pilihan:
+          - "{1, 2, 3}"
+          - "{2}"
+          - "{1, 3}"
+          - "error"
+        jawaban: 1
+        penjelasan: "Tanda & mengambil irisan: angka yang ada di kedua set, yaitu 2."
+
 
   - id: "7-4"
     judul: "Dict + Set untuk Menghitung"
@@ -276,6 +327,88 @@ pelajaran:
           - "nama.sort()"
         jawaban: 1
         penjelasan: "Set membuang duplikat. Lalu len menghitung nama yang tersisa."
+      - soal: "s = {1, 2, 3}. Berapa len(s | {3, 4})?"
+        pilihan:
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+        jawaban: 1
+        penjelasan: "Gabungan berisi 1, 2, 3, 4. Angka 3 yang dobel dihitung sekali, jadi ada 4."
+
+
+  - id: "7-5"
+    judul: "Menghapus dan Menggabung Kamus"
+    menit: 6
+    materi: |
+      Dict tidak hanya bisa diisi. Kamu juga bisa menghapus isinya.
+      Menghapus itu penting. Misalnya siswa pindah sekolah, namanya
+      harus keluar dari buku nilai.
+
+      ## Menghapus dengan del
+
+      `del nilai['Sari']` menghapus pasangan 'Sari' dari dict.
+      Kalau kuncinya tidak ada, Python error (KeyError).
+      Jadi cek dulu dengan `in` kalau kamu ragu.
+
+      ## Menghapus dengan pop
+
+      `nilai.pop('Sari')` juga menghapus. Bedanya: pop
+      MENGEMBALIKAN nilai yang dihapus. Kamu bisa menyimpannya:
+      `v = nilai.pop('Sari')`.
+
+      ## Menggabung dua dict
+
+      Punya dua buku nilai? Gabung dengan `update()`:
+      `nilai1.update(nilai2)` menyalin semua isi nilai2 ke nilai1.
+      Kalau ada kunci yang sama, isi dari nilai2 yang menang.
+
+      ## Ringkasan
+
+      - `del d[kunci]` — hapus tanpa mengambil nilainya.
+      - `d.pop(kunci)` — hapus dan ambil nilainya.
+      - `d.update(d2)` — gabung dua dict.
+
+      Dict itu seperti loker pribadi. Kadang kamu harus
+      mengeluarkan barang lama atau memindahkan barang
+      dari loker lain. Sekarang kamu bisa!
+    contoh:
+      - kode: |
+          nilai = {'Budi': 90, 'Sari': 85, 'Rina': 92}
+          del nilai['Sari']
+          print(nilai)
+        penjelasan: "Pasangan 'Sari' dihapus. Isi dict tinggal Budi dan Rina."
+      - kode: |
+          nilai = {'Budi': 90, 'Sari': 85}
+          nilai.update({'Rina': 92, 'Tono': 88})
+          print(nilai)
+        penjelasan: "Isi dict kedua disalin ke nilai. Sekarang ada 4 pasangan."
+    kuis:
+      - soal: "Untuk menghapus kunci 'Sari' dari dict tanpa mengambil nilainya, kita menulis..."
+        pilihan:
+          - "nilai.pop('Sari')"
+          - "del nilai['Sari']"
+          - "nilai.remove('Sari')"
+          - "nilai['Sari'] = None"
+        jawaban: 1
+        penjelasan: "del menghapus pasangan dari dict. pop juga menghapus, tapi dia mengembalikan nilainya."
+      - soal: "Perbedaan utama pop() dengan del adalah..."
+        pilihan:
+          - "pop lebih cepat"
+          - "pop mengembalikan nilai yang dihapus"
+          - "del bisa dipakai di semua tipe"
+          - "tidak ada bedanya"
+        jawaban: 1
+        penjelasan: "pop() menghapus DAN mengembalikan nilainya. del hanya menghapus."
+      - soal: "d1 = {'a': 1} dan d2 = {'b': 2}. Setelah d1.update(d2), isi d1 adalah..."
+        pilihan:
+          - "{'a': 1}"
+          - "{'b': 2}"
+          - "{'a': 1, 'b': 2}"
+          - "error"
+        jawaban: 2
+        penjelasan: "update() menyalin semua isi d2 ke d1. Jadi d1 berisi a dan b."
+
 
 soal:
   - id: "s7-1"
@@ -505,3 +638,202 @@ soal:
       - "Simpan total per teman di dict: total[nama]."
       - "Kalau nama sudah ada, tambahkan: total[nama] = total[nama] + jml."
       - "Cetak dengan loop for k, v in total.items()."
+
+  - id: "s7-6"
+    judul: "Belanja di Toko Kue"
+    sulit: "sedang"
+    cerita: |
+      Kancil berbelanja di toko kue.
+      Di papan tulis tertulis daftar harga kue.
+      Kancil membeli beberapa kue.
+      Ia harus menghitung total uang yang dibayar.
+      Kamu akan membaca daftar harga dulu, lalu daftar kue yang dibeli.
+      Jumlahkan harga semua kue yang dibeli.
+
+      Baca N, lalu N pasangan nama dan harga.
+      Lalu baca M, lalu M nama kue.
+      Cetak total harganya.
+    input: "Baris 1: N (banyak kue di daftar). N baris berikutnya: nama dan harga (dipisah spasi). Baris berikutnya: M (banyak kue dibeli). M baris berikutnya: nama kue yang dibeli."
+    output: "Satu angka: total harga kue yang dibeli."
+    contoh:
+      - input: "3\nkue 5000\nroti 3000\nsusu 2000\n2\nkue\nsusu"
+        output: "7000"
+      - input: "2\napel 1000\nmangga 2000\n1\nmangga"
+        output: "2000"
+    tes:
+      - input: "3\nkue 5000\nroti 3000\nsusu 2000\n2\nkue\nsusu"
+        output: "7000"
+      - input: "2\napel 1000\nmangga 2000\n1\nmangga"
+        output: "2000"
+      - input: "2\nkopi 4000\nteh 3000\n2\nkopi\nteh"
+        output: "7000"
+      - input: "3\na 10\nb 20\nc 30\n3\na\nb\nc"
+        output: "60"
+      - input: "1\nkue 5000\n1\nkue"
+        output: "5000"
+      - input: "2\nx 100\ny 200\n2\nx\nx"
+        output: "200"
+    solusi: |
+      n = int(input())
+      harga = {}
+      for i in range(n):
+          baris = input().split()
+          harga[baris[0]] = int(baris[1])
+      m = int(input())
+      total = 0
+      for i in range(m):
+          nama = input()
+          total = total + harga[nama]
+      print(total)
+    petunjuk:
+      - "Simpan daftar harga ke dict: harga[nama] = angka."
+      - "Baca M, lalu loop sebanyak M kali."
+      - "Setiap nama, tambahkan harga[nama] ke total. Cetak total setelah loop."
+
+  - id: "s7-7"
+    judul: "Penghitung Kata"
+    sulit: "sulit"
+    cerita: |
+      Kancil suka menulis cerita pendek.
+      Bu Guru minta ia menghitung kata di ceritanya.
+      Setiap kata yang sama dihitung jadi satu baris saja.
+      Kamu akan membaca satu baris berisi beberapa kata.
+      Hitung berapa kali tiap kata muncul.
+      Cetak tiap kata dan jumlahnya.
+      Urutannya sesuai kemunculan pertama.
+    input: "Satu baris: beberapa kata dipisah spasi."
+    output: "Beberapa baris: <kata>: <jumlah>. Urut sesuai kemunculan pertama."
+    contoh:
+      - input: "apel jeruk apel"
+        output: "apel: 2\njeruk: 1"
+      - input: "kancil buaya kancil rusa kancil"
+        output: "kancil: 3\nbuaya: 1\nrusa: 1"
+    tes:
+      - input: "apel jeruk apel"
+        output: "apel: 2\njeruk: 1"
+      - input: "kancil buaya kancil rusa kancil"
+        output: "kancil: 3\nbuaya: 1\nrusa: 1"
+      - input: "satu"
+        output: "satu: 1"
+      - input: "a b c a b a"
+        output: "a: 3\nb: 2\nc: 1"
+      - input: "x x x x"
+        output: "x: 4"
+      - input: "meja kursi meja papan kursi meja"
+        output: "meja: 3\nkursi: 2\npapan: 1"
+    solusi: |
+      kata = input().split()
+      hitung = {}
+      for k in kata:
+          if k in hitung:
+              hitung[k] = hitung[k] + 1
+          else:
+              hitung[k] = 1
+      for k, v in hitung.items():
+          print(k + ':', v)
+    petunjuk:
+      - "Pecah kalimat dengan split(): kata = input().split()."
+      - "Hitung tiap kata dengan pola dict: kalau ada tambah 1, kalau belum mulai dari 1."
+      - "Cetak dengan for k, v in hitung.items(): print(k + ':', v)."
+  - id: "s7-9"
+    judul: "Piket Setiap Hari"
+    sulit: "sulit"
+    cerita: |
+      Kelas 7A mengadakan piket kelas setiap hari.
+      Setiap hari, beberapa siswa datang piket.
+      Siswa yang rajin piket setiap hari dapat hadiah.
+      Kancil ingin tahu siapa saja yang piket setiap hari.
+      Dia juga ingin tahu berapa siswa berbeda yang pernah piket.
+      Baca banyak hari.
+      Untuk tiap hari, baca banyak nama, lalu nama-namanya.
+      Cetak banyak siswa yang piket semua hari.
+      Lalu cetak banyak siswa berbeda yang pernah piket.
+    input: "Baris 1: d (banyak hari). Untuk tiap hari: baris berisi m (banyak nama), lalu m baris nama."
+    output: "Baris 1: Semua hari: <banyak siswa piket setiap hari>. Baris 2: Pernah: <banyak siswa berbeda pernah piket>."
+    contoh:
+      - input: "2\n3\nBudi\nSari\nRina\n2\nSari\nTono"
+        output: "Semua hari: 1\nPernah: 4"
+      - input: "1\n2\nAyu\nBudi"
+        output: "Semua hari: 2\nPernah: 2"
+    tes:
+      - input: "2\n3\nBudi\nSari\nRina\n2\nSari\nTono"
+        output: "Semua hari: 1\nPernah: 4"
+      - input: "1\n2\nAyu\nBudi"
+        output: "Semua hari: 2\nPernah: 2"
+      - input: "2\n2\nA\nB\n2\nC\nD"
+        output: "Semua hari: 0\nPernah: 4"
+      - input: "3\n1\nA\n1\nA\n1\nA"
+        output: "Semua hari: 1\nPernah: 1"
+      - input: "2\n3\nX\nX\nY\n2\nY\nZ"
+        output: "Semua hari: 1\nPernah: 3"
+      - input: "3\n2\nA\nB\n2\nB\nC\n2\nC\nA"
+        output: "Semua hari: 0\nPernah: 3"
+    solusi: |
+      d = int(input())
+      semua = None
+      pernah = set()
+      for i in range(d):
+          m = int(input())
+          hari = set()
+          for j in range(m):
+              hari.add(input())
+          if semua is None:
+              semua = hari
+          else:
+              semua = semua & hari
+          pernah = pernah | hari
+      print('Semua hari:', len(semua))
+      print('Pernah:', len(pernah))
+    petunjuk:
+      - "Simpan nama tiap hari di satu set."
+      - "Iriskan dengan set hari sebelumnya untuk siswa yang piket semua hari."
+      - "Gabungkan semua set untuk siswa yang pernah piket. Cetak len keduanya."
+
+  - id: "s7-8"
+    judul: "Dua Kelompok Piket"
+    sulit: "sedang"
+    cerita: |
+      Kelas 7A punya dua kelompok piket.
+      Kelompok A piket hari Senin.
+      Kelompok B piket hari Selasa.
+      Bu Guru ingin tahu siswa yang masuk dua kelompok sekaligus.
+      Dia juga ingin tahu banyak siswa berbeda di dua kelompok itu.
+      Baca banyak anggota kelompok A, lalu nama-namanya.
+      Baca banyak anggota kelompok B, lalu nama-namanya.
+      Cetak banyak siswa yang sama, lalu banyak siswa berbeda.
+    input: "Baris 1: n (banyak anggota kelompok A). n baris nama. Baris berikutnya: m (banyak anggota kelompok B). m baris nama."
+    output: "Baris 1: Sama: <banyak siswa di dua kelompok>. Baris 2: Semua: <banyak siswa berbeda>."
+    contoh:
+      - input: "3\nBudi\nSari\nRina\n2\nSari\nTono"
+        output: "Sama: 1\nSemua: 4"
+      - input: "2\nAyu\nBudi\n2\nAyu\nBudi"
+        output: "Sama: 2\nSemua: 2"
+    tes:
+      - input: "3\nBudi\nSari\nRina\n2\nSari\nTono"
+        output: "Sama: 1\nSemua: 4"
+      - input: "2\nAyu\nBudi\n2\nAyu\nBudi"
+        output: "Sama: 2\nSemua: 2"
+      - input: "1\nTono\n1\nTono"
+        output: "Sama: 1\nSemua: 1"
+      - input: "2\nA\nB\n2\nC\nD"
+        output: "Sama: 0\nSemua: 4"
+      - input: "3\nX\nX\nY\n2\nY\nZ"
+        output: "Sama: 1\nSemua: 3"
+      - input: "2\nKancil\nBuaya\n3\nRusa\nKancil\nBuaya"
+        output: "Sama: 2\nSemua: 3"
+    solusi: |
+      n = int(input())
+      a = set()
+      for i in range(n):
+          a.add(input())
+      m = int(input())
+      b = set()
+      for i in range(m):
+          b.add(input())
+      print('Sama:', len(a & b))
+      print('Semua:', len(a | b))
+    petunjuk:
+      - "Simpan nama kelompok A di satu set, kelompok B di set lain."
+      - "a & b adalah siswa di kedua kelompok. a | b adalah semua siswa berbeda."
+      - "Cetak len(a & b) lalu len(a | b)."
+

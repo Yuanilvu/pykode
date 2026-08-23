@@ -73,6 +73,23 @@ pelajaran:
           - "tidak pernah"
         jawaban: 1
         penjelasan: "Fungsi baru bekerja saat dipanggil, bukan saat dibuat."
+      - soal: "Apa outputnya?\n\ndef sapa():\n    print('Halo')\n\nsapa()\nsapa()"
+        pilihan:
+          - "Halo 1 kali"
+          - "Halo 2 kali"
+          - "Halo 3 kali"
+          - "tidak ada output"
+        jawaban: 1
+        penjelasan: "Fungsi dipanggil dua kali. Isinya jalan dua kali, jadi Halo tercetak 2 kali."
+      - soal: "Fungsi sudah dibuat tapi tidak pernah dipanggil. Isi fungsi akan..."
+        pilihan:
+          - "jalan satu kali"
+          - "jalan terus-menerus"
+          - "tidak pernah jalan"
+          - "error"
+        jawaban: 2
+        penjelasan: "Fungsi baru bekerja saat dipanggil. Tidak dipanggil, tidak jalan."
+
 
   - id: "8-2"
     judul: "Parameter: Tombol Mesin"
@@ -141,6 +158,23 @@ pelajaran:
           - "error"
         jawaban: 2
         penjelasan: "a = 3 dan b = 2. Jadi 3 * 2 = 6."
+      - soal: "def tambah(a, b): print(a + b). Lalu tambah(4, 5) mencetak..."
+        pilihan:
+          - "45"
+          - "9"
+          - "20"
+          - "error"
+        jawaban: 1
+        penjelasan: "a = 4 dan b = 5. Jadi 4 + 5 = 9."
+      - soal: "def sapa(nama): print('Halo ' + nama). Lalu sapa('Budi') mencetak..."
+        pilihan:
+          - "'Halo Budi'"
+          - "'Halo'"
+          - "'Budi'"
+          - "error"
+        jawaban: 0
+        penjelasan: "Parameter nama diisi 'Budi'. Teks 'Halo ' digabung dengan 'Budi'."
+
 
   - id: "8-3"
     judul: "return: Hasil Keluar dari Mesin"
@@ -222,6 +256,23 @@ pelajaran:
           - "error"
         jawaban: 2
         penjelasan: "tambah(2, 3) menjadi 5. Lalu 5 * 2 = 10."
+      - soal: "def dua(x): return x * 2. Lalu print(dua(dua(3))) mencetak..."
+        pilihan:
+          - "6"
+          - "9"
+          - "12"
+          - "error"
+        jawaban: 2
+        penjelasan: "dua(3) menjadi 6. Lalu dua(6) menjadi 12. Hasilnya 12."
+      - soal: "def tiga(x): return x + 3. Lalu print(tiga(4)) mencetak..."
+        pilihan:
+          - "7"
+          - "4"
+          - "34"
+          - "error"
+        jawaban: 0
+        penjelasan: "tiga(4) mengembalikan 4 + 3 = 7. Lalu 7 dicetak."
+
 
   - id: "8-4"
     judul: "Variabel Lokal: Rahasia di Dalam Fungsi"
@@ -294,6 +345,94 @@ pelajaran:
           - "membuat x baru"
         jawaban: 2
         penjelasan: "x tidak dikenal di luar fungsi. Jadi terjadi NameError."
+      - soal: "Variabel lokal hanya dikenal..."
+        pilihan:
+          - "di seluruh program"
+          - "di dalam fungsi tempat ia dibuat"
+          - "di file lain"
+          - "tidak pernah dikenal"
+        jawaban: 1
+        penjelasan: "Variabel lokal hidup di dalam fungsinya saja. Di luar fungsi, ia tidak ada."
+
+
+  - id: "8-5"
+    judul: "Fungsi dengan Nilai Awal"
+    menit: 6
+    materi: |
+      Kadang sebuah fungsi punya nilai yang sering sama.
+      Contohnya ucapan 'Halo'. Kita tidak mau mengetiknya
+      setiap kali memanggil fungsi. Solusinya: **nilai awal**
+      (default parameter).
+
+      ## Cara membuat nilai awal
+
+      ```
+      def sapa(nama, pesan='Halo'):
+          print(pesan + ', ' + nama + '!')
+      ```
+
+      Parameter `pesan` punya nilai awal 'Halo'.
+      Kalau kamu tidak mengisi pesan, Python memakai 'Halo'.
+      Kalau kamu mengisi, nilai kamu yang dipakai.
+
+      ```
+      sapa('Budi')            # Halo, Budi!
+      sapa('Sari', 'Hai')     # Hai, Sari!
+      ```
+
+      ## Aturan penting
+
+      - Parameter dengan nilai awal diletakkan di BELAKANG.
+      - Parameter tanpa nilai awal harus di depan.
+      - Nilai awal bisa angka juga: `def kali(a, b=2)`.
+
+      ## Kenapa berguna?
+
+      Nilai awal membuat fungsi fleksibel. Satu fungsi bisa
+      dipakai dengan banyak cara. Seperti tombol yang sudah
+      punya pengaturan standar, tapi tetap bisa diubah
+      kalau perlu!
+    contoh:
+      - kode: |
+          def sapa(nama, pesan='Halo'):
+              print(pesan + ', ' + nama + '!')
+
+          sapa('Budi')
+          sapa('Sari', 'Hai')
+        penjelasan: "Panggilan pertama memakai nilai awal 'Halo'. Panggilan kedua memakai 'Hai'."
+      - kode: |
+          def kali(a, b=2):
+              return a * b
+
+          print(kali(5))
+          print(kali(5, 10))
+        penjelasan: "kali(5) memakai b=2 jadi 10. kali(5, 10) memakai b=10 jadi 50."
+    kuis:
+      - soal: "def sapa(nama, pesan='Halo'). Lalu sapa('Budi') mencetak..."
+        pilihan:
+          - "Halo, Budi!"
+          - "Budi!"
+          - "Halo!"
+          - "error"
+        jawaban: 0
+        penjelasan: "Pesan tidak diisi, jadi Python memakai nilai awal 'Halo'."
+      - soal: "def kali(a, b=2): return a * b. Hasil kali(7) adalah..."
+        pilihan:
+          - "9"
+          - "14"
+          - "72"
+          - "error"
+        jawaban: 1
+        penjelasan: "b tidak diisi, jadi b memakai nilai awal 2. 7 * 2 = 14."
+      - soal: "Di mana letak parameter yang punya nilai awal?"
+        pilihan:
+          - "di depan"
+          - "di belakang"
+          - "di tengah saja"
+          - "bebas di mana saja"
+        jawaban: 1
+        penjelasan: "Parameter dengan nilai awal harus di belakang. Yang tanpa nilai awal di depan."
+
 
 soal:
   - id: "s8-1"
@@ -514,3 +653,198 @@ soal:
       - "Fungsi total(harga) menjumlahkan isi list dengan for."
       - "Kumpulkan semua harga ke list dengan append()."
       - "Cetak 'Total:' lalu hasil pemanggilan total(belanja)."
+
+  - id: "s8-6"
+    judul: "Cek Bilangan Genap"
+    sulit: "sedang"
+    cerita: |
+      Kancil membuat permainan tebak-tebakan.
+      Satu kartu berisi satu angka.
+      Teman harus menyebut: genap atau ganjil.
+      Kancil ingin komputernya yang menjawab.
+      Buat fungsi bernama genap.
+      Fungsi itu menerima satu angka.
+      Ia mengembalikan True kalau angkanya genap,
+      False kalau ganjil.
+      Baca satu angka, lalu cetak 'genap' atau 'ganjil'.
+    input: "Satu baris: angka."
+    output: "Satu baris: genap atau ganjil"
+    contoh:
+      - input: "4"
+        output: "genap"
+      - input: "7"
+        output: "ganjil"
+    tes:
+      - input: "4"
+        output: "genap"
+      - input: "7"
+        output: "ganjil"
+      - input: "0"
+        output: "genap"
+      - input: "1"
+        output: "ganjil"
+      - input: "100"
+        output: "genap"
+      - input: "13"
+        output: "ganjil"
+    solusi: |
+      def genap(n):
+          if n % 2 == 0:
+              return True
+          return False
+
+      x = int(input())
+      if genap(x):
+          print('genap')
+      else:
+          print('ganjil')
+    petunjuk:
+      - "Fungsi: def genap(n): lalu cek n % 2 == 0."
+      - "Kalau habis dibagi 2, return True. Kalau tidak, return False."
+      - "Di luar fungsi, panggil genap(x) lalu cetak hasilnya."
+
+  - id: "s8-7"
+    judul: "Faktorial"
+    sulit: "sulit"
+    cerita: |
+      Bu Guru memberi tantangan matematika: menghitung faktorial.
+      Faktorial dari 5 artinya 5 x 4 x 3 x 2 x 1 = 120.
+      Menghitungnya butuh perkalian berulang.
+      Kancil ingin membuat fungsi bernama faktorial.
+      Fungsi itu menerima satu angka n.
+      Ia mengembalikan hasil 1 x 2 x 3 x ... x n.
+      Baca satu angka, lalu cetak faktorialnya.
+    input: "Satu baris: angka n (1-10)."
+    output: "Satu baris: n! (faktorial dari n)."
+    contoh:
+      - input: "5"
+        output: "120"
+      - input: "3"
+        output: "6"
+    tes:
+      - input: "5"
+        output: "120"
+      - input: "3"
+        output: "6"
+      - input: "1"
+        output: "1"
+      - input: "4"
+        output: "24"
+      - input: "7"
+        output: "5040"
+      - input: "10"
+        output: "3628800"
+    solusi: |
+      def faktorial(n):
+          hasil = 1
+          for i in range(1, n + 1):
+              hasil = hasil * i
+          return hasil
+
+      n = int(input())
+      print(faktorial(n))
+    petunjuk:
+      - "Buat hasil = 1 sebelum loop."
+      - "Kalikan dengan setiap angka dari 1 sampai n: hasil = hasil * i."
+      - "Return hasil, lalu cetak faktorial(n)."
+  - id: "s8-9"
+    judul: "Detektif Palindrom"
+    sulit: "sulit"
+    cerita: |
+      Di perpustakaan ada lomba kata ajaib.
+      Kata ajaib disebut palindrom.
+      Palindrom dibaca dari depan dan belakang hasilnya sama.
+      Contohnya kodok dan malam.
+      Kancil ingin membuat fungsi bernama palindrom.
+      Fungsi itu menerima satu kata.
+      Ia mengembalikan True kalau kata itu palindrom.
+      Kalau bukan, False.
+      Baca satu kata.
+      Cetak 'palindrom' atau 'bukan'.
+      Ayo bantu Kancil!
+    input: "Satu baris: kata (huruf kecil semua)."
+    output: "Satu baris: palindrom atau bukan"
+    contoh:
+      - input: "kodok"
+        output: "palindrom"
+      - input: "kancil"
+        output: "bukan"
+    tes:
+      - input: "kodok"
+        output: "palindrom"
+      - input: "kancil"
+        output: "bukan"
+      - input: "a"
+        output: "palindrom"
+      - input: "malam"
+        output: "palindrom"
+      - input: "buku"
+        output: "bukan"
+      - input: "kasurrusak"
+        output: "palindrom"
+    solusi: |
+      def palindrom(s):
+          n = len(s)
+          for i in range(n // 2):
+              if s[i] != s[n - 1 - i]:
+                  return False
+          return True
+
+      kata = input()
+      if palindrom(kata):
+          print('palindrom')
+      else:
+          print('bukan')
+    petunjuk:
+      - "Bandingkan huruf depan dan belakang: s[i] dengan s[n - 1 - i]."
+      - "Cukup sampai tengah kata: range(n // 2)."
+      - "Kalau ada satu beda, langsung return False. Kalau semua sama, return True."
+
+  - id: "s8-8"
+    judul: "Penghitung Vokal"
+    sulit: "sedang"
+    cerita: |
+      Kancil belajar membaca kata.
+      Bu Guru memberi tantangan: hitung huruf vokal.
+      Huruf vokal adalah a, i, u, e, o.
+      Kancil harus membuat fungsi bernama vokal.
+      Fungsi itu menerima satu kata.
+      Lalu mengembalikan banyak huruf vokal di kata itu.
+      Baca satu kata.
+      Cetak 'Vokal:' lalu jumlahnya.
+      Bantu Kancil menang!
+    input: "Satu baris: kata (huruf kecil semua)."
+    output: "Satu baris: Vokal: <jumlah huruf vokal>."
+    contoh:
+      - input: "kancil"
+        output: "Vokal: 2"
+      - input: "python"
+        output: "Vokal: 1"
+    tes:
+      - input: "kancil"
+        output: "Vokal: 2"
+      - input: "python"
+        output: "Vokal: 1"
+      - input: "aiueo"
+        output: "Vokal: 5"
+      - input: "smp"
+        output: "Vokal: 0"
+      - input: "budi"
+        output: "Vokal: 2"
+      - input: "sekolah"
+        output: "Vokal: 3"
+    solusi: |
+      def vokal(s):
+          j = 0
+          for c in s:
+              if c in 'aiueo':
+                  j = j + 1
+          return j
+
+      kata = input()
+      print('Vokal:', vokal(kata))
+    petunjuk:
+      - "Buat fungsi: def vokal(s): lalu loop setiap huruf."
+      - "Cek huruf dengan if c in 'aiueo'. Kalau benar, tambah satu."
+      - "Return jumlahnya, lalu cetak 'Vokal:' dan hasilnya."
+

@@ -74,6 +74,22 @@ pelajaran:
           - "satu baris dengan if"
         jawaban: 0
         penjelasan: "Blok if ditandai dengan indentasi (menjorok ke dalam), biasanya 4 spasi."
+      - soal: "Kode ini mencetak apa?\n\nx = 3\nif x > 5:\n    print('Besar')"
+        pilihan:
+          - "Besar"
+          - "tidak mencetak apa pun"
+          - "error"
+          - "x"
+        jawaban: 1
+        penjelasan: "3 tidak lebih besar dari 5. Blok if dilewati, jadi tidak ada yang tercetak."
+      - soal: "Syarat mana yang benar untuk umur 12 tahun atau lebih?"
+        pilihan:
+          - "umur > 12"
+          - "umur >= 12"
+          - "umur == 12"
+          - "umur < 12"
+        jawaban: 1
+        penjelasan: ">= artinya lebih besar atau sama dengan. Jadi umur 12 ikut masuk."
 
   - id: "4-2"
     judul: "Pilih Satu: if/else"
@@ -153,6 +169,22 @@ pelajaran:
           - "error"
         jawaban: 1
         penjelasan: "5 tidak lebih besar dari 10. Jadi blok if dilewati dan blok else yang jalan: Kecil."
+      - soal: "Kode ini mencetak apa?\n\nhadir = 18\nif hadir >= 20:\n    print('Rajin')\nelse:\n    print('Ayo lebih rajin')"
+        pilihan:
+          - "Rajin"
+          - "Ayo lebih rajin"
+          - "Rajin dan Ayo lebih rajin"
+          - "error"
+        jawaban: 1
+        penjelasan: "18 kurang dari 20. Jadi blok else yang jalan."
+      - soal: "jawaban berisi 'budi'. Kode ini mencetak apa?\n\nif jawaban != 'kancil':\n    print('Salah!')\nelse:\n    print('Benar!')"
+        pilihan:
+          - "Salah!"
+          - "Benar!"
+          - "Salah! dan Benar!"
+          - "error"
+        jawaban: 0
+        penjelasan: "'budi' tidak sama dengan 'kancil'. Jadi syarat != benar dan blok if yang jalan."
 
   - id: "4-3"
     judul: "Banyak Pilihan: elif"
@@ -233,6 +265,22 @@ pelajaran:
           - "error"
         jawaban: 1
         penjelasan: "75 tidak memenuhi syarat pertama. Tapi memenuhi elif nilai >= 70, jadi dapat B."
+      - soal: "Nilai 55 di kode ini dapat huruf apa?\n\nif nilai >= 85:\n    print('A')\nelif nilai >= 70:\n    print('B')\nelse:\n    print('C')"
+        pilihan:
+          - "A"
+          - "B"
+          - "C"
+          - "error"
+        jawaban: 2
+        penjelasan: "55 tidak lolos syarat pertama dan kedua. Dia masuk ke else dan dapat C."
+      - soal: "Mengapa urutan elif itu penting?"
+        pilihan:
+          - "urutan tidak penting sama sekali"
+          - "yang benar pertama kali dari atas yang jalan"
+          - "yang benar terakhir yang jalan"
+          - "semua blok ikut jalan"
+        jawaban: 1
+        penjelasan: "Python memeriksa dari atas ke bawah. Begitu ada syarat benar, blok itu jalan dan berhenti."
 
   - id: "4-4"
     judul: "Gabungkan Syarat & Sisa Bagi"
@@ -306,6 +354,110 @@ pelajaran:
           - "tinggi saja yang benar"
         jawaban: 1
         penjelasan: "and menuntut kedua syarat benar. Kalau mau salah satu cukup, pakai or."
+      - soal: "Syarat mana yang bernilai benar?\n\numur = 10\ntinggi = 150"
+        pilihan:
+          - "umur >= 12 and tinggi >= 140"
+          - "umur >= 12 or tinggi >= 140"
+          - "umur >= 12 and tinggi >= 150"
+          - "umur >= 12 or tinggi <= 140"
+        jawaban: 1
+        penjelasan: "and butuh dua-duanya benar. Umur 10 gagal. or cukup satu benar, tinggi 150 lolos."
+      - soal: "Berapa hasil 17 % 5?"
+        pilihan:
+          - "3"
+          - "2"
+          - "3.4"
+          - "1"
+        jawaban: 1
+        penjelasan: "17 dibagi 5 = 3 sisa 2. Operator % memberi sisanya, yaitu 2."
+
+  - id: "4-5"
+    judul: "Keputusan Berlapis: if di Dalam if"
+    menit: 8
+    materi: |
+      Pernah masuk gerbang sekolah? Ada dua penjaga. Penjaga pertama memeriksa
+      kartu pelajar. Kalau lolos, baru penjaga kedua memeriksa tasmu.
+
+      Itulah if di dalam if. Disebut percabangan berlapis. If bagian luar
+      diperiksa dulu. Kalau benar, barulah if bagian dalam diperiksa.
+      Kalau if luar salah, if dalam tidak pernah diperiksa.
+
+      ## Contoh sehari-hari
+
+      Mau masuk pesta ulang tahun. Syarat pertama: diundang atau tidak.
+      Kalau diundang, syarat kedua: bawa kado atau tidak.
+
+      ```
+      if diundang:
+          if bawa_kado:
+              print('Silakan masuk!')
+          else:
+              print('Kado dulu, ya!')
+      else:
+          print('Belum diundang')
+      ```
+
+      Anak yang tidak diundang langsung ditolak penjaga pertama.
+      If dalam tidak sempat diperiksa.
+
+      ## Aturan penting
+
+      - Tulis if dalam dengan indentasi lebih dalam (8 spasi)
+      - If dalam hanya jalan kalau if luar benar
+      - Setiap if boleh punya else sendiri
+      - Boleh berlapis lebih dari dua, tapi jangan terlalu dalam. Nanti susah dibaca
+
+      Percabangan berlapis itu seperti permainan petak umpet bertingkat.
+      Kamu baru bisa ke lantai dua kalau lantai satu sudah dilewati.
+      Coba ubah nilai di contoh dan lihat hasilnya!
+    contoh:
+      - kode: |
+          undangan = True
+          kado = True
+          if undangan:
+              if kado:
+                  print('Silakan masuk!')
+              else:
+                  print('Kado dulu, ya!')
+          else:
+              print('Belum diundang')
+        penjelasan: "undangan benar, lalu kado diperiksa. Kado juga benar, jadi 'Silakan masuk!'."
+      - kode: |
+          nilai = 90
+          if nilai >= 75:
+              if nilai >= 90:
+                  print('Hebat!')
+              else:
+                  print('Bagus!')
+          else:
+              print('Ayo belajar lagi')
+        penjelasan: "Nilai 90 lolos syarat luar (>= 75), lalu diperiksa lagi. 90 >= 90, jadi 'Hebat!'."
+    kuis:
+      - soal: "Kode ini mencetak apa?\n\nx = 5\nif x > 3:\n    if x > 8:\n        print('A')\n    else:\n        print('B')"
+        pilihan:
+          - "A"
+          - "B"
+          - "A dan B"
+          - "error"
+        jawaban: 1
+        penjelasan: "5 > 3 benar, lanjut ke if dalam. 5 > 8 salah, jadi else dalam yang jalan: B."
+      - soal: "Kapan if bagian dalam diperiksa?"
+        pilihan:
+          - "selalu diperiksa"
+          - "hanya kalau if bagian luar benar"
+          - "hanya kalau if bagian luar salah"
+          - "tidak pernah"
+        jawaban: 1
+        penjelasan: "If dalam hanya jalan kalau if luar benar. Kalau luar salah, langsung dilewati."
+      - soal: "Kode ini mencetak apa?\n\nhujan = True\npayung = False\nif hujan:\n    if payung:\n        print('Boleh keluar')\n    else:\n        print('Pinjam payung dulu')\nelse:\n    print('Boleh keluar')"
+        pilihan:
+          - "Boleh keluar"
+          - "Pinjam payung dulu"
+          - "Boleh keluar dua kali"
+          - "error"
+        jawaban: 1
+        penjelasan: "hujan benar, lanjut ke if dalam. payung salah, jadi else dalam yang jalan."
+
 
 soal:
   - id: "s4-1"
@@ -513,3 +665,171 @@ soal:
       - "Baca umur dan tinggi dengan int(input())."
       - "Gabung dua syarat dengan and: umur >= 10 and tinggi >= 130."
       - "Kalau syarat gabungan benar cetak 'Boleh naik'. Selain itu cetak 'Belum boleh'."
+
+  - id: "s4-6"
+    judul: "Duel Angka"
+    sulit: "sedang"
+    cerita: |
+      Kancil dan Siti main duel angka. Masing-masing memilih satu
+      angka. Angka yang lebih besar menang. Kalau sama, hasilnya seri.
+      Kancil mengetik angkanya, lalu Siti mengetik angkanya. Komputer
+      mencetak pemenangnya: 'A lebih besar', 'B lebih besar', atau
+      'Sama besar'. Baca dua angka, bandingkan, lalu cetak hasilnya.
+    input: "Dua baris: angka A (int), lalu angka B (int)."
+    output: "Satu baris: A lebih besar, B lebih besar, atau Sama besar."
+    contoh:
+      - input: "7\n3"
+        output: "A lebih besar"
+      - input: "4\n4"
+        output: "Sama besar"
+    tes:
+      - input: "7\n3"
+        output: "A lebih besar"
+      - input: "4\n4"
+        output: "Sama besar"
+      - input: "3\n7"
+        output: "B lebih besar"
+      - input: "10\n10"
+        output: "Sama besar"
+      - input: "1\n9"
+        output: "B lebih besar"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      if a > b:
+          print('A lebih besar')
+      elif b > a:
+          print('B lebih besar')
+      else:
+          print('Sama besar')
+    petunjuk:
+      - "Baca dua angka dengan int(input()). Simpan di a dan b."
+      - "Bandingkan dengan a > b dan b > a."
+      - "Kalau dua-duanya tidak lebih besar, berarti sama. Cetak 'Sama besar'."
+
+  - id: "s4-7"
+    judul: "Lampu Ajaib"
+    sulit: "sulit"
+    cerita: |
+      Kancil menemukan lampu ajaib di laboratorium. Lampu menyala
+      sesuai bilangan yang dimasukkan. Habis dibagi 3 dan 5? Lampu
+      merah menyala. Habis dibagi 3 saja? Lampu hijau. Habis dibagi 5
+      saja? Lampu kuning. Tidak habis dibagi keduanya? Lampu mati.
+      Contoh: 15 habis dibagi 3 dan 5, jadi merah. Baca satu bilangan,
+      lalu cetak warna lampunya.
+    input: "Satu baris: bilangan (int)."
+    output: "Satu baris: Merah, Hijau, Kuning, atau Mati."
+    contoh:
+      - input: "15"
+        output: "Merah"
+      - input: "9"
+        output: "Hijau"
+    tes:
+      - input: "15"
+        output: "Merah"
+      - input: "9"
+        output: "Hijau"
+      - input: "10"
+        output: "Kuning"
+      - input: "7"
+        output: "Mati"
+      - input: "30"
+        output: "Merah"
+      - input: "25"
+        output: "Kuning"
+    solusi: |
+      n = int(input())
+      if n % 3 == 0 and n % 5 == 0:
+          print('Merah')
+      elif n % 3 == 0:
+          print('Hijau')
+      elif n % 5 == 0:
+          print('Kuning')
+      else:
+          print('Mati')
+    petunjuk:
+      - "Cek dulu syarat paling ketat: habis dibagi 3 DAN 5."
+      - "Pakai and: n % 3 == 0 and n % 5 == 0."
+      - "Lalu cek habis dibagi 3 saja, habis dibagi 5 saja. Sisanya Mati."
+  - id: "s4-8"
+    judul: "Pintu Rahasia Game"
+    sulit: "sedang"
+    cerita: |
+      Di game kesukaan Kancil ada pintu rahasia.
+      Pintunya terbuka kalau kata sandinya benar.
+      Kata sandinya 'kancil123'. Kalau ketikan sama
+      dengan kata sandi, cetak 'Pintu terbuka'.
+      Kalau tidak sama, cetak 'Kata sandi salah'.
+      Baca satu kata sandi, lalu cetak hasilnya.
+    input: "Satu baris: kata sandi (tulisan)."
+    output: "Satu baris: Pintu terbuka atau Kata sandi salah."
+    contoh:
+      - input: "kancil123"
+        output: "Pintu terbuka"
+      - input: "budi99"
+        output: "Kata sandi salah"
+    tes:
+      - input: "kancil123"
+        output: "Pintu terbuka"
+      - input: "budi99"
+        output: "Kata sandi salah"
+      - input: "Kancil123"
+        output: "Kata sandi salah"
+      - input: "kancil12"
+        output: "Kata sandi salah"
+      - input: "123kancil"
+        output: "Kata sandi salah"
+    solusi: |
+      s = input()
+      if s == 'kancil123':
+          print('Pintu terbuka')
+      else:
+          print('Kata sandi salah')
+    petunjuk:
+      - "Baca kata sandi dengan input(). Simpan di variabel s."
+      - "Bandingkan dengan tanda ==: s == 'kancil123'."
+      - "Kalau benar cetak 'Pintu terbuka'. Kalau tidak, cetak 'Kata sandi salah'."
+  - id: "s4-9"
+    judul: "Rencana Hari Libur"
+    sulit: "sulit"
+    cerita: |
+      Kancil membuat program rencana hari libur.
+      Program membaca hari lalu cuaca. Kalau hari
+      Sabtu atau Minggu dan cuacanya cerah, Kancil
+      main di luar. Kalau hari libur tapi hujan,
+      dia main di rumah. Kalau hari sekolah, dia
+      ke sekolah walau cuaca apa pun. Baca dua
+      ketikan, lalu cetak rencananya.
+    input: "Dua baris: hari (tulisan), lalu cuaca (tulisan: cerah atau hujan)."
+    output: "Satu baris: Main di luar, Main di rumah, atau Ke sekolah."
+    contoh:
+      - input: "Sabtu\ncerah"
+        output: "Main di luar"
+      - input: "Sabtu\nhujan"
+        output: "Main di rumah"
+    tes:
+      - input: "Sabtu\ncerah"
+        output: "Main di luar"
+      - input: "Sabtu\nhujan"
+        output: "Main di rumah"
+      - input: "Minggu\ncerah"
+        output: "Main di luar"
+      - input: "Senin\ncerah"
+        output: "Ke sekolah"
+      - input: "Rabu\nhujan"
+        output: "Ke sekolah"
+      - input: "Minggu\nhujan"
+        output: "Main di rumah"
+    solusi: |
+      hari = input()
+      cuaca = input()
+      if (hari == 'Sabtu' or hari == 'Minggu') and cuaca == 'cerah':
+          print('Main di luar')
+      elif hari == 'Sabtu' or hari == 'Minggu':
+          print('Main di rumah')
+      else:
+          print('Ke sekolah')
+    petunjuk:
+      - "Gabung syarat hari libur dengan or: hari == 'Sabtu' or hari == 'Minggu'."
+      - "Kalau hari libur DAN cuaca cerah, pakai and. Cetak 'Main di luar'."
+      - "Hari libur tapi tidak cerah masuk ke elif. Hari lain masuk ke else."
