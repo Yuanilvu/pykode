@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Mode Ujian{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>📝 Mode Ujian</h1>
+    <p>Simulasi lomba: 3 soal, timer berjalan, hasil langsung dianalisis!</p>
+  </div>
+</div>
+
+{% if active %}
+<div class="card" style="border:2px solid var(--primary)">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <div>
+      <strong>⚡ Kamu punya ujian aktif!</strong>
+      <div style="color:var(--muted);font-size:.9rem">3 soal · {{ active.duration_min }} menit · batas {{ active.deadline[:16] }}</div>
+    </div>
+    <a class="btn" href="{{ url_for('exam_run', exam_id=active.id) }}">🚀 Mulai Ujian</a>
+  </div>
+</div>
+{% else %}
+<div class="card" style="text-align:center;color:var(--muted)">
+  Tidak ada ujian aktif sekarang. Kalau ada, bakal muncul di sini! 🎯
+</div>
+{% endif %}
+
+<div class="section-title">📜 Riwayat Ujian</div>
+{% if history %}
+{% for h in history %}
+<div class="card" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+  <div>
+    <strong>📝 {{ h.created_at[:16] }}</strong>
+    <span style="color:var(--muted);font-size:.85rem"> · {{ h.duration_min }} menit · {{ h.n_total }} soal</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <span style="font-weight:700">{% if h.n_ac == h.n_total %}🏆{% elif h.n_ac >= 2 %}👍{% else %}💪{% endif %} {{ h.n_ac }}/{{ h.n_total }} benar</span>
+    <a class="btn btn-outline btn-sm" href="{{ url_for('exam_results_page', exam_id=h.id) }}">Lihat Hasil</a>
+  </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="card" style="text-align:center;color:var(--muted)">Belum ada ujian.</div>
+{% endif %}
+
+{% endblock %}

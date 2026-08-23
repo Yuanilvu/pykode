@@ -14,6 +14,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import curriculum
 import db
 import detective
+import explainer
 from judge import judge, run_code
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -81,6 +82,12 @@ EXPLAIN_XP = 5
 DRILL_XP = 40
 PROBLEM_XP = {"mudah": 50, "sedang": 100, "sulit": 150}
 DUEL_BONUS = 30
+SKILL_BY_BAB = {
+    1: "Dasar & Print", 2: "Variabel", 3: "Tipe Data & String", 4: "Kondisi (if)",
+    5: "Perulangan (for)", 6: "While & Logika", 7: "List", 8: "Fungsi",
+    9: "Error & Try", 10: "Dictionary", 11: "String Lanjutan", 12: "Class",
+    13: "Dunia Nyata",
+}
 RANKS = [
     (0, "Pemula", "🌱"),
     (300, "Penjelajah", "🧭"),
@@ -306,7 +313,7 @@ def index():
     babs = []
     for b in curriculum.get_babs():
         lessons = b.get("pelajaran") or []
-        problems = b.get("soal") or []
+        problems = [p for p in (b.get("soal") or []) if not p.get("varian_dari")]
         l_done = sum(1 for l in lessons if l["id"] in done_lessons)
         p_solved = sum(1 for p in problems if p["id"] in solved)
         total = len(lessons) + len(problems)
@@ -346,6 +353,9 @@ def index():
     if challenge:
         chal_solved = sum(1 for s in db.challenge_solves(challenge["id"])
                           if s["user_id"] == user["id"])
+    active_exam = None
+    if user["role"] != "monitor":
+        active_exam = db.get_active_exam(user["id"])
     return render_template("index.html", babs=babs, badges=badges,
                            stats=stats, top=top, streak_bonus=bonus,
                            rank=rank, n_bab_done=n_bab_done, project=proyek,
@@ -356,7 +366,7 @@ def index():
                            review_count=review_count, challenge=challenge,
                            chal_solved=chal_solved,
                            pet=pet_for(user), n_badges=len(badges),
-                           total_badges=len(BADGES))
+                           total_badges=len(BADGES), active_exam=active_exam)
 
 
 @app.route("/lesson/<lesson_id>")
@@ -392,7 +402,7 @@ def problem(problem_id):
         flash("Soal tidak ditemukan.", "danger")
         return redirect(url_for("index"))
     bab, data = found["bab"], found["data"]
-    problems = bab.get("soal") or []
+    problems = [p for p in (bab.get("soal") or []) if not p.get("varian_dari")]
     idx = next((i for i, s in enumerate(problems) if s["id"] == problem_id), 0)
     prev_p = problems[idx - 1] if idx > 0 else None
     next_p = problems[idx + 1] if idx + 1 < len(problems) else None
@@ -502,6 +512,133 @@ def duel():
                            problem=problem["data"] if problem else None,
                            solvers=solvers, winner=winner, scores=scores,
                            history=history, streaks=streaks, me=me)
+
+
+# ---------- Mode Ujian (Simulasi Lomba) ----------
+
+def _exam_pick_problems(n_easy=1, n_medium=1, n_hard=1):
+    """Pilih soal ujian: 1 mudah + 1 sedang + 1 sulit (acak, tanpa varian)."""
+    import random
+    pools = {"mudah": [], "sedang": [], "sulit": []}
+    for b in curriculum.get_babs():
+        for p in (b.get("soal") or []):
+            if not p.get("varian_dari"):
+                pools.get(p.get("sulit"), []).append(p["id"])
+    picked = []
+    for level, n in (("mudah", n_easy), ("sedang", n_medium), ("sulit", n_hard)):
+        pool = pools.get(level) or []
+        picked.extend(random.sample(pool, min(n, len(pool))))
+    return picked or ["s1-1", "s1-2", "s1-3"]
+
+
+def _notify_exam_done(exam, user):
+    import urllib.request
+    res = db.exam_results(exam["id"])
+    ac = sum(1 for s in res.values() if s == "AC")
+    total = len((exam["problem_ids"] or "").split(","))
+    msg = (f"📝 Ujian {user['username']} selesai: {ac}/{total} benar "
+           f"({exam['duration_min']} menit). Cek analisis di Monitor!")
+    try:
+        req = urllib.request.Request("https://ntfy.sh/pykodeYuan",
+                                     data=msg.encode(), method="POST")
+        urllib.request.urlopen(req, timeout=5)
+    except Exception:
+        pass
+
+
+@app.route("/exam")
+@login_required
+def exam_page():
+    db.expire_exams(g.user["id"])
+    active = db.get_active_exam(g.user["id"])
+    history = db.exams_history(g.user["id"])
+    hist_items = []
+    for h in history:
+        res = db.exam_results(h["id"])
+        ids = (h["problem_ids"] or "").split(",")
+        h["n_ac"] = sum(1 for s in res.values() if s == "AC")
+        h["n_total"] = len(ids)
+        hist_items.append(h)
+    return render_template("exam.html", active=active, history=hist_items)
+
+
+@app.route("/exam/<int:exam_id>")
+@login_required
+def exam_run(exam_id):
+    exam = db.get_exam(exam_id)
+    if not exam or (exam["user_id"] != g.user["id"] and g.user["role"] != "monitor"):
+        flash("Ujian tidak ditemukan.", "danger")
+        return redirect(url_for("index"))
+    if exam["status"] == "done":
+        return redirect(url_for("exam_results_page", exam_id=exam_id))
+    db.expire_exams(exam["user_id"])
+    if exam["status"] == "done":
+        return redirect(url_for("exam_results_page", exam_id=exam_id))
+    problems = []
+    for pid in (exam["problem_ids"] or "").split(","):
+        found = curriculum.get_problem(pid)
+        if found:
+            problems.append({"id": pid, "judul": found["data"]["judul"],
+                             "sulit": found["data"].get("sulit", ""),
+                             "bab": found["bab"]["bab"]})
+    res = db.exam_results(exam_id)
+    return render_template("exam_run.html", exam=exam, problems=problems,
+                           hasil=res, now_iso=date.today().isoformat())
+
+
+@app.route("/api/exam-finish", methods=["POST"])
+@login_required
+def api_exam_finish():
+    body = request.get_json(silent=True) or {}
+    exam_id = int(body.get("exam_id") or 0)
+    exam = db.get_exam(exam_id)
+    if not exam or exam["user_id"] != g.user["id"]:
+        return jsonify({"ok": False, "error": "Ujian tidak ditemukan"}), 404
+    if exam["status"] != "done":
+        db.exam_finish(exam_id)
+        _notify_exam_done(exam, g.user)
+    return jsonify({"ok": True})
+
+
+@app.route("/exam/results/<int:exam_id>")
+@login_required
+def exam_results_page(exam_id):
+    exam = db.get_exam(exam_id)
+    if not exam or (exam["user_id"] != g.user["id"] and g.user["role"] != "monitor"):
+        flash("Ujian tidak ditemukan.", "danger")
+        return redirect(url_for("index"))
+    db.expire_exams(exam["user_id"])
+    res = db.exam_results(exam_id)
+    problems = []
+    n_ac = 0
+    for pid in (exam["problem_ids"] or "").split(","):
+        found = curriculum.get_problem(pid)
+        st = res.get(pid, "BELUM")
+        if st == "AC":
+            n_ac += 1
+        problems.append({"id": pid,
+                         "judul": found["data"]["judul"] if found else pid,
+                         "bab": found["bab"]["bab"] if found else "?",
+                         "status": st})
+    user = db.get_user(exam["user_id"])
+    return render_template("exam_results.html", exam=exam, problems=problems,
+                           n_ac=n_ac, n_total=len(problems), user=user)
+
+
+@app.route("/api/exam-create", methods=["POST"])
+@monitor_required
+def api_exam_create():
+    body = request.get_json(silent=True) or {}
+    user_id = int(body.get("user_id") or 0)
+    duration = max(5, min(120, int(body.get("duration_min") or 15)))
+    target = db.get_user(user_id)
+    if not target or target["role"] == "monitor":
+        return jsonify({"ok": False, "error": "Siswa tidak ditemukan"}), 404
+    if db.get_active_exam(user_id):
+        return jsonify({"ok": False, "error": f"{target['username']} masih punya ujian aktif!"}), 400
+    pids = _exam_pick_problems()
+    exam_id = db.create_exam(user_id, pids, duration)
+    return jsonify({"ok": True, "exam_id": exam_id})
 
 
 # ---------- Auth routes ----------
@@ -642,6 +779,25 @@ def api_lesson_explain():
     return jsonify({"ok": True, "xp_added": xp_added, "first": first})
 
 
+def _cek_rencana(rencana, soal):
+    """Verifikasi Rencana Cerdas: cek rencana vs kebutuhan soal (input/output)."""
+    teks = rencana.lower()
+    butuh_input = any((t.get("input") or "").strip() for t in (soal.get("tes") or []))
+    baca = any(k in teks for k in ["baca", "input", "ketik", "minta", "ambil", "terima"])
+    cetak = any(k in teks for k in ["cetak", "print", "tampil", "tulis", "keluar", "hasil"])
+    pesan = []
+    if butuh_input and not baca:
+        pesan.append("⚠️ Soal ini butuh KETIKAN (input), tapi rencanamu belum menyebut 'baca'. "
+                     "Tambahkan langkah baca data dulu!")
+    if not cetak:
+        pesan.append("⚠️ Semua soal harus mencetak hasil (output). Tambahkan langkah 'cetak hasilnya'.")
+    if len(rencana.splitlines()) < 2 and len(rencana) < 45:
+        pesan.append("💡 Rencana yang hebat biasanya 2-3 langkah kecil. Coba pecah jadi langkah-langkah.")
+    if not pesan:
+        pesan.append("✅ Rencanamu lengkap: baca data + cetak hasil. Kode si Robot bangga padamu!")
+    return {"pesan": pesan}
+
+
 @app.route("/api/problem-plan", methods=["POST"])
 @login_required
 def api_problem_plan():
@@ -649,12 +805,13 @@ def api_problem_plan():
     body = request.get_json(silent=True) or {}
     problem_id = body.get("problem_id", "")
     rencana = (body.get("rencana") or "").strip()[:500]
-    if not curriculum.get_problem(problem_id):
+    found = curriculum.get_problem(problem_id)
+    if not found:
         return jsonify({"ok": False, "error": "Soal tidak ditemukan"}), 404
     if len(rencana) < 5:
         return jsonify({"ok": False, "error": "Tulis rencanamu dulu ya (minimal 5 huruf)!"}), 400
     db.save_problem_plan(g.user["id"], problem_id, rencana)
-    return jsonify({"ok": True})
+    return jsonify({"ok": True, "cek": _cek_rencana(rencana, found["data"])})
 
 
 @app.route("/api/submit", methods=["POST"])
@@ -697,9 +854,22 @@ def api_submit():
                 except Exception:
                     pass
 
+    # Mode Ujian: submission pertama per soal ujian yang dihitung
+    if status in ("AC", "WA"):
+        exam = db.get_active_exam(g.user["id"])
+        if exam and problem_id in (exam["problem_ids"] or "").split(","):
+            db.exam_result_save(exam["id"], problem_id, status)
+            if len(db.exam_results(exam["id"])) >= len((exam["problem_ids"] or "").split(",")):
+                db.exam_finish(exam["id"])
+                try:
+                    _notify_exam_done(exam, g.user)
+                except Exception:
+                    pass
+
     xp_added, new_badges, first_solve = 0, [], False
     deteksi = {}
     mentok = {"ada": False}
+    jelas = []
     if status == "AC":
         state = db.problem_state(g.user["id"], problem_id)
         first_solve = not state["solved"]
@@ -708,6 +878,7 @@ def api_submit():
             xp_added = PROBLEM_XP.get(soal.get("sulit"), 50)
             db.add_xp(g.user["id"], xp_added)
         new_badges = _check_badges(g.user["id"])
+        jelas = explainer.explain_code(code)
     else:
         deteksi = detective.analyze(code, soal.get("tes") or [], result["results"])
         mentok = _mentok_payload(result["results"],
@@ -715,19 +886,48 @@ def api_submit():
                                  hint_scroll=True)
     # Latihan serupa: bab sama + tingkat sama (biar mastery, bukan hafal)
     latihan = []
+    warmup = []
     if status != "AC":
         for b in curriculum.get_babs():
             if any(p["id"] == problem_id for p in (b.get("soal") or [])):
                 same = [p for p in (b.get("soal") or [])
-                        if p["id"] != problem_id and p.get("sulit") == soal.get("sulit")]
+                        if p["id"] != problem_id and p.get("sulit") == soal.get("sulit")
+                        and not p.get("varian_dari")]
                 if len(same) < 2:
-                    same = [p for p in (b.get("soal") or []) if p["id"] != problem_id]
+                    same = [p for p in (b.get("soal") or [])
+                            if p["id"] != problem_id and not p.get("varian_dari")]
                 latihan = [{"id": p["id"], "judul": p["judul"]} for p in same[:2]]
+                # Warm-up adaptif: soal lebih mudah (tingkat di bawahnya)
+                easier = {"sulit": "sedang", "sedang": "mudah"}.get(soal.get("sulit"))
+                if easier:
+                    cand = [p for p in (b.get("soal") or [])
+                            if p.get("sulit") == easier and not p.get("varian_dari")]
+                    if not cand:
+                        for b2 in curriculum.get_babs():
+                            if b2["bab"] >= b["bab"]:
+                                continue
+                            cand = [p for p in (b2.get("soal") or [])
+                                    if p.get("sulit") == easier and not p.get("varian_dari")]
+                            if cand:
+                                break
+                    if cand:
+                        warmup = [{"id": cand[0]["id"], "judul": cand[0]["judul"]}]
+                break
+    # Saran varian 'angka beda' kalau soal ini punya versi latihan
+    varian_saran = []
+    if status != "AC":
+        for b in curriculum.get_babs():
+            for p in (b.get("soal") or []):
+                if p.get("varian_dari") == problem_id:
+                    varian_saran = [{"id": p["id"], "judul": p["judul"]}]
+                    break
+            if varian_saran:
                 break
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_solve": first_solve, "new_badges": new_badges,
                     "deteksi": deteksi, "duel_bonus": duel_bonus,
-                    "mentok": mentok, "latihan": latihan})
+                    "mentok": mentok, "latihan": latihan, "jelas": jelas,
+                    "warmup": warmup, "varian_saran": varian_saran})
 
 
 @app.route("/api/drill-submit", methods=["POST"])
@@ -772,6 +972,104 @@ def _milestone_unlocked(user_id, misi):
         return True
     prev = curriculum.get_project()["misi"][idx - 1]
     return db.milestone_done(user_id, prev["id"])
+
+
+def _milestone2_unlocked(user_id, misi):
+    """Sama seperti _milestone_unlocked, untuk Proyek Fase 2."""
+    bab = curriculum.get_bab(misi.get("bab", 1))
+    if not bab:
+        return False
+    done_lessons = db.lessons_done_ids(user_id)
+    lessons = bab.get("pelajaran") or []
+    if not lessons or not all(l["id"] in done_lessons for l in lessons):
+        return False
+    proyek2 = curriculum.get_project2()
+    misi_list = proyek2.get("misi") or []
+    if misi not in misi_list:
+        return False
+    idx = misi_list.index(misi)
+    if idx == 0:
+        return True
+    prev = misi_list[idx - 1]
+    return db.milestone_done(user_id, prev["id"])
+
+
+@app.route("/project2")
+@login_required
+def project2():
+    proyek = curriculum.get_project2()
+    if not proyek:
+        flash("Proyek Fase 2 belum tersedia.", "info")
+        return redirect(url_for("index"))
+    done_ids = db.milestones_done_ids(g.user["id"])
+    misi_list = []
+    for m in proyek.get("misi") or []:
+        unlocked = _milestone2_unlocked(g.user["id"], m)
+        misi_list.append({
+            "data": m,
+            "done": m["id"] in done_ids,
+            "unlocked": unlocked,
+        })
+    n_done = sum(1 for x in misi_list if x["done"])
+    n_total = len(misi_list)
+    saved_code = db.get_project2_code(g.user["id"])
+    return render_template("project2.html", proyek=proyek, misi=misi_list,
+                           n_done=n_done, n_total=n_total,
+                           pct=round(100 * n_done / n_total) if n_total else 0,
+                           has_code=bool(saved_code.strip()))
+
+
+@app.route("/project2/<milestone_id>")
+@login_required
+def project2_milestone(milestone_id):
+    m = curriculum.get_milestone2(milestone_id)
+    if not m:
+        flash("Misi tidak ditemukan.", "danger")
+        return redirect(url_for("project2"))
+    if not _milestone2_unlocked(g.user["id"], m):
+        flash("🔒 Misi ini belum terbuka. Selesaikan pelajaran bab sebelumnya dulu!", "info")
+        return redirect(url_for("project2"))
+    done = db.milestone_done(g.user["id"], milestone_id)
+    saved = db.get_project2_code(g.user["id"])
+    starter = m.get("starter", "") if not saved.strip() else ""
+    return render_template("project2_milestone.html", misi=m, done=done,
+                           starter=starter, saved_code=saved)
+
+
+@app.route("/api/project2-submit", methods=["POST"])
+@login_required
+def api_project2_submit():
+    body = request.get_json(silent=True) or {}
+    milestone_id = body.get("milestone_id", "")
+    code = (body.get("code") or "")[:20000]
+    m = curriculum.get_milestone2(milestone_id)
+    if not m:
+        return jsonify({"ok": False, "error": "Misi tidak ditemukan"}), 404
+    if not _milestone2_unlocked(g.user["id"], m):
+        return jsonify({"ok": False, "error": "Misi belum terbuka"}), 403
+    result = judge(code, m.get("tes") or [])
+    status = "AC" if result["verdict"] == "AC" else "WA"
+    xp_added, new_badges, first_done = 0, [], False
+    deteksi = {}
+    mentok = {"ada": False}
+    jelas = []
+    if status == "AC":
+        first_done = not db.milestone_done(g.user["id"], milestone_id)
+        db.save_project2_code(g.user["id"], code)
+        if first_done:
+            db.mark_milestone_done(g.user["id"], milestone_id)
+            xp_added = int(m.get("xp", 80))
+            db.add_xp(g.user["id"], xp_added)
+        new_badges = _check_badges(g.user["id"])
+        jelas = explainer.explain_code(code)
+    else:
+        deteksi = detective.analyze(code, m.get("tes") or [], result["results"])
+        mentok = _mentok_payload(result["results"],
+                                 lesson_url=_lesson_url_for_bab(m.get("bab", 1)))
+    return jsonify({**result, "status": status, "xp_added": xp_added,
+                    "first_done": first_done, "new_badges": new_badges,
+                    "solusi": m.get("solusi", "") if status == "AC" else "",
+                    "deteksi": deteksi, "mentok": mentok, "jelas": jelas})
 
 
 @app.route("/project")
@@ -832,6 +1130,7 @@ def api_project_submit():
     xp_added, new_badges, first_done = 0, [], False
     deteksi = {}
     mentok = {"ada": False}
+    jelas = []
     if status == "AC":
         first_done = not db.milestone_done(g.user["id"], milestone_id)
         db.save_project_code(g.user["id"], code)
@@ -840,6 +1139,7 @@ def api_project_submit():
             xp_added = int(m.get("xp", 80))
             db.add_xp(g.user["id"], xp_added)
         new_badges = _check_badges(g.user["id"])
+        jelas = explainer.explain_code(code)
     else:
         deteksi = detective.analyze(code, m.get("tes") or [], result["results"])
         mentok = _mentok_payload(result["results"],
@@ -847,7 +1147,7 @@ def api_project_submit():
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_done": first_done, "new_badges": new_badges,
                     "solusi": m.get("solusi", "") if status == "AC" else "",
-                    "deteksi": deteksi, "mentok": mentok})
+                    "deteksi": deteksi, "mentok": mentok, "jelas": jelas})
 
 
 # ---------- Perbaiki Kode (bug) ----------
@@ -973,6 +1273,64 @@ def monitor():
     return render_template("monitor.html", users=data, stats=stats)
 
 
+def _radar_points(skills, cx=110, cy=95, rmax=70):
+    """Titik polygon radar chart (SVG) dari daftar (nama, pct 0-100)."""
+    import math
+    n = len(skills)
+    if n == 0:
+        return ""
+    pts = []
+    for i, (_nama, pct) in enumerate(skills):
+        ang = -math.pi / 2 + 2 * math.pi * i / n
+        r = rmax * max(0, min(100, pct)) / 100
+        pts.append(f"{cx + r * math.cos(ang):.1f},{cy + r * math.sin(ang):.1f}")
+    return " ".join(pts)
+
+
+def _skill_map(user_id, stats):
+    """Peta kemampuan per skill (dari bab soal yang pernah dicoba)."""
+    per_bab = {}
+    for b in curriculum.get_babs():
+        for p in (b.get("soal") or []):
+            if p.get("varian_dari"):
+                continue
+            st = stats.get(p["id"])
+            if not st:
+                continue
+            rec = per_bab.setdefault(b["bab"], {"attempts": 0, "solved": 0})
+            rec["attempts"] += st["attempts"]
+            rec["solved"] += st["solved"]
+    skills = []
+    for bab, rec in sorted(per_bab.items()):
+        nama = SKILL_BY_BAB.get(bab, f"Bab {bab}")
+        pct = round(100 * rec["solved"] / rec["attempts"]) if rec["attempts"] else 0
+        skills.append({"bab": bab, "nama": nama, "attempts": rec["attempts"],
+                       "solved": rec["solved"], "pct": pct})
+    skills.sort(key=lambda s: -s["attempts"])
+    return skills
+
+
+def _weak_skills(skills):
+    """Skill lemah: akurasi < 50% dan pernah dicoba >= 2x (atau 0 benar dari >=2)."""
+    weak = []
+    for s in skills:
+        if s["attempts"] >= 2 and (s["pct"] < 50 or s["solved"] == 0):
+            weak.append(s)
+    return weak[:3]
+
+
+def _drill_suggestions(weak_babs, limit=4):
+    """Saran drill untuk bab yang lemah."""
+    out = []
+    for d in curriculum.get_drills():
+        if d.get("tingkat") in weak_babs:
+            out.append({"id": d["id"], "judul": d["judul"], "emoji": d.get("emoji", "🧠"),
+                        "tema": d.get("tema", "")})
+        if len(out) >= limit:
+            break
+    return out
+
+
 @app.route("/monitor/<int:user_id>")
 @monitor_required
 def monitor_detail(user_id):
@@ -991,7 +1349,7 @@ def monitor_detail(user_id):
     per_bab = []
     for b in curriculum.get_babs():
         lessons = b.get("pelajaran") or []
-        problems = b.get("soal") or []
+        problems = [p for p in (b.get("soal") or []) if not p.get("varian_dari")]
         per_bab.append({
             "bab": b["bab"], "judul": b["judul"], "emoji": b["emoji"],
             "l_done": sum(1 for l in lessons if l["id"] in data["done_lessons"]),
@@ -1009,8 +1367,22 @@ def monitor_detail(user_id):
     for r in rencana:
         p = curriculum.get_problem(r["problem_id"])
         r["judul"] = p["data"]["judul"] if p else r["problem_id"]
+    # Peta kemampuan + saran otomatis
+    stats = db.problem_stats(user_id)
+    skills = _skill_map(user_id, stats)
+    radar = []
+    top = skills[:6]
+    for s in top:
+        radar.append((f"{s['nama'][:12]}", s["pct"]))
+    radar_pts = _radar_points(radar)
+    radar_grid = [_radar_points([(n, lvl) for n, _ in radar], rmax=70 * lvl / 100)
+                  for lvl in (25, 50, 75, 100)]
+    weak = _weak_skills(skills)
+    drill_saran = _drill_suggestions([w["bab"] for w in weak]) if weak else []
     return render_template("student_detail.html", s=data, per_bab=per_bab, stats=stats,
-                           penjelasan=penjelasan, rencana=rencana)
+                           penjelasan=penjelasan, rencana=rencana,
+                           skills=top, radar_pts=radar_pts, radar_grid=radar_grid,
+                           weak=weak, drill_saran=drill_saran)
 
 
 # ---------- Review cerdas ----------

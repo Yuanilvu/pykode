@@ -23,6 +23,11 @@
       {% if u.wrong_24h >= 5 %}<span class="pill" style="background:#fee2e2;color:#991b1b">⚠️ {{ u.wrong_24h }} gagal 24 jam</span>{% endif %}
     </div>
   </div>
+  <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+    <a class="btn btn-outline btn-sm" href="{{ url_for('monitor_detail', user_id=u.id) }}">🔍 Detail & Peta Kemampuan</a>
+    <button class="btn btn-outline btn-sm btn-exam" data-uid="{{ u.id }}" data-name="{{ u.username }}">📝 Buat Ujian (15 menit)</button>
+    <span class="exam-msg" style="font-size:.85rem;color:var(--success)"></span>
+  </div>
   <div class="stat-row" style="margin-top:12px">
     <div class="stat-box" style="background:#eef2ff"><span class="num">{{ u.lessons }}/{{ stats.pelajaran }}</span><span class="lbl">Pelajaran</span></div>
     <div class="stat-box" style="background:#ecfdf5"><span class="num">{{ u.solved }}/{{ stats.soal }}</span><span class="lbl">Soal</span></div>
@@ -40,9 +45,6 @@
     {% endfor %}
   </div>
   {% endif %}
-  <div style="margin-top:12px;text-align:right">
-    <a class="btn btn-outline btn-sm" href="{{ url_for('monitor_detail', user_id=u.id) }}">🔍 Detail {{ u.username }} — lihat kode & riwayat</a>
-  </div>
 </div>
 {% else %}
 <div class="flash flash-info">Belum ada pengguna lain. Ajak adekmu bikin akun! 🎉</div>
@@ -52,4 +54,34 @@
   📲 Kakak bisa dapat notifikasi HP: digesek tiap hari pukul 18:00 + ringkasan mingguan tiap Minggu — alert otomatis kalau ada yang gagal &gt;5x dalam sehari.
 </div>
 
+{% endblock %}
+{% block scripts %}
+<script>
+document.querySelectorAll('.btn-exam').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var uid = btn.dataset.uid;
+    var name = btn.dataset.name;
+    var msg = btn.parentNode.querySelector('.exam-msg');
+    btn.disabled = true;
+    msg.textContent = 'Membuat ujian...';
+    fetch('/api/exam-create', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({user_id: parseInt(uid, 10), duration_min: 15})
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      btn.disabled = false;
+      if (d.ok) {
+        msg.textContent = '✅ Ujian untuk ' + name + ' dibuat! Dia lihat di dashboard-nya.';
+      } else {
+        msg.textContent = '⚠️ ' + (d.error || 'Gagal membuat ujian.');
+        msg.style.color = '#b91c1c';
+      }
+    }).catch(function () {
+      btn.disabled = false;
+      msg.textContent = '⚠️ Gagal terhubung.';
+      msg.style.color = '#b91c1c';
+    });
+  });
+});
+</script>
 {% endblock %}

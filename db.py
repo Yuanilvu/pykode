@@ -142,6 +142,26 @@ CREATE TABLE IF NOT EXISTS problem_plans (
     updated_at TEXT DEFAULT (datetime('now')),
     PRIMARY KEY (user_id, problem_id)
 );
+CREATE TABLE IF NOT EXISTS exams (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    problem_ids TEXT NOT NULL,
+    duration_min INTEGER NOT NULL DEFAULT 15,
+    deadline TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'active',
+    created_at TEXT DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS exam_results (
+    exam_id INTEGER NOT NULL,
+    problem_id TEXT NOT NULL,
+    status TEXT NOT NULL,
+    submitted_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (exam_id, problem_id)
+);
+CREATE TABLE IF NOT EXISTS project2_code (
+    user_id INTEGER PRIMARY KEY,
+    code TEXT NOT NULL DEFAULT ''
+);
 """
 
 
@@ -176,13 +196,21 @@ def init_db():
     with get_conn() as conn:
         conn.executescript(SCHEMA)
         # Migrasi DB lama: kolom role belum ada di database yang dibuat sebelum fitur monitor.
+        # try/except: beberapa worker gunicorn boot bersamaan bisa sama-sama jalanin ALTER
+        # (race) — kalau kolom sudah ada, abaikan.
         cols = [r["name"] for r in conn.execute("PRAGMA table_info(users)")]
         if "role" not in cols:
-            conn.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'siswa'")
+            try:
+                conn.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'siswa'")
+            except sqlite3.OperationalError:
+                pass
         # Migrasi: submissions sekarang menyimpan kode terakhir (untuk detail monitor).
         scol = [r["name"] for r in conn.execute("PRAGMA table_info(submissions)")]
         if "code" not in scol:
-            conn.execute("ALTER TABLE submissions ADD COLUMN code TEXT DEFAULT ''")
+            try:
+                conn.execute("ALTER TABLE submissions ADD COLUMN code TEXT DEFAULT ''")
+            except sqlite3.OperationalError:
+                pass
 
 
 # ---------- anti brute-force (shared antar worker) ----------
@@ -528,6 +556,78 @@ def get_problem_plan(user_id, problem_id):
             (user_id, problem_id)).fetchone()
 
 
+def problem_stats(user_id):
+    """{problem_id: {attempts, solved}} untuk semua soal yang pernah dicoba."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT problem_id, attempts, solved FROM problems_solved WHERE user_id = ?",
+            (user_id,)).fetchall()
+        return {r["problem_id"]: {"attempts": r["attempts"], "solved": r["solved"]}
+                for r in rows}
+
+
+# ---------- mode ujian ----------
+
+def create_exam(user_id, problem_ids, duration_min=15):
+    """Buat ujian baru. Return exam_id."""
+    with get_conn() as conn:
+        cur = conn.execute(
+            "INSERT INTO exams (user_id, problem_ids, duration_min, deadline) "
+            "VALUES (?, ?, ?, datetime('now', '+' || ? || ' minutes'))",
+            (user_id, ",".join(problem_ids), duration_min, duration_min))
+        return cur.lastrowid
+
+
+def get_exam(exam_id):
+    with get_conn() as conn:
+        return conn.execute("SELECT * FROM exams WHERE id = ?", (exam_id,)).fetchone()
+
+
+def get_active_exam(user_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT * FROM exams WHERE user_id = ? AND status = 'active' "
+            "AND deadline > datetime('now') ORDER BY id DESC LIMIT 1", (user_id,)).fetchone()
+
+
+def expire_exams(user_id):
+    """Ujian yang lewat deadline -> status done (hasil apa adanya). Return jumlah."""
+    with get_conn() as conn:
+        cur = conn.execute(
+            "UPDATE exams SET status = 'done' WHERE user_id = ? AND status = 'active' "
+            "AND deadline <= datetime('now')", (user_id,))
+        return cur.rowcount
+
+
+def exam_finish(exam_id):
+    with get_conn() as conn:
+        conn.execute("UPDATE exams SET status = 'done' WHERE id = ?", (exam_id,))
+
+
+def exam_result_save(exam_id, problem_id, status):
+    """Simpan hasil pertama per soal (submission pertama yang dihitung)."""
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO exam_results (exam_id, problem_id, status) "
+            "VALUES (?, ?, ?)", (exam_id, problem_id, status))
+
+
+def exam_results(exam_id):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT problem_id, status FROM exam_results WHERE exam_id = ?",
+            (exam_id,)).fetchall()
+        return {r["problem_id"]: r["status"] for r in rows}
+
+
+def exams_history(user_id, limit=10):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT * FROM exams WHERE user_id = ? ORDER BY id DESC LIMIT ?",
+            (user_id, limit)).fetchall()
+        return [dict(r) for r in rows]
+
+
 # ---------- leaderboard ----------
 
 def leaderboard(limit=10):
@@ -569,6 +669,21 @@ def save_project_code(user_id, code):
     with get_conn() as conn:
         conn.execute(
             "INSERT INTO project_code (user_id, code) VALUES (?, ?) "
+            "ON CONFLICT(user_id) DO UPDATE SET code = excluded.code",
+            (user_id, code))
+
+
+def get_project2_code(user_id):
+    with get_conn() as conn:
+        row = conn.execute("SELECT code FROM project2_code WHERE user_id = ?",
+                           (user_id,)).fetchone()
+        return row["code"] if row else ""
+
+
+def save_project2_code(user_id, code):
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT INTO project2_code (user_id, code) VALUES (?, ?) "
             "ON CONFLICT(user_id) DO UPDATE SET code = excluded.code",
             (user_id, code))
 

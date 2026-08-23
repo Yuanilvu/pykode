@@ -120,6 +120,7 @@ st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print('Hal
 d = json.loads(body)
 check("submit benar -> AC +50 XP + badge pemula", d["verdict"] == "AC" and d["xp_added"] == 50
       and any(b["id"] == "pemula_pemberani" for b in d["new_badges"]))
+check("AC -> Jelaskan Kode-mu tersedia", len(d.get("jelas", [])) >= 1)
 st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print('Halo Python!')"})
 d = json.loads(body)
 check("submit ulang -> AC tapi 0 XP (first-solve only)", d["verdict"] == "AC" and d["xp_added"] == 0)
@@ -157,6 +158,32 @@ st, body = c.get("/lesson/1-1")
 check("lesson -> kartu Ngajar Robot", "Ngajar Kode si Robot" in body)
 st, body = c.get("/problem/s1-1")
 check("problem -> kartu Rencana Dulu", "Rencana Dulu, Baru Koding" in body)
+
+print("== RENCANA CERDAS & VARIASI & WARM-UP ==")
+st, body = c.post_json("/api/problem-plan", {"problem_id": "s13-1", "rencana": "tinggal cetak saja"})
+d = json.loads(body)
+check("rencana cerdas -> feedback muncul", d["ok"] is True and len(d.get("cek", {}).get("pesan", [])) >= 1)
+st, body = c.post_json("/api/submit", {"problem_id": "s13-1", "code": "print('salah')"})
+d = json.loads(body)
+check("varian saran muncul saat WA", len(d.get("varian_saran", [])) >= 1)
+st, body = c.get("/problem/s13-1b")
+check("halaman varian -> badge Versi Latihan", st == 200 and "Versi Latihan" in body)
+st, body = c.post_json("/api/submit", {"problem_id": "s13-2", "code": "print('salah')"})
+d = json.loads(body)
+check("warm-up adaptif -> saran soal lebih mudah", len(d.get("warmup", [])) >= 1)
+
+print("== PROYEK FASE 2 (Game Tebak Angka) ==")
+kancil_id = db.get_user_by_username("kancil")["id"]
+for lid in ("13-1", "13-2", "13-3", "13-4"):
+    db.mark_lesson_done(kancil_id, lid)
+st, body = c.get("/project2")
+check("project2 -> 200 & judul", st == 200 and "Game Tebak Angka" in body)
+st, body = c.get("/project2/m2-1")
+check("misi m2-1 terbuka -> 200", st == 200 and "Angka Rahasia" in body)
+m2 = curriculum.get_milestone2("m2-1")
+st, body = c.post_json("/api/project2-submit", {"milestone_id": "m2-1", "code": m2["solusi"]})
+d = json.loads(body)
+check("misi m2-1 AC +60 XP", d["verdict"] == "AC" and d["xp_added"] == 60)
 
 print("== LEADERBOARD ==")
 st, body = c.get("/leaderboard")
@@ -230,6 +257,27 @@ st, body = c.get(f"/monitor/{kancil_id}")
 check("monitor detail -> 200 & ada kode area", st == 200 and "Progres per Bab" in body)
 check("monitor detail -> penjelasan & rencana adek tampil",
       "Penjelasan Pelajaran" in body and "Rencana Sebelum Koding" in body)
+check("monitor detail -> peta kemampuan & saran", "Peta Kemampuan" in body)
+
+print("== MODE UJIAN ==")
+tikus_id = db.get_user_by_username("tikus")["id"]
+st, body = c.post_json("/api/exam-create", {"user_id": tikus_id, "duration_min": 15})
+d = json.loads(body)
+check("monitor bikin ujian -> ok", d.get("ok") is True)
+exam = db.get_active_exam(tikus_id)
+check("ujian aktif untuk tikus", exam is not None and exam["status"] == "active")
+pid0 = exam["problem_ids"].split(",")[0]
+dprob = curriculum.get_problem(pid0)["data"]
+st, body = c_t.post_json("/api/submit", {"problem_id": pid0, "code": dprob["solusi"]})
+d = json.loads(body)
+check("submit soal ujian -> AC tercatat", d["verdict"] == "AC")
+st, body = c_t.get("/exam")
+check("tikus lihat halaman ujian", st == 200 and "Mode Ujian" in body)
+st, body = c_t.post_json("/api/exam-finish", {"exam_id": exam["id"]})
+d = json.loads(body)
+check("ujian diselesaikan", d.get("ok") is True)
+st, body = c_t.get(f"/exam/results/{exam['id']}")
+check("hasil ujian tampil (1/3)", st == 200 and "Hasil Ujian" in body and "1/3" in body)
 st, body = c.get("/")
 check("index -> kartu target harian", st == 200 and "Target Harian" in body)
 

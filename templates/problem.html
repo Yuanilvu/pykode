@@ -29,6 +29,13 @@
   </div>
   {% endfor %}
 
+  {% if soal.varian_dari %}
+  <div class="flash" style="background:#fdf2f8;color:#9d174d;border:1px solid #fbcfe8">
+    🧪 Ini <strong>Versi Latihan</strong> — pola sama dengan <strong>{{ soal.varian_dari }}</strong>, tapi angka beda!
+    Tujuannya biar kamu paham POLANYA, bukan hafal jawabannya.
+  </div>
+  {% endif %}
+
   {% if soal.petunjuk %}
   <button class="btn btn-ghost btn-sm" id="btn-hint">💡 Lihat Petunjuk</button>
   <div class="hint-box" id="hint-box">
@@ -119,8 +126,18 @@
     }).then(r => r.json()).then(d => {
       btn.disabled = false;
       if (d.ok) {
-        st.textContent = '✅ Rencana tersimpan — sekarang waktunya koding!';
+        st.innerHTML = '✅ Rencana tersimpan — sekarang waktunya koding!';
         st.style.color = 'var(--success)';
+        if (d.cek && d.cek.pesan && d.cek.pesan.length) {
+          var fb = document.getElementById('plan-feedback');
+          if (!fb) {
+            fb = document.createElement('div');
+            fb.id = 'plan-feedback';
+            fb.style.marginTop = '8px';
+            btn.parentNode.appendChild(fb);
+          }
+          fb.innerHTML = d.cek.pesan.map(function (p) { return '<div style="padding:3px 0">' + esc(p) + '</div>'; }).join('');
+        }
       } else {
         st.textContent = d.error || 'Gagal menyimpan.';
         st.style.color = '#b91c1c';
@@ -174,6 +191,13 @@
       if (d.new_badges && d.new_badges.length) {
         d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
       }
+      if (d.jelas && d.jelas.length) {
+        html += '<details class="card" style="margin-top:10px"><summary style="cursor:pointer;font-weight:700">🔍 Jelaskan Kode-mu — apa yang sebenarnya kamu tulis?</summary><div style="margin-top:8px;font-size:.92rem">';
+        d.jelas.forEach(function (j) {
+          html += '<div style="padding:3px 0"><span style="color:var(--muted);font-family:monospace;font-size:.8rem">L' + j.baris + ':</span> ' + esc(j.teks) + '</div>';
+        });
+        html += '</div></details>';
+      }
     } else {
       html += '<div class="verdict-banner verdict-WA">😅 Belum benar — ' + d.passed + '/' + d.total + ' tes rahasia lolos. Cek lagi, kamu pasti bisa!</div>';
       if (d.deteksi && d.deteksi.ada) {
@@ -186,6 +210,20 @@
       if (d.latihan && d.latihan.length) {
         html += '<div class="verdict-banner" style="background:#f0fdf4;color:#166534">🧠 <strong>Latihan serupa (biar makin jago):</strong> ';
         d.latihan.forEach(function (p) {
+          html += ' <a class="btn btn-outline btn-sm" href="' + PYKODE_BASE + '/problem/' + esc(p.id) + '">' + esc(p.judul) + '</a>';
+        });
+        html += '</div>';
+      }
+      if (d.warmup && d.warmup.length) {
+        html += '<div class="verdict-banner" style="background:#fffbeb;color:#92400e">🪜 <strong>Mulai dari yang lebih mudah dulu:</strong> ';
+        d.warmup.forEach(function (p) {
+          html += ' <a class="btn btn-outline btn-sm" href="' + PYKODE_BASE + '/problem/' + esc(p.id) + '">' + esc(p.judul) + '</a>';
+        });
+        html += '</div>';
+      }
+      if (d.varian_saran && d.varian_saran.length) {
+        html += '<div class="verdict-banner" style="background:#fdf2f8;color:#9d174d">🧪 <strong>Coba versi angka beda:</strong> ';
+        d.varian_saran.forEach(function (p) {
           html += ' <a class="btn btn-outline btn-sm" href="' + PYKODE_BASE + '/problem/' + esc(p.id) + '">' + esc(p.judul) + '</a>';
         });
         html += '</div>';

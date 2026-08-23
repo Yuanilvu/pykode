@@ -12,18 +12,20 @@ _by_lesson = None
 _by_problem = None
 _drills = None
 _project = None
+_project2 = None
 _bugs = None
 _bug_by_id = None
 
 
 def _load_all():
-    global _babs, _by_lesson, _by_problem, _drills, _project, _bugs, _bug_by_id
+    global _babs, _by_lesson, _by_problem, _drills, _project, _project2, _bugs, _bug_by_id
     if _babs is not None:
         return
     babs = []
     by_lesson, by_problem = {}, {}
     drills = []
     project = None
+    project2 = None
     bugs, bug_by_id = [], {}
     for fn in sorted(os.listdir(CURRICULUM_DIR)):
         if not fn.endswith(".yaml"):
@@ -40,6 +42,8 @@ def _load_all():
             drills = data["drill"] or []
         elif "proyek" in data:
             project = data["proyek"]
+        elif "proyek2" in data:
+            project2 = data["proyek2"]
         elif "bug" in data:
             bugs = data["bug"] or []
             for b in bugs:
@@ -48,8 +52,12 @@ def _load_all():
     if project:
         misi = sorted(project.get("misi") or [], key=lambda m: m.get("bab", 999))
         project["misi"] = misi
+    if project2:
+        misi2 = sorted(project2.get("misi") or [], key=lambda m: m.get("bab", 999))
+        project2["misi"] = misi2
     bugs.sort(key=lambda b: (b.get("bab", 99), b["id"]))
     _babs, _by_lesson, _by_problem, _drills, _project = babs, by_lesson, by_problem, drills, project
+    _project2 = project2
     _bugs, _bug_by_id = bugs, bug_by_id
 
 
@@ -63,6 +71,21 @@ def get_milestone(milestone_id):
     if not _project:
         return None
     for m in _project.get("misi") or []:
+        if m["id"] == milestone_id:
+            return m
+    return None
+
+
+def get_project2():
+    _load_all()
+    return _project2
+
+
+def get_milestone2(milestone_id):
+    _load_all()
+    if not _project2:
+        return None
+    for m in _project2.get("misi") or []:
         if m["id"] == milestone_id:
             return m
     return None

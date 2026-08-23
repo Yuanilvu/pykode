@@ -17,6 +17,49 @@
   </div>
 </div>
 
+<div class="section-title">🎯 Peta Kemampuan</div>
+<div class="card" style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+  <div style="text-align:center">
+    <svg width="220" height="190" viewBox="0 0 220 190">
+      {% for g in radar_grid %}
+      <polygon points="{{ g }}" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+      {% endfor %}
+      {% if radar_pts %}
+      <polygon points="{{ radar_pts }}" fill="rgba(99,102,241,.25)" stroke="#6366f1" stroke-width="2"/>
+      {% endif %}
+    </svg>
+    <div style="color:var(--muted);font-size:.8rem">makin lebar = makin jago</div>
+  </div>
+  <div style="flex:1;min-width:200px">
+    {% if skills %}
+    {% for s in skills %}
+    <div style="display:flex;align-items:center;gap:8px;padding:3px 0">
+      <span style="width:110px;font-size:.85rem">{{ s.nama }}</span>
+      <div class="progress" style="flex:1"><i style="width:{{ s.pct }}%;background:{% if s.pct >= 70 %}var(--success){% elif s.pct >= 50 %}#f59e0b{% else %}#ef4444{% endif %}"></i></div>
+      <span style="font-size:.8rem;color:var(--muted)">{{ s.solved }}/{{ s.attempts }}</span>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="color:var(--muted)">Belum ada data — adek belum mengerjakan soal.</p>
+    {% endif %}
+  </div>
+</div>
+
+{% if weak %}
+<div class="card" style="border-left:4px solid #ef4444">
+  <strong>⚠️ Perlu Perhatian (otomatis)</strong>
+  {% for w in weak %}
+  <div style="margin-top:6px">
+    🔴 <strong>{{ w.nama }}</strong> — akurasi {{ w.pct }}% ({{ w.solved }}/{{ w.attempts }} benar).
+    Saranku: ulangi Bab {{ w.bab }} + kerjakan drill berikut:
+    {% for d in drill_saran %}
+    <a class="btn btn-outline btn-sm" href="{{ url_for('drill', drill_id=d.id) }}">{{ d.emoji }} {{ d.judul }}</a>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 <div class="section-title">📚 Progres per Bab</div>
 <div class="bab-grid">
   {% for b in per_bab %}

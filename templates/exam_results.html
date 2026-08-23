@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Hasil Ujian{% endblock %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>📊 Hasil Ujian</h1>
+    <p>{{ user.username }} · {{ exam.created_at[:16] }} · {{ exam.duration_min }} menit</p>
+  </div>
+  <div style="text-align:center">
+    <div class="rank-big" style="color:{% if n_ac == n_total %}#16a34a{% elif n_ac >= 2 %}#f59e0b{% else %}#dc2626{% endif %}">{{ n_ac }}/{{ n_total }}</div>
+    <div>benar</div>
+  </div>
+</div>
+
+{% if n_ac == n_total %}
+<div class="flash flash-success" style="text-align:center;font-size:1.1rem">🏆 SEMPURNA! Kamu menjawab semua benar!</div>
+{% elif n_ac >= 2 %}
+<div class="flash flash-success" style="text-align:center">👍 Kerja bagus! Tinggal sedikit lagi menuju sempurna.</div>
+{% else %}
+<div class="flash" style="text-align:center">💪 Jangan menyerah — analisis di bawah bantu kamu tahu harus belajar apa!</div>
+{% endif %}
+
+<div class="card">
+  {% for p in problems %}
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap">
+    <div>
+      <strong>🧩 {{ p.judul }}</strong>
+      <span style="color:var(--muted);font-size:.85rem">({{ p.id }}, bab {{ p.bab }})</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      {% if p.status == 'AC' %}
+      <span style="color:var(--success);font-weight:700">✅ Benar</span>
+      {% elif p.status == 'WA' %}
+      <span style="color:#dc2626;font-weight:700">❌ Salah</span>
+      {% else %}
+      <span style="color:var(--muted)">⏳ Tidak dijawab</span>
+      {% endif %}
+      <a class="btn btn-outline btn-sm" href="{{ url_for('problem', problem_id=p.id) }}">Coba Lagi →</a>
+    </div>
+  </div>
+  {% endfor %}
+  <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+    <a class="btn btn-outline btn-sm" href="{{ url_for('exam_page') }}">← Kembali ke Mode Ujian</a>
+  </div>
+</div>
+
+{% endblock %}

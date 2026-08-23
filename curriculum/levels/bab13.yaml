@@ -354,3 +354,122 @@ soal:
       - "Baca dua angka: total dan uang bayar."
       - "Kembalian = bayar - total. Cetak dulu."
       - "Jumlah lembar lima ribuan = kembalian // 5000. Cetak di baris kedua."
+
+  - id: "s13-1b"
+    judul: "Total Belanja (Versi 2)"
+    sulit: "mudah"
+    varian_dari: "s13-1"
+    cerita: |
+      Ini versi latihan dengan angka beda!
+      Kancil jaga warung lagi. Pembeli beli roti.
+      Baris pertama: harga satu roti.
+      Baris kedua: jumlah roti.
+      Hitung total belanjanya. Cetak angkanya saja.
+    input: "Baris 1: harga satu roti. Baris 2: jumlah roti."
+    output: "Satu baris: total belanja."
+    contoh:
+      - input: "3200\n4"
+        output: "12800"
+      - input: "1500\n3"
+        output: "4500"
+    tes:
+      - input: "3200\n4"
+        output: "12800"
+      - input: "1500\n3"
+        output: "4500"
+      - input: "700\n6"
+        output: "4200"
+      - input: "2500\n2"
+        output: "5000"
+      - input: "1200\n5"
+        output: "6000"
+      - input: "9999\n1"
+        output: "9999"
+    solusi: |
+      harga = int(input())
+      jumlah = int(input())
+      print(harga * jumlah)
+    petunjuk:
+      - "Baca dua angka dengan int(input())."
+      - "Kalikan harga dengan jumlah pakai *."
+      - "Cetak hasil kalinya dengan print()."
+
+  - id: "s13-2b"
+    judul: "Suhu (Versi 2)"
+    sulit: "sedang"
+    varian_dari: "s13-2"
+    cerita: |
+      Ini versi latihan dengan angka beda!
+      Termometer Kancil menunjukkan Celcius lagi.
+      Ubah ke Fahrenheit pakai rumus yang sama:
+      Fahrenheit = Celcius × 9 ÷ 5 + 32.
+      Bulatkan dengan round(). Cetak angkanya saja.
+    input: "Satu baris: suhu dalam Celcius."
+    output: "Satu baris: suhu dalam Fahrenheit (angka bulat)."
+    contoh:
+      - input: "25"
+        output: "77"
+      - input: "-10"
+        output: "14"
+    tes:
+      - input: "25"
+        output: "77"
+      - input: "-10"
+        output: "14"
+      - input: "50"
+        output: "122"
+      - input: "11"
+        output: "52"
+      - input: "-20"
+        output: "-4"
+      - input: "96"
+        output: "205"
+    solusi: |
+      c = int(input())
+      f = int(round(c * 9 / 5 + 32))
+      print(f)
+    petunjuk:
+      - "Baca suhu dengan int(input())."
+      - "Hitung pakai rumus: c * 9 / 5 + 32."
+      - "Bulatkan dengan round(), ubah ke int(), lalu cetak."
+
+  - id: "s13-3b"
+    judul: "Kembalian (Versi 2)"
+    sulit: "sulit"
+    varian_dari: "s13-3"
+    cerita: |
+      Ini versi latihan dengan angka beda!
+      Kancil belanja di toko Bu Kancil.
+      Baris pertama: total belanja.
+      Baris kedua: uang yang dibayar.
+      Cetak kembaliannya, lalu jumlah lembar lima ribuan.
+    input: "Baris 1: total belanja. Baris 2: uang yang dibayar."
+    output: "Baris 1: kembalian. Baris 2: jumlah lembar lima ribuan."
+    contoh:
+      - input: "20000\n50000"
+        output: "30000\n6"
+      - input: "7500\n10000"
+        output: "2500\n0"
+    tes:
+      - input: "20000\n50000"
+        output: "30000\n6"
+      - input: "7500\n10000"
+        output: "2500\n0"
+      - input: "35000\n50000"
+        output: "15000\n3"
+      - input: "1000\n2000"
+        output: "1000\n0"
+      - input: "45000\n100000"
+        output: "55000\n11"
+      - input: "18000\n20000"
+        output: "2000\n0"
+    solusi: |
+      total = int(input())
+      bayar = int(input())
+      kembalian = bayar - total
+      print(kembalian)
+      print(kembalian // 5000)
+    petunjuk:
+      - "Baca dua angka: total dan uang bayar."
+      - "Kembalian = bayar - total. Cetak dulu."
+      - "Jumlah lembar lima ribuan = kembalian // 5000. Cetak di baris kedua."

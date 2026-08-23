@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Ujian — PyKode{% endblock %}
+{% block content %}
+
+<div class="hero" style="background:linear-gradient(135deg,#1e1b4b,#312e81)">
+  <div>
+    <h1>📝 Ujian Berlangsung!</h1>
+    <p>Kerjakan 3 soal. Submission pertama tiap soal yang dihitung. Semangat! 💪</p>
+  </div>
+  <div style="text-align:center">
+    <div id="timer" class="rank-big" style="font-size:2rem;color:#fbbf24">--:--</div>
+    <div style="color:#c7d2fe">sisa waktu</div>
+  </div>
+</div>
+
+<div class="card">
+  {% for p in problems %}
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);gap:10px;flex-wrap:wrap">
+    <div>
+      <strong>🧩 {{ p.judul }}</strong>
+      <span style="color:var(--muted);font-size:.85rem">({{ p.id }}, bab {{ p.bab }}, {{ p.sulit }})</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      {% set st = hasil.get(p.id) %}
+      {% if st == 'AC' %}
+      <span style="color:var(--success);font-weight:700">✅ Benar</span>
+      {% elif st == 'WA' %}
+      <span style="color:#dc2626;font-weight:700">❌ Salah</span>
+      {% else %}
+      <span style="color:var(--muted)">⏳ Belum</span>
+      {% endif %}
+      <a class="btn btn-outline btn-sm" href="{{ url_for('problem', problem_id=p.id) }}">Kerjakan →</a>
+    </div>
+  </div>
+  {% endfor %}
+  <div style="margin-top:14px;text-align:center">
+    <button class="btn" id="btn-finish">🏁 Selesaikan Ujian Sekarang</button>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+(function () {
+  var examId = {{ exam.id }};
+  var deadline = new Date('{{ exam.deadline }}'.replace(' ', 'T') + 'Z');
+  // deadline tersimpan dalam UTC (datetime('now') SQLite = UTC), tampilkan lokal
+  deadline = new Date(deadline.getTime() - deadline.getTimezoneOffset() * 60000);
+
+  function tick() {
+    var el = document.getElementById('timer');
+    var diff = deadline - new Date();
+    if (diff <= 0) {
+      el.textContent = '00:00';
+      finish(true);
+      return;
+    }
+    var m = Math.floor(diff / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    el.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+  function finish(auto) {
+    if (window._finishing) return;
+    window._finishing = true;
+    fetch('/api/exam-finish', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({exam_id: examId})
+    }).then(function () {
+      location.href = '/exam/results/' + examId;
+    }).catch(function () {
+      location.href = '/exam/results/' + examId;
+    });
+  }
+  setInterval(tick, 1000);
+  tick();
+  document.getElementById('btn-finish').addEventListener('click', function () { finish(false); });
+})();
+</script>
+{% endblock %}

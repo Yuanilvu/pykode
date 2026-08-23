@@ -23,6 +23,13 @@
   <span class="btn btn-outline btn-sm">Temenin Kode 🤖</span>
 </a>
 
+{% if active_exam %}
+<a class="card" href="{{ url_for('exam_run', exam_id=active_exam.id) }}" style="display:flex;justify-content:space-between;align-items:center;border:2px solid var(--primary);margin-bottom:14px;text-decoration:none">
+  <span><strong>📝 Kamu punya UJIAN!</strong> 3 soal · batas {{ active_exam.deadline[:16] }}</span>
+  <span class="btn">🚀 Kerjakan Sekarang</span>
+</a>
+{% endif %}
+
 <div class="stat-row">
   <div class="stat-box"><span class="num">⭐ {{ g_user.xp }}</span><span class="lbl">XP</span></div>
   <div class="stat-box"><span class="num">🔥 {{ g_user.streak }}</span><span class="lbl">Streak</span></div>
