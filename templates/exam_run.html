@@ -43,9 +43,9 @@
 <script>
 (function () {
   var examId = {{ exam.id }};
+  // deadline tersimpan UTC (datetime('now') SQLite) — parse langsung sebagai UTC,
+  // Date JS otomatis menangani zona waktu lokal. JANGAN tambah offset manual!
   var deadline = new Date('{{ exam.deadline }}'.replace(' ', 'T') + 'Z');
-  // deadline tersimpan dalam UTC (datetime('now') SQLite = UTC), tampilkan lokal
-  deadline = new Date(deadline.getTime() - deadline.getTimezoneOffset() * 60000);
 
   function tick() {
     var el = document.getElementById('timer');

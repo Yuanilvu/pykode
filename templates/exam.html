@@ -14,7 +14,7 @@
   <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
     <div>
       <strong>⚡ Kamu punya ujian aktif!</strong>
-      <div style="color:var(--muted);font-size:.9rem">3 soal · {{ active.duration_min }} menit · batas {{ active.deadline[:16] }}</div>
+      <div style="color:var(--muted);font-size:.9rem">3 soal · {{ active.duration_min }} menit</div>
     </div>
     <a class="btn" href="{{ url_for('exam_run', exam_id=active.id) }}">🚀 Mulai Ujian</a>
   </div>
