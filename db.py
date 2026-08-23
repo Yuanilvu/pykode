@@ -128,6 +128,20 @@ CREATE TABLE IF NOT EXISTS duel_solves (
     solved_at TEXT DEFAULT (datetime('now')),
     PRIMARY KEY (duel_id, user_id)
 );
+CREATE TABLE IF NOT EXISTS lesson_explanations (
+    user_id INTEGER NOT NULL,
+    lesson_id TEXT NOT NULL,
+    penjelasan TEXT NOT NULL,
+    updated_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (user_id, lesson_id)
+);
+CREATE TABLE IF NOT EXISTS problem_plans (
+    user_id INTEGER NOT NULL,
+    problem_id TEXT NOT NULL,
+    rencana TEXT NOT NULL,
+    updated_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (user_id, problem_id)
+);
 """
 
 
@@ -455,6 +469,63 @@ def duel_history(limit=7):
             FROM duels d LEFT JOIN users u ON u.id = d.winner_id
             ORDER BY d.duel_date DESC LIMIT ?""", (limit,)).fetchall()
         return [dict(r) for r in rows]
+
+
+# ---------- belajar aktif (ngajar robot & rencana dulu) ----------
+
+def save_lesson_explanation(user_id, lesson_id, penjelasan):
+    """Simpan penjelasan adek ('ngajar Kode si Robot'). Return True jika baru pertama kali."""
+    with get_conn() as conn:
+        cur = conn.execute(
+            """INSERT OR IGNORE INTO lesson_explanations (user_id, lesson_id, penjelasan)
+               VALUES (?, ?, ?)""", (user_id, lesson_id, penjelasan))
+        if cur.rowcount == 0:
+            conn.execute(
+                "UPDATE lesson_explanations SET penjelasan = ?, updated_at = datetime('now') "
+                "WHERE user_id = ? AND lesson_id = ?", (penjelasan, user_id, lesson_id))
+            return False
+        return True
+
+
+def get_lesson_explanations(user_id):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT lesson_id, penjelasan, updated_at FROM lesson_explanations "
+            "WHERE user_id = ? ORDER BY updated_at DESC", (user_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_lesson_explanation(user_id, lesson_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT penjelasan FROM lesson_explanations WHERE user_id = ? AND lesson_id = ?",
+            (user_id, lesson_id)).fetchone()
+
+
+def save_problem_plan(user_id, problem_id, rencana):
+    with get_conn() as conn:
+        conn.execute(
+            """INSERT INTO problem_plans (user_id, problem_id, rencana)
+               VALUES (?, ?, ?)
+               ON CONFLICT(user_id, problem_id) DO UPDATE SET
+                   rencana = excluded.rencana,
+                   updated_at = datetime('now')""",
+            (user_id, problem_id, rencana))
+
+
+def get_problem_plans(user_id):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT problem_id, rencana, updated_at FROM problem_plans "
+            "WHERE user_id = ? ORDER BY updated_at DESC", (user_id,)).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_problem_plan(user_id, problem_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT rencana FROM problem_plans WHERE user_id = ? AND problem_id = ?",
+            (user_id, problem_id)).fetchone()
 
 
 # ---------- leaderboard ----------

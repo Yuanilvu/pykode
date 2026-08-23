@@ -77,6 +77,7 @@ db.init_db()  # idempoten — aman dipanggil saat import (gunicorn) & saat dev
 # ---------- Konstanta ----------
 LESSON_XP = 30
 QUIZ_XP = 5
+EXPLAIN_XP = 5
 DRILL_XP = 40
 PROBLEM_XP = {"mudah": 50, "sedang": 100, "sulit": 150}
 DUEL_BONUS = 30
@@ -373,9 +374,13 @@ def lesson(lesson_id):
     done = db.lesson_done(g.user["id"], lesson_id)
     quiz_state = [{"answered": db.quiz_correct(g.user["id"], lesson_id, i)}
                   for i in range(len(data.get("kuis") or []))]
+    saved_explain = None
+    row = db.get_lesson_explanation(g.user["id"], lesson_id)
+    if row:
+        saved_explain = row["penjelasan"]
     return render_template("lesson.html", bab=bab, lesson=data,
                            prev_l=prev_l, next_l=next_l, done=done,
-                           quiz_state=quiz_state,
+                           quiz_state=quiz_state, saved_explain=saved_explain,
                            next_problem=(bab.get("soal") or [None])[0])
 
 
@@ -392,8 +397,13 @@ def problem(problem_id):
     prev_p = problems[idx - 1] if idx > 0 else None
     next_p = problems[idx + 1] if idx + 1 < len(problems) else None
     state = db.problem_state(g.user["id"], problem_id)
+    saved_plan = None
+    prow = db.get_problem_plan(g.user["id"], problem_id)
+    if prow:
+        saved_plan = prow["rencana"]
     return render_template("problem.html", bab=bab, soal=data,
-                           prev_p=prev_p, next_p=next_p, state=state)
+                           prev_p=prev_p, next_p=next_p, state=state,
+                           saved_plan=saved_plan)
 
 
 @app.route("/drills")
@@ -612,6 +622,41 @@ def api_lesson_done():
     return jsonify({"ok": True, "xp_added": xp_added, "new_badges": new_badges})
 
 
+@app.route("/api/lesson-explain", methods=["POST"])
+@login_required
+def api_lesson_explain():
+    """'Ngajar Kode si Robot' — adek menjelaskan pelajaran dengan kata-katanya sendiri."""
+    body = request.get_json(silent=True) or {}
+    lesson_id = body.get("lesson_id", "")
+    penjelasan = (body.get("penjelasan") or "").strip()[:500]
+    if not curriculum.get_lesson(lesson_id):
+        return jsonify({"ok": False, "error": "Pelajaran tidak ditemukan"}), 404
+    if len(penjelasan) < 10:
+        return jsonify({"ok": False,
+                        "error": "Kode si Robot butuh penjelasan yang jelas (minimal 10 huruf) ya!"}), 400
+    first = db.save_lesson_explanation(g.user["id"], lesson_id, penjelasan)
+    xp_added = 0
+    if first:
+        xp_added = EXPLAIN_XP
+        db.add_xp(g.user["id"], xp_added)
+    return jsonify({"ok": True, "xp_added": xp_added, "first": first})
+
+
+@app.route("/api/problem-plan", methods=["POST"])
+@login_required
+def api_problem_plan():
+    """'Rencana Dulu' — adek menulis langkah-langkah sebelum menulis kode."""
+    body = request.get_json(silent=True) or {}
+    problem_id = body.get("problem_id", "")
+    rencana = (body.get("rencana") or "").strip()[:500]
+    if not curriculum.get_problem(problem_id):
+        return jsonify({"ok": False, "error": "Soal tidak ditemukan"}), 404
+    if len(rencana) < 5:
+        return jsonify({"ok": False, "error": "Tulis rencanamu dulu ya (minimal 5 huruf)!"}), 400
+    db.save_problem_plan(g.user["id"], problem_id, rencana)
+    return jsonify({"ok": True})
+
+
 @app.route("/api/submit", methods=["POST"])
 @login_required
 def api_submit():
@@ -668,10 +713,21 @@ def api_submit():
         mentok = _mentok_payload(result["results"],
                                  lesson_url=_lesson_url_for_problem(problem_id),
                                  hint_scroll=True)
+    # Latihan serupa: bab sama + tingkat sama (biar mastery, bukan hafal)
+    latihan = []
+    if status != "AC":
+        for b in curriculum.get_babs():
+            if any(p["id"] == problem_id for p in (b.get("soal") or [])):
+                same = [p for p in (b.get("soal") or [])
+                        if p["id"] != problem_id and p.get("sulit") == soal.get("sulit")]
+                if len(same) < 2:
+                    same = [p for p in (b.get("soal") or []) if p["id"] != problem_id]
+                latihan = [{"id": p["id"], "judul": p["judul"]} for p in same[:2]]
+                break
     return jsonify({**result, "status": status, "xp_added": xp_added,
                     "first_solve": first_solve, "new_badges": new_badges,
                     "deteksi": deteksi, "duel_bonus": duel_bonus,
-                    "mentok": mentok})
+                    "mentok": mentok, "latihan": latihan})
 
 
 @app.route("/api/drill-submit", methods=["POST"])
@@ -944,7 +1000,17 @@ def monitor_detail(user_id):
             "p_total": len(problems),
         })
     stats = curriculum.stats()
-    return render_template("student_detail.html", s=data, per_bab=per_bab, stats=stats)
+    # Belajar aktif: penjelasan ('ngajar robot') & rencana dulu
+    penjelasan = db.get_lesson_explanations(user_id)
+    for x in penjelasan:
+        l = curriculum.get_lesson(x["lesson_id"])
+        x["judul"] = f"{l['data']['judul']} (Bab {l['bab']['bab']})" if l else x["lesson_id"]
+    rencana = db.get_problem_plans(user_id)
+    for r in rencana:
+        p = curriculum.get_problem(r["problem_id"])
+        r["judul"] = p["data"]["judul"] if p else r["problem_id"]
+    return render_template("student_detail.html", s=data, per_bab=per_bab, stats=stats,
+                           penjelasan=penjelasan, rencana=rencana)
 
 
 # ---------- Review cerdas ----------

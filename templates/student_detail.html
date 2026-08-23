@@ -71,4 +71,32 @@
   {% endif %}
 </div>
 
+<div class="section-title">🧠 Penjelasan Pelajaran ("Ngajar Kode si Robot")</div>
+<div class="card">
+  {% if penjelasan %}
+  {% for x in penjelasan %}
+  <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+    <div style="font-weight:700;font-size:.95rem">🤖 {{ x.judul }} <span style="color:var(--muted);font-size:.8rem;font-weight:400">· {{ x.updated_at[:16] }}</span></div>
+    <div style="color:#334155;margin-top:4px">{{ x.penjelasan }}</div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <p style="color:var(--muted);text-align:center;margin:0">Belum ada penjelasan. (Adek belum 'ngajar' Kode si Robot.)</p>
+  {% endif %}
+</div>
+
+<div class="section-title">📝 Rencana Sebelum Koding</div>
+<div class="card">
+  {% if rencana %}
+  {% for r in rencana %}
+  <div style="padding:10px 0;border-bottom:1px solid var(--border)">
+    <div style="font-weight:700;font-size:.95rem">🧩 {{ r.judul }} <span style="color:var(--muted);font-size:.8rem;font-weight:400">· {{ r.updated_at[:16] }}</span></div>
+    <div style="color:#334155;margin-top:4px;white-space:pre-line">{{ r.rencana }}</div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <p style="color:var(--muted);text-align:center;margin:0">Belum ada rencana. (Adek belum pakai fitur 'Rencana Dulu'.)</p>
+  {% endif %}
+</div>
+
 {% endblock %}

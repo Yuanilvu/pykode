@@ -17,12 +17,12 @@
   <div class="materi">{{ render_markdown(lesson.materi) | safe }}</div>
 
   {% if lesson.contoh %}
-  <h3>🧪 Coba Langsung!</h3>
+  <h3>🧪 Coba Langsung! <span style="font-size:.85rem;color:var(--muted)">✏️ Boleh diubah-ubah dulu — tebak hasilnya, lalu jalankan!</span></h3>
   {% for c in lesson.contoh %}
   <div class="example-box">
-    <pre><code>{{ c.kode }}</code></pre>
+    <textarea id="example-editor-{{ loop.index0 }}" class="cm-editor example-editor">{{ c.kode }}</textarea>
     <div class="ex-foot">
-      <button class="btn btn-primary btn-sm run-example" data-code="{{ c.kode | e }}">▶ Jalankan</button>
+      <button class="btn btn-primary btn-sm run-example">▶ Jalankan</button>
       {% if c.penjelasan %}<span class="ex-explain">{{ c.penjelasan }}</span>{% endif %}
     </div>
     <pre class="example-out"></pre>
@@ -48,6 +48,25 @@
   </div>
   {% endfor %}
   {% endif %}
+
+  <div class="card teach-card">
+    <div style="display:flex;gap:12px;align-items:flex-start">
+      <div style="font-size:2.6rem;line-height:1">🤖</div>
+      <div style="flex:1">
+        <strong>Ngajar Kode si Robot</strong>
+        <div style="color:var(--muted);font-size:.9rem;margin:4px 0">
+          Kode si Robot baru belajar dan bingung. Jelaskan ke dia pakai kata-katamu:
+          apa yang tadi kamu pelajari? Menjelaskan = kamu beneran paham!
+          {% if not saved_explain %}(Pertama kali <strong>+5 XP</strong>){% endif %}
+        </div>
+        <textarea id="explain-text" rows="2" placeholder="Contoh: print() itu alat buat mencetak tulisan di layar...">{{ saved_explain if saved_explain else '' }}</textarea>
+        <div style="margin-top:8px">
+          <button class="btn btn-outline btn-sm" id="btn-explain">💬 Kirim ke Kode si Robot</button>
+          <span id="explain-status" style="font-size:.85rem"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
     {% if done %}
@@ -93,6 +112,32 @@
       }
       location.reload();
     }).catch(() => { btn.disabled = false; toast('Gagal menyimpan. Coba lagi.', 'bad'); });
+  });
+
+  document.getElementById('btn-explain')?.addEventListener('click', function () {
+    var btn = this;
+    var teks = document.getElementById('explain-text').value.trim();
+    var st = document.getElementById('explain-status');
+    if (teks.length < 10) {
+      st.textContent = '⚠️ Tulis minimal 10 huruf ya — Kode si Robot butuh penjelasan yang jelas!';
+      st.style.color = '#b91c1c';
+      return;
+    }
+    btn.disabled = true;
+    fetch('/api/lesson-explain', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({lesson_id: lessonId, penjelasan: teks})
+    }).then(r => r.json()).then(d => {
+      btn.disabled = false;
+      if (d.ok) {
+        st.textContent = d.first ? '🤖 Kode si Robot paham! +' + d.xp_added + ' XP 🎉' : '🤖 Sudah disimpan — Kode si Robot makin pintar!';
+        st.style.color = 'var(--success)';
+      } else {
+        st.textContent = d.error || 'Gagal menyimpan.';
+        st.style.color = '#b91c1c';
+      }
+    }).catch(() => { btn.disabled = false; st.textContent = 'Gagal menyimpan. Coba lagi.'; st.style.color = '#b91c1c'; });
   });
 })();
 </script>

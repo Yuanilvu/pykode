@@ -37,6 +37,24 @@
   {% endif %}
 </div>
 
+<div class="card plan-card">
+  <div style="display:flex;gap:12px;align-items:flex-start">
+    <div style="font-size:2rem;line-height:1">📝</div>
+    <div style="flex:1">
+      <strong>Rencana Dulu, Baru Koding!</strong>
+      <div style="color:var(--muted);font-size:.9rem;margin:4px 0">
+        Sebelum nulis kode, tulis dulu 2-3 langkah rencanamu dalam bahasa Indonesia.
+        Programmer hebat selalu rencana dulu! (Contoh: 1. baca angka, 2. kalikan, 3. cetak)
+      </div>
+      <textarea id="plan-text" rows="2" placeholder="1. ...&#10;2. ...&#10;3. ...">{{ saved_plan if saved_plan else '' }}</textarea>
+      <div style="margin-top:8px">
+        <button class="btn btn-outline btn-sm" id="btn-plan">💾 Simpan Rencanaku</button>
+        <span id="plan-status" style="font-size:.85rem"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card">
   <div class="editor-wrap short">
     <div class="editor-head"><span>🐍 Python</span><span>Python 3</span></div>
@@ -83,6 +101,32 @@
 
   function getCode() { return editor.getValue(); }
   function getStdin() { return document.getElementById('stdin-input').value; }
+
+  document.getElementById('btn-plan')?.addEventListener('click', function () {
+    var btn = this;
+    var teks = document.getElementById('plan-text').value.trim();
+    var st = document.getElementById('plan-status');
+    if (teks.length < 5) {
+      st.textContent = '⚠️ Tulis rencanamu dulu ya (minimal 5 huruf)!';
+      st.style.color = '#b91c1c';
+      return;
+    }
+    btn.disabled = true;
+    fetch('/api/problem-plan', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({problem_id: problemId, rencana: teks})
+    }).then(r => r.json()).then(d => {
+      btn.disabled = false;
+      if (d.ok) {
+        st.textContent = '✅ Rencana tersimpan — sekarang waktunya koding!';
+        st.style.color = 'var(--success)';
+      } else {
+        st.textContent = d.error || 'Gagal menyimpan.';
+        st.style.color = '#b91c1c';
+      }
+    }).catch(() => { btn.disabled = false; st.textContent = 'Gagal menyimpan. Coba lagi.'; st.style.color = '#b91c1c'; });
+  });
 
   btnRun.addEventListener('click', function () {
     outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
@@ -138,6 +182,13 @@
       }
       if (d.mentok && d.mentok.ada) {
         html += crashBanner(d.mentok);
+      }
+      if (d.latihan && d.latihan.length) {
+        html += '<div class="verdict-banner" style="background:#f0fdf4;color:#166534">🧠 <strong>Latihan serupa (biar makin jago):</strong> ';
+        d.latihan.forEach(function (p) {
+          html += ' <a class="btn btn-outline btn-sm" href="' + PYKODE_BASE + '/problem/' + esc(p.id) + '">' + esc(p.judul) + '</a>';
+        });
+        html += '</div>';
       }
     }
     html += '<div class="results">';

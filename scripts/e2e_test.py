@@ -109,6 +109,7 @@ check("badge hello_world baru (+10 XP)", d["new"] is True and d["xp_added"] == 1
 st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print('salah nih')"})
 d = json.loads(body)
 check("submit salah -> WA, 0/2", d["verdict"] == "WA" and d["passed"] == 0 and d["total"] == 2)
+check("submit WA -> saran latihan serupa", len(d.get("latihan", [])) >= 1)
 st, body = c.post_json("/api/submit", {"problem_id": "s1-1", "code": "print(hasi)"})
 d = json.loads(body)
 check("submit crash -> mentok: pesan ramah + langkah bantuan", d["status"] == "WA"
@@ -141,6 +142,21 @@ check("lesson done ulang -> 0 XP", d["xp_added"] == 0)
 st, body = c.get("/")
 total_xp = 10 + 50 + 5 + 30 + 20  # first-run + soal + quiz + lesson + badge pemula_pemberani
 check(f"dashboard XP = {total_xp}", f"⭐ {total_xp}" in body)
+
+print("== BELAJAR AKTIF (Ngajar Robot & Rencana Dulu) ==")
+st, body = c.post_json("/api/lesson-explain", {"lesson_id": "1-1", "penjelasan": "print itu alat mencetak tulisan di layar"})
+d = json.loads(body)
+check("ngajar robot pertama -> +5 XP", d["ok"] is True and d["xp_added"] == 5)
+st, body = c.post_json("/api/lesson-explain", {"lesson_id": "1-1", "penjelasan": "print itu alat mencetak tulisan di layar, versi diedit"})
+d = json.loads(body)
+check("ngajar robot ulang -> bisa diedit, 0 XP", d["ok"] is True and d["xp_added"] == 0)
+st, body = c.post_json("/api/problem-plan", {"problem_id": "s1-1", "rencana": "1. baca angka 2. kalikan 3. cetak"})
+d = json.loads(body)
+check("rencana dulu tersimpan", d["ok"] is True)
+st, body = c.get("/lesson/1-1")
+check("lesson -> kartu Ngajar Robot", "Ngajar Kode si Robot" in body)
+st, body = c.get("/problem/s1-1")
+check("problem -> kartu Rencana Dulu", "Rencana Dulu, Baru Koding" in body)
 
 print("== LEADERBOARD ==")
 st, body = c.get("/leaderboard")
@@ -212,6 +228,8 @@ check("manifest -> 200", st == 200 and "PyKode" in body)
 kancil_id = db.get_user_by_username("kancil")["id"]
 st, body = c.get(f"/monitor/{kancil_id}")
 check("monitor detail -> 200 & ada kode area", st == 200 and "Progres per Bab" in body)
+check("monitor detail -> penjelasan & rencana adek tampil",
+      "Penjelasan Pelajaran" in body and "Rencana Sebelum Koding" in body)
 st, body = c.get("/")
 check("index -> kartu target harian", st == 200 and "Target Harian" in body)
 

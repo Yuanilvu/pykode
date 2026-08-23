@@ -115,17 +115,24 @@ function maybeFirstRun() {
     }).catch(function () {});
 }
 
-/* Contoh di materi pelajaran */
+/* Contoh di materi pelajaran — EDITABLE: pakai kode dari editor */
+var exampleEditors = {};
+document.querySelectorAll('.example-editor').forEach(function (ta) {
+  exampleEditors[ta.id] = initEditor(ta);
+});
 document.querySelectorAll('.run-example').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var box = btn.closest('.example-box');
+    var ta = box.querySelector('.example-editor');
+    var editor = ta && exampleEditors[ta.id];
+    var code = editor ? editor.getValue() : (btn.dataset.code || '');
     var out = box.querySelector('.example-out');
     out.textContent = '⏳ Menjalankan...';
     out.classList.add('show');
     fetch(PYKODE_BASE + '/api/run', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: btn.dataset.code })
+      body: JSON.stringify({ code: code })
     }).then(function (r) { return r.json(); }).then(function (d) {
       if (d.status === 'ok') {
         out.textContent = d.stdout || '(tidak ada output)';
