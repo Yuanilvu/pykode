@@ -71,7 +71,7 @@
     var btn = this;
     outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
     btn.disabled = true;
-    fetch('/api/run', {
+    fetch(PYKODE_BASE + '/api/run', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({code: editor.getValue(), stdin: document.getElementById('stdin-input').value})
@@ -91,7 +91,7 @@
     var btn = this;
     resBox.innerHTML = '<div class="output-box">⏳ Menguji misi...</div>';
     btn.disabled = true;
-    fetch('/api/project2-submit', {
+    fetch(PYKODE_BASE + '/api/project2-submit', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({milestone_id: milestoneId, code: editor.getValue()})

@@ -62,14 +62,14 @@
   function finish(auto) {
     if (window._finishing) return;
     window._finishing = true;
-    fetch('/api/exam-finish', {
+    fetch(PYKODE_BASE + '/api/exam-finish', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({exam_id: examId})
     }).then(function () {
-      location.href = '/exam/results/' + examId;
+      location.href = PYKODE_BASE + '/exam/results/' + examId;
     }).catch(function () {
-      location.href = '/exam/results/' + examId;
+      location.href = PYKODE_BASE + '/exam/results/' + examId;
     });
   }
   setInterval(tick, 1000);

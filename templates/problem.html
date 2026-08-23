@@ -119,7 +119,7 @@
       return;
     }
     btn.disabled = true;
-    fetch('/api/problem-plan', {
+    fetch(PYKODE_BASE + '/api/problem-plan', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({problem_id: problemId, rencana: teks})
@@ -148,7 +148,7 @@
   btnRun.addEventListener('click', function () {
     outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
     btnRun.disabled = true;
-    fetch('/api/run', {
+    fetch(PYKODE_BASE + '/api/run', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({code: getCode(), stdin: getStdin()})
@@ -169,7 +169,7 @@
   btnSubmit.addEventListener('click', function () {
     resBox.innerHTML = '<div class="output-box">⏳ Menguji jawaban...</div>';
     btnSubmit.disabled = true; btnRun.disabled = true;
-    fetch('/api/submit', {
+    fetch(PYKODE_BASE + '/api/submit', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({problem_id: problemId, code: getCode()})

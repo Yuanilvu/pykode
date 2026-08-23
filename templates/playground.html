@@ -58,7 +58,7 @@ print('Halo dari Rumah Kode!')</textarea>
     var btn = this;
     outBox.innerHTML = '<div class="output-box">⏳ Menjalankan...</div>';
     btn.disabled = true;
-    fetch('/api/run', {
+    fetch(PYKODE_BASE + '/api/run', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({code: editor.getValue(), stdin: document.getElementById('stdin-input').value})
@@ -76,7 +76,7 @@ print('Halo dari Rumah Kode!')</textarea>
 
   document.getElementById('btn-save').addEventListener('click', function () {
     var judul = titleInput.value.trim() || 'Karya Tanpa Judul';
-    fetch('/api/playground-save', {
+    fetch(PYKODE_BASE + '/api/playground-save', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({judul: judul, code: editor.getValue(), work_id: currentWorkId})
@@ -100,7 +100,7 @@ print('Halo dari Rumah Kode!')</textarea>
   workList.addEventListener('change', function () {
     var id = this.value;
     if (!id) { currentWorkId = null; return; }
-    fetch('/api/playground-load', {
+    fetch(PYKODE_BASE + '/api/playground-load', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({work_id: parseInt(id, 10)})
@@ -117,7 +117,7 @@ print('Halo dari Rumah Kode!')</textarea>
   btnDelete.addEventListener('click', function () {
     if (!currentWorkId) return;
     if (!confirm('Hapus karya ini?')) return;
-    fetch('/api/playground-delete', {
+    fetch(PYKODE_BASE + '/api/playground-delete', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({work_id: currentWorkId})

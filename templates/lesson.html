@@ -99,7 +99,7 @@
   document.getElementById('btn-lesson-done')?.addEventListener('click', function () {
     var btn = this;
     btn.disabled = true;
-    fetch('/api/lesson-done', {
+    fetch(PYKODE_BASE + '/api/lesson-done', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({lesson_id: lessonId})
@@ -124,7 +124,7 @@
       return;
     }
     btn.disabled = true;
-    fetch('/api/lesson-explain', {
+    fetch(PYKODE_BASE + '/api/lesson-explain', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({lesson_id: lessonId, penjelasan: teks})

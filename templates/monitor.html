@@ -64,7 +64,7 @@ document.querySelectorAll('.btn-exam').forEach(function (btn) {
     var msg = btn.parentNode.querySelector('.exam-msg');
     btn.disabled = true;
     msg.textContent = 'Membuat ujian...';
-    fetch('/api/exam-create', {
+    fetch(PYKODE_BASE + '/api/exam-create', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({user_id: parseInt(uid, 10), duration_min: 15})
