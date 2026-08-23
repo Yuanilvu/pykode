@@ -404,8 +404,9 @@ def problem(problem_id):
     bab, data = found["bab"], found["data"]
     problems = [p for p in (bab.get("soal") or []) if not p.get("varian_dari")]
     idx = next((i for i, s in enumerate(problems) if s["id"] == problem_id), 0)
-    prev_p = problems[idx - 1] if idx > 0 else None
-    next_p = problems[idx + 1] if idx + 1 < len(problems) else None
+    # Halaman varian: nav ke soal lain tidak relevan — tetap di halaman ini
+    prev_p = None if data.get("varian_dari") else (problems[idx - 1] if idx > 0 else None)
+    next_p = None if data.get("varian_dari") else (problems[idx + 1] if idx + 1 < len(problems) else None)
     state = db.problem_state(g.user["id"], problem_id)
     saved_plan = None
     prow = db.get_problem_plan(g.user["id"], problem_id)

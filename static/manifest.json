@@ -2,14 +2,14 @@
   "name": "PyKode — Belajar Python",
   "short_name": "PyKode",
   "description": "Belajar Python untuk anak SMP: pelajaran, soal, drill, bug, tantangan mingguan.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "../",
+  "scope": "../",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#6366f1",
   "icons": [
     {
-      "src": "./static/icon.svg",
+      "src": "./icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
