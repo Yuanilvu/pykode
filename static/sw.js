@@ -1,5 +1,5 @@
 /* PyKode — Service Worker (PWA): cache static, network-first untuk halaman */
-var CACHE = 'pykode-v1';
+var CACHE = 'pykode-v2';
 
 self.addEventListener('install', function (e) {
   self.skipWaiting();
