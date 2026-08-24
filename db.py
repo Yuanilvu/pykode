@@ -302,7 +302,11 @@ def touch_streak(user_id):
                      (last, today, user_id))
         if last in (3, 7, 14, 30):
             bonus = last * 10
-            add_xp(user_id, bonus)
+            # Bonus XP di koneksi YANG SAMA (satu transaksi). Jangan panggil
+            # add_xp() di sini: koneksi #2 bakal nunggu write-lock koneksi #1
+            # yang belum commit → deadlock → "database is locked" (500).
+            conn.execute("UPDATE users SET xp = xp + ? WHERE id = ?",
+                         (bonus, user_id))
         return last, bonus
 
 
