@@ -848,3 +848,113 @@ soal:
       - "Cek huruf dengan if c in 'aiueo'. Kalau benar, tambah satu."
       - "Return jumlahnya, lalu cetak 'Vokal:' dan hasilnya."
 
+
+  - id: "s8-10"
+    judul: "Mesin Dua Angka"
+    sulit: "sulit"
+    cerita: |
+      Kancil menemukan mesin ajaib di gudang sekolah.
+      Mesin itu memakan daftar angka.
+      Lalu mengeluarkan dua angka: yang terkecil dan yang terbesar.
+      Kamu harus membuat fungsi bernama cari.
+      Fungsi itu menerima list angka.
+      Ia mengembalikan dua nilai dalam satu tuple: (terkecil, terbesar).
+      Angkanya bisa negatif, misalnya -5.
+      Baca N, lalu N angka.
+      Cetak 'Terkecil: <nilai>' lalu 'Terbesar: <nilai>'.
+    input: "Baris 1: N (banyak angka). N baris berikutnya: angka tiap kartu (boleh negatif)."
+    output: "Baris 1: Terkecil: <nilai>. Baris 2: Terbesar: <nilai>."
+    contoh:
+      - input: "5\n7\n9\n4\n8\n6"
+        output: "Terkecil: 4\nTerbesar: 9"
+      - input: "1\n7"
+        output: "Terkecil: 7\nTerbesar: 7"
+    tes:
+      - input: "5\n7\n9\n4\n8\n6"
+        output: "Terkecil: 4\nTerbesar: 9"
+      - input: "1\n7"
+        output: "Terkecil: 7\nTerbesar: 7"
+      - input: "4\n10\n-3\n5\n-8"
+        output: "Terkecil: -8\nTerbesar: 10"
+      - input: "3\n5\n5\n5"
+        output: "Terkecil: 5\nTerbesar: 5"
+      - input: "4\n100\n1\n50\n25"
+        output: "Terkecil: 1\nTerbesar: 100"
+      - input: "2\n9\n8"
+        output: "Terkecil: 8\nTerbesar: 9"
+    solusi: |
+      def cari(nilai):
+          terkecil = nilai[0]
+          terbesar = nilai[0]
+          for x in nilai:
+              if x < terkecil:
+                  terkecil = x
+              if x > terbesar:
+                  terbesar = x
+          return (terkecil, terbesar)
+      
+      n = int(input())
+      angka = []
+      for i in range(n):
+          angka.append(int(input()))
+      hasil = cari(angka)
+      print('Terkecil:', hasil[0])
+      print('Terbesar:', hasil[1])
+    petunjuk:
+      - "Buat fungsi: def cari(nilai): dengan dua variabel: terkecil dan terbesar, mulai dari nilai[0]."
+      - "Jelajahi list. Perbarui terkecil dan terbesar di dalam loop."
+      - "Kembalikan keduanya: return (terkecil, terbesar). Lalu cetak hasil[0] dan hasil[1]."
+
+  - id: "s8-11"
+    judul: "Seleksi Tim Matematika"
+    sulit: "sulit"
+    cerita: |
+      Bu Guru memilih siswa untuk lomba matematika.
+      Siswa yang nilainya sama dengan batas atau lebih tinggi lolos.
+      Kamu harus membuat fungsi bernama pilih.
+      Fungsi itu menerima list nilai dan satu angka batas.
+      Fungsi mengembalikan list baru berisi nilai yang lolos.
+      Urutannya tetap sama.
+      Baca N, lalu N nilai, lalu batas.
+      Cetak 'Lulus: <banyak>' lalu setiap nilai yang lolos satu per baris.
+    input: "Baris 1: N (banyak nilai). N baris berikutnya: nilai. Baris terakhir: batas."
+    output: "Baris 1: Lulus: <banyak nilai yang lolos>. Baris berikutnya: setiap nilai yang lolos."
+    contoh:
+      - input: "3\n80\n50\n90\n75"
+        output: "Lulus: 2\n80\n90"
+      - input: "2\n70\n70\n70"
+        output: "Lulus: 2\n70\n70"
+    tes:
+      - input: "3\n80\n50\n90\n75"
+        output: "Lulus: 2\n80\n90"
+      - input: "3\n50\n40\n30\n75"
+        output: "Lulus: 0"
+      - input: "2\n70\n70\n70"
+        output: "Lulus: 2\n70\n70"
+      - input: "1\n100\n0"
+        output: "Lulus: 1\n100"
+      - input: "4\n10\n20\n30\n40\n25"
+        output: "Lulus: 2\n30\n40"
+      - input: "5\n5\n15\n25\n35\n45\n20"
+        output: "Lulus: 3\n25\n35\n45"
+    solusi: |
+      def pilih(nilai, batas):
+          hasil = []
+          for x in nilai:
+              if x >= batas:
+                  hasil.append(x)
+          return hasil
+      
+      n = int(input())
+      nilai = []
+      for i in range(n):
+          nilai.append(int(input()))
+      batas = int(input())
+      lulus = pilih(nilai, batas)
+      print('Lulus:', len(lulus))
+      for x in lulus:
+          print(x)
+    petunjuk:
+      - "Buat fungsi: def pilih(nilai, batas): dengan list kosong di dalamnya."
+      - "Kalau x >= batas, masukkan x ke list dengan append."
+      - "Return list itu. Cetak 'Lulus:' dan len(list), lalu cetak isinya satu per satu."

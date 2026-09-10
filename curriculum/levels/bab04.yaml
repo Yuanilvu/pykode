@@ -833,3 +833,124 @@ soal:
       - "Gabung syarat hari libur dengan or: hari == 'Sabtu' or hari == 'Minggu'."
       - "Kalau hari libur DAN cuaca cerah, pakai and. Cetak 'Main di luar'."
       - "Hari libur tapi tidak cerah masuk ke elif. Hari lain masuk ke else."
+
+  - id: "s4-10"
+    judul: "Urutkan Tiga Angka"
+    sulit: "sulit"
+    cerita: |
+      Kancil, Siti, dan Rina berlomba memilih angka.
+      Setelah itu mereka ingin mengurutkan angka dari yang terkecil.
+      Angka terkecil dicetak dulu.
+      Lalu angka tengah.
+      Lalu angka terbesar.
+      Kalau ada angka yang sama, tetap dicetak semua.
+      Baca tiga angka berurutan.
+      Cetak tiga baris: angka terkecil, angka tengah, angka terbesar.
+      Gunakan if dan else untuk membandingkan.
+      Cetak persis seperti contoh.
+    input: "Tiga baris: angka pertama (int), angka kedua (int), lalu angka ketiga (int)."
+    output: "Tiga baris: Terkecil: <angka terkecil>, Tengah: <angka tengah>, Terbesar: <angka terbesar>."
+    contoh:
+      - input: "7\n3\n5"
+        output: "Terkecil: 3\nTengah: 5\nTerbesar: 7"
+      - input: "9\n9\n2"
+        output: "Terkecil: 2\nTengah: 9\nTerbesar: 9"
+    tes:
+      - input: "7\n3\n5"
+        output: "Terkecil: 3\nTengah: 5\nTerbesar: 7"
+      - input: "9\n9\n2"
+        output: "Terkecil: 2\nTengah: 9\nTerbesar: 9"
+      - input: "1\n2\n3"
+        output: "Terkecil: 1\nTengah: 2\nTerbesar: 3"
+      - input: "3\n2\n1"
+        output: "Terkecil: 1\nTengah: 2\nTerbesar: 3"
+      - input: "5\n5\n5"
+        output: "Terkecil: 5\nTengah: 5\nTerbesar: 5"
+      - input: "0\n-5\n4"
+        output: "Terkecil: -5\nTengah: 0\nTerbesar: 4"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      if a <= b and a <= c:
+          kecil = a
+          if b <= c:
+              tengah = b
+              besar = c
+          else:
+              tengah = c
+              besar = b
+      elif b <= a and b <= c:
+          kecil = b
+          if a <= c:
+              tengah = a
+              besar = c
+          else:
+              tengah = c
+              besar = a
+      else:
+          kecil = c
+          if a <= b:
+              tengah = a
+              besar = b
+          else:
+              tengah = b
+              besar = a
+      print('Terkecil:', kecil)
+      print('Tengah:', tengah)
+      print('Terbesar:', besar)
+    petunjuk:
+      - "Baca tiga angka dengan int(input()). Simpan di a, b, c."
+      - "Cari angka terkecil dulu dengan if dan elif. Lalu cari angka tengah dari dua angka yang tersisa."
+      - "Pakai tanda <= supaya angka yang sama tetap benar. Cetak tiga baris di akhir."
+
+  - id: "s4-11"
+    judul: "Diskon Toko Mainan"
+    sulit: "sulit"
+    cerita: |
+      Toko mainan buka diskon besar.
+      Aturannya begini.
+      Harga 100000 ke atas potong 20000.
+      Harga 50000 sampai 99999 potong 10000.
+      Harga di bawah 50000 tidak dapat potongan.
+      Kalau kamu punya kartu anggota, potongan ditambah 5000 lagi.
+      Baca harga lalu ketikan 'ya' atau 'tidak' untuk kartu.
+      Cetak dua baris: potongan dan uang yang harus dibayar.
+      Bayar dihitung dari harga dikurangi potongan.
+    input: "Dua baris: harga (int), lalu kartu anggota (tulisan: ya atau tidak)."
+    output: "Dua baris: Potongan: <potongan>, lalu Bayar: <harga - potongan>."
+    contoh:
+      - input: "120000\nya"
+        output: "Potongan: 25000\nBayar: 95000"
+      - input: "80000\ntidak"
+        output: "Potongan: 10000\nBayar: 70000"
+    tes:
+      - input: "120000\nya"
+        output: "Potongan: 25000\nBayar: 95000"
+      - input: "80000\ntidak"
+        output: "Potongan: 10000\nBayar: 70000"
+      - input: "100000\nya"
+        output: "Potongan: 25000\nBayar: 75000"
+      - input: "99999\ntidak"
+        output: "Potongan: 10000\nBayar: 89999"
+      - input: "50000\nya"
+        output: "Potongan: 15000\nBayar: 35000"
+      - input: "25000\nya"
+        output: "Potongan: 5000\nBayar: 20000"
+    solusi: |
+      harga = int(input())
+      kartu = input()
+      if harga >= 100000:
+          potongan = 20000
+      elif harga >= 50000:
+          potongan = 10000
+      else:
+          potongan = 0
+      if kartu == 'ya':
+          potongan = potongan + 5000
+      print('Potongan:', potongan)
+      print('Bayar:', harga - potongan)
+    petunjuk:
+      - "Baca harga dengan int(input()). Baca kartu dengan input()."
+      - "Pakai if dan elif untuk memilih potongan dari harga. Cek 100000 dulu, lalu 50000."
+      - "Kalau kartu 'ya', tambahkan 5000: potongan = potongan + 5000. Lalu cetak dua baris."

@@ -784,3 +784,94 @@ soal:
       - "Pakai for i in range(1, n + 1) untuk mencoba semua bilangan."
       - "n % i == 0 artinya i membagi n tanpa sisa."
       - "Kalau syaratnya benar, cetak i. Satu pembagi per baris."
+
+  - id: "s5-10"
+    judul: "Jumlah Digit Angka"
+    sulit: "sulit"
+    cerita: |
+      Kancil mendapat kartu bertuliskan angka besar.
+      Angka 123 punya tiga digit: 1, 2, dan 3.
+      Bu Guru minta Kancil menjumlahkan semua digitnya.
+      1 tambah 2 tambah 3 hasilnya 6.
+      Angka 0 hanya punya satu digit, yaitu 0.
+      Bantu Kancil: baca satu angka N, lalu cetak jumlah semua digitnya.
+    input: "Satu angka N (0-100000)."
+    output: "Satu angka: jumlah semua digit N."
+    contoh:
+      - input: "123"
+        output: "6"
+      - input: "999"
+        output: "27"
+    tes:
+      - input: "123"
+        output: "6"
+      - input: "0"
+        output: "0"
+      - input: "7"
+        output: "7"
+      - input: "1024"
+        output: "7"
+      - input: "999"
+        output: "27"
+      - input: "100"
+        output: "1"
+    solusi: |
+      n = int(input())
+      total = 0
+      while n > 0:
+          total = total + (n % 10)
+          n = int(n / 10)
+      print(total)
+    petunjuk:
+      - "Ambil digit terakhir dengan n % 10."
+      - "Tambahkan digit itu ke total, lalu buang digit terakhir: n = int(n / 10)."
+      - "Ulangi sampai n jadi 0. Lalu cetak total."
+
+  - id: "s5-11"
+    judul: "Genap dan Ganjil"
+    sulit: "sulit"
+    cerita: |
+      Kancil menjaga meja pinjaman buku di kelas.
+      Setiap teman meminjam buku, ia mencatat nomor bukunya.
+      Nomor bukunya 1 sampai 100.
+      Kalau sudah selesai, ia mengetik -1 sebagai tanda berhenti.
+      Kancil ingin tahu jumlah semua nomor genap.
+      Ia juga ingin tahu banyak nomor ganjil.
+      Baca nomor sampai -1, lalu cetak dua baris hasilnya.
+    input: "Beberapa baris angka (1-100). Baris terakhir selalu -1."
+    output: "Baris 1: Genap: <jumlah semua angka genap>. Baris 2: Ganjil: <banyak angka ganjil>."
+    contoh:
+      - input: "1\n2\n3\n4\n-1"
+        output: "Genap: 6\nGanjil: 2"
+      - input: "2\n4\n6\n-1"
+        output: "Genap: 12\nGanjil: 0"
+    tes:
+      - input: "1\n2\n3\n4\n-1"
+        output: "Genap: 6\nGanjil: 2"
+      - input: "-1"
+        output: "Genap: 0\nGanjil: 0"
+      - input: "2\n4\n6\n-1"
+        output: "Genap: 12\nGanjil: 0"
+      - input: "1\n3\n5\n-1"
+        output: "Genap: 0\nGanjil: 3"
+      - input: "8\n-1"
+        output: "Genap: 8\nGanjil: 0"
+      - input: "7\n-1"
+        output: "Genap: 0\nGanjil: 1"
+    solusi: |
+      total_genap = 0
+      banyak_ganjil = 0
+      while True:
+          x = int(input())
+          if x == -1:
+              break
+          if x % 2 == 0:
+              total_genap = total_genap + x
+          else:
+              banyak_ganjil = banyak_ganjil + 1
+      print('Genap:', total_genap)
+      print('Ganjil:', banyak_ganjil)
+    petunjuk:
+      - "Pakai while True. Baca angka, lalu cek apakah angkanya -1."
+      - "Kalau -1, pakai break. Kalau genap, tambahkan ke total_genap. Kalau ganjil, tambah banyak_ganjil."
+      - "Cetak dua baris setelah loop selesai."

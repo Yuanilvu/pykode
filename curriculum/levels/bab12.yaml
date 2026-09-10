@@ -833,4 +833,98 @@ soal:
       - "map(lambda x: x * x, a) menguadratkan tiap angka."
       - "sum() menjumlahkan semuanya. Cetak 'Total:' lalu hasilnya."
 
+  - id: "s12-10"
+    judul: "Juara Menggambar"
+    sulit: "sulit"
+    cerita: |
+      Kelas 7A mengadakan lomba menggambar.
+      Skor peserta dicatat.
+      Bu Guru ingin papan juara.
+      Dia butuh nama dengan skor terbesar.
+      Kalau ada skor sama, yang muncul lebih dulu yang menang.
+      Lalu semua peserta diurutkan dari skor terbesar ke terkecil.
+      Kamu boleh pakai max() dan sorted() dengan key lambda!
+      Baca banyak peserta, lalu nama dan skornya.
+    input: "Baris 1: banyak peserta (n). Lalu n baris: nama spasi skor (nama satu kata)."
+    output: "Baris 1: 'Juara: <nama> <skor>'. Lalu satu baris per peserta: <nama> <skor>, urut dari skor terbesar ke terkecil."
+    contoh:
+      - input: "3\nBudi 80\nSari 90\nRina 70"
+        output: "Juara: Sari 90\nSari 90\nBudi 80\nRina 70"
+      - input: "2\nTono 50\nAyu 50"
+        output: "Juara: Tono 50\nTono 50\nAyu 50"
+    tes:
+      - input: "3\nBudi 80\nSari 90\nRina 70"
+        output: "Juara: Sari 90\nSari 90\nBudi 80\nRina 70"
+      - input: "2\nTono 50\nAyu 50"
+        output: "Juara: Tono 50\nTono 50\nAyu 50"
+      - input: "1\nMila 100"
+        output: "Juara: Mila 100\nMila 100"
+      - input: "4\nA 1\nB 2\nC 3\nD 4"
+        output: "Juara: D 4\nD 4\nC 3\nB 2\nA 1"
+      - input: "3\nX 10\nY 10\nZ 5"
+        output: "Juara: X 10\nX 10\nY 10\nZ 5"
+      - input: "2\nKancil 7\nRusa 7"
+        output: "Juara: Kancil 7\nKancil 7\nRusa 7"
+    solusi: |
+      n = int(input())
+      daftar = []
+      for i in range(n):
+          data = input().split()
+          daftar.append((data[0], int(data[1])))
+      juara = max(daftar, key=lambda x: x[1])
+      print('Juara:', juara[0], juara[1])
+      daftar.sort(key=lambda x: x[1], reverse=True)
+      for nama, skor in daftar:
+          print(nama, skor)
+    petunjuk:
+      - "Simpan tiap peserta sebagai pasangan (nama, skor) di dalam list."
+      - "max(daftar, key=lambda x: x[1]) mencari skor terbesar. Kalau seri, yang pertama yang menang."
+      - "Urutkan dengan daftar.sort(key=lambda x: x[1], reverse=True) lalu cetak satu per satu."
+
+  - id: "s12-11"
+    judul: "Petak Angka"
+    sulit: "sulit"
+    cerita: |
+      Kancil belajar perkalian di sekolah.
+      Dia ingin membuat tabel perkalian.
+      Tabel punya baris dan kolom.
+      Angka di baris i dan kolom j adalah i kali j.
+      Membuatnya satu per satu lama sekali.
+      Pakai list comprehension di dalam list comprehension!
+      Baca banyak baris dan banyak kolom.
+      Cetak tabelnya.
+      Tiap baris dipisah spasi.
+    input: "Dua baris: banyak baris (r), lalu banyak kolom (c)."
+    output: "r baris: tiap baris berisi i kali 1 sampai i kali c, dipisah spasi."
+    contoh:
+      - input: "2\n3"
+        output: "1 2 3\n2 4 6"
+      - input: "1\n1"
+        output: "1"
+    tes:
+      - input: "2\n3"
+        output: "1 2 3\n2 4 6"
+      - input: "1\n1"
+        output: "1"
+      - input: "3\n2"
+        output: "1 2\n2 4\n3 6"
+      - input: "1\n4"
+        output: "1 2 3 4"
+      - input: "4\n1"
+        output: "1\n2\n3\n4"
+      - input: "2\n2"
+        output: "1 2\n2 4"
+    solusi: |
+      r = int(input())
+      c = int(input())
+      tabel = [[i * j for j in range(1, c + 1)] for i in range(1, r + 1)]
+      for baris in tabel:
+          for x in baris:
+              print(x, end=' ')
+          print()
+    petunjuk:
+      - "Gunakan [[i * j for j in range(1, c + 1)] for i in range(1, r + 1)] untuk membuat tabel."
+      - "Loop tiap baris tabel. Cetak isinya dengan end=' '."
+      - "Setelah satu baris selesai, panggil print() untuk pindah baris."
+
 

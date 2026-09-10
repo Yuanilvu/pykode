@@ -763,3 +763,89 @@ soal:
       - "Baca tiga angka dengan int(input()). Simpan di a, b, c."
       - "Total = a + b + c."
       - "Cetak empat baris berurutan. Baris terakhir memakai total."
+
+  - id: "s2-10"
+    judul: "Laporan Lab Angka"
+    sulit: "sulit"
+    cerita: |
+      Di laboratorium komputer ada mesin laporan angka.
+      Mesin membaca dua angka dari kamu.
+      Lalu mesin mencetak empat baris laporan: jumlah, selisih, kali, dan dua kali jumlah.
+      Jumlah artinya angka pertama ditambah angka kedua.
+      Selisih artinya angka pertama dikurangi angka kedua.
+      Kali artinya angka pertama dikali angka kedua.
+      Dua kali jumlah artinya jumlah dikali dua.
+      Baca dua angka, lalu cetak empat baris persis seperti contoh.
+    input: "Dua baris: angka pertama (int), lalu angka kedua (int)."
+    output: "Empat baris: Jumlah: <a+b>, Selisih: <a-b>, Kali: <a*b>, Dua kali jumlah: <(a+b)*2>."
+    contoh:
+      - input: "8\n4"
+        output: "Jumlah: 12\nSelisih: 4\nKali: 32\nDua kali jumlah: 24"
+      - input: "10\n3"
+        output: "Jumlah: 13\nSelisih: 7\nKali: 30\nDua kali jumlah: 26"
+    tes:
+      - input: "8\n4"
+        output: "Jumlah: 12\nSelisih: 4\nKali: 32\nDua kali jumlah: 24"
+      - input: "0\n0"
+        output: "Jumlah: 0\nSelisih: 0\nKali: 0\nDua kali jumlah: 0"
+      - input: "5\n5"
+        output: "Jumlah: 10\nSelisih: 0\nKali: 25\nDua kali jumlah: 20"
+      - input: "2\n9"
+        output: "Jumlah: 11\nSelisih: -7\nKali: 18\nDua kali jumlah: 22"
+      - input: "10\n3"
+        output: "Jumlah: 13\nSelisih: 7\nKali: 30\nDua kali jumlah: 26"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      print('Jumlah:', a + b)
+      print('Selisih:', a - b)
+      print('Kali:', a * b)
+      print('Dua kali jumlah:', (a + b) * 2)
+    petunjuk:
+      - "Baca dua angka dengan int(input()). Simpan di variabel a dan b."
+      - "Jumlah = a + b. Selisih = a - b. Kali = a * b."
+      - "Dua kali jumlah memakai tanda kurung: (a + b) * 2."
+
+  - id: "s2-11"
+    judul: "Jumlah Pasangan"
+    sulit: "sulit"
+    cerita: |
+      Tiga sahabat: Kancil, Siti, dan Rina.
+      Mereka masing-masing memilih satu angka.
+      Kancil ingin tahu jumlah tiap pasangan.
+      Pasangan pertama: angka Kancil ditambah angka Siti.
+      Pasangan kedua: angka Siti ditambah angka Rina.
+      Pasangan ketiga: angka Kancil ditambah angka Rina.
+      Lalu jumlah ketiga angka.
+      Baca tiga angka berurutan.
+      Cetak empat baris persis seperti contoh.
+    input: "Tiga baris: angka Kancil (int), angka Siti (int), lalu angka Rina (int)."
+    output: "Empat baris: Pasangan 1: <a+b>, Pasangan 2: <b+c>, Pasangan 3: <a+c>, Total: <a+b+c>."
+    contoh:
+      - input: "3\n5\n2"
+        output: "Pasangan 1: 8\nPasangan 2: 7\nPasangan 3: 5\nTotal: 10"
+      - input: "1\n1\n1"
+        output: "Pasangan 1: 2\nPasangan 2: 2\nPasangan 3: 2\nTotal: 3"
+    tes:
+      - input: "3\n5\n2"
+        output: "Pasangan 1: 8\nPasangan 2: 7\nPasangan 3: 5\nTotal: 10"
+      - input: "0\n0\n0"
+        output: "Pasangan 1: 0\nPasangan 2: 0\nPasangan 3: 0\nTotal: 0"
+      - input: "10\n20\n30"
+        output: "Pasangan 1: 30\nPasangan 2: 50\nPasangan 3: 40\nTotal: 60"
+      - input: "7\n7\n7"
+        output: "Pasangan 1: 14\nPasangan 2: 14\nPasangan 3: 14\nTotal: 21"
+      - input: "1\n1\n1"
+        output: "Pasangan 1: 2\nPasangan 2: 2\nPasangan 3: 2\nTotal: 3"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      print('Pasangan 1:', a + b)
+      print('Pasangan 2:', b + c)
+      print('Pasangan 3:', a + c)
+      print('Total:', a + b + c)
+    petunjuk:
+      - "Baca tiga angka dengan int(input()). Simpan di variabel a, b, c."
+      - "Pasangan 1 = a + b. Pasangan 2 = b + c. Pasangan 3 = a + c."
+      - "Total = a + b + c. Cetak empat baris berurutan."

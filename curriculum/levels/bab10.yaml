@@ -862,4 +862,106 @@ soal:
       - "Loop dalam mencetak angka 1 sampai i dengan end=' '."
       - "Setelah loop dalam selesai, panggil print() untuk pindah baris."
 
+  - id: "s10-10"
+    judul: "Menara Balok"
+    sulit: "sulit"
+    cerita: |
+      Kancil punya banyak balok angka.
+      Baloknya masih acak.
+      Dia ingin menyusunnya dari yang paling besar ke yang paling kecil.
+      Caranya: cari balok terbesar, taruh di depan.
+      Lalu cari terbesar dari sisa balok, taruh di posisi kedua.
+      Begitu terus sampai rapi.
+      Kamu tidak boleh pakai .sort() atau sorted()!
+      Baca banyak balok, lalu angkanya.
+      Cetak urut dari besar ke kecil.
+    input: "Baris 1: banyak balok (n). Lalu n baris berisi angka balok."
+    output: "Satu baris: angka balok urut dari besar ke kecil, dipisah spasi."
+    contoh:
+      - input: "4\n3\n1\n4\n2"
+        output: "4 3 2 1"
+      - input: "3\n5\n5\n2"
+        output: "5 5 2"
+    tes:
+      - input: "4\n3\n1\n4\n2"
+        output: "4 3 2 1"
+      - input: "3\n5\n5\n2"
+        output: "5 5 2"
+      - input: "1\n9"
+        output: "9"
+      - input: "2\n7\n7"
+        output: "7 7"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "5 4 3 2 1"
+      - input: "3\n-1\n-5\n0"
+        output: "0 -1 -5"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      for i in range(n):
+          besar = i
+          for j in range(i + 1, n):
+              if a[j] > a[besar]:
+                  besar = j
+          a[i], a[besar] = a[besar], a[i]
+      for x in a:
+          print(x, end=' ')
+      print()
+    petunjuk:
+      - "Simpan semua balok di dalam list."
+      - "Untuk tiap posisi, cari index balok terbesar di sisa list dengan dua for."
+      - "Tukar balok terbesar ke posisinya. Cetak semua angka dengan end=' '."
+
+  - id: "s10-11"
+    judul: "Kata Ajaib"
+    sulit: "sulit"
+    cerita: |
+      Bu Guru memberi teka-teki.
+      Dari satu kalimat, pilih kata yang mengandung huruf a.
+      Kata itu disebut kata ajaib.
+      Kumpulkan semua kata ajaib.
+      Gabungkan dengan tanda strip (-).
+      Cetak hasilnya.
+      Lalu cetak berapa banyak kata ajaib.
+      Kalau tidak ada sama sekali, cetak 'Tidak ada'.
+      Bantu Kancil memecahkan teka-teki ini!
+    input: "Satu baris kalimat (huruf kecil, kata dipisah spasi)."
+    output: "Kalau ada: baris 1 kata ajaib digabung '-', baris 2 'Banyak: <n>'. Kalau tidak ada: 'Tidak ada'."
+    contoh:
+      - input: "aku suka python"
+        output: "aku-suka\nBanyak: 2"
+      - input: "ibu minum"
+        output: "Tidak ada"
+    tes:
+      - input: "aku suka python"
+        output: "aku-suka\nBanyak: 2"
+      - input: "ibu minum"
+        output: "Tidak ada"
+      - input: "mama papa"
+        output: "mama-papa\nBanyak: 2"
+      - input: "a"
+        output: "a\nBanyak: 1"
+      - input: "kancil dan burung"
+        output: "kancil-dan\nBanyak: 2"
+      - input: "satu kata saja"
+        output: "satu-kata-saja\nBanyak: 3"
+    solusi: |
+      kalimat = input()
+      kata = kalimat.split()
+      hasil = []
+      for k in kata:
+          if 'a' in k:
+              hasil.append(k)
+      if len(hasil) == 0:
+          print('Tidak ada')
+      else:
+          print('-'.join(hasil))
+          print('Banyak:', len(hasil))
+    petunjuk:
+      - "Pecah kalimat dengan .split(). Periksa tiap kata dengan if 'a' in kata."
+      - "Simpan kata ajaib di list. Gabungkan dengan '-'.join(hasil)."
+      - "Kalau list kosong, cetak 'Tidak ada'. Kalau tidak, cetak hasil gabungan lalu 'Banyak:' dan jumlahnya."
+
 

@@ -473,3 +473,98 @@ soal:
       - "Baca dua angka: total dan uang bayar."
       - "Kembalian = bayar - total. Cetak dulu."
       - "Jumlah lembar lima ribuan = kembalian // 5000. Cetak di baris kedua."
+
+  - id: "s13-4"
+    judul: "Bagi Rata Kue"
+    sulit: "sulit"
+    cerita: |
+      Kancil ditunjuk beli kue untuk acara kelas.
+      Baris pertama: uang Kancil.
+      Baris kedua: harga satu kue.
+      Baris ketiga: banyak siswa di kelas.
+
+      Kancil mau beli kue sebanyak-banyaknya.
+      Lalu sisa uangnya dicatat juga.
+      Kalau kuenya tidak cukup untuk semua siswa,
+      cetak kata: kurang
+      Kalau cukup, cetak kata: cukup
+    input: "Baris 1: uang Kancil. Baris 2: harga satu kue. Baris 3: banyak siswa."
+    output: "Baris 1: banyak kue yang bisa dibeli. Baris 2: sisa uang. Baris 3: kata kurang atau cukup."
+    contoh:
+      - input: "50000\n6000\n8"
+        output: "8\n2000\ncukup"
+      - input: "5000\n6000\n3"
+        output: "0\n5000\nkurang"
+    tes:
+      - input: "50000\n6000\n8"
+        output: "8\n2000\ncukup"
+      - input: "5000\n6000\n3"
+        output: "0\n5000\nkurang"
+      - input: "48000\n6000\n8"
+        output: "8\n0\ncukup"
+      - input: "42000\n6000\n8"
+        output: "7\n0\nkurang"
+      - input: "1\n1\n1"
+        output: "1\n0\ncukup"
+    solusi: |
+      uang = int(input())
+      harga = int(input())
+      siswa = int(input())
+      kue = uang // harga
+      sisa = uang % harga
+      print(kue)
+      print(sisa)
+      if kue >= siswa:
+          print('cukup')
+      else:
+          print('kurang')
+    petunjuk:
+      - "Banyak kue = uang dibagi harga, pakai //."
+      - "Sisa uang dihitung pakai tanda %."
+      - "Bandingkan kue dengan siswa untuk kata cukup atau kurang."
+
+  - id: "s13-5"
+    judul: "Tabungan Sepatu Impian"
+    sulit: "sulit"
+    cerita: |
+      Kancil ingin membeli sepatu impian.
+      Baris pertama: harga sepatu.
+      Baris kedua: uang tabungan Kancil sekarang.
+      Baris ketiga: uang yang ditabung tiap minggu.
+
+      Kancil butuh tahu berapa minggu lagi
+      supaya tabungannya cukup.
+      Kalau uangnya sudah cukup sekarang,
+      cetak angka 0.
+    input: "Baris 1: harga sepatu. Baris 2: tabungan sekarang. Baris 3: tabungan per minggu."
+    output: "Satu angka: banyak minggu lagi supaya tabungan cukup."
+    contoh:
+      - input: "120000\n30000\n10000"
+        output: "9"
+      - input: "100000\n100000\n5000"
+        output: "0"
+    tes:
+      - input: "120000\n30000\n10000"
+        output: "9"
+      - input: "100000\n100000\n5000"
+        output: "0"
+      - input: "10000\n3000\n3000"
+        output: "3"
+      - input: "50000\n0\n10000"
+        output: "5"
+      - input: "120000\n115000\n5000"
+        output: "1"
+    solusi: |
+      harga = int(input())
+      tabung = int(input())
+      perminggu = int(input())
+      kurang = harga - tabung
+      if kurang <= 0:
+          print(0)
+      else:
+          minggu = (kurang + perminggu - 1) // perminggu
+          print(minggu)
+    petunjuk:
+      - "Hitung dulu uang yang masih kurang."
+      - "Kalau kurang tidak lebih dari 0, cetak 0."
+      - "Pakai trik (kurang + perminggu - 1) // perminggu dari pelajaran Tabungan Impian."

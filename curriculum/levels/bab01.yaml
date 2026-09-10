@@ -576,3 +576,87 @@ soal:
       - "Tiap baris dicetak dengan satu print()."
       - "Spasi di tengah makin sedikit sampai baris tengah."
       - "Setelah baris tengah, spasi makin banyak lagi. Ikuti contoh persis."
+
+  - id: "s1-10"
+    judul: "Mesin Hitung Ajaib"
+    sulit: "sulit"
+    cerita: |
+      Kancil menemukan mesin hitung ajaib di laboratorium.
+      Mesin itu mencetak soal hitungan sekaligus jawabannya.
+      Kamu tidak perlu mengetik apa pun.
+      Kamu hanya perlu menulis empat perintah print.
+      Tiap baris berisi soal, tanda sama dengan, lalu hasilnya.
+      Ingat: Python mengerjakan kali dulu, baru tambah.
+      Kalau ada tanda kurung, isi kurung dikerjakan paling dulu.
+      Cetak persis empat baris ini.
+    input: "Tidak ada input."
+    output: "Empat baris: soal hitungan, tanda sama dengan, lalu hasilnya."
+    contoh:
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+    tes:
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+      - input: ""
+        output: "3 + 5 * 2 = 13\n(3 + 5) * 2 = 16\n10 - 4 + 6 = 12\n(10 - 4) * 6 = 36"
+    solusi: |
+      print('3 + 5 * 2 =', 3 + 5 * 2)
+      print('(3 + 5) * 2 =', (3 + 5) * 2)
+      print('10 - 4 + 6 =', 10 - 4 + 6)
+      print('(10 - 4) * 6 =', (10 - 4) * 6)
+    petunjuk:
+      - "Tiap baris dicetak dengan satu print()."
+      - "Tulis soal di dalam tanda kutip, lalu koma, lalu hitungannya lagi tanpa kutip."
+      - "Python mengerjakan kali dulu. Tanda kurung dikerjakan paling dulu."
+
+  - id: "s1-11"
+    judul: "Struk Belanja Kancil"
+    sulit: "sulit"
+    cerita: |
+      Kancil belanja di toko buku.
+      Dia membeli buku seharga 2000 rupiah.
+      Dia juga membeli pensil seharga 1500 rupiah.
+      Ibu kasir mencetak struk belanja.
+      Kamu bantu Kancil membuat struknya.
+      Struk berisi lima baris.
+      Ada harga buku, harga pensil, total, uang, dan sisa.
+      Kancil membayar dengan uang 5000 rupiah.
+      Total dihitung dari harga buku ditambah harga pensil.
+      Sisa uang dihitung dari uang dikurangi total.
+      Cetak persis seperti contoh.
+    input: "Tidak ada input."
+    output: "Lima baris struk: Buku, Pensil, Total, Uang, lalu Sisa."
+    contoh:
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+    tes:
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+      - input: ""
+        output: "Buku: 2000\nPensil: 1500\nTotal: 3500\nUang: 5000\nSisa: 1500"
+    solusi: |
+      print('Buku: 2000')
+      print('Pensil: 1500')
+      print('Total:', 2000 + 1500)
+      print('Uang: 5000')
+      print('Sisa:', 5000 - (2000 + 1500))
+    petunjuk:
+      - "Cetak lima baris dengan lima print()."
+      - "Baris Total tidak menulis angka 3500 langsung. Tulis hitungannya: 2000 + 1500."
+      - "Baris Sisa memakai tanda kurung: 5000 - (2000 + 1500)."

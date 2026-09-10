@@ -752,3 +752,97 @@ soal:
       - "Simpan dua kata di variabel a dan b."
       - "Huruf besar semua: a.upper() dan b.upper()."
       - "Total huruf = len(a) + len(b). Hitung di dalam f-string."
+
+  - id: "s3-10"
+    judul: "Mesin Gema"
+    sulit: "sulit"
+    cerita: |
+      Kancil menemukan mesin gema di pasar malam.
+      Kamu memasukkan satu kata dan satu angka.
+      Mesin mencetak empat baris.
+      Baris pertama: kata huruf besar semua.
+      Baris kedua: kata huruf kecil semua.
+      Baris ketiga: jumlah huruf kata.
+      Baris keempat: kata yang diulang.
+      Kata diulang sebanyak angkamu.
+      Contoh: kata 'ha' dan angka 3.
+      Huruf besarnya 'HA'. Jumlah hurufnya 2. Ulangannya 'hahaha'.
+      Baca kata lalu angka.
+      Cetak persis seperti contoh.
+    input: "Dua baris: kata (tulisan), lalu angka (int)."
+    output: "Empat baris: Besar: <KATA>, Kecil: <kata>, Panjang: <n>, Gema: <kata diulang>."
+    contoh:
+      - input: "ha\n3"
+        output: "Besar: HA\nKecil: ha\nPanjang: 2\nGema: hahaha"
+      - input: "yo\n4"
+        output: "Besar: YO\nKecil: yo\nPanjang: 2\nGema: yoyoyoyo"
+    tes:
+      - input: "ha\n3"
+        output: "Besar: HA\nKecil: ha\nPanjang: 2\nGema: hahaha"
+      - input: "yo\n4"
+        output: "Besar: YO\nKecil: yo\nPanjang: 2\nGema: yoyoyoyo"
+      - input: "A\n5"
+        output: "Besar: A\nKecil: a\nPanjang: 1\nGema: AAAAA"
+      - input: "Mie\n1"
+        output: "Besar: MIE\nKecil: mie\nPanjang: 3\nGema: Mie"
+      - input: "kancil\n0"
+        output: "Besar: KANCIL\nKecil: kancil\nPanjang: 6\nGema: "
+    solusi: |
+      kata = input()
+      n = int(input())
+      print(f'Besar: {kata.upper()}')
+      print(f'Kecil: {kata.lower()}')
+      print(f'Panjang: {len(kata)}')
+      print(f'Gema: {kata * n}')
+    petunjuk:
+      - "Simpan kata di variabel. Baca angka dengan int(input())."
+      - "Huruf besar: kata.upper(). Huruf kecil: kata.lower(). Panjang: len(kata)."
+      - "Mengulang kata: tulis kata * n di dalam f-string. Kalau n = 0, hasilnya kosong."
+
+  - id: "s3-11"
+    judul: "Tebak Panjang Nama"
+    sulit: "sulit"
+    cerita: |
+      Kancil dan Siti main tebak panjang.
+      Kancil mengetik satu kata.
+      Siti mengetik satu kata.
+      Komputer mencetak lima baris.
+      Baris pertama: kata pertama huruf besar semua.
+      Baris kedua: kata kedua huruf kecil semua.
+      Baris ketiga: panjang kata pertama.
+      Baris keempat: panjang kata kedua.
+      Baris kelima: selisih panjangnya.
+      Selisih dihitung dari panjang kata pertama dikurangi panjang kata kedua.
+      Bisa hasilnya angka negatif.
+      Baca dua kata.
+      Cetak persis seperti contoh.
+    input: "Dua baris: kata pertama (tulisan), lalu kata kedua (tulisan)."
+    output: "Lima baris: Kata 1: <KATA PERTAMA>, Kata 2: <kata kedua>, Panjang 1: <n1>, Panjang 2: <n2>, Selisih: <n1-n2>."
+    contoh:
+      - input: "kancil\npintar"
+        output: "Kata 1: KANCIL\nKata 2: pintar\nPanjang 1: 6\nPanjang 2: 6\nSelisih: 0"
+      - input: "budi\nsantoso"
+        output: "Kata 1: BUDI\nKata 2: santoso\nPanjang 1: 4\nPanjang 2: 7\nSelisih: -3"
+    tes:
+      - input: "kancil\npintar"
+        output: "Kata 1: KANCIL\nKata 2: pintar\nPanjang 1: 6\nPanjang 2: 6\nSelisih: 0"
+      - input: "budi\nsantoso"
+        output: "Kata 1: BUDI\nKata 2: santoso\nPanjang 1: 4\nPanjang 2: 7\nSelisih: -3"
+      - input: "A\nB"
+        output: "Kata 1: A\nKata 2: b\nPanjang 1: 1\nPanjang 2: 1\nSelisih: 0"
+      - input: "Andi Pratama\nRina"
+        output: "Kata 1: ANDI PRATAMA\nKata 2: rina\nPanjang 1: 12\nPanjang 2: 4\nSelisih: 8"
+      - input: "siti\naminah"
+        output: "Kata 1: SITI\nKata 2: aminah\nPanjang 1: 4\nPanjang 2: 6\nSelisih: -2"
+    solusi: |
+      a = input()
+      b = input()
+      print(f'Kata 1: {a.upper()}')
+      print(f'Kata 2: {b.lower()}')
+      print(f'Panjang 1: {len(a)}')
+      print(f'Panjang 2: {len(b)}')
+      print(f'Selisih: {len(a) - len(b)}')
+    petunjuk:
+      - "Simpan dua kata di variabel a dan b."
+      - "Huruf besar: a.upper(). Huruf kecil: b.lower(). Panjang: len(a) dan len(b)."
+      - "Selisih = len(a) - len(b). Kalau kata pertama lebih pendek, hasilnya negatif."

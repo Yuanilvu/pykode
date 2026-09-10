@@ -776,3 +776,104 @@ soal:
       - "Baca dan simpan dua list dengan append."
       - "Gabungkan dengan tanda tambah: a + b."
       - "Urutkan dengan sort(), lalu cetak semua isinya satu per baris."
+
+  - id: "s6-10"
+    judul: "Juara Dua Lomba Lari"
+    sulit: "sulit"
+    cerita: |
+      Kancil ikut lomba lari antar kelas.
+      Juara satu dapat sepeda.
+      Juara dua dapat buku gambar.
+      Panitia mencatat waktu semua pelari.
+      Kancil penasaran dengan waktu juara dua.
+      Itu angka terbesar kedua.
+      Kalau ada dua angka sama, tetap dihitung dua.
+      Baca N (banyak pelari, minimal 2), lalu N waktu.
+      Cetak angka terbesar kedua.
+    input: "Baris 1: N (banyak pelari, minimal 2). N baris berikutnya: waktu tiap pelari."
+    output: "Satu angka: waktu terbesar kedua."
+    contoh:
+      - input: "5\n7\n9\n4\n8\n6"
+        output: "8"
+      - input: "3\n5\n5\n5"
+        output: "5"
+    tes:
+      - input: "5\n7\n9\n4\n8\n6"
+        output: "8"
+      - input: "2\n1\n2"
+        output: "1"
+      - input: "2\n2\n1"
+        output: "1"
+      - input: "3\n5\n5\n5"
+        output: "5"
+      - input: "4\n10\n3\n10\n1"
+        output: "10"
+      - input: "6\n50\n30\n40\n20\n10\n25"
+        output: "40"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      terbesar = a[0]
+      kedua = None
+      for x in a[1:]:
+          if x > terbesar:
+              kedua = terbesar
+              terbesar = x
+          elif kedua is None or x > kedua:
+              kedua = x
+      print(kedua)
+    petunjuk:
+      - "Simpan semua waktu ke list dengan append."
+      - "Pakai dua variabel: terbesar dan kedua. Awalnya kedua = None (belum ada)."
+      - "Kalau angka lebih besar dari terbesar, kedua jadi terbesar lama. Kalau tidak, cek apakah angka lebih besar dari kedua. Cetak kedua."
+
+  - id: "s6-11"
+    judul: "Selisih Tiang Bendera"
+    sulit: "sulit"
+    cerita: |
+      Kancil memasang tiang bendera di halaman.
+      Tiap tiang punya tinggi berbeda.
+      Bu Guru bertanya: dua tiang mana yang tingginya paling dekat?
+      Contoh: tinggi 7 dan 4, selisihnya 3.
+      Tiang sama tinggi, selisihnya 0.
+      Kancil harus mencari selisih terkecil antara dua tiang mana pun.
+      Baca N (banyak tiang, minimal 2), lalu N tinggi tiang.
+      Cetak selisih terkecilnya.
+    input: "Baris 1: N (banyak tiang, minimal 2). N baris berikutnya: tinggi tiap tiang."
+    output: "Satu angka: selisih terkecil antara dua tiang."
+    contoh:
+      - input: "4\n7\n2\n9\n4"
+        output: "2"
+      - input: "3\n5\n5\n5"
+        output: "0"
+    tes:
+      - input: "4\n7\n2\n9\n4"
+        output: "2"
+      - input: "2\n100\n1"
+        output: "99"
+      - input: "3\n5\n5\n5"
+        output: "0"
+      - input: "5\n50\n10\n40\n20\n30"
+        output: "10"
+      - input: "3\n1\n100\n50"
+        output: "49"
+      - input: "4\n10\n20\n30\n40"
+        output: "10"
+    solusi: |
+      n = int(input())
+      a = []
+      for i in range(n):
+          a.append(int(input()))
+      a.sort()
+      d = a[1] - a[0]
+      for i in range(2, n):
+          s = a[i] - a[i - 1]
+          if s < d:
+              d = s
+      print(d)
+    petunjuk:
+      - "Urutkan list dengan sort(). Selisih terkecil pasti dari dua angka yang berdekatan."
+      - "Mulai dengan selisih a[1] - a[0]."
+      - "Bandingkan dengan selisih pasangan lain: a[i] - a[i - 1]. Simpan yang paling kecil."

@@ -854,4 +854,101 @@ soal:
       - "Bungkus pengubahan dan pembagian di dalam try. except ValueError mencetak 'Bukan angka!'."
       - "Cek angka kedua dengan if b == 0 sebelum membagi."
 
+  - id: "s9-10"
+    judul: "Mesin Hitung"
+    sulit: "sulit"
+    cerita: |
+      Di perpustakaan ada mesin hitung.
+      Kamu mengetik dua angka.
+      Mesin membagi angka pertama dengan angka kedua.
+      Kalau ketikanmu bukan angka, mesin bilang 'Bukan angka!'.
+      Kalau angka kedua nol, mesin bilang 'Tidak bisa dibagi nol!'.
+      Mesin tidak menyerah.
+      Dia terus bertanya sampai berhasil.
+      Bantu Kancil memakai mesin ini.
+    input: "Beberapa baris: tiap baris dua ketikan dipisah spasi. Baris terakhir pasti berhasil."
+    output: "Baris 'Bukan angka!' atau 'Tidak bisa dibagi nol!' untuk tiap percobaan gagal, lalu satu baris hasil bagi saat berhasil."
+    contoh:
+      - input: "10 2"
+        output: "5.0"
+      - input: "a 2\n10 2"
+        output: "Bukan angka!\n5.0"
+    tes:
+      - input: "10 2"
+        output: "5.0"
+      - input: "a 2\n10 2"
+        output: "Bukan angka!\n5.0"
+      - input: "8 0\n8 2"
+        output: "Tidak bisa dibagi nol!\n4.0"
+      - input: "x y\n3 0\n9 3"
+        output: "Bukan angka!\nTidak bisa dibagi nol!\n3.0"
+      - input: "1 1"
+        output: "1.0"
+      - input: "0 5"
+        output: "0.0"
+    solusi: |
+      while True:
+          data = input().split()
+          try:
+              a = int(data[0])
+              b = int(data[1])
+              print(a / b)
+              break
+          except ValueError:
+              print('Bukan angka!')
+          except ZeroDivisionError:
+              print('Tidak bisa dibagi nol!')
+    petunjuk:
+      - "Bungkus membaca dan membagi di dalam try. except ValueError mencetak 'Bukan angka!'."
+      - "except ZeroDivisionError mencetak 'Tidak bisa dibagi nol!'."
+      - "Letakkan semuanya di dalam while True. Pakai break setelah berhasil mencetak hasil bagi."
+
+  - id: "s9-11"
+    judul: "Keranjang Buah"
+    sulit: "sulit"
+    cerita: |
+      Kancil mengisi keranjang buah.
+      Tiap buah punya berat.
+      Beratnya ditulis di kertas kecil.
+      Kadang tulisannya salah, bukan angka.
+      Kalau salah, buah itu tidak masuk keranjang.
+      Kancil mengetik berat sampai kata 'selesai'.
+      Kalau ketikan bukan angka, cetak 'Bukan angka!'.
+      Di akhir, cetak total beratnya.
+    input: "Beberapa baris: tiap baris satu ketikan. Berakhir dengan kata 'selesai'."
+    output: "Satu baris 'Bukan angka!' untuk tiap ketikan yang salah, lalu satu baris 'Total: <jumlah>'."
+    contoh:
+      - input: "3\n4\nselesai"
+        output: "Total: 7"
+      - input: "a\n2\nselesai"
+        output: "Bukan angka!\nTotal: 2"
+    tes:
+      - input: "3\n4\nselesai"
+        output: "Total: 7"
+      - input: "a\n2\nselesai"
+        output: "Bukan angka!\nTotal: 2"
+      - input: "selesai"
+        output: "Total: 0"
+      - input: "0\n0\nselesai"
+        output: "Total: 0"
+      - input: "10\nx\ny\n20\nselesai"
+        output: "Bukan angka!\nBukan angka!\nTotal: 30"
+      - input: "-5\n5\nselesai"
+        output: "Total: 0"
+    solusi: |
+      total = 0
+      while True:
+          x = input()
+          if x == 'selesai':
+              break
+          try:
+              total = total + int(x)
+          except ValueError:
+              print('Bukan angka!')
+      print('Total:', total)
+    petunjuk:
+      - "Pakai while True dan berhenti dengan break kalau ketikan sama dengan 'selesai'."
+      - "Coba ubah ketikan dengan int() di dalam try. except ValueError mencetak 'Bukan angka!'."
+      - "Jumlahkan angka yang berhasil diubah. Setelah keluar dari loop, cetak 'Total:' lalu jumlahnya."
+
 
