@@ -24,7 +24,7 @@ function confetti() {
     s.style.top = (20 + Math.random() * 40) + 'vh';
     s.style.animationDelay = (Math.random() * 0.3) + 's';
     document.body.appendChild(s);
-    setTimeout(function (n) { n.remove(); }, 2200);
+    setTimeout(function (n) { n.remove(); }, 2200, s);
   }
 }
 

@@ -86,7 +86,7 @@ print('Halo dari Rumah Kode!')</textarea>
         toast('Tersimpan! 💾', 'good');
         if (d.new_badges && d.new_badges.length) d.new_badges.forEach(b => toast('Badge baru: ' + b.emoji + ' ' + b.nama + ' (+' + b.xp + ' XP)', 'good'));
         // refresh list
-        fetch('/playground').then(r => r.text()).then(html => {
+        fetch(PYKODE_BASE + '/playground').then(r => r.text()).then(html => {
           var parser = new DOMParser();
           var doc = parser.parseFromString(html, 'text/html');
           var newList = doc.getElementById('work-list');

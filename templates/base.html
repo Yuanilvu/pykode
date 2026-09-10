@@ -56,7 +56,7 @@
 <script>window.PYKODE_BASE = {{ request.script_root|tojson }};</script>
 <script src="{{ url_for('static', filename='vendor/codemirror/codemirror.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/codemirror/python.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/app.js') }}?v=5"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}?v=6"></script>
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register(PYKODE_BASE + '/sw.js').catch(function () {});
