@@ -3,7 +3,9 @@
 Materi ala Mimo + Online Judge + Drill logika + gamifikasi.
 """
 import functools
+import hmac
 import os
+import re
 import time
 from datetime import date
 
@@ -22,6 +24,10 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("PYKODE_SECRET", "pykode-dev-secret-ganti-ini")
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
 app.jinja_env.globals["render_markdown"] = curriculum.render_markdown
+
+# Kode undangan registrasi (env PYKODE_KODE) — dibandingkan "santai":
+# huruf besar/kecil & spasi diabaikan. Kosong = registrasi ditolak total.
+INVITE = re.sub(r"\s+", "", os.environ.get("PYKODE_KODE", "")).lower()
 
 # Middleware subpath — akses via https://yan.tail51a905.ts.net/pykode/ (Funnel port 443)
 # Tailscale serve strip prefix-nya, jadi URL absolut (url_for, fetch, redirect) harus diprefix manual.
@@ -648,7 +654,11 @@ def register():
     if request.method == "POST":
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
-        if not username or not password:
+        # kode undangan dibandingkan "santai": huruf besar/kecil & spasi diabaikan
+        kode = re.sub(r"\s+", "", request.form.get("kode", "")).lower()
+        if not INVITE or not hmac.compare_digest(kode, INVITE):
+            flash("Kode undangan salah — minta kode ke pemilik aplikasi ya. 🔑", "danger")
+        elif not username or not password:
             flash("Nama pengguna dan kata sandi wajib diisi.", "danger")
         elif len(username) < 3 or len(username) > 20:
             flash("Nama pengguna 3-20 karakter.", "danger")

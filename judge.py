@@ -1,12 +1,20 @@
-"""PyKode — Sandbox Python runner.
+"""PyKode — Sandbox Python runner (bubblewrap).
 
-Menjalankan kode user secara terisolasi:
-- `-I` (isolated mode): tidak baca env, site-packages, atau PYTHONPATH user
-- RLIMIT_CPU: batas waktu eksekusi
-- RLIMIT_AS: batas memory
-- RLIMIT_FSIZE: batas penulisan file
-- Direktori temp per eksekusi, dibersihkan setelahnya
-- Output dibatasi panjangnya
+Menjalankan kode siswa secara terisolasi lewat bubblewrap:
+- `--unshare-all`: jaringan, PID, user, IPC, UTS & cgroup di-unshare → NETWORK OFF
+- Sistem read-only: /usr + /etc di-ro-bind; /home, /tmp, /root di-tmpfs →
+  file server (.env, DB, repo) TIDAK terlihat dari kode siswa
+- venv PyKode (/home/yuan/pykode/.venv) di-ro-bind ke /venv: interpreter +
+  stdlib + site-packages tersedia read-only
+- Script siswa ditulis di tmpdir, di-ro-bind ke /work, dijalankan dengan
+  `/venv/bin/python -I -B /work/main.py` (isolated mode, tanpa .pyc)
+- RLIMIT CPU/AS/FSIZE/NPROC sebagai lapisan kedua
+- Timeout subprocess + `--die-with-parent` (anak mati saat parent dibunuh)
+- Output dibatasi panjangnya, tmpdir dibersihkan setelah selesai
+
+Butuh biner `bwrap` (paket `bubblewrap`) terpasang di sistem. Kalau bwrap
+tidak ada, eksekusi DITOLAK (fail closed) — kode siswa tidak pernah
+dijalankan tanpa sandbox.
 """
 import os
 import re
@@ -19,17 +27,87 @@ import time
 
 TIME_LIMIT = 3          # detik per eksekusi
 MEM_LIMIT_MB = 256      # batas memory
+FILE_LIMIT_MB = 1       # batas ukuran tulis file
+NPROC_LIMIT = 64        # batas jumlah proses (cegah fork-bomb)
 OUTPUT_LIMIT = 64 * 1024  # karakter output maksimal
 MAX_CODE_LEN = 20000    # panjang kode maksimal
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BWRAP = shutil.which("bwrap") or "/usr/bin/bwrap"
+
+TIMEOUT_MSG = ("⏰ Waktu habis! Program jalan terlalu lama — "
+               "mungkin looping terus tanpa berhenti.")
+
+
+def _venv_root() -> str:
+    """Root venv yang di-bind ke /venv di dalam sandbox."""
+    cand = os.path.join(BASE_DIR, ".venv")
+    if os.path.isdir(os.path.join(cand, "bin")):
+        return cand
+    return os.path.dirname(os.path.dirname(os.path.abspath(sys.executable)))
+
 
 def _limit_setup():
-    """Resource limits untuk proses anak (dijalankan sebelum exec)."""
+    """Resource limits untuk proses anak (dijalankan sebelum exec).
+
+    Catatan: RLIMIT_NPROC TIDAK dipasang di sini — limit NPROC yang kecil bikin
+    bwrap gagal membuat namespace (user ini sudah punya ratusan proses) →
+    EAGAIN "Creating new namespace failed". NPROC dipasang di dalam sandbox
+    lewat prelude (lihat _PRELUDE), tempat hitungan proses terpisah per
+    namespace & NPROC benar-benar berguna menahan fork-bomb.
+    """
     mem_bytes = MEM_LIMIT_MB * 1024 * 1024
-    fsize = 1024 * 1024
+    fsize = FILE_LIMIT_MB * 1024 * 1024
     resource.setrlimit(resource.RLIMIT_CPU, (TIME_LIMIT, TIME_LIMIT + 1))
     resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
     resource.setrlimit(resource.RLIMIT_FSIZE, (fsize, fsize))
+
+
+# Prelude di dalam sandbox: pasang SEMUA rlimit (termasuk NPROC) lalu exec kode siswa.
+_PRELUDE = f"""\
+import os
+import resource
+
+_MB = 1024 * 1024
+resource.setrlimit(resource.RLIMIT_CPU, ({TIME_LIMIT}, {TIME_LIMIT + 1}))
+resource.setrlimit(resource.RLIMIT_AS, ({MEM_LIMIT_MB} * _MB,) * 2)
+resource.setrlimit(resource.RLIMIT_FSIZE, ({FILE_LIMIT_MB} * _MB,) * 2)
+try:
+    resource.setrlimit(resource.RLIMIT_NPROC, ({NPROC_LIMIT},) * 2)
+except (OSError, ValueError):
+    pass
+os.execv("/venv/bin/python", ["/venv/bin/python", "-I", "-B", "/work/main.py"])
+"""
+
+
+def _sandbox_command(workdir: str) -> list:
+    """Perintah bubblewrap: sistem read-only, /home & /tmp tmpfs, net off,
+    venv ro-bind, kode siswa ro-bind di /work, cwd = /tmp (bab 12 menulis file)."""
+    cmd = [
+        BWRAP,
+        "--unshare-all", "--die-with-parent",
+        "--ro-bind", "/usr", "/usr",
+        "--ro-bind", "/etc", "/etc",
+        "--symlink", "usr/lib", "/lib",
+        "--symlink", "usr/lib64", "/lib64",
+        "--symlink", "usr/bin", "/bin",
+        "--symlink", "usr/sbin", "/sbin",
+        "--proc", "/proc",
+        "--dev", "/dev",
+        "--ro-bind", _venv_root(), "/venv",
+        "--ro-bind", workdir, "/work",
+        "--tmpfs", "/tmp",
+        "--tmpfs", "/home",
+        "--tmpfs", "/root",
+        "--chdir", "/tmp",
+        "--setenv", "HOME", "/tmp",
+        "--setenv", "PATH", "/usr/bin:/bin",
+        "--setenv", "LANG", "C.UTF-8",
+        "--setenv", "LC_ALL", "C.UTF-8",
+        "--setenv", "PYTHONDONTWRITEBYTECODE", "1",
+        "/venv/bin/python", "-I", "-B", "/work/_pykode_run.py",
+    ]
+    return cmd
 
 
 def _friendly_error(err: str) -> str:
@@ -107,34 +185,51 @@ def _friendly_error(err: str) -> str:
 
 
 def run_code(code: str, stdin_data: str = "", timeout: int = TIME_LIMIT) -> dict:
-    """Jalankan kode sekali. Return dict: {status, stdout, stderr, time_ms}."""
+    """Jalankan kode sekali di sandbox bubblewrap.
+
+    Return dict: {status, stdout, stderr, time_ms}.
+    """
     if len(code) > MAX_CODE_LEN:
         return {"status": "error", "stdout": "", "stderr": "Kode terlalu panjang (maks 20.000 karakter).",
                 "time_ms": 0}
     tmpdir = tempfile.mkdtemp(prefix="pykode_")
     start = time.monotonic()
     try:
-        script = os.path.join(tmpdir, "main.py")
-        with open(script, "w", encoding="utf-8") as f:
+        with open(os.path.join(tmpdir, "main.py"), "w", encoding="utf-8") as f:
             f.write(code)
+        with open(os.path.join(tmpdir, "_pykode_run.py"), "w", encoding="utf-8") as f:
+            f.write(_PRELUDE)  # pasang rlimit (termasuk NPROC) lalu exec main.py
+        cmd = _sandbox_command(tmpdir)
+        # env bersih: kode siswa TIDAK bisa membaca rahasia dari environment server
+        env = {"PATH": "/usr/bin:/bin"}
         try:
             proc = subprocess.run(
-                [sys.executable, "-I", "-B", script],
+                cmd,
                 input=stdin_data,
                 capture_output=True,
                 text=True,
                 timeout=timeout,
                 cwd=tmpdir,
                 preexec_fn=_limit_setup,
+                env=env,
             )
         except subprocess.TimeoutExpired:
             return {"status": "timeout", "stdout": "",
-                    "stderr": "⏰ Waktu habis! Program jalan terlalu lama — mungkin looping terus tanpa berhenti.",
+                    "stderr": TIMEOUT_MSG,
+                    "time_ms": int((time.monotonic() - start) * 1000)}
+        except OSError as e:
+            return {"status": "error", "stdout": "",
+                    "stderr": f"Sandbox tidak bisa dijalankan ({e}). Lapor pemilik aplikasi ya.",
                     "time_ms": int((time.monotonic() - start) * 1000)}
         elapsed_ms = int((time.monotonic() - start) * 1000)
         out = proc.stdout[-OUTPUT_LIMIT:]
         err = proc.stderr[-OUTPUT_LIMIT:]
         if proc.returncode != 0:
+            # bwrap/RLIMIT bisa menyamarkan timeout: exit != 0 yang makannya
+            # (hampir) sama dengan batas waktu → anggap timeout.
+            if elapsed_ms >= (timeout - 0.5) * 1000:
+                return {"status": "timeout", "stdout": out,
+                        "stderr": TIMEOUT_MSG, "time_ms": elapsed_ms}
             return {"status": "error", "stdout": out,
                     "stderr": _friendly_error(err), "time_ms": elapsed_ms}
         return {"status": "ok", "stdout": out, "stderr": "", "time_ms": elapsed_ms}
