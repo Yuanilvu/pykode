@@ -361,9 +361,10 @@ soal:
     judul: "Laporan Statistik Turnamen"
     sulit: "sedang"
     cerita: |
-      Pelatih minta laporan lengkap! Ketik jumlah pertarungan. Lalu mulai
-      dengan random.seed(3), dan setiap babak panggil random.randint(0, 1)
-      satu kali: 0 artinya Kancil menang, 1 artinya Macan menang. Cetak
+      Pelatih minta laporan lengkap! Ketik jumlah pertarungan.
+      Lalu mulai dengan random.seed(3), dan setiap babak panggil
+      random.randint(0, 1) satu kali: 0 artinya Kancil menang,
+      1 artinya Macan menang. Cetak
       total pertarungan, kemenangan Kancil, kemenangan Macan, lalu
       kesimpulannya: siapa yang lebih kuat atau seimbang. Laporan ini
       dipakai pelatih untuk menyusun strategi.
@@ -415,8 +416,9 @@ soal:
     judul: "Papan Peringkat Musim Baru"
     sulit: "sedang"
     cerita: |
-      Musim baru dimulai! Ketik jumlah ronde. Lalu mulai dengan
-      random.seed(8). Setiap ronde, jalankan 3 pertandingan: Kancil lawan
+      Musim baru dimulai! Ketik jumlah ronde.
+      Lalu mulai dengan random.seed(8). Setiap ronde, jalankan
+      3 pertandingan: Kancil lawan
       Macan, Kancil lawan Bebek, lalu Macan lawan Bebek. Tiap pertandingan
       panggil random.randint(0, 1) satu kali: 0 artinya petarung pertama
       menang, 1 artinya petarung kedua menang. Cetak papan peringkatnya!

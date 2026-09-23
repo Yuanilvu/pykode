@@ -464,8 +464,9 @@ soal:
     judul: "RPG Mini: Petualangan Lengkap"
     sulit: "sulit"
     cerita: |
-      Proyek besarmu dimulai! Ketik angka seed, lalu mulai dengan
-      random.seed(angka itu). Pahlawan: nyawa 5, serangan 2, skor 0, harta
+      Proyek besarmu dimulai! Ketik angka seed.
+      Lalu mulai dengan random.seed(angka itu). Pahlawan: nyawa 5,
+      serangan 2, skor 0, harta
       0. Musuh: nyawa 4. Menu 1 = maju: panggil random.randint(1, 6) satu
       kali (1-2 nyawa -1, 3-4 harta +1 skor +10, 5-6 jalan sepi). Menu 2 =
       latih: serangan +1. Menu 3 = serang: nyawa musuh dikurangi seranganmu.

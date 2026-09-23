@@ -235,7 +235,7 @@ soal:
       Kancil sedang berlatih membuat kelas. Ia ingin kamu membuat kelas bernama
       Saham dengan `__init__` yang menyimpan `nama` dan `harga`. Setelah itu,
       baca nama dan harga dari input, bikin satu objek, lalu cetak datanya
-      seperti contoh. Ayo bantu Kancil!
+      seperti contoh. Ayo bantu Kancil bikin cetakan saham pertamanya!
     input: "Dua baris: nama saham, lalu harga (angka)."
     output: "Dua baris: 'Saham: <nama>' lalu 'Harga: <harga>'"
     contoh:

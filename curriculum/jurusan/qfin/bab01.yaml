@@ -223,6 +223,8 @@ pelajaran:
 
       **Menghemat itu keren.** Selisih harga bisa kamu tabung,
       dan tabungan bisa dapat bunga. Lingkaran uang yang pintar!
+
+      Sekarang giliranmu: ubah angka di contoh, lalu kerjakan soalnya ya!
     contoh:
       - kode: |
           harga = 80000
@@ -269,6 +271,7 @@ soal:
       Hari ini ada diskon 25%! Kancil bingung: berapa potongan harganya,
       dan berapa yang harus dibayar? Bantu Kancil menghitung.
       Cetak dua baris. Pakai int() ya supaya tidak ada koma.
+      Ayo tunjukkan jurus barumu ini ke Kancil!
     input: "Satu baris: harga sepatu (angka bulat)."
     output: "Dua baris: 'Potongan: <angka>' lalu 'Bayar: <angka>'."
     contoh:
@@ -303,6 +306,7 @@ soal:
       setiap tahun. Kancil mau tahu: berapa bunga totalnya dan berapa
       uangnya sekarang? Ketik uang, persen bunga per tahun, dan lamanya
       menabung (tahun). Cetak bunga dan total akhir. Pakai int().
+      Kancil tidak sabar menunggu jawabanmu!
     input: "Tiga baris: uang awal, persen bunga per tahun, jumlah tahun."
     output: "Dua baris: 'Bunga: <angka>' lalu 'Total: <angka>'."
     contoh:
@@ -338,7 +342,8 @@ soal:
       Kancil menabung dengan BUNGA MAJEMUK 10% per tahun.
       Bunganya ikut berbunga seperti bola salju! Setelah 3 tahun,
       berapa uangnya? Ketik uang awalnya, lalu cetak uang akhir.
-      Bulatkan pakai int() setiap tahun ya.
+      Bulatkan pakai int() setiap tahun ya. Bola salju uangnya menunggu
+      kamu hitung, ayo semangat!
     input: "Satu baris: uang awal (angka bulat)."
     output: "Satu baris: 'Setelah 3 tahun: <angka>'."
     contoh:

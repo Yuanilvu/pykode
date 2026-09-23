@@ -104,7 +104,8 @@ pelajaran:
       ```
 
       Kancil (serangan 4) menyerang Macan: nyawa Macan dari 7 jadi 3. Keren, kan?
-      Pahlawanmu sekarang bisa bertarung sungguhan. Coba di contoh!
+      Pahlawanmu sekarang bisa bertarung sungguhan! Coba dulu di contoh,
+      lalu siap-siap menggunakannya di soal.
     contoh:
       - kode: |
           class Petarung:
@@ -243,7 +244,7 @@ soal:
       Waktunya bikin pahlawanmu sendiri! Bikin kelas Pahlawan dengan `__init__`
       yang menyimpan `nama` dan `serangan`. Baca nama dan serangan dari input,
       bikin satu objek, lalu cetak datanya seperti contoh. Pahlawan ini bakal
-      jadi juara suatu hari nanti!
+      jadi juara suatu hari nanti! Selamat mencoba, calon pembuat game hebat!
     input: "Dua baris: nama pahlawan, lalu serangan (angka)."
     output: "Dua baris: 'Pahlawan: <nama>' lalu 'Serangan: <angka>'"
     contoh:
@@ -344,7 +345,8 @@ soal:
       Ron berlatih keras supaya serangannya naik! Setiap sesi latihan,
       serangannya bertambah 2. Baca nama, serangan awal, dan berapa kali
       latihan. Setelah setiap sesi, cetak perkembangan serangannya. Terakhir,
-      cetak serangan akhirnya.
+      cetak serangan akhirnya. Ayo bantu Ron jadi petarung terkuat
+      di seluruh desa, ya!
     input: "Tiga baris: nama, serangan awal, jumlah latihan."
     output: "Tiap sesi: 'Latihan <i> - serangan: <angka>', lalu 'Serangan akhir: <angka>'"
     contoh:

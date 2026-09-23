@@ -276,6 +276,7 @@ soal:
       Minggu ini harganya berubah. Bu Rina mau tahu:
       naik, turun, atau tetap? Ketik harga minggu kemarin,
       lalu harga minggu ini. Cetak selisih dan statusnya.
+      Bantu Bu Rina memutuskan kapan sebaiknya belanja, ya!
     input: "Dua baris: harga lama, lalu harga baru."
     output: "Dua baris: 'Naik <angka>' / 'Turun <angka>' / 'Tetap', lalu 'Status: NAIK' / 'Status: TURUN' / 'Status: TETAP'."
     contoh:
@@ -319,7 +320,8 @@ soal:
       selama beberapa hari. Ia penasaran: berapa hari harga
       naik dibanding hari sebelumnya? Hari pertama tidak
       dihitung karena belum ada pembanding. Bantu Kancil
-      menghitung, lalu cetak hasilnya.
+      menghitung, lalu cetak hasilnya. Kancil penasaran sekali
+      dengan pola harga mainan itu!
     input: "Baris pertama banyak hari, lalu satu harga per baris."
     output: "Satu baris: 'Hari naik: <angka>'."
     contoh:
@@ -361,6 +363,7 @@ soal:
       Kancil ingin menjual robotnya di hari paling mahal!
       Cari harga tertinggi dan hari keberapa harga itu muncul.
       Kalau ada harga yang sama, pilih yang lebih dulu muncul.
+      Semoga robotnya terjual dengan harga tertinggi!
     input: "Baris pertama banyak hari, lalu satu harga per baris."
     output: "Dua baris: 'Harga terbaik: <angka>' lalu 'Hari ke-<angka>'."
     contoh:

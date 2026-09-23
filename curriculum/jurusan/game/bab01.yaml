@@ -109,7 +109,8 @@ pelajaran:
       ```
 
       Gabungkan loop + keadaan + if, jadilah mesin game! ⚙️
-      Di soal nanti kamu akan menghitung skor serangan pemain.
+      Di soal nanti kamu akan menghitung skor serangan pemain
+      dan membangun mesin game milikmu sendiri. Siap?
     contoh:
       - kode: |
           skor = 0
@@ -231,6 +232,8 @@ soal:
       Kancil sedang menguji game barunya. Setiap serangan memberi 10 skor.
       Ia ingin melihat skor menumpuk di setiap serangan! Ketik jumlah
       serangan, lalu cetak skor setelah tiap serangan dan skor akhirnya.
+      Ayo buktikan mesin skor buatanmu bekerja dengan hebat, serangan
+      demi serangan!
     input: "Satu baris: jumlah serangan (angka bulat)."
     output: "Baris per serangan: 'Serangan <ke->: skor <skor>', lalu 'Total skor: <skor>'."
     contoh:
@@ -268,7 +271,8 @@ soal:
       Game Tebak Angka Kancil punya 3 nyawa! Pemain mengetik tebakan
       satu per satu. Kalau benar, game berhenti dan menang. Kalau salah,
       nyawa berkurang. Baris pertama adalah angka rahasianya, baris
-      berikutnya adalah tebakan pemain.
+      berikutnya adalah tebakan pemain. Awas, nyawanya cuma tiga —
+      mainkan dengan cermat!
     input: "Baris pertama: angka rahasia. Baris berikutnya: tebakan (satu per baris)."
     output: "Tiap salah: 'Salah! Nyawa: <sisa>'. Kalau benar: 'BENAR! Kamu menang!'. Kalau nyawa habis: 'Game Over! Nyawamu habis.'"
     contoh:
@@ -312,6 +316,7 @@ soal:
       Serangan ke-1 dapat 10 poin, serangan ke-2 dapat 20 poin,
       serangan ke-3 dapat 30 poin, dan seterusnya. Ketik jumlah
       serangan, lalu cetak poin tiap serangan dan total semuanya.
+      Combo makin seru, kan? Ayo hitung!
     input: "Satu baris: jumlah serangan (angka bulat)."
     output: "Baris per serangan: 'Serangan <ke->: <poin> poin', lalu 'Total: <total>'."
     contoh:

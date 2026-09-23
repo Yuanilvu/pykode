@@ -241,6 +241,7 @@ soal:
       Ia ingin tahu berapa kali angka yang ia tebak muncul.
       Ketik angka yang dicari, lalu banyak lemparan, lalu
       hasil tiap lemparan. Cetak berapa kali angka itu muncul.
+      Dadu Kancil tidak pernah bohong, kok!
     input: "Baris 1 angka yang dicari, baris 2 banyak lemparan, lalu hasil tiap lemparan."
     output: "Satu baris: 'Muncul <angka> kali'."
     contoh:
@@ -317,7 +318,8 @@ soal:
       tahu rata-ratanya, lalu membandingkannya dengan angka
       teoretis dadu 3.5. Ketik banyak lemparan, lalu hasil
       tiap lemparan. Bantu Kancil menghitung rata-ratanya
-      pakai int(), lalu cetak hasilnya.
+      pakai int(), lalu cetak hasilnya. Makin banyak
+      lemparannya, makin seru dan menantang!
     input: "Baris pertama banyak lemparan, lalu hasil tiap lemparan."
     output: "Dua baris: 'Rata-rata: <angka>' lalu 'Di atas teoretis' / 'Di bawah teoretis' / 'Sama dengan teoretis'."
     contoh:
