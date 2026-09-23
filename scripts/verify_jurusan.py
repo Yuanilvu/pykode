@@ -91,6 +91,9 @@ def validate_module(data, rel):
     if not isinstance(data.get("modul"), int):
         fail(f"{rel}: 'modul' harus int")
         ok = False
+    if "tingkat" in data and data.get("tingkat") not in (1, 2):
+        fail(f"{rel}: 'tingkat' harus 1 atau 2, dapat {data.get('tingkat')!r}")
+        ok = False
     return ok, pris
 
 

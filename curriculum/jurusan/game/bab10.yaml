@@ -1,0 +1,552 @@
+bab: 10
+modul: 10
+jurusan: "game"
+tingkat: 2
+judul: "Proyek: RPG Mini"
+emoji: "🏰"
+warna: "#dc2626"
+deskripsi: "Gabungkan semua jurusmu jadi game RPG mini yang bisa disimpan!"
+prasyarat: 13
+
+pelajaran:
+  - id: "g10-1"
+    judul: "Rancang Pahlawan & Musuh"
+    menit: 7
+    materi: |
+      Waktunya proyek besar! 🏰 Kamu akan membuat **RPG mini**, game
+      petualangan dengan pahlawan yang bisa menjelajah dan bertarung.
+
+      Langkah pertama: rancang pahlawannya. Pahlawan butuh **stat lengkap**,
+      yaitu data pentingnya:
+      - `nama` - siapa namanya.
+      - `nyawa` - berapa kali boleh kena serangan.
+      - `serangan` - seberapa kuat pukulannya.
+      - `harta` - berapa harta yang sudah dikumpulkan.
+
+      Semua stat itu disimpan di dalam kelas, seperti di Modul 6.
+
+      ```python
+      class Pahlawan:
+          def __init__(self, nama, nyawa, serangan):
+              self.nama = nama
+              self.nyawa = nyawa
+              self.serangan = serangan
+              self.harta = 0
+      ```
+
+      Lihat `self.harta = 0`? Setiap pahlawan baru mulai dengan harta kosong.
+      Jadi harta tidak perlu diketik saat pahlawan dibuat.
+
+      Kelas juga punya method, yaitu jurus yang menempel pada objek. Contohnya
+      `status()` untuk mencetak keadaan pahlawan.
+
+      Musuhnya juga dibuat dari kelas, tapi statnya lebih sederhana: nama dan
+      nyawa saja. Nanti musuh inilah yang kena seranganmu.
+
+      Ayo rancang pahlawan dan musuhmu di contoh bawah! ⚔️
+    contoh:
+      - kode: |
+          class Pahlawan:
+              def __init__(self, nama, nyawa, serangan):
+                  self.nama = nama
+                  self.nyawa = nyawa
+                  self.serangan = serangan
+                  self.harta = 0
+
+              def status(self):
+                  print(self.nama, "- nyawa:", self.nyawa, "- serangan:", self.serangan, "- harta:", self.harta)
+
+
+          p = Pahlawan("Kancil", 5, 2)
+          p.status()
+        penjelasan: "status() mencetak semua stat pahlawan dalam satu baris."
+      - kode: |
+          class Musuh:
+              def __init__(self, nama, nyawa):
+                  self.nama = nama
+                  self.nyawa = nyawa
+
+
+          class Pahlawan:
+              def __init__(self, nama, nyawa, serangan):
+                  self.nama = nama
+                  self.nyawa = nyawa
+                  self.serangan = serangan
+
+              def serang(self, musuh):
+                  musuh.nyawa = musuh.nyawa - self.serangan
+                  print(self.nama, "menyerang", musuh.nama + "! Nyawa musuh:", musuh.nyawa)
+
+
+          p = Pahlawan("Kancil", 5, 2)
+          m = Musuh("Goblin", 4)
+          p.serang(m)
+          p.serang(m)
+        penjelasan: "Dua kali serangan: nyawa Goblin dari 4 jadi 2, lalu jadi 0."
+    kuis:
+      - soal: "Di dalam kelas, nyawa pahlawan disimpan di..."
+        pilihan:
+          - "self.nyawa"
+          - "nyawa.file"
+          - "print.nyawa"
+          - "class.nyawa"
+        jawaban: 0
+        penjelasan: "Stat disimpan sebagai atribut objek, misalnya self.nyawa."
+      - soal: "Method status() dipanggil dengan cara..."
+        pilihan:
+          - "p.status()"
+          - "status(p)"
+          - "print.status()"
+          - "p = status"
+        jawaban: 0
+        penjelasan: "Method menempel pada objek, jadi ditulis p.status()."
+      - soal: "self.harta = 0 di dalam __init__ artinya..."
+        pilihan:
+          - "pahlawan baru mulai dengan harta 0"
+          - "harta tidak bisa dipakai"
+          - "harta langsung jadi 100"
+          - "harta dihapus tiap babak"
+        jawaban: 0
+        penjelasan: "Nilai awal harta diset 0 supaya tidak perlu diketik lagi."
+
+  - id: "g10-2"
+    judul: "Alur Petualangan (Menu)"
+    menit: 8
+    materi: |
+      RPG mini butuh **menu**, yaitu daftar pilihan yang muncul terus sampai
+      pemain keluar. 🎮
+
+      Menu kita berisi:
+      1. Jelajah - mencari harta.
+      2. Latih - menambah serangan.
+      3. Simpan - menyimpan game ke file.
+      9. Keluar - berhenti bermain.
+
+      Pola menunya memakai `while True` dan `input()`:
+
+      ```python
+      while True:
+          pilih = input()
+          if pilih == "1":
+              print("Menjelajah!")
+          elif pilih == "9":
+              print("Keluar dari game.")
+              break
+      ```
+
+      `while True` artinya ulangi terus. `break` dipakai saat pemain memilih
+      9, jadi loopnya berhenti.
+
+      Menyimpan game sudah kamu pelajari di Modul 7. Di menu ini, pilihan 3
+      menulis data ke file `simpan.txt`, lalu membacanya lagi untuk dicek.
+
+      Supaya contohnya mudah diuji, perintah di contoh ditulis di dalam
+      daftar, bukan dari ketikan. Di game sungguhan, perintahnya datang dari
+      `input()`.
+
+      Ayo rangkai alur petualanganmu! 🗺️
+    contoh:
+      - kode: |
+          harta = 0
+          serangan = 1
+          perintah = ["1", "2", "1", "9"]
+          for p in perintah:
+              if p == "1":
+                  harta = harta + 1
+                  print("Menjelajah! Harta:", harta)
+              elif p == "2":
+                  serangan = serangan + 1
+                  print("Latihan! Serangan:", serangan)
+              elif p == "3":
+                  print("Game disimpan.")
+              elif p == "9":
+                  print("Keluar dari game.")
+                  break
+        penjelasan: "Daftar perintah dijalankan berurutan, lalu berhenti di 9."
+      - kode: |
+          import random
+          random.seed(2)
+          harta = 0
+          perintah = ["1", "1", "3", "9"]
+          for p in perintah:
+              if p == "1":
+                  harta = harta + random.randint(1, 3)
+                  print("Menjelajah! Harta:", harta)
+              elif p == "3":
+                  f = open("simpan.txt", "w")
+                  f.write(f"harta={harta}\n")
+                  f.close()
+                  f = open("simpan.txt")
+                  isi = f.readline().strip().split("=")
+                  f.close()
+                  print("Tersimpan:", isi[1])
+              elif p == "9":
+                  print("Keluar dari game.")
+                  break
+        penjelasan: "Jelajah menambah harta acak, lalu pilihan 3 menyimpannya ke file."
+    kuis:
+      - soal: "Menu game diulang terus sampai pemain memilih..."
+        pilihan:
+          - "9 (keluar)"
+          - "1 (jelajah)"
+          - "2 (latih)"
+          - "3 (simpan)"
+        jawaban: 0
+        penjelasan: "Pilihan 9 memakai break, jadi loopnya berhenti."
+      - soal: "Apa tugas break di dalam menu?"
+        pilihan:
+          - "menghentikan loop"
+          - "menambah harta"
+          - "menyimpan file"
+          - "menghapus menu"
+        jawaban: 0
+        penjelasan: "break keluar dari loop, jadi menunya tidak muncul lagi."
+      - soal: "Pilihan 3 di menu kita dipakai untuk..."
+        pilihan:
+          - "menyimpan game ke file"
+          - "keluar dari game"
+          - "menyerang musuh"
+          - "menambah serangan"
+        jawaban: 0
+        penjelasan: "Pilihan 3 menulis data ke simpan.txt, lalu membaca lagi."
+
+  - id: "g10-3"
+    judul: "Poles & Uji Game-mu"
+    menit: 8
+    materi: |
+      Game sudah jalan! Sekarang saatnya **poles** dan uji. 🧹
+
+      Game yang bagus dicoba dulu sebelum dimainkan orang lain. Menguji
+      artinya mencoba banyak situasi, bukan cuma satu.
+
+      Cara mengujinya:
+      - Coba beberapa seed berbeda. Hasilnya harus tetap masuk akal.
+      - Coba kondisi ekstrem: nyawa habis, harta nol, atau pilihan menu yang
+        salah.
+      - Pastikan hasilnya rapi dan formatnya sama terus.
+
+      Menguji dengan beberapa seed:
+
+      ```python
+      import random
+      for seed in [1, 2, 3]:
+          random.seed(seed)
+          harta = random.randint(1, 3)
+          print("Seed", seed, "-> harta:", harta)
+      ```
+
+      Kalau pemain salah mengetik pilihan, jangan sampai game berhenti karena
+      error. Cetak pesan yang ramah, lalu tampilkan menunya lagi.
+
+      ```python
+      else:
+          print("Pilihan tidak dikenal.")
+      ```
+
+      Game yang sudah diuji jadi enak dimainkan dan pemain tidak bingung. Ayo
+      poles game-mu! 🏰
+    contoh:
+      - kode: |
+          import random
+          for seed in [1, 2, 3]:
+              random.seed(seed)
+              harta = random.randint(1, 3)
+              print("Seed", seed, "-> harta:", harta)
+        penjelasan: "Tiga seed diuji, dan hasilnya masuk akal semua: harta 1 sampai 3."
+      - kode: |
+          perintah = ["7", "1", "9"]
+          for p in perintah:
+              if p == "1":
+                  print("Menjelajah dimulai.")
+              elif p == "9":
+                  print("Keluar dari game.")
+                  break
+              else:
+                  print("Pilihan tidak dikenal:", p)
+        penjelasan: "Pilihan salah tidak membuat game error, cuma diberi pesan."
+    kuis:
+      - soal: "Kenapa game diuji dengan beberapa seed berbeda?"
+        pilihan:
+          - "supaya tahu hasilnya tetap masuk akal di banyak situasi"
+          - "supaya game lebih cepat"
+          - "supaya filenya banyak"
+          - "supaya warnanya berubah"
+        jawaban: 0
+        penjelasan: "Satu uji saja belum cukup. Banyak situasi membuat game lebih teruji."
+      - soal: "Pemain mengetik pilihan yang tidak ada di menu. Yang benar adalah..."
+        pilihan:
+          - "cetak pesan ramah lalu tampilkan menu lagi"
+          - "biarkan game error"
+          - "hapus file simpanan"
+          - "matikan komputer"
+        jawaban: 0
+        penjelasan: "Pilihan salah cukup diberi pesan, lalu game jalan terus."
+      - soal: "Hasil yang rapi artinya..."
+        pilihan:
+          - "formatnya sama terus, tidak ada spasi aneh"
+          - "hurufnya paling besar"
+          - "ditulis pakai gambar"
+          - "tidak dicetak sama sekali"
+        jawaban: 0
+        penjelasan: "Format yang tetap membuat pemain mudah membaca hasilnya."
+
+soal:
+  - id: "sg10-1"
+    judul: "Rancang Pahlawan Proyekmu"
+    sulit: "mudah"
+    cerita: |
+      Proyek RPG mini dimulai dari pahlawannya! Ketik nama, nyawa, serangan,
+      dan harta sang pahlawan. Bikin kelas Pahlawan dengan `__init__` yang
+      menyimpan keempat stat itu. Tambahkan method `status()` yang mencetak
+      keempat stat itu juga. Simpan semuanya di self, ya! Nanti pahlawan ini
+      yang menjelajah dan bertarung di game-mu.
+    input: "Empat baris: nama, nyawa, serangan, harta."
+    output: "Empat baris: 'Pahlawan: <nama>', 'Nyawa: <n>', 'Serangan: <n>', 'Harta: <n>'."
+    contoh:
+      - input: "Budi\n5\n2\n3"
+        output: "Pahlawan: Budi\nNyawa: 5\nSerangan: 2\nHarta: 3"
+      - input: "Kancil\n3\n4\n0"
+        output: "Pahlawan: Kancil\nNyawa: 3\nSerangan: 4\nHarta: 0"
+    tes:
+      - input: "Budi\n5\n2\n3"
+        output: "Pahlawan: Budi\nNyawa: 5\nSerangan: 2\nHarta: 3"
+      - input: "Kancil\n3\n4\n0"
+        output: "Pahlawan: Kancil\nNyawa: 3\nSerangan: 4\nHarta: 0"
+      - input: "Sinta\n10\n1\n9"
+        output: "Pahlawan: Sinta\nNyawa: 10\nSerangan: 1\nHarta: 9"
+      - input: "Ron\n1\n1\n1"
+        output: "Pahlawan: Ron\nNyawa: 1\nSerangan: 1\nHarta: 1"
+    solusi: |
+      class Pahlawan:
+          def __init__(self, nama, nyawa, serangan, harta):
+              self.nama = nama
+              self.nyawa = nyawa
+              self.serangan = serangan
+              self.harta = harta
+
+          def status(self):
+              print("Pahlawan:", self.nama)
+              print("Nyawa:", self.nyawa)
+              print("Serangan:", self.serangan)
+              print("Harta:", self.harta)
+
+
+      nama = input()
+      nyawa = int(input())
+      serangan = int(input())
+      harta = int(input())
+      p = Pahlawan(nama, nyawa, serangan, harta)
+      p.status()
+    petunjuk:
+      - "Bikin kelas Pahlawan dengan __init__ yang menerima nama, nyawa, serangan, dan harta."
+      - "Simpan semuanya di self, lalu tambahkan method status() yang mencetak keempatnya."
+      - "Baca empat baris input dengan int() untuk angkanya, bikin objeknya, lalu panggil p.status()."
+
+  - id: "sg10-2"
+    judul: "Jelajah Satu Langkah"
+    sulit: "sedang"
+    cerita: |
+      Pahlawanmu siap! Sekarang coba menjelajah satu langkah. Ketik angka
+      seed dulu. Lalu mulai dengan random.seed(angka yang kamu ketik).
+      Panggil random.randint(1, 6) satu kali untuk undian: hasil 1 atau 2
+      artinya musuh menyerang, hasil 3 atau 4 artinya dapat harta dan skor,
+      hasil 5 atau 6 artinya jalan sepi. Cetak kejadiannya dan keadaan
+      pahlawanmu!
+    input: "Satu baris: angka seed."
+    output: "Kalau diserang: 'Musuh menyerang! Nyawa: 4'. Kalau dapat harta: 'Harta ditemukan! Harta: 1' lalu 'Skor: 10'. Kalau sepi: 'Jalan sepi.'. Terakhir selalu tiga baris: 'Nyawa: <n>', 'Skor: <n>', 'Harta: <n>'."
+    contoh:
+      - input: "1"
+        output: "Musuh menyerang! Nyawa: 4\nNyawa: 4\nSkor: 0\nHarta: 0"
+      - input: "7"
+        output: "Harta ditemukan! Harta: 1\nSkor: 10\nNyawa: 5\nSkor: 10\nHarta: 1"
+    tes:
+      - input: "1"
+        output: "Musuh menyerang! Nyawa: 4\nNyawa: 4\nSkor: 0\nHarta: 0"
+      - input: "7"
+        output: "Harta ditemukan! Harta: 1\nSkor: 10\nNyawa: 5\nSkor: 10\nHarta: 1"
+      - input: "5"
+        output: "Jalan sepi.\nNyawa: 5\nSkor: 0\nHarta: 0"
+      - input: "10"
+        output: "Jalan sepi.\nNyawa: 5\nSkor: 0\nHarta: 0"
+      - input: "12"
+        output: "Harta ditemukan! Harta: 1\nSkor: 10\nNyawa: 5\nSkor: 10\nHarta: 1"
+    solusi: |
+      import random
+      seed = int(input())
+      random.seed(seed)
+      nyawa = 5
+      skor = 0
+      harta = 0
+      undian = random.randint(1, 6)
+      if undian <= 2:
+          nyawa = nyawa - 1
+          print("Musuh menyerang! Nyawa:", nyawa)
+      elif undian <= 4:
+          harta = harta + 1
+          skor = skor + 10
+          print("Harta ditemukan! Harta:", harta)
+          print("Skor:", skor)
+      else:
+          print("Jalan sepi.")
+      print("Nyawa:", nyawa)
+      print("Skor:", skor)
+      print("Harta:", harta)
+    petunjuk:
+      - "Baca seed dengan int(input()), langsung ikuti dengan random.seed(seed)."
+      - "Panggil random.randint(1, 6) satu kali saja, simpan hasilnya di undian."
+      - "Pakai if/elif/else untuk tiga kemungkinan, lalu cetak nyawa, skor, dan harta di akhir."
+
+  - id: "sg10-3"
+    judul: "Menu Petualangan Mini"
+    sulit: "sedang"
+    cerita: |
+      Sekarang bikin menunya! Pahlawan mulai dengan nyawa 3, serangan 1, dan
+      harta 0. Baca pilihan menu sampai ketik 9: 1 artinya jelajah (harta
+      naik 1), 2 artinya latih (serangan naik 1), 3 artinya simpan game ke
+      file, 9 artinya keluar. Pilihan 3 menulis file simpan.txt lalu
+      membacanya lagi. Pilihan lain dicetak 'Pilihan tidak dikenal.'.
+    input: "Beberapa baris pilihan menu, berakhir dengan 9."
+    output: "'1' mencetak 'Jelajah! Harta: <n>'. '2' mencetak 'Latihan! Serangan: <n>'. '3' mencetak 'Tersimpan: nyawa=<n> serangan=<n> harta=<n>'. '9' mencetak 'Petualangan selesai.' lalu berhenti. Pilihan lain mencetak 'Pilihan tidak dikenal.'. Terakhir tiga baris: 'Nyawa akhir: <n>', 'Serangan akhir: <n>', 'Harta akhir: <n>'."
+    contoh:
+      - input: "1\n1\n2\n9"
+        output: "Jelajah! Harta: 1\nJelajah! Harta: 2\nLatihan! Serangan: 2\nPetualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 2\nHarta akhir: 2"
+      - input: "3\n9"
+        output: "Tersimpan: nyawa=3 serangan=1 harta=0\nPetualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 1\nHarta akhir: 0"
+    tes:
+      - input: "1\n1\n2\n9"
+        output: "Jelajah! Harta: 1\nJelajah! Harta: 2\nLatihan! Serangan: 2\nPetualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 2\nHarta akhir: 2"
+      - input: "3\n9"
+        output: "Tersimpan: nyawa=3 serangan=1 harta=0\nPetualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 1\nHarta akhir: 0"
+      - input: "2\n2\n3\n9"
+        output: "Latihan! Serangan: 2\nLatihan! Serangan: 3\nTersimpan: nyawa=3 serangan=3 harta=0\nPetualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 3\nHarta akhir: 0"
+      - input: "7\n9"
+        output: "Pilihan tidak dikenal.\nPetualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 1\nHarta akhir: 0"
+      - input: "9"
+        output: "Petualangan selesai.\nNyawa akhir: 3\nSerangan akhir: 1\nHarta akhir: 0"
+    solusi: |
+      nyawa = 3
+      serangan = 1
+      harta = 0
+      while True:
+          pilih = input()
+          if pilih == "1":
+              harta = harta + 1
+              print("Jelajah! Harta:", harta)
+          elif pilih == "2":
+              serangan = serangan + 1
+              print("Latihan! Serangan:", serangan)
+          elif pilih == "3":
+              f = open("simpan.txt", "w")
+              f.write(f"nyawa={nyawa}\n")
+              f.write(f"serangan={serangan}\n")
+              f.write(f"harta={harta}\n")
+              f.close()
+              f = open("simpan.txt")
+              b1 = f.readline().strip().split("=")
+              b2 = f.readline().strip().split("=")
+              b3 = f.readline().strip().split("=")
+              f.close()
+              print(f"Tersimpan: nyawa={b1[1]} serangan={b2[1]} harta={b3[1]}")
+          elif pilih == "9":
+              print("Petualangan selesai.")
+              break
+          else:
+              print("Pilihan tidak dikenal.")
+      print("Nyawa akhir:", nyawa)
+      print("Serangan akhir:", serangan)
+      print("Harta akhir:", harta)
+    petunjuk:
+      - "Pakai while True supaya menunya jalan terus, dan break saat pilih == \"9\"."
+      - "Tiap pilihan mengubah stat yang berbeda: 1 menambah harta, 2 menambah serangan."
+      - 'Pilihan 3 menulis tiga baris nama=nilai ke "simpan.txt", lalu membacanya lagi dengan .strip().split("=").'
+
+  - id: "sg10-4"
+    judul: "RPG Mini: Petualangan Lengkap"
+    sulit: "sulit"
+    cerita: |
+      Proyek besarmu dimulai! Ketik angka seed, lalu mulai dengan
+      random.seed(angka itu). Pahlawan: nyawa 5, serangan 2, skor 0, harta
+      0. Musuh: nyawa 4. Menu 1 = maju: panggil random.randint(1, 6) satu
+      kali (1-2 nyawa -1, 3-4 harta +1 skor +10, 5-6 jalan sepi). Menu 2 =
+      latih: serangan +1. Menu 3 = serang: nyawa musuh dikurangi seranganmu.
+      Ketik 9 untuk keluar. Nyawa habis berarti Game Over!
+    input: "Baris pertama: angka seed. Lalu baris perintah menu (1, 2, 3, atau 9) sampai keluar atau nyawa habis."
+    output: "Baris kejadian: 'Musuh menyerang! Nyawa: <n>' / 'Harta ditemukan! Harta: <n>' / 'Jalan sepi.' / 'Latihan! Serangan: <n>' / 'Musuh kena! Nyawa musuh: <n>' / 'Pilihan tidak dikenal.'. Kalau musuh tumbang: 'Musuh tumbang! Skor: <n>' (skor +20, musuh baru datang). Lalu 'Keluar dari game.' atau 'Game Over!'. Terakhir: 'Nyawa: <n>', 'Skor: <n>', 'Harta: <n>'."
+    contoh:
+      - input: "7\n1\n2\n3\n9"
+        output: "Harta ditemukan! Harta: 1\nLatihan! Serangan: 3\nMusuh kena! Nyawa musuh: 1\nKeluar dari game.\nNyawa: 5\nSkor: 10\nHarta: 1"
+      - input: "7\n2\n2\n2\n3\n9"
+        output: "Latihan! Serangan: 3\nLatihan! Serangan: 4\nLatihan! Serangan: 5\nMusuh kena! Nyawa musuh: -1\nMusuh tumbang! Skor: 20\nKeluar dari game.\nNyawa: 5\nSkor: 20\nHarta: 0"
+    tes:
+      - input: "7\n1\n2\n3\n9"
+        output: "Harta ditemukan! Harta: 1\nLatihan! Serangan: 3\nMusuh kena! Nyawa musuh: 1\nKeluar dari game.\nNyawa: 5\nSkor: 10\nHarta: 1"
+      - input: "7\n2\n2\n2\n3\n9"
+        output: "Latihan! Serangan: 3\nLatihan! Serangan: 4\nLatihan! Serangan: 5\nMusuh kena! Nyawa musuh: -1\nMusuh tumbang! Skor: 20\nKeluar dari game.\nNyawa: 5\nSkor: 20\nHarta: 0"
+      - input: "15\n1\n1\n1\n1\n1\n1\n1\n9"
+        output: "Musuh menyerang! Nyawa: 4\nMusuh menyerang! Nyawa: 3\nJalan sepi.\nJalan sepi.\nMusuh menyerang! Nyawa: 2\nMusuh menyerang! Nyawa: 1\nMusuh menyerang! Nyawa: 0\nGame Over!\nNyawa: 0\nSkor: 0\nHarta: 0"
+      - input: "1\n1\n1\n1\n9"
+        output: "Musuh menyerang! Nyawa: 4\nJalan sepi.\nMusuh menyerang! Nyawa: 3\nKeluar dari game.\nNyawa: 3\nSkor: 0\nHarta: 0"
+      - input: "2\n3\n9"
+        output: "Musuh kena! Nyawa musuh: 2\nKeluar dari game.\nNyawa: 5\nSkor: 0\nHarta: 0"
+      - input: "4\n5\n9"
+        output: "Pilihan tidak dikenal.\nKeluar dari game.\nNyawa: 5\nSkor: 0\nHarta: 0"
+    solusi: |
+      import random
+
+
+      class Pahlawan:
+          def __init__(self, nama):
+              self.nama = nama
+              self.nyawa = 5
+              self.serangan = 2
+              self.skor = 0
+              self.harta = 0
+
+
+      class Musuh:
+          def __init__(self, nama, nyawa):
+              self.nama = nama
+              self.nyawa = nyawa
+
+
+      seed = int(input())
+      random.seed(seed)
+      p = Pahlawan("Kancil")
+      m = Musuh("Goblin", 4)
+      while p.nyawa > 0:
+          perintah = input()
+          if perintah == "9":
+              print("Keluar dari game.")
+              break
+          elif perintah == "1":
+              undian = random.randint(1, 6)
+              if undian <= 2:
+                  p.nyawa = p.nyawa - 1
+                  print("Musuh menyerang! Nyawa:", p.nyawa)
+              elif undian <= 4:
+                  p.harta = p.harta + 1
+                  p.skor = p.skor + 10
+                  print("Harta ditemukan! Harta:", p.harta)
+              else:
+                  print("Jalan sepi.")
+          elif perintah == "2":
+              p.serangan = p.serangan + 1
+              print("Latihan! Serangan:", p.serangan)
+          elif perintah == "3":
+              m.nyawa = m.nyawa - p.serangan
+              print("Musuh kena! Nyawa musuh:", m.nyawa)
+              if m.nyawa <= 0:
+                  p.skor = p.skor + 20
+                  print("Musuh tumbang! Skor:", p.skor)
+                  m.nyawa = 4
+          else:
+              print("Pilihan tidak dikenal.")
+      if p.nyawa <= 0:
+          print("Game Over!")
+      print("Nyawa:", p.nyawa)
+      print("Skor:", p.skor)
+      print("Harta:", p.harta)
+    petunjuk:
+      - "Baca seed dulu, lalu random.seed(seed). Bikin objek Pahlawan dan Musuh dari kelasmu."
+      - "Menu pakai while p.nyawa > 0. Pilihan 1 memanggil random.randint(1, 6) satu kali saja tiap maju."
+      - "Pilihan 3 mengurangi nyawa musuh. Kalau nyawanya 0 ke bawah, skor +20 dan nyawa musuh kembali 4."

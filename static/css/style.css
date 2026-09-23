@@ -376,3 +376,13 @@ textarea.stdin { width: 100%; min-height: 70px; border: 1px solid var(--border);
   padding: 14px; background: linear-gradient(160deg, rgba(255, 255, 255, .9), rgba(99, 102, 241, .05));
 }
 .jalur-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+/* ── Tingkat 1 / Tingkat 2 (24 Sep 2026) ── */
+.jalur-tingkat {
+  font-weight: 800; font-size: .95rem; color: #334155;
+  margin: 16px 4px 8px; display: flex; align-items: center; gap: 8px;
+}
+.jalur-tingkat::after {
+  content: ""; flex: 1; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, rgba(99, 102, 241, .35), rgba(99, 102, 241, 0));
+}

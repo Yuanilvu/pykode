@@ -388,12 +388,15 @@ def index():
                 "modul": m.get("modul", m.get("bab")), "judul": m.get("judul"),
                 "emoji": m.get("emoji"), "warna": m.get("warna") or j_aktif.get("warna"),
                 "deskripsi": m.get("deskripsi"), "prasyarat": m.get("prasyarat"),
+                "tingkat": m.get("tingkat", 1),
                 "pelajaran": m_lessons,
                 "n_lessons": len(m_lessons), "n_problems": len(m_problems),
                 "done": m_done, "total": m_total,
                 "pct": round(100 * m_done / m_total) if m_total else 0,
                 "complete": m_total > 0 and m_done == m_total,
             })
+    j_mods_t1 = [x for x in j_mods if x["tingkat"] <= 1]
+    j_mods_t2 = [x for x in j_mods if x["tingkat"] >= 2]
     show_jurusan_modal = ((not jid_sekarang) and user["role"] != "monitor"
                           and bool(j_enabled))
     return render_template("index.html", babs=babs, badges=badges,
@@ -409,6 +412,7 @@ def index():
                            total_badges=len(BADGES), active_exam=active_exam,
                            jurusan_list=j_enabled, jurusan_coming=j_coming,
                            jurusan_aktif=j_aktif, jurusan_mods=j_mods,
+                           jurusan_mods_t1=j_mods_t1, jurusan_mods_t2=j_mods_t2,
                            show_jurusan_modal=show_jurusan_modal)
 
 

@@ -1,0 +1,578 @@
+bab: 10
+modul: 10
+jurusan: "qfin"
+tingkat: 2
+judul: "Proyek: Analis Saham Mini"
+emoji: "💼"
+warna: "#14b8a6"
+deskripsi: "Proyek besar: kelas, statistik, dan laporan untuk bos jadi satu."
+prasyarat: 13
+
+pelajaran:
+  - id: "q10-1"
+    judul: "Gabung Semua: Kelas + Data"
+    menit: 8
+    materi: |
+      Saatnya jadi analis saham sungguhan! 💼 Di proyek ini semua jurusmu dipakai.
+      Kita mulai dari **kelas** yang kamu rakit di Modul 6.
+
+      Ingat kelas Saham? Isinya nama dan harga. Sekarang kita tambah **method
+      ringkasan**. Method itu jurus milik objek, dipanggil pakai titik.
+
+      ```python
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+
+          def ringkasan(self):
+              return f"{self.nama}: {self.harga}"
+      ```
+
+      `ringkasan()` mengembalikan kalimat siap cetak.
+
+      ```python
+      s = Saham("TLKM", 4000)
+      print(s.ringkasan())
+      ```
+
+      Hasilnya `TLKM: 4000`. Kenapa pakai kelas? Karena data saham dipakai
+      bersama-sama terus. Dengan kelas, nama dan harganya tidak gampang tertukar.
+
+      **Datanya banyak?** Masukkan objeknya ke list, lalu loop satu-satu.
+      Persis seperti cara kumpulkan objek di Modul 6.
+
+      ```python
+      daftar = [Saham("TLKM", 4000), Saham("BBRI", 5000)]
+      for s in daftar:
+          print(s.ringkasan())
+      ```
+
+      Ayo coba di contoh bawah. Ini pondasinya; nanti kita hitung statistiknya!
+    contoh:
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+              def ringkasan(self):
+                  return f"{self.nama}: {self.harga}"
+
+
+          s = Saham("TLKM", 4000)
+          print(s.ringkasan())
+        penjelasan: "ringkasan() mengembalikan 'TLKM: 4000', lalu dicetak."
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+              def ringkasan(self):
+                  return f"{self.nama}: {self.harga}"
+
+
+          daftar = [Saham("TLKM", 4000), Saham("BBRI", 5000)]
+          for s in daftar:
+              print(s.ringkasan())
+        penjelasan: "Dua objek dicetak berurutan: TLKM dulu, lalu BBRI."
+    kuis:
+      - soal: "Cara memanggil method ringkasan() dari objek s adalah..."
+        pilihan:
+          - "s.ringkasan()"
+          - "ringkasan(s)"
+          - "print(ringkasan)"
+          - "s-ringkasan"
+        jawaban: 0
+        penjelasan: "Method dipanggil pakai titik: nama_objek.nama_method()."
+      - soal: "Kenapa data saham enak disimpan di dalam kelas?"
+        pilihan:
+          - "biar programnya lebih panjang"
+          - "biar nama dan harganya menyatu, tidak tertukar"
+          - "biar tidak perlu list"
+          - "biar cepat selesai"
+        jawaban: 1
+        penjelasan: "Satu objek menyimpan data satu saham. Jadi rapi dan aman."
+      - soal: "Isi method ringkasan() pada contoh di atas adalah..."
+        pilihan:
+          - "print(self.nama)"
+          - "self.nama = nama"
+          - "return harga"
+          - "return f\"{self.nama}: {self.harga}\""
+        jawaban: 3
+        penjelasan: "Method mengembalikan teks gabungan nama dan harga."
+
+  - id: "q10-2"
+    judul: "Fungsi Analisis"
+    menit: 8
+    materi: |
+      Analis butuh angka ringkasan. Di Modul 8 kamu sudah belajar statistik:
+      rata-rata, jarak, varians, dan simpangan. Sekarang semua itu kita bungkus
+      jadi **satu fungsi** bernama `analisis()`.
+
+      Fungsinya menerima daftar harga, lalu mengembalikan **dict**. Dict itu seperti
+      kamus: ada nama kunci dan ada isinya.
+
+      ```python
+      def analisis(harga):
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total // len(harga)
+
+          jumlah = 0
+          for h in harga:
+              selisih = h - rata
+              jumlah = jumlah + selisih * selisih
+          simpangan = int((jumlah / len(harga)) ** 0.5)
+
+          return {"rata": rata, "maks": max(harga), "min": min(harga),
+                  "simpangan": simpangan}
+      ```
+
+      - `rata` = jumlah semua harga dibagi banyaknya harga (pakai bagi bulat).
+      - `maks` = harga tertinggi, `min` = harga terendah.
+      - `simpangan` = akar dari rata-rata kuadrat jarak, seperti di Modul 8.
+        Makin besar simpangannya, makin liar harganya bergoyang.
+
+      Cara mengambil isinya: tulis kuncinya dalam kurung siku.
+
+      ```python
+      hasil = analisis([3000, 4000, 5000])
+      print(hasil["rata"])
+      ```
+
+      Hasilnya `4000`. Fungsi ini dipakai berkali-kali nanti, jadi tulis sekali saja.
+      Ayo coba di contoh bawah!
+    contoh:
+      - kode: |
+          def analisis(harga):
+              total = 0
+              for h in harga:
+                  total = total + h
+              rata = total // len(harga)
+
+              jumlah = 0
+              for h in harga:
+                  selisih = h - rata
+                  jumlah = jumlah + selisih * selisih
+              simpangan = int((jumlah / len(harga)) ** 0.5)
+
+              return {"rata": rata, "maks": max(harga), "min": min(harga),
+                      "simpangan": simpangan}
+
+
+          hasil = analisis([3000, 4000, 5000])
+          print("Rata-rata:", hasil["rata"])
+          print("Tertinggi:", hasil["maks"])
+          print("Terendah:", hasil["min"])
+          print("Simpangan:", hasil["simpangan"])
+        penjelasan: "Rata-ratanya 4000, tertinggi 5000, terendah 3000, simpangannya 816."
+      - kode: |
+          def analisis(harga):
+              total = 0
+              for h in harga:
+                  total = total + h
+              rata = total // len(harga)
+
+              jumlah = 0
+              for h in harga:
+                  selisih = h - rata
+                  jumlah = jumlah + selisih * selisih
+              simpangan = int((jumlah / len(harga)) ** 0.5)
+
+              return {"rata": rata, "maks": max(harga), "min": min(harga),
+                      "simpangan": simpangan}
+
+
+          hasil = analisis([1000, 1000, 1000])
+          print("Rata-rata:", hasil["rata"])
+          print("Simpangan:", hasil["simpangan"])
+        penjelasan: "Harga rata semuanya tetap. Simpangannya 0, artinya tenang."
+    kuis:
+      - soal: "Fungsi analisis() mengembalikan apa?"
+        pilihan:
+          - "satu angka saja"
+          - "dict berisi rata, maks, min, dan simpangan"
+          - "daftar harga"
+          - "kalimat panjang"
+        jawaban: 1
+        penjelasan: "return-nya dict, jadi empat angka sekaligus bisa dibawa pulang."
+      - soal: "Simpangan dihitung dengan cara..."
+        pilihan:
+          - "varians dikali dua"
+          - "akar dari varians, pakai ** 0.5"
+          - "rata-rata ditambah jarak"
+          - "harga tertinggi dikurangi terendah"
+        jawaban: 1
+        penjelasan: "Sama seperti Modul 8: simpangan itu akar dari varians."
+      - soal: "Harga [2000, 2000, 2000]. Simpangannya..."
+        pilihan:
+          - "3"
+          - "2000"
+          - "6000"
+          - "0"
+        jawaban: 3
+        penjelasan: "Tiap harga pas di rata-rata, jadi jaraknya 0 semua."
+
+  - id: "q10-3"
+    judul: "Laporan Analis untuk Bos"
+    menit: 8
+    materi: |
+      Bos besar Pak Otong minta laporan singkat. 📝 Laporan yang bagus itu urut:
+      judul, angka-angka penting, lalu kesimpulan.
+
+      Judulnya pakai f-string seperti biasa.
+
+      ```python
+      print(f"=== LAPORAN SAHAM {nama} ===")
+      ```
+
+      Setelah angka-angkanya, kita beri **rekomendasi**. Aturannya sederhana.
+      - Harga terakhir lebih murah dari rata-rata → `BELI` (sedang murah!).
+      - Harga terakhir lebih mahal dari rata-rata → `JUAL` (sedang mahal!).
+      - Sama saja → `TAHAN`.
+
+      ```python
+      if akhir < rata:
+          print("Rekomendasi: BELI")
+      elif akhir > rata:
+          print("Rekomendasi: JUAL")
+      else:
+          print("Rekomendasi: TAHAN")
+      ```
+
+      **Simpan ke file, yuk!** Sejak Modul 7 kamu bisa menulis file. Laporan bisa
+      kamu simpan supaya bos bisa membukanya nanti.
+
+      ```python
+      f = open("laporan.txt", "w")
+      f.write("Paling tenang: TLKM")
+      f.close()
+      ```
+
+      Ayo susun laporan pertamamu di contoh bawah!
+    contoh:
+      - kode: |
+          harga = [3000, 4000, 5000, 3500]
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total // len(harga)
+          akhir = harga[len(harga) - 1]
+
+          print("=== LAPORAN SAHAM TLKM ===")
+          print("Rata-rata:", rata)
+          print("Harga terakhir:", akhir)
+          if akhir < rata:
+              print("Rekomendasi: BELI")
+          elif akhir > rata:
+              print("Rekomendasi: JUAL")
+          else:
+              print("Rekomendasi: TAHAN")
+        penjelasan: "Rata-ratanya 3875, harga terakhir 3500. Lebih murah, jadi BELI."
+      - kode: |
+          laporan = "Paling tenang: TLKM"
+          f = open("laporan.txt", "w")
+          f.write(laporan)
+          f.close()
+
+          f = open("laporan.txt")
+          isi = f.read()
+          f.close()
+          print("Isi laporan:", isi)
+        penjelasan: "Laporan disimpan ke file, lalu dibaca lagi dan dicetak."
+    kuis:
+      - soal: "Harga terakhir 3500, rata-rata 3875. Rekomendasinya..."
+        pilihan:
+          - "BELI"
+          - "JUAL"
+          - "TAHAN"
+          - "TIDAK TAHU"
+        jawaban: 0
+        penjelasan: "3500 lebih murah dari 3875, jadi saatnya BELI."
+      - soal: "Harga terakhir lebih mahal dari rata-rata. Artinya..."
+        pilihan:
+          - "sedang murah"
+          - "sedang mahal"
+          - "harganya hilang"
+          - "tidak ada rekomendasi"
+        jawaban: 1
+        penjelasan: "Kalau sudah mahal, rekomendasinya JUAL."
+      - soal: "Untuk menyimpan laporan ke file, kita pakai..."
+        pilihan:
+          - "print(laporan.txt)"
+          - "input(laporan.txt)"
+          - "open(\"laporan.txt\", \"w\")"
+          - "random.laporan()"
+        jawaban: 2
+        penjelasan: "open dengan mode \"w\" membuka file untuk ditulis."
+
+soal:
+  - id: "sq10-1"
+    judul: "Ringkasan Saham"
+    sulit: "mudah"
+    cerita: |
+      Kancil baru belajar kelas dan ingin pamer ke Rani. Bikin kelas Saham dengan
+      method ringkasan() yang mengembalikan '<nama>: <harga>'. Ketik jumlah saham
+      n, lalu untuk tiap saham ketik nama dan harganya. Cetak ringkasan tiap saham
+      di baris sendiri, urut dari yang pertama, ya!
+    input: "Baris pertama n. Lalu n pasang baris: nama saham, lalu harganya (angka)."
+    output: "n baris: '<nama>: <harga>', sesuai urutan input."
+    contoh:
+      - input: "2\nTLKM\n4000\nBBRI\n5000"
+        output: "TLKM: 4000\nBBRI: 5000"
+      - input: "1\nGOTO\n100"
+        output: "GOTO: 100"
+    tes:
+      - input: "2\nTLKM\n4000\nBBRI\n5000"
+        output: "TLKM: 4000\nBBRI: 5000"
+      - input: "1\nGOTO\n100"
+        output: "GOTO: 100"
+      - input: "3\nA\n1000\nB\n2000\nC\n3000"
+        output: "A: 1000\nB: 2000\nC: 3000"
+      - input: "4\nW\n100\nX\n200\nY\n300\nZ\n400"
+        output: "W: 100\nX: 200\nY: 300\nZ: 400"
+    solusi: |
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+
+          def ringkasan(self):
+              return f"{self.nama}: {self.harga}"
+
+
+      n = int(input())
+      for i in range(n):
+          nama = input()
+          harga = int(input())
+          s = Saham(nama, harga)
+          print(s.ringkasan())
+    petunjuk:
+      - "Bikin kelas Saham dulu, lengkap dengan method ringkasan()."
+      - "Baca n, lalu pakai for i in range(n) untuk membaca tiap saham."
+      - "Bikin objek baru tiap putaran, lalu cetak s.ringkasan()."
+
+  - id: "sq10-2"
+    judul: "Fungsi Analisis Harga"
+    sulit: "sedang"
+    cerita: |
+      Rani punya daftar harga saham dan ingin tahu ringkasannya. Buat fungsi
+      analisis(harga) yang mengembalikan dict dengan kunci rata, maks, min, dan
+      simpangan. Ketik jumlah harga n, lalu n baris harga. Cetak empat baris:
+      'Rata-rata:', 'Tertinggi:', 'Terendah:', dan 'Simpangan:' beserta angkanya.
+      Simpangan pakai cara Modul 8: jarak tiap harga dari rata-rata dikuadratkan,
+      dirata-ratakan, lalu diakar dengan ** 0.5 dan dibungkus int(). Urutan
+      barisnya harus persis ya!
+    input: "Baris pertama n. Lalu n baris harga (angka)."
+    output: "Empat baris: 'Rata-rata: <angka>', 'Tertinggi: <angka>', 'Terendah: <angka>', 'Simpangan: <angka>'."
+    contoh:
+      - input: "3\n3000\n4000\n5000"
+        output: "Rata-rata: 4000\nTertinggi: 5000\nTerendah: 3000\nSimpangan: 816"
+      - input: "1\n2500"
+        output: "Rata-rata: 2500\nTertinggi: 2500\nTerendah: 2500\nSimpangan: 0"
+    tes:
+      - input: "3\n3000\n4000\n5000"
+        output: "Rata-rata: 4000\nTertinggi: 5000\nTerendah: 3000\nSimpangan: 816"
+      - input: "1\n2500"
+        output: "Rata-rata: 2500\nTertinggi: 2500\nTerendah: 2500\nSimpangan: 0"
+      - input: "4\n1000\n1000\n1000\n1000"
+        output: "Rata-rata: 1000\nTertinggi: 1000\nTerendah: 1000\nSimpangan: 0"
+      - input: "5\n2000\n4000\n3000\n5000\n1000"
+        output: "Rata-rata: 3000\nTertinggi: 5000\nTerendah: 1000\nSimpangan: 1414"
+      - input: "2\n5000\n3000"
+        output: "Rata-rata: 4000\nTertinggi: 5000\nTerendah: 3000\nSimpangan: 1000"
+    solusi: |
+      def analisis(harga):
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total // len(harga)
+
+          jumlah = 0
+          for h in harga:
+              selisih = h - rata
+              jumlah = jumlah + selisih * selisih
+          simpangan = int((jumlah / len(harga)) ** 0.5)
+
+          return {"rata": rata, "maks": max(harga), "min": min(harga),
+                  "simpangan": simpangan}
+
+
+      n = int(input())
+      harga = []
+      for i in range(n):
+          harga.append(int(input()))
+      hasil = analisis(harga)
+      print("Rata-rata:", hasil["rata"])
+      print("Tertinggi:", hasil["maks"])
+      print("Terendah:", hasil["min"])
+      print("Simpangan:", hasil["simpangan"])
+    petunjuk:
+      - "Kumpulkan harga dulu ke list pakai append, baru panggil fungsinya."
+      - "Rata-rata = total // len(harga). Lalu jumlahkan kuadrat jarak tiap harga."
+      - "Simpangan = int((jumlah / len(harga)) ** 0.5), caranya sama seperti Modul 8."
+
+  - id: "sq10-3"
+    judul: "Laporan untuk Pak Otong"
+    sulit: "sedang"
+    cerita: |
+      Pak Otong minta laporan satu saham. Ketik nama saham, jumlah harga n, lalu n
+      harga. Hitung rata-rata, tertinggi, terendah, dan simpangan pakai fungsi
+      analisis(). Cetak laporan: judul '=== LAPORAN SAHAM <nama> ===', lalu keempat
+      angka itu, harga terakhir, dan rekomendasi. Rekomendasi BELI kalau harga
+      terakhir di bawah rata-rata, JUAL kalau di atas, TAHAN kalau sama.
+    input: "Tiga bagian: nama saham, jumlah harga n, lalu n baris harga."
+    output: "Tujuh baris: '=== LAPORAN SAHAM <nama> ===', lalu 'Rata-rata:', 'Tertinggi:', 'Terendah:', 'Simpangan:', 'Harga terakhir:', dan 'Rekomendasi:'."
+    contoh:
+      - input: "TLKM\n4\n3000\n4000\n5000\n3500"
+        output: "=== LAPORAN SAHAM TLKM ===\nRata-rata: 3875\nTertinggi: 5000\nTerendah: 3000\nSimpangan: 739\nHarga terakhir: 3500\nRekomendasi: BELI"
+      - input: "BBRI\n3\n2800\n3000\n3200"
+        output: "=== LAPORAN SAHAM BBRI ===\nRata-rata: 3000\nTertinggi: 3200\nTerendah: 2800\nSimpangan: 163\nHarga terakhir: 3200\nRekomendasi: JUAL"
+    tes:
+      - input: "TLKM\n4\n3000\n4000\n5000\n3500"
+        output: "=== LAPORAN SAHAM TLKM ===\nRata-rata: 3875\nTertinggi: 5000\nTerendah: 3000\nSimpangan: 739\nHarga terakhir: 3500\nRekomendasi: BELI"
+      - input: "BBRI\n3\n2800\n3000\n3200"
+        output: "=== LAPORAN SAHAM BBRI ===\nRata-rata: 3000\nTertinggi: 3200\nTerendah: 2800\nSimpangan: 163\nHarga terakhir: 3200\nRekomendasi: JUAL"
+      - input: "SAME\n3\n1000\n1000\n1000"
+        output: "=== LAPORAN SAHAM SAME ===\nRata-rata: 1000\nTertinggi: 1000\nTerendah: 1000\nSimpangan: 0\nHarga terakhir: 1000\nRekomendasi: TAHAN"
+      - input: "ONE\n1\n2500"
+        output: "=== LAPORAN SAHAM ONE ===\nRata-rata: 2500\nTertinggi: 2500\nTerendah: 2500\nSimpangan: 0\nHarga terakhir: 2500\nRekomendasi: TAHAN"
+      - input: "ASII\n5\n4000\n4500\n3500\n4200\n3900"
+        output: "=== LAPORAN SAHAM ASII ===\nRata-rata: 4020\nTertinggi: 4500\nTerendah: 3500\nSimpangan: 331\nHarga terakhir: 3900\nRekomendasi: BELI"
+    solusi: |
+      def analisis(harga):
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total // len(harga)
+
+          jumlah = 0
+          for h in harga:
+              selisih = h - rata
+              jumlah = jumlah + selisih * selisih
+          simpangan = int((jumlah / len(harga)) ** 0.5)
+
+          return {"rata": rata, "maks": max(harga), "min": min(harga),
+                  "simpangan": simpangan}
+
+
+      nama = input()
+      n = int(input())
+      harga = []
+      for i in range(n):
+          harga.append(int(input()))
+      hasil = analisis(harga)
+      akhir = harga[len(harga) - 1]
+      print(f"=== LAPORAN SAHAM {nama} ===")
+      print("Rata-rata:", hasil["rata"])
+      print("Tertinggi:", hasil["maks"])
+      print("Terendah:", hasil["min"])
+      print("Simpangan:", hasil["simpangan"])
+      print("Harga terakhir:", akhir)
+      if akhir < hasil["rata"]:
+          print("Rekomendasi: BELI")
+      elif akhir > hasil["rata"]:
+          print("Rekomendasi: JUAL")
+      else:
+          print("Rekomendasi: TAHAN")
+    petunjuk:
+      - "Pakai fungsi analisis() dari pelajaran supaya kodenya rapi dan pendek."
+      - "Harga terakhir = harga[len(harga) - 1]. Bandingkan dengan rata-ratanya."
+      - "Cetak dulu semua angka, baru rekomendasi di baris paling bawah."
+
+  - id: "sq10-4"
+    judul: "Program Analis Mini"
+    sulit: "sulit"
+    cerita: |
+      Ini proyek pamungkas! Pak Otong punya banyak saham. Ketik n, lalu n baris
+      data: nama diikuti harga-harga, dipisah spasi. Untuk tiap saham, pakai kelas
+      Saham dengan method analisis() dan rekomendasi(), lalu cetak laporannya
+      seperti soal sebelumnya. Terakhir cetak 'Total saham: n' dan 'Paling tenang:
+      <nama>' — saham dengan simpangan terkecil. Kalau sama, yang lebih dulu
+      menang. Simpan baris terakhir itu ke file laporan.txt, ya!
+    input: "Baris pertama n. Lalu n baris: nama, lalu beberapa harga dipisah spasi."
+    output: "Tiap saham: 7 baris laporan seperti soal sebelumnya. Terakhir 2 baris: 'Total saham: <n>' dan 'Paling tenang: <nama>'."
+    contoh:
+      - input: "2\nTLKM 4000 4500 3500 3900\nBBRI 2800 3200 3000 3100"
+        output: "=== LAPORAN SAHAM TLKM ===\nRata-rata: 3975\nTertinggi: 4500\nTerendah: 3500\nSimpangan: 356\nHarga terakhir: 3900\nRekomendasi: BELI\n=== LAPORAN SAHAM BBRI ===\nRata-rata: 3025\nTertinggi: 3200\nTerendah: 2800\nSimpangan: 147\nHarga terakhir: 3100\nRekomendasi: JUAL\nTotal saham: 2\nPaling tenang: BBRI"
+      - input: "1\nGOTO 100"
+        output: "=== LAPORAN SAHAM GOTO ===\nRata-rata: 100\nTertinggi: 100\nTerendah: 100\nSimpangan: 0\nHarga terakhir: 100\nRekomendasi: TAHAN\nTotal saham: 1\nPaling tenang: GOTO"
+    tes:
+      - input: "2\nTLKM 4000 4500 3500 3900\nBBRI 2800 3200 3000 3100"
+        output: "=== LAPORAN SAHAM TLKM ===\nRata-rata: 3975\nTertinggi: 4500\nTerendah: 3500\nSimpangan: 356\nHarga terakhir: 3900\nRekomendasi: BELI\n=== LAPORAN SAHAM BBRI ===\nRata-rata: 3025\nTertinggi: 3200\nTerendah: 2800\nSimpangan: 147\nHarga terakhir: 3100\nRekomendasi: JUAL\nTotal saham: 2\nPaling tenang: BBRI"
+      - input: "1\nGOTO 100"
+        output: "=== LAPORAN SAHAM GOTO ===\nRata-rata: 100\nTertinggi: 100\nTerendah: 100\nSimpangan: 0\nHarga terakhir: 100\nRekomendasi: TAHAN\nTotal saham: 1\nPaling tenang: GOTO"
+      - input: "3\nA 1000 2000 1500\nB 500 500\nC 3000 1000 2000 4000 5000"
+        output: "=== LAPORAN SAHAM A ===\nRata-rata: 1500\nTertinggi: 2000\nTerendah: 1000\nSimpangan: 408\nHarga terakhir: 1500\nRekomendasi: TAHAN\n=== LAPORAN SAHAM B ===\nRata-rata: 500\nTertinggi: 500\nTerendah: 500\nSimpangan: 0\nHarga terakhir: 500\nRekomendasi: TAHAN\n=== LAPORAN SAHAM C ===\nRata-rata: 3000\nTertinggi: 5000\nTerendah: 1000\nSimpangan: 1414\nHarga terakhir: 5000\nRekomendasi: JUAL\nTotal saham: 3\nPaling tenang: B"
+      - input: "2\nX 1000 3000 2000\nY 2000 4000 3000"
+        output: "=== LAPORAN SAHAM X ===\nRata-rata: 2000\nTertinggi: 3000\nTerendah: 1000\nSimpangan: 816\nHarga terakhir: 2000\nRekomendasi: TAHAN\n=== LAPORAN SAHAM Y ===\nRata-rata: 3000\nTertinggi: 4000\nTerendah: 2000\nSimpangan: 816\nHarga terakhir: 3000\nRekomendasi: TAHAN\nTotal saham: 2\nPaling tenang: X"
+      - input: "3\nZZZZ 900 800 700\nAMAR 4000\nMEGA 1000 2000 3000 4000"
+        output: "=== LAPORAN SAHAM ZZZZ ===\nRata-rata: 800\nTertinggi: 900\nTerendah: 700\nSimpangan: 81\nHarga terakhir: 700\nRekomendasi: BELI\n=== LAPORAN SAHAM AMAR ===\nRata-rata: 4000\nTertinggi: 4000\nTerendah: 4000\nSimpangan: 0\nHarga terakhir: 4000\nRekomendasi: TAHAN\n=== LAPORAN SAHAM MEGA ===\nRata-rata: 2500\nTertinggi: 4000\nTerendah: 1000\nSimpangan: 1118\nHarga terakhir: 4000\nRekomendasi: JUAL\nTotal saham: 3\nPaling tenang: AMAR"
+    solusi: |
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+
+          def analisis(self):
+              total = 0
+              for h in self.harga:
+                  total = total + h
+              rata = total // len(self.harga)
+
+              jumlah = 0
+              for h in self.harga:
+                  selisih = h - rata
+                  jumlah = jumlah + selisih * selisih
+              simpangan = int((jumlah / len(self.harga)) ** 0.5)
+
+              return {"rata": rata, "maks": max(self.harga), "min": min(self.harga),
+                      "simpangan": simpangan}
+
+          def rekomendasi(self):
+              hasil = self.analisis()
+              akhir = self.harga[len(self.harga) - 1]
+              if akhir < hasil["rata"]:
+                  return "BELI"
+              elif akhir > hasil["rata"]:
+                  return "JUAL"
+              else:
+                  return "TAHAN"
+
+
+      n = int(input())
+      daftar = []
+      for i in range(n):
+          baris = input().split()
+          harga = []
+          for x in baris[1:]:
+              harga.append(int(x))
+          daftar.append(Saham(baris[0], harga))
+
+      for s in daftar:
+          hasil = s.analisis()
+          print(f"=== LAPORAN SAHAM {s.nama} ===")
+          print("Rata-rata:", hasil["rata"])
+          print("Tertinggi:", hasil["maks"])
+          print("Terendah:", hasil["min"])
+          print("Simpangan:", hasil["simpangan"])
+          print("Harga terakhir:", s.harga[len(s.harga) - 1])
+          print("Rekomendasi:", s.rekomendasi())
+
+      paling_tenang = daftar[0]
+      for s in daftar:
+          if s.analisis()["simpangan"] < paling_tenang.analisis()["simpangan"]:
+              paling_tenang = s
+
+      print("Total saham:", n)
+      print("Paling tenang:", paling_tenang.nama)
+      f = open("laporan.txt", "w")
+      f.write("Paling tenang: " + paling_tenang.nama)
+      f.close()
+    petunjuk:
+      - "Tiap baris data: baris = input().split(). Nama = baris[0], sisanya harga."
+      - "Pakai for x in baris[1:] untuk mengubah harga jadi angka dengan int(x)."
+      - "Simpan semua objek di list. Lalu loop dua kali: cetak laporan, dan cari simpangan terkecil."

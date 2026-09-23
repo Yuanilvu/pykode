@@ -1,0 +1,523 @@
+bab: 8
+modul: 8
+jurusan: "qfin"
+tingkat: 2
+judul: "Statistik & Risiko"
+emoji: "📊"
+warna: "#f59e0b"
+deskripsi: "Ukur rata-rata dan getaran harga, lalu nilai risiko tiap saham."
+prasyarat: 12
+
+pelajaran:
+  - id: "q8-1"
+    judul: "Rata-rata & Jarak"
+    menit: 6
+    materi: |
+      Kamu sudah tahu rata-rata: jumlah semua data dibagi banyaknya data. 📊
+      Sekarang kita pakai rata-rata itu untuk melihat **jarak** tiap data.
+
+      Contoh: harga sahammu 1000, 1100, dan 1200.
+      Rata-ratanya 1100.
+
+      Jarak itu selisih tiap harga dari rata-rata.
+
+      ```python
+      harga = [1000, 1100, 1200]
+      rata = 1100
+      for h in harga:
+          print(h - rata)
+      ```
+
+      Hasilnya -100, 0, dan 100. Perhatikan tandanya.
+      Harga 1000 ada di bawah rata-rata, jadi hasilnya minus.
+
+      **Jarak selalu kita anggap positif.** Kalau minus, kita balik jadi plus.
+
+      ```python
+      selisih = 1000 - 1100
+      if selisih < 0:
+          selisih = -selisih
+      print(selisih)
+      ```
+
+      Hasilnya 100. Artinya harga 1000 berjarak 100 dari rata-rata.
+      Harga 1200 juga berjarak 100. Harga 1100 jaraknya 0, karena pas di rata-rata.
+
+      Jarak paling besar disebut **jarak terjauh**.
+      Mencarinya pakai pola juara, seperti waktu mencari harga termahal.
+
+      Ayo hitung rata-rata dan jaraknya di contoh bawah!
+    contoh:
+      - kode: |
+          harga = [1000, 1100, 1200]
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total / 3
+          print("Rata-rata:", int(rata))
+
+          for h in harga:
+              selisih = h - rata
+              if selisih < 0:
+                  selisih = -selisih
+              print("Jarak:", int(selisih))
+        penjelasan: "Rata-ratanya 1100. Jarak tiap harga: 100, 0, lalu 100."
+      - kode: |
+          harga = [800, 1000, 1200, 1400]
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total / 4
+
+          terjauh = 0
+          for h in harga:
+              selisih = h - rata
+              if selisih < 0:
+                  selisih = -selisih
+              if selisih > terjauh:
+                  terjauh = selisih
+
+          print("Rata-rata:", int(rata))
+          print("Jarak terjauh:", int(terjauh))
+        penjelasan: "Rata-ratanya 1100. Harga 800 dan 1400 sama-sama berjarak 300."
+    kuis:
+      - soal: "Data harganya 1000 dan 1200. Rata-ratanya..."
+        pilihan: ["1200", "1100", "1000", "2200"]
+        jawaban: 1
+        penjelasan: "Jumlahnya 2200, dibagi 2 hasilnya 1100."
+      - soal: "Jarak harga 1000 dari rata-rata 1100 adalah..."
+        pilihan: ["-100", "0", "100", "2100"]
+        jawaban: 2
+        penjelasan: "Selisihnya -100, tapi jarak selalu positif, jadi 100."
+      - soal: "Harga yang jaraknya 0 adalah harga yang..."
+        pilihan: ["pas sama rata-rata", "paling mahal", "paling murah", "tidak ada"]
+        jawaban: 0
+        penjelasan: "Kalau harganya sama dengan rata-rata, jaraknya 0."
+
+  - id: "q8-2"
+    judul: "Getaran Harga (Volatilitas)"
+    menit: 7
+    materi: |
+      Harga saham itu bergoyang naik-turun. Goyangan itu bisa diukur! 📊
+
+      Ukurannya bernama **varians** dan **simpangan**.
+
+      Caranya: cari rata-rata dulu, lalu hitung jarak tiap harga dari rata-rata.
+      Setelah itu kuadratkan tiap jarak, jumlahkan, lalu bagi banyaknya data.
+
+      ```python
+      harga = [1000, 1200]
+      rata = 1100
+
+      jumlah = 0
+      for h in harga:
+          selisih = h - rata
+          jumlah = jumlah + selisih * selisih
+      print(jumlah)
+      ```
+
+      Harga 1000 jaraknya -100, kuadratnya 10000.
+      Harga 1200 jaraknya 100, kuadratnya juga 10000.
+      Jumlahnya 20000. Dibagi 2 data, hasilnya 10000. Itulah **varians**.
+
+      **Simpangan** itu akar dari varians. Di Python, akarnya pakai `** 0.5`.
+
+      ```python
+      varians = 10000
+      print(int(varians ** 0.5))
+      ```
+
+      Hasilnya 100. Jadi harga itu biasanya bergoyang sekitar 100 dari rata-ratanya.
+      Varians yang besar artinya harga getarannya liar.
+
+      Ayo hitung varians dan simpangannya di contoh bawah!
+    contoh:
+      - kode: |
+          harga = [1000, 1200]
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total / 2
+
+          jumlah_kuadrat = 0
+          for h in harga:
+              selisih = h - rata
+              jumlah_kuadrat = jumlah_kuadrat + selisih * selisih
+
+          varians = jumlah_kuadrat / 2
+          print("Varians:", int(varians))
+          print("Simpangan:", int(varians ** 0.5))
+        penjelasan: "Kuadrat jaraknya 10000 dan 10000. Variansnya 10000, simpangannya 100."
+      - kode: |
+          harga = [800, 800, 1200, 1200]
+          total = 0
+          for h in harga:
+              total = total + h
+          rata = total / 4
+
+          jumlah_kuadrat = 0
+          for h in harga:
+              selisih = h - rata
+              jumlah_kuadrat = jumlah_kuadrat + selisih * selisih
+
+          varians = jumlah_kuadrat / 4
+          print("Varians:", int(varians))
+          print("Simpangan:", int(varians ** 0.5))
+        penjelasan: "Rata-ratanya 1000, jaraknya 200. Variansnya 40000, simpangannya 200."
+    kuis:
+      - soal: "Varians itu..."
+        pilihan: ["harga tertinggi", "jumlah semua harga", "rata-rata dari kuadrat jarak", "nama saham"]
+        jawaban: 2
+        penjelasan: "Varians itu jumlah kuadrat jarak dibagi banyaknya data."
+      - soal: "Simpangan dihitung dengan cara..."
+        pilihan: ["varians * 2", "varians ** 0.5", "varians + 1", "varians - 1"]
+        jawaban: 1
+        penjelasan: "Simpangan itu akar dari varians, jadi pakai ** 0.5."
+      - soal: "Variansnya 40000. Simpangannya..."
+        pilihan: ["200", "400", "2000", "20"]
+        jawaban: 0
+        penjelasan: "Akar dari 40000 adalah 200."
+
+  - id: "q8-3"
+    judul: "Saham Tenang vs Saham Liar"
+    menit: 7
+    materi: |
+      Sekarang saatnya membandingkan dua saham. 🥊
+
+      Saham yang harganya stabil disebut **tenang**.
+      Saham yang harganya naik-turun tajam disebut **liar**.
+
+      Caranya: hitung simpangan masing-masing, lalu bandingkan.
+
+      ```python
+      def simpangan(data):
+          total = 0
+          for x in data:
+              total = total + x
+          rata = total / len(data)
+          jumlah = 0
+          for x in data:
+              selisih = x - rata
+              jumlah = jumlah + selisih * selisih
+          return int((jumlah / len(data)) ** 0.5)
+
+      a = [900, 900, 1100, 1100]
+      b = [800, 800, 1200, 1200]
+      print(simpangan(a))
+      print(simpangan(b))
+      ```
+
+      Hasilnya 100 dan 200. Jadi saham b lebih liar.
+
+      Simpangan yang lebih besar artinya getarannya lebih besar.
+      Kita bisa menutup laporan dengan kesimpulan pakai if dan else:
+
+      ```python
+      if simpangan(b) > simpangan(a):
+          print("b lebih liar")
+      else:
+          print("a lebih tenang")
+      ```
+
+      Fungsi `simpangan` kamu tulis sekali, lalu dipakai berkali-kali.
+      Itu kekuatan fungsi!
+
+      Ayo bandingkan sahammu di contoh bawah!
+    contoh:
+      - kode: |
+          def simpangan(data):
+              total = 0
+              for x in data:
+                  total = total + x
+              rata = total / len(data)
+              jumlah = 0
+              for x in data:
+                  selisih = x - rata
+                  jumlah = jumlah + selisih * selisih
+              return int((jumlah / len(data)) ** 0.5)
+
+          tenang = [900, 900, 1100, 1100]
+          liar = [800, 800, 1200, 1200]
+          s1 = simpangan(tenang)
+          s2 = simpangan(liar)
+          print("Tenang:", s1)
+          print("Liar:", s2)
+          if s2 > s1:
+              print("Pemenang: saham liar")
+          else:
+              print("Pemenang: saham tenang")
+        penjelasan: "Saham tenang simpangannya 100, saham liar 200. Yang liar menang getar."
+      - kode: |
+          def simpangan(data):
+              total = 0
+              for x in data:
+                  total = total + x
+              rata = total / len(data)
+              jumlah = 0
+              for x in data:
+                  selisih = x - rata
+                  jumlah = jumlah + selisih * selisih
+              return int((jumlah / len(data)) ** 0.5)
+
+          a = [1000, 1300]
+          b = [1000, 1100]
+          print("Saham A:", simpangan(a))
+          print("Saham B:", simpangan(b))
+          if simpangan(a) > simpangan(b):
+              print("A lebih getar")
+          else:
+              print("B lebih getar")
+        penjelasan: "Saham A simpangannya 150, saham B hanya 50."
+    kuis:
+      - soal: "Saham disebut liar kalau..."
+        pilihan: ["harganya tetap terus", "harganya naik-turun tajam", "namanya panjang", "tidak punya data"]
+        jawaban: 1
+        penjelasan: "Saham liar harganya bergoyang tajam."
+      - soal: "Simpangan saham A 150 dan saham B 90. Yang lebih tenang adalah..."
+        pilihan: ["A", "B", "dua-duanya", "tidak ada"]
+        jawaban: 1
+        penjelasan: "Simpangan B lebih kecil, jadi B lebih tenang."
+      - soal: "Kenapa kita pakai satu fungsi simpangan() untuk dua saham?"
+        pilihan: ["tulis sekali, pakai berkali-kali", "biar kodenya panjang", "supaya angkanya berubah", "biar filenya hilang"]
+        jawaban: 0
+        penjelasan: "Fungsi ditulis sekali lalu bisa dipakai untuk data apa saja."
+
+soal:
+  - id: "sq8-1"
+    judul: "Jarak Terjauh Harga Kancil"
+    sulit: "mudah"
+    cerita: |
+      Kancil mencatat beberapa harga saham. Ia ingin tahu rata-ratanya dan
+      harga yang paling jauh dari rata-rata itu. Baca n dulu, lalu n harga
+      satu per satu. Hitung rata-ratanya, lalu cari jarak terjauhnya.
+      Jarak itu selalu angka positif. Cetak rata-rata dan jarak terjauh!
+    input: "Baris pertama n. Lalu n baris: harga tiap hari."
+    output: "Dua baris: 'Rata-rata: <angka>' lalu 'Selisih terjauh: <angka>'"
+    contoh:
+      - input: "4\n900\n1000\n1100\n1200"
+        output: "Rata-rata: 1050\nSelisih terjauh: 150"
+      - input: "3\n1000\n1000\n1000"
+        output: "Rata-rata: 1000\nSelisih terjauh: 0"
+    tes:
+      - input: "4\n900\n1000\n1100\n1200"
+        output: "Rata-rata: 1050\nSelisih terjauh: 150"
+      - input: "3\n1000\n1000\n1000"
+        output: "Rata-rata: 1000\nSelisih terjauh: 0"
+      - input: "5\n500\n600\n700\n800\n900"
+        output: "Rata-rata: 700\nSelisih terjauh: 200"
+      - input: "2\n800\n1000"
+        output: "Rata-rata: 900\nSelisih terjauh: 100"
+      - input: "4\n2000\n2000\n4000\n4000"
+        output: "Rata-rata: 3000\nSelisih terjauh: 1000"
+    solusi: |
+      n = int(input())
+      data = []
+      for i in range(n):
+          data.append(int(input()))
+
+      total = 0
+      for x in data:
+          total = total + x
+      rata = int(total / n)
+
+      terjauh = 0
+      for x in data:
+          selisih = x - rata
+          if selisih < 0:
+              selisih = -selisih
+          if selisih > terjauh:
+              terjauh = selisih
+
+      print("Rata-rata:", rata)
+      print("Selisih terjauh:", terjauh)
+    petunjuk:
+      - "Baca semua harga dulu, simpan ke dalam list."
+      - "Rata-rata = jumlah semua harga dibagi n. Bungkus dengan int()."
+      - "Hitung jarak tiap harga dari rata-rata. Kalau minus, balik jadi plus dengan -selisih."
+
+  - id: "sq8-2"
+    judul: "Getaran Harga Saham"
+    sulit: "sedang"
+    cerita: |
+      Rani penasaran seberapa besar harga sahamnya bergoyang. Ia mencatat
+      beberapa harga selama seminggu. Baca n dulu, lalu n harganya. Hitung
+      varians dan simpangannya, lalu cetak keduanya. Ingat: varians itu
+      rata-rata kuadrat jarak, dan simpangan itu akar dari varians.
+      Pakai int() ya supaya hasilnya rapi!
+    input: "Baris pertama n. Lalu n baris: harga tiap hari."
+    output: "Dua baris: 'Varians: <angka>' lalu 'Simpangan: <angka>'"
+    contoh:
+      - input: "4\n900\n900\n1100\n1100"
+        output: "Varians: 10000\nSimpangan: 100"
+      - input: "2\n1000\n1300"
+        output: "Varians: 22500\nSimpangan: 150"
+    tes:
+      - input: "4\n900\n900\n1100\n1100"
+        output: "Varians: 10000\nSimpangan: 100"
+      - input: "2\n1000\n1300"
+        output: "Varians: 22500\nSimpangan: 150"
+      - input: "4\n800\n800\n1200\n1200"
+        output: "Varians: 40000\nSimpangan: 200"
+      - input: "3\n500\n500\n500"
+        output: "Varians: 0\nSimpangan: 0"
+      - input: "2\n500\n1500"
+        output: "Varians: 250000\nSimpangan: 500"
+    solusi: |
+      n = int(input())
+      data = []
+      for i in range(n):
+          data.append(int(input()))
+
+      total = 0
+      for x in data:
+          total = total + x
+      rata = int(total / n)
+
+      jumlah_kuadrat = 0
+      for x in data:
+          selisih = x - rata
+          jumlah_kuadrat = jumlah_kuadrat + selisih * selisih
+
+      varians = int(jumlah_kuadrat / n)
+      simpangan = int(varians ** 0.5)
+
+      print("Varians:", varians)
+      print("Simpangan:", simpangan)
+    petunjuk:
+      - "Hitung rata-rata dulu, seperti di pelajaran."
+      - "Untuk tiap harga: selisih = x - rata, lalu tambahkan selisih * selisih ke jumlah."
+      - "Varians = jumlah_kuadrat dibagi n. Simpangan = varians ** 0.5, lalu bungkus int()."
+
+  - id: "sq8-3"
+    judul: "Duel Tenang vs Liar"
+    sulit: "sedang"
+    cerita: |
+      Ada dua saham yang mau dibandingkan. Masing-masing punya 4 harga.
+      Baca nama saham pertama, empat harganya, lalu nama saham kedua dan
+      empat harganya. Hitung simpangan keduanya, lalu cetak kesimpulan
+      siapa yang lebih liar. Kalau sama, cetak sama tenangnya.
+      Tulis nama sahamnya sama persis seperti di input ya!
+    input: "Lima baris saham pertama: nama lalu 4 harganya. Lalu lima baris saham kedua."
+    output: "Dua baris '<nama>: <angka>', lalu 'Kesimpulan: <nama> lebih liar' atau 'Kesimpulan: sama tenangnya'"
+    contoh:
+      - input: "TLKM\n900\n900\n1100\n1100\nBBRI\n800\n800\n1200\n1200"
+        output: "TLKM: 100\nBBRI: 200\nKesimpulan: BBRI lebih liar"
+      - input: "AAA\n800\n800\n1200\n1200\nBBB\n900\n900\n1100\n1100"
+        output: "AAA: 200\nBBB: 100\nKesimpulan: AAA lebih liar"
+    tes:
+      - input: "TLKM\n900\n900\n1100\n1100\nBBRI\n800\n800\n1200\n1200"
+        output: "TLKM: 100\nBBRI: 200\nKesimpulan: BBRI lebih liar"
+      - input: "AAA\n800\n800\n1200\n1200\nBBB\n900\n900\n1100\n1100"
+        output: "AAA: 200\nBBB: 100\nKesimpulan: AAA lebih liar"
+      - input: "P\n900\n900\n1100\n1100\nQ\n900\n900\n1100\n1100"
+        output: "P: 100\nQ: 100\nKesimpulan: sama tenangnya"
+      - input: "GOTO\n500\n500\n1500\n1500\nASII\n1000\n1000\n1200\n1200"
+        output: "GOTO: 500\nASII: 100\nKesimpulan: GOTO lebih liar"
+      - input: "UNVR\n1000\n1000\n1000\n1000\nICBP\n2000\n2000\n2000\n2000"
+        output: "UNVR: 0\nICBP: 0\nKesimpulan: sama tenangnya"
+    solusi: |
+      def simpangan(data):
+          total = 0
+          for x in data:
+              total = total + x
+          rata = total / len(data)
+          jumlah = 0
+          for x in data:
+              selisih = x - rata
+              jumlah = jumlah + selisih * selisih
+          return int((jumlah / len(data)) ** 0.5)
+
+
+      nama1 = input()
+      d1 = []
+      for i in range(4):
+          d1.append(int(input()))
+
+      nama2 = input()
+      d2 = []
+      for i in range(4):
+          d2.append(int(input()))
+
+      s1 = simpangan(d1)
+      s2 = simpangan(d2)
+
+      print(nama1 + ":", s1)
+      print(nama2 + ":", s2)
+      if s1 > s2:
+          print("Kesimpulan:", nama1, "lebih liar")
+      elif s2 > s1:
+          print("Kesimpulan:", nama2, "lebih liar")
+      else:
+          print("Kesimpulan: sama tenangnya")
+    petunjuk:
+      - "Bikin dulu fungsi simpangan(data) yang mengembalikan simpangan."
+      - "Baca 4 harga tiap saham ke dalam list dengan loop range(4)."
+      - "Bandingkan s1 dan s2: yang lebih besar lebih liar. Kalau sama, cetak sama tenangnya."
+
+  - id: "sq8-4"
+    judul: "Laporan Risiko Pak Otong"
+    sulit: "sulit"
+    cerita: |
+      Pak Otong minta laporan risiko satu saham. Baca nama saham, lalu n,
+      lalu n harganya. Cetak laporan lengkap: judulnya, nama sahamnya,
+      banyak datanya, rata-rata, varians, dan simpangan. Kalau simpangannya
+      lebih dari 150, sahamnya LIAR. Kalau tidak, TENANG. Ikuti contoh ya,
+      laporannya harus rapi baris demi baris!
+    input: "Baris pertama nama saham, lalu n, lalu n baris harga."
+    output: "Tujuh baris: judul, 'Saham: <nama>', 'Banyak data: <n>', 'Rata-rata: <angka>', 'Varians: <angka>', 'Simpangan: <angka>', lalu 'Kesimpulan: TENANG/LIAR'"
+    contoh:
+      - input: "TLKM\n4\n900\n900\n1100\n1100"
+        output: "=== LAPORAN RISIKO ===\nSaham: TLKM\nBanyak data: 4\nRata-rata: 1000\nVarians: 10000\nSimpangan: 100\nKesimpulan: TENANG"
+      - input: "BBRI\n4\n800\n800\n1200\n1200"
+        output: "=== LAPORAN RISIKO ===\nSaham: BBRI\nBanyak data: 4\nRata-rata: 1000\nVarians: 40000\nSimpangan: 200\nKesimpulan: LIAR"
+    tes:
+      - input: "TLKM\n4\n900\n900\n1100\n1100"
+        output: "=== LAPORAN RISIKO ===\nSaham: TLKM\nBanyak data: 4\nRata-rata: 1000\nVarians: 10000\nSimpangan: 100\nKesimpulan: TENANG"
+      - input: "BBRI\n4\n800\n800\n1200\n1200"
+        output: "=== LAPORAN RISIKO ===\nSaham: BBRI\nBanyak data: 4\nRata-rata: 1000\nVarians: 40000\nSimpangan: 200\nKesimpulan: LIAR"
+      - input: "ASII\n2\n1000\n1300"
+        output: "=== LAPORAN RISIKO ===\nSaham: ASII\nBanyak data: 2\nRata-rata: 1150\nVarians: 22500\nSimpangan: 150\nKesimpulan: TENANG"
+      - input: "GOTO\n4\n500\n500\n500\n500"
+        output: "=== LAPORAN RISIKO ===\nSaham: GOTO\nBanyak data: 4\nRata-rata: 500\nVarians: 0\nSimpangan: 0\nKesimpulan: TENANG"
+      - input: "UNVR\n2\n100\n700"
+        output: "=== LAPORAN RISIKO ===\nSaham: UNVR\nBanyak data: 2\nRata-rata: 400\nVarians: 90000\nSimpangan: 300\nKesimpulan: LIAR"
+    solusi: |
+      def rata_rata(data):
+          total = 0
+          for x in data:
+              total = total + x
+          return int(total / len(data))
+
+
+      def varians(data):
+          rata = rata_rata(data)
+          jumlah = 0
+          for x in data:
+              selisih = x - rata
+              jumlah = jumlah + selisih * selisih
+          return int(jumlah / len(data))
+
+
+      nama = input()
+      n = int(input())
+      data = []
+      for i in range(n):
+          data.append(int(input()))
+
+      v = varians(data)
+      s = int(v ** 0.5)
+
+      print("=== LAPORAN RISIKO ===")
+      print("Saham:", nama)
+      print("Banyak data:", n)
+      print("Rata-rata:", rata_rata(data))
+      print("Varians:", v)
+      print("Simpangan:", s)
+      if s > 150:
+          print("Kesimpulan: LIAR")
+      else:
+          print("Kesimpulan: TENANG")
+    petunjuk:
+      - "Bikin fungsi rata_rata(data) dan varians(data) dulu. varians memakai rata_rata di dalamnya."
+      - "Cetak laporan baris demi baris sesuai contoh, mulai dari judulnya."
+      - "Simpangan = varians ** 0.5. Kalau simpangan lebih dari 150, kesimpulannya LIAR."

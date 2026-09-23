@@ -1,0 +1,445 @@
+bab: 6
+modul: 6
+jurusan: "game"
+tingkat: 2
+judul: "Kelas Pahlawan & Musuh"
+emoji: "🦸"
+warna: "#7c3aed"
+deskripsi: "Naik level: cetak pahlawan & musuh dari kelas buatanmu, lalu adu duel!"
+prasyarat: 11
+
+pelajaran:
+  - id: "g6-1"
+    judul: "Cetakan Pahlawan"
+    menit: 7
+    materi: |
+      Selamat datang di **Tingkat 2**! 🚀 Sekarang kamu bikin pahlawan dengan
+      jurus programmer sungguhan: **kelas** (class).
+
+      Kelas itu seperti **cetakan**. Dari satu cetakan pahlawan, kamu bisa bikin
+      Budi, Sinta, dan Ron — masing-masing punya datanya sendiri.
+
+      ```python
+      class Pahlawan:
+          def __init__(self, nama, serangan):
+              self.nama = nama
+              self.serangan = serangan
+      ```
+
+      - `class Pahlawan:` artinya bikin cetakan bernama Pahlawan.
+      - `__init__` jalan otomatis saat pahlawan lahir.
+      - `self` adalah pahlawan itu sendiri.
+
+      ```python
+      p = Pahlawan("Budi", 7)
+      print(p.nama)       # Budi
+      print(p.serangan)   # 7
+      ```
+
+      Di Modul 1-3 kamu menyimpan data petualang pakai dict dan list. Sekarang
+      data itu bisa hidup di dalam objek, lengkap dengan jurusnya! Coba dulu di
+      contoh bawah, nanti di soal kamu bikin sendiri.
+    contoh:
+      - kode: |
+          class Pahlawan:
+              def __init__(self, nama, serangan):
+                  self.nama = nama
+                  self.serangan = serangan
+
+          p = Pahlawan("Budi", 7)
+          print(p.nama)
+          print(p.serangan)
+        penjelasan: "Cetakan Pahlawan bikin objek p berisi Budi dengan serangan 7."
+      - kode: |
+          class Pahlawan:
+              def __init__(self, nama, serangan):
+                  self.nama = nama
+                  self.serangan = serangan
+
+          a = Pahlawan("Kancil", 5)
+          b = Pahlawan("Macan", 9)
+          print(a.nama, a.serangan)
+          print(b.nama, b.serangan)
+        penjelasan: "Satu cetakan, dua pahlawan berbeda data."
+    kuis:
+      - soal: "Kelas itu ibarat apa?"
+        pilihan: ["cetakan", "piala", "peta", "pedang"]
+        jawaban: 0
+        penjelasan: "Kelas itu cetakannya. Objeknya adalah pahlawan hasil cetakan."
+      - soal: "Kapan __init__ dijalankan?"
+        pilihan: ["saat objek dibuat", "saat file dihapus", "tiap 1 detik", "saat print"]
+        jawaban: 0
+        penjelasan: "__init__ otomatis jalan saat objek lahir untuk menyiapkan data."
+      - soal: "Setelah p = Pahlawan(\"Budi\", 7), apa isi p.serangan?"
+        pilihan: ["7", "Budi", "0", "p"]
+        jawaban: 0
+        penjelasan: "self.serangan = serangan, jadi p.serangan berisi 7."
+
+  - id: "g6-2"
+    judul: "Jurus Menyerang"
+    menit: 7
+    materi: |
+      Sekarang tambahkan **jurus** ke pahlawanmu. Jurus di dalam kelas namanya
+      **method** — fungsinya menempel pada objek.
+
+      ```python
+      class Petarung:
+          def __init__(self, nama, nyawa, serangan):
+              self.nama = nama
+              self.nyawa = nyawa
+              self.serangan = serangan
+
+          def serang(self, musuh):
+              musuh.nyawa = musuh.nyawa - self.serangan
+      ```
+
+      Baca baik-baik `serang(self, musuh)`. Saat kamu tulis `a.serang(b)`,
+      artinya: **a menyerang b**. Nyawa b berkurang sebanyak serangan a.
+
+      ```python
+      a = Petarung("Kancil", 9, 4)
+      b = Petarung("Macan", 7, 5)
+      a.serang(b)
+      print(b.nyawa)   # 3
+      ```
+
+      Kancil (serangan 4) menyerang Macan: nyawa Macan dari 7 jadi 3. Keren, kan?
+      Pahlawanmu sekarang bisa bertarung sungguhan. Coba di contoh!
+    contoh:
+      - kode: |
+          class Petarung:
+              def __init__(self, nama, nyawa, serangan):
+                  self.nama = nama
+                  self.nyawa = nyawa
+                  self.serangan = serangan
+
+              def serang(self, musuh):
+                  musuh.nyawa = musuh.nyawa - self.serangan
+
+          a = Petarung("Kancil", 9, 4)
+          b = Petarung("Macan", 7, 5)
+          a.serang(b)
+          print("Nyawa Macan:", b.nyawa)
+        penjelasan: "Kancil menyerang Macan: nyawa Macan berkurang 4."
+      - kode: |
+          class Petarung:
+              def __init__(self, nama, nyawa, serangan):
+                  self.nama = nama
+                  self.nyawa = nyawa
+                  self.serangan = serangan
+
+              def serang(self, musuh):
+                  musuh.nyawa = musuh.nyawa - self.serangan
+
+          a = Petarung("Budi", 10, 3)
+          b = Petarung("Naga", 8, 2)
+          a.serang(b)
+          b.serang(a)
+          print("Nyawa Naga:", b.nyawa)
+          print("Nyawa Budi:", a.nyawa)
+        penjelasan: "Keduanya saling menyerang: Naga jadi 5, Budi jadi 8."
+    kuis:
+      - soal: "Saat a.serang(b) dijalankan, nyawa siapa yang berkurang?"
+        pilihan: ["b", "a", "dua-duanya", "tidak ada"]
+        jawaban: 0
+        penjelasan: "a adalah penyerang, b adalah musuh yang terkena."
+      - soal: "Musuh punya nyawa 10. Penyerang punya serangan 4. Setelah satu serangan, nyawa musuh jadi..."
+        pilihan: ["6", "14", "4", "0"]
+        jawaban: 0
+        penjelasan: "10 - 4 = 6."
+      - soal: "Kenapa self wajib ditulis paling depan di method?"
+        pilihan: ["karena self adalah objek yang beraksi", "supaya kode lebih panjang", "biar terlihat keren", "supaya angka bertambah"]
+        jawaban: 0
+        penjelasan: "self menunjuk objek yang memanggil method itu."
+
+  - id: "g6-3"
+    judul: "Duel sampai Tumbang"
+    menit: 8
+    materi: |
+      Duel sungguhan butuh **loop** sampai ada yang tumbang. Aturannya sederhana:
+
+      1. Selama dua-duanya masih punya nyawa, terus bertarung.
+      2. Yang menyerang mengurangi nyawa lawannya.
+      3. Kalau lawannya masih hidup, dia langsung balas menyerang!
+
+      ```python
+      while a.nyawa > 0 and b.nyawa > 0:
+          b.nyawa = b.nyawa - a.serangan
+          if b.nyawa > 0:
+              a.nyawa = a.nyawa - b.serangan
+      ```
+
+      Perhatikan `if b.nyawa > 0` di dalam loop. Itu artinya: kalau lawan sudah
+      tumbang, dia **tidak sempat** membalas.
+
+      Setelah loop berhenti, yang masih punya nyawa adalah pemenangnya:
+
+      ```python
+      if a.nyawa > 0:
+          print("Pemenang:", a.nama)
+      else:
+          print("Pemenang:", b.nama)
+      ```
+
+      Pemenang tidak kehilangan nyawa lagi — sisanya tetap dihitung. Coba di
+      contoh, lalu nanti kamu bikin duel sendiri di soal!
+    contoh:
+      - kode: |
+          class Petarung:
+              def __init__(self, nama, nyawa, serangan):
+                  self.nama = nama
+                  self.nyawa = nyawa
+                  self.serangan = serangan
+
+          a = Petarung("Budi", 10, 3)
+          b = Petarung("Naga", 8, 2)
+
+          while a.nyawa > 0 and b.nyawa > 0:
+              b.nyawa = b.nyawa - a.serangan
+              if b.nyawa > 0:
+                  a.nyawa = a.nyawa - b.serangan
+
+          if a.nyawa > 0:
+              print("Pemenang:", a.nama)
+          else:
+              print("Pemenang:", b.nama)
+        penjelasan: "Budi menang dan masih punya 6 nyawa."
+      - kode: |
+          class Petarung:
+              def __init__(self, nama, nyawa, serangan):
+                  self.nama = nama
+                  self.nyawa = nyawa
+                  self.serangan = serangan
+
+              def serang(self, musuh):
+                  musuh.nyawa = musuh.nyawa - self.serangan
+
+          a = Petarung("Kancil", 6, 4)
+          b = Petarung("Macan", 6, 4)
+          a.serang(b)
+          b.serang(a)
+          a.serang(b)
+          print("Nyawa Macan:", b.nyawa)
+        penjelasan: "Dua serangan dari Kancil: nyawa Macan jadi -2."
+    kuis:
+      - soal: "Loop duel berhenti saat..."
+        pilihan: ["salah satu nyawa habis (0 atau kurang)", "sepuluh putaran", "pemain bosan", "nyawa bertambah"]
+        jawaban: 0
+        penjelasan: "while berhenti begitu salah satu nyawa tidak lagi > 0."
+      - soal: "Kenapa ada if b.nyawa > 0 sebelum balasan?"
+        pilihan: ["supaya yang tumbang tidak membalas", "supaya nyawa bertambah", "supaya loop makin cepat", "supaya nama berubah"]
+        jawaban: 0
+        penjelasan: "Yang sudah tumbang tidak boleh menyerang lagi."
+      - soal: "Setelah loop selesai, pemenangnya adalah..."
+        pilihan: ["yang nyawanya masih > 0", "yang namanya paling panjang", "dua-duanya", "yang kalah"]
+        jawaban: 0
+        penjelasan: "Cukup cek siapa yang nyawanya masih tersisa."
+
+soal:
+  - id: "sg6-1"
+    judul: "Cetak Pahlawan Pertamamu"
+    sulit: "mudah"
+    cerita: |
+      Waktunya bikin pahlawanmu sendiri! Bikin kelas Pahlawan dengan `__init__`
+      yang menyimpan `nama` dan `serangan`. Baca nama dan serangan dari input,
+      bikin satu objek, lalu cetak datanya seperti contoh. Pahlawan ini bakal
+      jadi juara suatu hari nanti!
+    input: "Dua baris: nama pahlawan, lalu serangan (angka)."
+    output: "Dua baris: 'Pahlawan: <nama>' lalu 'Serangan: <angka>'"
+    contoh:
+      - input: "Budi\n7"
+        output: "Pahlawan: Budi\nSerangan: 7"
+      - input: "Sinta\n10"
+        output: "Pahlawan: Sinta\nSerangan: 10"
+    tes:
+      - input: "Budi\n7"
+        output: "Pahlawan: Budi\nSerangan: 7"
+      - input: "Sinta\n10"
+        output: "Pahlawan: Sinta\nSerangan: 10"
+      - input: "Ron\n3"
+        output: "Pahlawan: Ron\nSerangan: 3"
+      - input: "Anggi\n12"
+        output: "Pahlawan: Anggi\nSerangan: 12"
+    solusi: |
+      class Pahlawan:
+          def __init__(self, nama, serangan):
+              self.nama = nama
+              self.serangan = serangan
+
+
+      nama = input()
+      serangan = int(input())
+      pahlawanku = Pahlawan(nama, serangan)
+      print("Pahlawan:", pahlawanku.nama)
+      print("Serangan:", pahlawanku.serangan)
+    petunjuk:
+      - "Bikin kelas Pahlawan dengan __init__ yang menerima nama dan serangan."
+      - "Simpan dengan self.nama = nama dan self.serangan = serangan."
+      - "Cetak pakai print(\"Pahlawan:\", pahlawanku.nama) lalu print(\"Serangan:\", pahlawanku.serangan)."
+
+  - id: "sg6-2"
+    judul: "Duel Mini"
+    sulit: "sedang"
+    cerita: |
+      Grrr! Naga menantang Budi bertanding! Bikin kelas Petarung dengan nama,
+      nyawa, dan serangan. Aturan duel: petarung pertama menyerang duluan, lalu
+      serangan bergantian. Tiap serangan mengurangi nyawa lawan sebanyak angka
+      serangannya. Kalau lawan sudah tumbang (nyawa 0 atau kurang), dia tidak
+      membalas. Cetak pemenang dan sisa nyawanya!
+    input: "Enam baris: nama1, nyawa1, serangan1, nama2, nyawa2, serangan2."
+    output: "Dua baris: 'Pemenang: <nama>' lalu 'Nyawa tersisa: <angka>'"
+    contoh:
+      - input: "Budi\n10\n3\nNaga\n8\n2"
+        output: "Pemenang: Budi\nNyawa tersisa: 6"
+      - input: "Rani\n5\n2\nIblis\n12\n4"
+        output: "Pemenang: Iblis\nNyawa tersisa: 8"
+    tes:
+      - input: "Budi\n10\n3\nNaga\n8\n2"
+        output: "Pemenang: Budi\nNyawa tersisa: 6"
+      - input: "Rani\n5\n2\nIblis\n12\n4"
+        output: "Pemenang: Iblis\nNyawa tersisa: 8"
+      - input: "A\n6\n4\nB\n6\n4"
+        output: "Pemenang: A\nNyawa tersisa: 2"
+      - input: "Kancil\n9\n3\nMacan\n7\n5"
+        output: "Pemenang: Macan\nNyawa tersisa: 1"
+    solusi: |
+      class Petarung:
+          def __init__(self, nama, nyawa, serangan):
+              self.nama = nama
+              self.nyawa = nyawa
+              self.serangan = serangan
+
+
+      def duel(a, b):
+          while a.nyawa > 0 and b.nyawa > 0:
+              b.nyawa = b.nyawa - a.serangan
+              if b.nyawa > 0:
+                  a.nyawa = a.nyawa - b.serangan
+          if a.nyawa > 0:
+              return a
+          return b
+
+
+      nama1 = input()
+      nyawa1 = int(input())
+      serangan1 = int(input())
+      nama2 = input()
+      nyawa2 = int(input())
+      serangan2 = int(input())
+
+      p1 = Petarung(nama1, nyawa1, serangan1)
+      p2 = Petarung(nama2, nyawa2, serangan2)
+      pemenang = duel(p1, p2)
+      print("Pemenang:", pemenang.nama)
+      print("Nyawa tersisa:", max(pemenang.nyawa, 0))
+    petunjuk:
+      - "Tulis loop while a.nyawa > 0 and b.nyawa > 0 seperti di pelajaran."
+      - "Ingat: yang tumbang tidak membalas (pakai if b.nyawa > 0)."
+      - "Setelah loop, cek siapa yang nyawanya masih > 0 sebagai pemenang."
+
+  - id: "sg6-3"
+    judul: "Latihan Berjenjang"
+    sulit: "sedang"
+    cerita: |
+      Ron berlatih keras supaya serangannya naik! Setiap sesi latihan,
+      serangannya bertambah 2. Baca nama, serangan awal, dan berapa kali
+      latihan. Setelah setiap sesi, cetak perkembangan serangannya. Terakhir,
+      cetak serangan akhirnya.
+    input: "Tiga baris: nama, serangan awal, jumlah latihan."
+    output: "Tiap sesi: 'Latihan <i> - serangan: <angka>', lalu 'Serangan akhir: <angka>'"
+    contoh:
+      - input: "Budi\n10\n3"
+        output: "Latihan 1 - serangan: 12\nLatihan 2 - serangan: 14\nLatihan 3 - serangan: 16\nSerangan akhir: 16"
+      - input: "Ron\n1\n4"
+        output: "Latihan 1 - serangan: 3\nLatihan 2 - serangan: 5\nLatihan 3 - serangan: 7\nLatihan 4 - serangan: 9\nSerangan akhir: 9"
+    tes:
+      - input: "Budi\n10\n3"
+        output: "Latihan 1 - serangan: 12\nLatihan 2 - serangan: 14\nLatihan 3 - serangan: 16\nSerangan akhir: 16"
+      - input: "Sinta\n5\n0"
+        output: "Serangan akhir: 5"
+      - input: "Ron\n1\n4"
+        output: "Latihan 1 - serangan: 3\nLatihan 2 - serangan: 5\nLatihan 3 - serangan: 7\nLatihan 4 - serangan: 9\nSerangan akhir: 9"
+      - input: "Dodo\n2\n6"
+        output: "Latihan 1 - serangan: 4\nLatihan 2 - serangan: 6\nLatihan 3 - serangan: 8\nLatihan 4 - serangan: 10\nLatihan 5 - serangan: 12\nLatihan 6 - serangan: 14\nSerangan akhir: 14"
+    solusi: |
+      class Pahlawan:
+          def __init__(self, nama, serangan):
+              self.nama = nama
+              self.serangan = serangan
+
+          def latihan(self):
+              self.serangan = self.serangan + 2
+
+
+      nama = input()
+      awal = int(input())
+      jumlah = int(input())
+      p = Pahlawan(nama, awal)
+      for i in range(jumlah):
+          p.latihan()
+          print("Latihan", i + 1, "- serangan:", p.serangan)
+      print("Serangan akhir:", p.serangan)
+    petunjuk:
+      - "Bikin method latihan() yang menambah 2 ke self.serangan."
+      - "Loop sebanyak jumlah latihan: for i in range(jumlah):"
+      - "Cetak tiap sesi dengan i + 1 supaya mulai dari Latihan 1."
+
+  - id: "sg6-4"
+    judul: "Turnamen Tiga Petarung"
+    sulit: "sulit"
+    cerita: |
+      Ada turnamen! Tiga petarung bertanding: petarung 1 melawan petarung 2
+      dulu (yang pertama menyerang duluan). Pemenangnya langsung melawan
+      petarung 3, dan yang menang lagi jadi juara. Aturan menyerang sama seperti
+      duel biasa. Baca data ketiga petarung, cetak juara dan nyawa sisanya!
+    input: "Tiga baris: 'nama nyawa serangan' (dipisah spasi)."
+    output: "Dua baris: 'Juara: <nama>' lalu 'Nyawa tersisa: <angka>'"
+    contoh:
+      - input: "Ciko 20 5\nDodi 15 4\nEka 12 6"
+        output: "Juara: Eka\nNyawa tersisa: 2"
+      - input: "A 10 3\nB 8 2\nC 6 4"
+        output: "Juara: A\nNyawa tersisa: 2"
+    tes:
+      - input: "Ciko 20 5\nDodi 15 4\nEka 12 6"
+        output: "Juara: Eka\nNyawa tersisa: 2"
+      - input: "A 10 3\nB 8 2\nC 6 4"
+        output: "Juara: A\nNyawa tersisa: 2"
+      - input: "X 30 2\nY 12 8\nZ 10 10"
+        output: "Juara: Z\nNyawa tersisa: 2"
+      - input: "P 14 3\nQ 9 5\nR 20 2"
+        output: "Juara: R\nNyawa tersisa: 14"
+      - input: "Titan 25 6\nBoi 30 4\nKiko 18 7"
+        output: "Juara: Kiko\nNyawa tersisa: 6"
+    solusi: |
+      class Petarung:
+          def __init__(self, nama, nyawa, serangan):
+              self.nama = nama
+              self.nyawa = nyawa
+              self.serangan = serangan
+
+
+      def duel(a, b):
+          while a.nyawa > 0 and b.nyawa > 0:
+              b.nyawa = b.nyawa - a.serangan
+              if b.nyawa > 0:
+                  a.nyawa = a.nyawa - b.serangan
+          if a.nyawa > 0:
+              return a
+          return b
+
+
+      baris1 = input().split()
+      baris2 = input().split()
+      baris3 = input().split()
+
+      p1 = Petarung(baris1[0], int(baris1[1]), int(baris1[2]))
+      p2 = Petarung(baris2[0], int(baris2[1]), int(baris2[2]))
+      p3 = Petarung(baris3[0], int(baris3[1]), int(baris3[2]))
+
+      juara = duel(duel(p1, p2), p3)
+      print("Juara:", juara.nama)
+      print("Nyawa tersisa:", max(juara.nyawa, 0))
+    petunjuk:
+      - "Pecah tiap baris dengan input().split(): baris[0] nama, baris[1] nyawa, baris[2] serangan."
+      - "Pakai fungsi duel yang sama dua kali: pertama p1 lawan p2, hasilnya lawan p3."
+      - "Karena duel mengembalikan objek pemenang, kamu bisa tulis juara = duel(duel(p1, p2), p3)."

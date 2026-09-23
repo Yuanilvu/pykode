@@ -1,0 +1,468 @@
+bab: 9
+modul: 9
+jurusan: "qfin"
+tingkat: 2
+judul: "Simulasi Nasib Investasi"
+emoji: "🎲"
+warna: "#6366f1"
+deskripsi: "Pakai angka acak yang bisa diulang untuk mengundi nasib investasi."
+prasyarat: 13
+
+pelajaran:
+  - id: "q9-1"
+    judul: "Angka Acak yang Bisa Diulang"
+    menit: 7
+    materi: |
+      Kadang kita butuh angka acak. Misalnya saat mengundi nasib investasi.
+      Di Python ada alatnya: **modul random**. Ambil dulu dengan `import random`.
+
+      ```python
+      import random
+
+      angka = random.randint(1, 6)
+      print(angka)
+      ```
+
+      `random.randint(1, 6)` itu seperti melempar dadu. Hasilnya angka 1 sampai 6.
+      **Kedua ujung ikut**, jadi 1 dan 6 sama-sama mungkin muncul.
+
+      Masalahnya, tiap kali dijalankan hasilnya bisa berbeda. Jadi susah dicek ulang.
+      Solusinya: **seed**. Seed itu nomor rahasia pengatur dadu.
+
+      ```python
+      import random
+
+      random.seed(7)
+      print(random.randint(1, 6))
+      ```
+
+      Kalau `random.seed(7)` ditulis lebih dulu, urutan hasilnya SELALU sama.
+      Tiap kali dijalankan, hasilnya tetap sama persis. Jadi adil dan bisa dites ulang.
+      Ubah seednya jadi 8, hasilnya lain lagi. Tapi dengan seed 7, hasilnya kembali sama.
+
+      Ayo coba di dua contoh bawah, lalu perhatikan baik-baik hasilnya. 🎲
+    contoh:
+      - kode: |
+          import random
+
+          random.seed(7)
+          print(random.randint(1, 6))
+          print(random.randint(1, 6))
+          print(random.randint(1, 6))
+        penjelasan: "Dengan seed 7, dadunya keluar 3, lalu 2, lalu 4. Selalu begitu."
+      - kode: |
+          import random
+
+          random.seed(7)
+          a = random.randint(1, 6)
+          random.seed(7)
+          b = random.randint(1, 6)
+          print(a)
+          print(b)
+        penjelasan: "Dua-duanya 3! Seed yang sama mengulang urutan yang sama persis."
+    kuis:
+      - soal: "Apa gunanya random.seed(7) sebelum memakai randint?"
+        pilihan:
+          - "Mengunci angka acak, jadi hasilnya selalu sama"
+          - "Menghapus semua angka acak"
+          - "Membuat hasilnya selalu 7"
+          - "Memperbesar dadunya"
+        jawaban: 0
+        penjelasan: "Seed mengunci urutan angka acak. Seed sama, hasil sama."
+      - soal: "random.randint(1, 6) bisa mengeluarkan angka..."
+        pilihan:
+          - "1 sampai 5 saja"
+          - "1 sampai 6, kedua ujung ikut"
+          - "0 sampai 6"
+          - "hanya 6"
+        jawaban: 1
+        penjelasan: "randint(a, b) memakai kedua ujungnya. Jadi 1 dan 6 sama-sama bisa."
+      - soal: "Kancil menjalankan program dengan seed 7 dua kali. Hasilnya..."
+        pilihan:
+          - "selalu berbeda"
+          - "selalu 7"
+          - "sama persis"
+          - "programnya error"
+        jawaban: 2
+        penjelasan: "Seed 7 memberi urutan yang sama setiap kali program dijalankan."
+
+  - id: "q9-2"
+    judul: "Simulasi Tabungan 10 Tahun"
+    menit: 8
+    materi: |
+      Kancil menabung uang di bank. Setiap tahun, uangnya bisa bertambah.
+      Berapa tambahannya? Tidak tetap! Kadang untung 3 persen, kadang 9 persen.
+
+      Di Python, untung tahun itu kita undi dengan `random.randint(0, 10)`.
+      Hasilnya persen: 0 sampai 10, kedua ujung ikut.
+
+      **Satu tahun = satu undian.** Dalam satu tahun, panggil randint SATU kali saja.
+      Lalu hitung uang barunya:
+
+      ```python
+      persen = random.randint(0, 10)
+      bunga = uang * persen // 100
+      uang = uang + bunga
+      ```
+
+      Tanda `//` artinya bagi bulat. Hasilnya dibuang angka belakang komanya.
+      Contoh: 1300 * 7 // 100 = 91. Jadi angkanya tetap bulat dan rapi.
+
+      **Bunga majemuk**: tahun depan, bunganya dihitung dari uang yang SUDAH baru.
+      Seperti bola salju yang makin besar. Urutannya selalu: undi persen, tambah uang,
+      lalu ulangi lagi untuk tahun berikutnya.
+
+      Di awal, tulis `random.seed(5)` supaya hasilnya selalu sama dan bisa dites.
+      Contoh bawah menghitung 10 tahun sekaligus. Ayo lihat uangnya tumbuh!
+    contoh:
+      - kode: |
+          import random
+
+          random.seed(5)
+          uang = 100000
+          for t in range(1, 4):
+              persen = random.randint(0, 10)
+              uang = uang + uang * persen // 100
+              print(f"Tahun {t}: {uang}")
+        penjelasan: "Untung 9 persen, lalu 4, lalu 5. Uang akhirnya jadi 119028."
+      - kode: |
+          import random
+
+          random.seed(5)
+          uang = 50000
+          for t in range(1, 11):
+              persen = random.randint(0, 10)
+              uang = uang + uang * persen // 100
+          print(f"Uang akhir: {uang}")
+        penjelasan: "10 tahun kemudian uang 50000 tumbuh jadi 85712."
+    kuis:
+      - soal: "Dalam satu tahun, berapa kali random.randint dipanggil?"
+        pilihan:
+          - "dua kali"
+          - "sepuluh kali"
+          - "satu kali"
+          - "tidak pernah"
+        jawaban: 2
+        penjelasan: "Satu tahun satu undian. Jadi randint dipanggil sekali per tahun."
+      - soal: "Berapa hasil dari 1300 * 7 // 100?"
+        pilihan:
+          - "91"
+          - "91.0"
+          - "9100"
+          - "13"
+        jawaban: 0
+        penjelasan: "1300 kali 7 hasilnya 9100. Dibagi bulat 100 hasilnya 91."
+      - soal: "Kenapa uang tahun berikutnya bisa tumbuh makin cepat?"
+        pilihan:
+          - "karena banknya makin kaya"
+          - "karena persennya pasti naik terus"
+          - "karena uangnya digandakan dua kali"
+          - "karena bunga dihitung dari uang yang sudah tumbuh"
+        jawaban: 3
+        penjelasan: "Itu namanya bunga majemuk. Bunganya ikut menumbuhkan bunga."
+
+  - id: "q9-3"
+    judul: "100 Skenario: Terbaik & Terburuk"
+    menit: 8
+    materi: |
+      Satu simulasi saja belum cukup. Nasib itu punya banyak kemungkinan.
+      Jadi kita jalankan **100 skenario** sekaligus, lalu lihat hasilnya.
+
+      Caranya: catat hasil tiap skenario, lalu lacak tiga hal.
+      - **Terbaik**: hasil paling besar yang pernah muncul.
+      - **Terburuk**: hasil paling kecil.
+      - **Total**: untuk menghitung rata-rata nanti.
+
+      Polanya mirip pola juara dulu:
+
+      ```python
+      if skor > terbaik:
+          terbaik = skor
+      if skor < terburuk:
+          terburuk = skor
+      ```
+
+      Karena hasilnya bisa nol, jangan mulai dari angka tebakan. Pakai cara aman:
+      skenario pertama langsung jadi juara sementara.
+
+      Rata-ratanya pakai bagi bulat: `total // 100`. Rata-rata memberi gambaran umum.
+      Terbaik dan terburuk menunjukkan batas nasib: seberapa untung, seberapa apes.
+
+      Masing-masing skenario boleh berisi beberapa tahun, jadi loop di dalam loop.
+      Jangan lupa `random.seed(11)` supaya hasilnya bisa diulang. Ayo coba!
+    contoh:
+      - kode: |
+          import random
+
+          random.seed(11)
+          terbaik = 0
+          terburuk = 0
+          total = 0
+          for s in range(5):
+              skor = random.randint(100, 900)
+              total = total + skor
+              if s == 0:
+                  terbaik = skor
+                  terburuk = skor
+              else:
+                  if skor > terbaik:
+                      terbaik = skor
+                  if skor < terburuk:
+                      terburuk = skor
+          print("Terbaik:", terbaik)
+          print("Terburuk:", terburuk)
+          print("Rata-rata:", total // 5)
+        penjelasan: "Lima undian: terbaik 899, terburuk 562, rata-ratanya 654."
+      - kode: |
+          import random
+
+          random.seed(11)
+          uang = 100000
+          terbaik = 0
+          terburuk = 0
+          total = 0
+          for s in range(100):
+              u = uang
+              for t in range(3):
+                  persen = random.randint(0, 10)
+                  u = u + u * persen // 100
+              total = total + u
+              if s == 0:
+                  terbaik = u
+                  terburuk = u
+              else:
+                  if u > terbaik:
+                      terbaik = u
+                  if u < terburuk:
+                      terburuk = u
+          print("Terbaik:", terbaik)
+          print("Terburuk:", terburuk)
+          print("Rata-rata:", total // 100)
+        penjelasan: "100 skenario 3 tahun: terbaik 131890, terburuk 101000, rata-rata 115088."
+    kuis:
+      - soal: "Kenapa kita menjalankan 100 skenario, bukan cuma satu?"
+        pilihan:
+          - "supaya terlihat banyak kemungkinan nasib"
+          - "supaya programnya lama"
+          - "supaya angkanya besar semua"
+          - "supaya tidak perlu seed"
+        jawaban: 0
+        penjelasan: "Dengan banyak skenario, kita lihat gambaran terbaik dan terburuk."
+      - soal: "Skenario pertama dipakai untuk apa?"
+        pilihan:
+          - "dibuang saja"
+          - "jadi juara sementara"
+          - "menghapus total"
+          - "mengubah seed"
+        jawaban: 1
+        penjelasan: "Skenario pertama jadi pembanding awal, biar tidak mulai dari tebakan."
+      - soal: "Total uang semua skenario 1000000. Rata-ratanya (pakai // 100)?"
+        pilihan:
+          - "1000"
+          - "100000000"
+          - "10000"
+          - "100"
+        jawaban: 2
+        penjelasan: "1000000 // 100 = 10000. Bagi bulat membuang angka di belakang koma."
+
+soal:
+  - id: "sq9-1"
+    judul: "Dadu Nasib Kancil"
+    sulit: "mudah"
+    cerita: |
+      Kancil menemukan dadu ajaib untuk mengundi nasib investasinya. Ia ingin kamu
+      membuat program lempar dadu. Ketik jumlah lemparan n dulu.
+      Lalu mulai dengan random.seed(7) di baris paling atas programmu.
+      Panggil random.randint(1, 6) satu kali untuk setiap lemparan, lalu cetak
+      hasil tiap lemparan di baris sendiri. Dengan seed yang sama, hasilnya selalu
+      bisa diulang!
+    input: "Satu baris: jumlah lemparan (n)."
+    output: "n baris: hasil dadu (1 sampai 6, kedua ujung ikut), satu angka per baris."
+    contoh:
+      - input: "5"
+        output: "3\n2\n4\n6\n1"
+      - input: "3"
+        output: "3\n2\n4"
+    tes:
+      - input: "5"
+        output: "3\n2\n4\n6\n1"
+      - input: "3"
+        output: "3\n2\n4"
+      - input: "1"
+        output: "3"
+      - input: "8"
+        output: "3\n2\n4\n6\n1\n1\n5\n1"
+      - input: "10"
+        output: "3\n2\n4\n6\n1\n1\n5\n1\n3\n5"
+      - input: "0"
+        output: ""
+    solusi: |
+      import random
+
+      random.seed(7)
+      n = int(input())
+      for i in range(n):
+          print(random.randint(1, 6))
+    petunjuk:
+      - "Tulis import random di baris pertama, lalu random.seed(7) di bawahnya."
+      - "Baca n pakai int(input()), lalu ulangi dengan for i in range(n)."
+      - "Di dalam loop, cetak random.randint(1, 6). Satu lemparan, satu angka!"
+
+  - id: "sq9-2"
+    judul: "Tabungan Bertumbuh"
+    sulit: "sedang"
+    cerita: |
+      Kancil menabung di bank ajaib. Setiap tahun, uangnya bertambah dengan persen
+      acak. Ketik uang awal, lalu jumlah tahun.
+      Sebelum loop, mulai dengan random.seed(5).
+      Setiap tahun, panggil random.randint(0, 10) tepat satu kali untuk persen
+      tahun itu. Bunganya pakai bagi bulat: uang * persen // 100.
+      Uang baru = uang lama + bunga, dan bunga berikutnya dihitung dari uang baru.
+      Cetak 'Tahun t: uang' untuk tiap tahun, mulai dari Tahun 1.
+    input: "Dua baris: uang awal, lalu jumlah tahun."
+    output: "Satu baris tiap tahun: 'Tahun <t>: <uang>', mulai dari Tahun 1."
+    contoh:
+      - input: "100000\n3"
+        output: "Tahun 1: 109000\nTahun 2: 113360\nTahun 3: 119028"
+      - input: "50000\n1"
+        output: "Tahun 1: 54500"
+    tes:
+      - input: "100000\n3"
+        output: "Tahun 1: 109000\nTahun 2: 113360\nTahun 3: 119028"
+      - input: "50000\n1"
+        output: "Tahun 1: 54500"
+      - input: "100000\n10"
+        output: "Tahun 1: 109000\nTahun 2: 113360\nTahun 3: 119028\nTahun 4: 130930\nTahun 5: 141404\nTahun 6: 141404\nTahun 7: 151302\nTahun 8: 155841\nTahun 9: 171425\nTahun 10: 171425"
+      - input: "250000\n4"
+        output: "Tahun 1: 272500\nTahun 2: 283400\nTahun 3: 297570\nTahun 4: 327327"
+      - input: "1000\n10"
+        output: "Tahun 1: 1090\nTahun 2: 1133\nTahun 3: 1189\nTahun 4: 1307\nTahun 5: 1411\nTahun 6: 1411\nTahun 7: 1509\nTahun 8: 1554\nTahun 9: 1709\nTahun 10: 1709"
+    solusi: |
+      import random
+
+      random.seed(5)
+      uang = int(input())
+      tahun = int(input())
+      for t in range(1, tahun + 1):
+          persen = random.randint(0, 10)
+          uang = uang + uang * persen // 100
+          print(f"Tahun {t}: {uang}")
+    petunjuk:
+      - "Tulis random.seed(5) dulu, lalu baca uang dan tahun dengan int(input())."
+      - "Pakai for t in range(1, tahun + 1) supaya tahunnya mulai dari 1."
+      - "Di dalam loop: undi persen, tambahkan bunganya, baru cetak uang tahun itu."
+
+  - id: "sq9-3"
+    judul: "100 Skenario Nasib"
+    sulit: "sedang"
+    cerita: |
+      Pak Otong ingin tahu nasib tabungan 100 orang anak. Ketik uang awal dan
+      jumlah tahun. Sebelum loop, mulai dengan random.seed(11). Jalankan 100
+      skenario. Tiap skenario: selama jumlah tahun, panggil random.randint(0, 10)
+      satu kali per tahun, lalu uang = uang + uang * persen // 100. Lacak uang
+      akhir: terbesar, terkecil, dan totalnya. Cetak 'Terbaik: x', 'Terburuk: y',
+      'Rata-rata: z' (z pakai total // 100).
+    input: "Dua baris: uang awal, lalu jumlah tahun per skenario."
+    output: "Tiga baris: 'Terbaik: <angka>', 'Terburuk: <angka>', 'Rata-rata: <angka>'."
+    contoh:
+      - input: "100000\n5"
+        output: "Terbaik: 148255\nTerburuk: 109262\nRata-rata: 127609"
+      - input: "50000\n3"
+        output: "Terbaik: 65945\nTerburuk: 50500\nRata-rata: 57544"
+    tes:
+      - input: "100000\n5"
+        output: "Terbaik: 148255\nTerburuk: 109262\nRata-rata: 127609"
+      - input: "50000\n3"
+        output: "Terbaik: 65945\nTerburuk: 50500\nRata-rata: 57544"
+      - input: "100000\n1"
+        output: "Terbaik: 110000\nTerburuk: 100000\nRata-rata: 104820"
+      - input: "100000\n0"
+        output: "Terbaik: 100000\nTerburuk: 100000\nRata-rata: 100000"
+      - input: "0\n5"
+        output: "Terbaik: 0\nTerburuk: 0\nRata-rata: 0"
+      - input: "200000\n10"
+        output: "Terbaik: 403354\nTerburuk: 255262\nRata-rata: 326916"
+    solusi: |
+      import random
+
+      random.seed(11)
+      uang = int(input())
+      tahun = int(input())
+      terbaik = 0
+      terburuk = 0
+      total = 0
+      for s in range(100):
+          u = uang
+          for t in range(tahun):
+              persen = random.randint(0, 10)
+              u = u + u * persen // 100
+          total = total + u
+          if s == 0:
+              terbaik = u
+              terburuk = u
+          else:
+              if u > terbaik:
+                  terbaik = u
+              if u < terburuk:
+                  terburuk = u
+      print("Terbaik:", terbaik)
+      print("Terburuk:", terburuk)
+      print("Rata-rata:", total // 100)
+    petunjuk:
+      - "Simpan uang awal di satu variabel. Tiap skenario mulai dari salinan uang itu."
+      - "Skenario pertama jadi juara sementara untuk terbaik dan terburuk."
+      - "Setelah 100 skenario, cetak terbaik, terburuk, dan total // 100."
+
+  - id: "sq9-4"
+    judul: "Duel Strategi: Pasti vs Acak"
+    sulit: "sulit"
+    cerita: |
+      Kancil punya dua rencana menabung. PASTI: setiap tahun uangnya bertambah 5%
+      tetap (pakai bagi bulat). ACAK: setiap tahun persennya diundi dengan
+      random.randint(0, 10). Ketik uang awal dan jumlah tahun.
+      Sebelum loop, mulai dengan random.seed(3).
+      Hitung keduanya berjalan bersamaan, satu undian per tahun untuk ACAK.
+      Cetak hasil akhir keduanya, lalu pemenangnya: PASTI, ACAK,
+      atau SERI kalau hasilnya sama.
+    input: "Dua baris: uang awal, lalu jumlah tahun."
+    output: "Tiga baris: 'Pasti: <angka>', 'Acak: <angka>', 'Pemenang: PASTI/ACAK/SERI'."
+    contoh:
+      - input: "100000\n10"
+        output: "Pasti: 162886\nAcak: 183407\nPemenang: ACAK"
+      - input: "50000\n1"
+        output: "Pasti: 52500\nAcak: 51500\nPemenang: PASTI"
+    tes:
+      - input: "100000\n10"
+        output: "Pasti: 162886\nAcak: 183407\nPemenang: ACAK"
+      - input: "50000\n1"
+        output: "Pasti: 52500\nAcak: 51500\nPemenang: PASTI"
+      - input: "100000\n3"
+        output: "Pasti: 115762\nAcak: 121251\nPemenang: ACAK"
+      - input: "200000\n7"
+        output: "Pasti: 281418\nAcak: 302910\nPemenang: ACAK"
+      - input: "0\n5"
+        output: "Pasti: 0\nAcak: 0\nPemenang: SERI"
+    solusi: |
+      import random
+
+      random.seed(3)
+      uang = int(input())
+      tahun = int(input())
+      pasti = uang
+      acak = uang
+      for t in range(tahun):
+          pasti = pasti + pasti * 5 // 100
+          persen = random.randint(0, 10)
+          acak = acak + acak * persen // 100
+      print("Pasti:", pasti)
+      print("Acak:", acak)
+      if acak > pasti:
+          print("Pemenang: ACAK")
+      elif pasti > acak:
+          print("Pemenang: PASTI")
+      else:
+          print("Pemenang: SERI")
+    petunjuk:
+      - "Siapkan dua variabel: pasti = uang dan acak = uang. Keduanya mulai sama."
+      - "Satu loop: pasti bertambah 5% tetap, acak mengundi persen dulu baru bertambah."
+      - "Bandingkan akhirnya: acak lebih besar, pasti lebih besar, atau sama (SERI)."

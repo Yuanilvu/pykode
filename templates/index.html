@@ -116,25 +116,39 @@
     </div>
     <button class="btn btn-outline btn-sm" onclick="gantiJurusan()">🔄 Ganti jalur</button>
   </div>
+  {% macro kartu_modul(m) %}
+  <a class="bab-card {% if m.complete %}bab-done{% endif %}" href="{{ url_for('lesson', lesson_id=m.pelajaran[0].id) if m.pelajaran else '#' }}">
+    <div class="bab-head">
+      <span class="bab-emoji">{{ m.emoji }}</span>
+      <div>
+        <div class="bab-title">Modul {{ m.modul }}: {{ m.judul }}</div>
+        <div class="bab-sub">{{ m.deskripsi }}</div>
+      </div>
+    </div>
+    <div class="bab-meta">
+      <span>{{ m.n_lessons }} pelajaran · {{ m.n_problems }} soal</span>
+      <span>{{ m.done }}/{{ m.total }}</span>
+    </div>
+    <div class="progress"><i style="width:{{ m.pct }}%; background:{{ m.warna or jurusan_aktif.warna }}"></i></div>
+    {% if m.tingkat >= 2 %}
+    <div style="color:var(--muted);font-size:.75rem;margin-top:6px">🚀 Lanjutan — paling pas setelah Tingkat 1 tuntas</div>
+    {% elif m.prasyarat %}
+    <div style="color:var(--muted);font-size:.75rem;margin-top:6px">💡 Paling pas setelah Bab {{ m.prasyarat }}</div>
+    {% endif %}
+  </a>
+  {% endmacro %}
+  {% if jurusan_mods_t1 %}
+  <div class="jalur-tingkat">🌱 Tingkat 1 · Fondasi</div>
   <div class="bab-grid">
-    {% for m in jurusan_mods %}
-    <a class="bab-card {% if m.complete %}bab-done{% endif %}" href="{{ url_for('lesson', lesson_id=m.pelajaran[0].id) if m.pelajaran else '#' }}">
-      <div class="bab-head">
-        <span class="bab-emoji">{{ m.emoji }}</span>
-        <div>
-          <div class="bab-title">Modul {{ m.modul }}: {{ m.judul }}</div>
-          <div class="bab-sub">{{ m.deskripsi }}</div>
-        </div>
-      </div>
-      <div class="bab-meta">
-        <span>{{ m.n_lessons }} pelajaran · {{ m.n_problems }} soal</span>
-        <span>{{ m.done }}/{{ m.total }}</span>
-      </div>
-      <div class="progress"><i style="width:{{ m.pct }}%; background:{{ m.warna or jurusan_aktif.warna }}"></i></div>
-      {% if m.prasyarat %}<div style="color:var(--muted);font-size:.75rem;margin-top:6px">💡 Paling pas setelah Bab {{ m.prasyarat }}</div>{% endif %}
-    </a>
-    {% endfor %}
+    {% for m in jurusan_mods_t1 %}{{ kartu_modul(m) }}{% endfor %}
   </div>
+  {% endif %}
+  {% if jurusan_mods_t2 %}
+  <div class="jalur-tingkat">🚀 Tingkat 2 · Lanjutan</div>
+  <div class="bab-grid">
+    {% for m in jurusan_mods_t2 %}{{ kartu_modul(m) }}{% endfor %}
+  </div>
+  {% endif %}
 </div>
 {% endif %}
 

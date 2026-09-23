@@ -1,0 +1,522 @@
+bab: 9
+modul: 9
+jurusan: "game"
+tingkat: 2
+judul: "Turnamen & Keseimbangan"
+emoji: "🏟️"
+warna: "#ea580c"
+deskripsi: "Adu petarung di turnamen acak, lalu uji siapa yang paling seimbang!"
+prasyarat: 13
+
+pelajaran:
+  - id: "g9-1"
+    judul: "Simulasi 100 Pertarungan"
+    menit: 6
+    materi: |
+      Hore, kamu masuk **arena turnamen**! 🏟️ Di sini petarungmu bertanding
+      berkali-kali, bukan cuma sekali.
+
+      Pertanyaannya: siapa yang menang kalau bertanding 100 kali? Jawabannya
+      dihitung pakai simulasi.
+
+      Simulasi artinya menjalankan pertarungan di komputer, bukan sungguhan.
+      Tiap babak, pemenangnya ditentukan angka acak.
+
+      ```python
+      hasil = random.randint(0, 1)
+      ```
+
+      Aturannya begini:
+      - hasil 0 artinya Kancil menang.
+      - hasil 1 artinya Macan menang.
+
+      Tiap babak butuh satu angka. Jadi panggil `random.randint(0, 1)` satu
+      kali di dalam loop.
+
+      ```python
+      import random
+      random.seed(7)
+      a = 0
+      b = 0
+      for i in range(100):
+          hasil = random.randint(0, 1)
+          if hasil == 0:
+              a = a + 1
+          else:
+              b = b + 1
+      ```
+
+      Variabel `a` menghitung kemenangan Kancil. Variabel `b` menghitung
+      kemenangan Macan. Tiap babak, salah satunya bertambah satu.
+
+      Ingat `random.seed(7)`? Itu kunci acakannya. Hasil 100 babakmu selalu
+      sama tiap dijalankan. Itu penting supaya game bisa diuji.
+
+      Setelah simulasi selesai, hasilnya dibandingkan. Yang menang lebih
+      banyak, dia juaranya. Ayo coba di contoh bawah! 🏆
+    contoh:
+      - kode: |
+          import random
+          random.seed(7)
+          a = 0
+          b = 0
+          for i in range(5):
+              hasil = random.randint(0, 1)
+              if hasil == 0:
+                  a = a + 1
+              else:
+                  b = b + 1
+          print("Kancil menang:", a)
+          print("Macan menang:", b)
+        penjelasan: "Lima babak dari seed 7: Kancil menang 3 kali, Macan 2 kali."
+      - kode: |
+          import random
+          random.seed(7)
+          a = 0
+          b = 0
+          for i in range(100):
+              hasil = random.randint(0, 1)
+              if hasil == 0:
+                  a = a + 1
+              else:
+                  b = b + 1
+          print("Kancil menang:", a)
+          print("Macan menang:", b)
+          if a > b:
+              print("Juara: Kancil")
+          else:
+              print("Juara: Macan")
+        penjelasan: "100 babak: Kancil 51, Macan 49, jadi juaranya Kancil."
+    kuis:
+      - soal: "Pemenang tiap babak ditentukan dengan..."
+        pilihan:
+          - "random.randint(0, 1)"
+          - "random.seed(0, 1)"
+          - "print(0, 1)"
+          - "input(0, 1)"
+        jawaban: 0
+        penjelasan: "Tiap babak butuh satu undian, jadi panggil random.randint(0, 1) satu kali."
+      - soal: "Kenapa hasil 100 babak bisa sama tiap kali dijalankan?"
+        pilihan:
+          - "karena memakai random.seed(7)"
+          - "karena komputernya lambat"
+          - "karena loopnya cuma 5 kali"
+          - "karena angkanya kecil"
+        jawaban: 0
+        penjelasan: "Seed mengunci acakannya, jadi urutan hasilnya selalu sama."
+      - soal: "Kancil menang kalau undiannya 0. Undian 5 babak: 0, 0, 1, 0, 1. Berapa kali Kancil menang?"
+        pilihan:
+          - "3"
+          - "2"
+          - "5"
+          - "1"
+        jawaban: 0
+        penjelasan: "Hitung yang hasilnya 0: ada 3 babak, jadi Kancil menang 3 kali."
+
+  - id: "g9-2"
+    judul: "Papan Peringkat Musim"
+    menit: 7
+    materi: |
+      Bos turnamen minta **papan peringkat**! 📋 Di situ tertulis kemenangan
+      semua petarung, jadi kelihatan siapa yang paling jago.
+
+      Kali ini ada 3 petarung: Kancil, Macan, dan Bebek. Mereka bertanding
+      **round-robin**, artinya semua saling melawan.
+
+      Satu ronde berisi 3 pertandingan:
+      1. Kancil lawan Macan.
+      2. Kancil lawan Bebek.
+      3. Macan lawan Bebek.
+
+      Tiap pertandingan, panggil `random.randint(0, 1)` satu kali:
+      - hasil 0 artinya petarung pertama yang menang.
+      - hasil 1 artinya petarung kedua yang menang.
+
+      Jadwalnya disimpan rapi di daftar:
+
+      ```python
+      jadwal = [[0, 1], [0, 2], [1, 2]]
+      ```
+
+      Angka 0, 1, dan 2 itu nomor petarung. `[0, 1]` artinya petarung 0
+      lawan petarung 1. Jadi `[0, 2]` artinya Kancil lawan Bebek.
+
+      Kemenangannya juga disimpan di daftar `menang = [0, 0, 0]`. Kalau
+      Kancil (nomor 0) menang, `menang[0]` ditambah satu.
+
+      Setelah beberapa ronde, papannya dicetak. Juaranya yang punya angka
+      paling besar. Kalau angkanya sama, yang lebih depan urutannya jadi
+      juara.
+
+      Ayo susun papan peringkatmu! 📊
+    contoh:
+      - kode: |
+          import random
+          random.seed(7)
+          nama = ["Kancil", "Macan", "Bebek"]
+          jadwal = [[0, 1], [0, 2], [1, 2]]
+          menang = [0, 0, 0]
+          for p in jadwal:
+              h = random.randint(0, 1)
+              if h == 0:
+                  menang[p[0]] = menang[p[0]] + 1
+              else:
+                  menang[p[1]] = menang[p[1]] + 1
+          for i in range(3):
+              print(nama[i] + ":", menang[i])
+        penjelasan: "Satu ronde dari seed 7: tiap petarung menang 1 kali."
+      - kode: |
+          import random
+          random.seed(7)
+          nama = ["Kancil", "Macan", "Bebek"]
+          jadwal = [[0, 1], [0, 2], [1, 2]]
+          menang = [0, 0, 0]
+          for ronde in range(3):
+              for p in jadwal:
+                  h = random.randint(0, 1)
+                  if h == 0:
+                      menang[p[0]] = menang[p[0]] + 1
+                  else:
+                      menang[p[1]] = menang[p[1]] + 1
+          print("Papan Peringkat")
+          for i in range(3):
+              print(nama[i] + ":", menang[i])
+          if menang[0] >= menang[1] and menang[0] >= menang[2]:
+              print("Juara musim: Kancil")
+          elif menang[1] >= menang[2]:
+              print("Juara musim: Macan")
+          else:
+              print("Juara musim: Bebek")
+        penjelasan: "Tiga ronde: Kancil 4, Macan 4, Bebek 1. Juara musim: Kancil."
+    kuis:
+      - soal: "Dalam 1 ronde round-robin, 3 petarung bertanding sebanyak..."
+        pilihan:
+          - "3 pertandingan"
+          - "1 pertandingan"
+          - "6 pertandingan"
+          - "9 pertandingan"
+        jawaban: 0
+        penjelasan: "Tiap ronde ada 3 pasangan: Kancil-Macan, Kancil-Bebek, Macan-Bebek."
+      - soal: "Hasil undian 1 artinya..."
+        pilihan:
+          - "petarung kedua yang menang"
+          - "petarung pertama yang menang"
+          - "pertandingannya seri"
+          - "tidak ada yang menang"
+        jawaban: 0
+        penjelasan: "Hasil 0 untuk petarung pertama, hasil 1 untuk petarung kedua."
+      - soal: "Kemenangan tiap petarung dihitung di dalam..."
+        pilihan:
+          - "daftar menang"
+          - "file simpan.txt"
+          - "peta harta"
+          - "nama petarung"
+        jawaban: 0
+        penjelasan: "menang = [0, 0, 0] menyimpan kemenangan tiap petarung."
+
+  - id: "g9-3"
+    judul: "Uji Keseimbangan"
+    menit: 8
+    materi: |
+      Game yang seru harus **seimbang**. Kalau satu petarung terlalu kuat,
+      pemain jadi cepat bosan. 🧪
+
+      Tukang game memakai **uji keseimbangan**. Caranya: ubah satu stat, lalu
+      jalankan simulasinya lagi.
+
+      Aturannya: dua uji memakai seed yang sama. Hasil acaknya jadi sama,
+      jadi perbandingannya adil.
+
+      ```python
+      import random
+      random.seed(5)
+      menang = 0
+      for i in range(20):
+          if random.randint(1, 6) <= 3:
+              menang = menang + 1
+      ```
+
+      Undian `random.randint(1, 6)` memberi angka 1 sampai 6. Pahlawan menang
+      kalau undiannya 3 ke bawah, jadi peluangnya separuh.
+
+      Uji kedua: misalnya musuh dilatih. Sekarang pahlawan cuma menang kalau
+      undiannya 2 ke bawah. Panggil `random.seed(5)` lagi, jalankan 20 babak
+      lagi, lalu hitung.
+
+      Bandingkan hasilnya! Kalau uji kedua menangnya lebih sedikit, berarti
+      musuhnya jadi lebih kuat.
+
+      Dari situ game bisa diatur supaya seru terus. Ayo jadi tukang uji
+      keseimbangan! ⚖️
+    contoh:
+      - kode: |
+          import random
+          random.seed(5)
+          menang = 0
+          for i in range(20):
+              if random.randint(1, 6) <= 3:
+                  menang = menang + 1
+          print("Uji 1 - Pahlawan menang:", menang)
+          random.seed(5)
+          menang2 = 0
+          for i in range(20):
+              if random.randint(1, 6) <= 2:
+                  menang2 = menang2 + 1
+          print("Uji 2 - Pahlawan menang:", menang2)
+        penjelasan: "Seed 5 dipakai dua kali: uji 1 menang 9 kali, uji 2 menang 6 kali."
+      - kode: |
+          import random
+          random.seed(5)
+          menang = 0
+          for i in range(20):
+              if random.randint(1, 6) <= 3:
+                  menang = menang + 1
+          random.seed(5)
+          menang2 = 0
+          for i in range(20):
+              if random.randint(1, 6) <= 2:
+                  menang2 = menang2 + 1
+          print("Uji 1 - Pahlawan menang:", menang)
+          print("Uji 2 - Pahlawan menang:", menang2)
+          if menang2 < menang:
+              print("Kesimpulan: Musuh lebih kuat sekarang.")
+          else:
+              print("Kesimpulan: Kekuatan musuh belum berubah.")
+        penjelasan: "Menangnya turun dari 9 jadi 6, jadi musuhnya lebih kuat."
+    kuis:
+      - soal: "Uji keseimbangan dilakukan dengan cara..."
+        pilihan:
+          - "mengubah satu stat lalu menjalankan simulasi lagi"
+          - "mengganti nama petarung"
+          - "menambah gambar baru"
+          - "menghapus file simpanan"
+        jawaban: 0
+        penjelasan: "Satu stat diubah, lalu hasilnya dibandingkan dengan uji sebelumnya."
+      - soal: "Kenapa dua uji sebaiknya memakai seed yang sama?"
+        pilihan:
+          - "supaya perbandingannya adil"
+          - "supaya programnya cepat"
+          - "supaya angkanya besar"
+          - "supaya filenya tersimpan"
+        jawaban: 0
+        penjelasan: "Dengan acakan yang sama, bedanya cuma dari stat yang diubah."
+      - soal: "Uji 1 pahlawan menang 9 kali. Uji 2 menang 6 kali. Artinya..."
+        pilihan:
+          - "musuhnya jadi lebih kuat"
+          - "musuhnya jadi lebih lemah"
+          - "tidak ada yang berubah"
+          - "pahlawannya jadi lebih kuat"
+        jawaban: 0
+        penjelasan: "Kemenangan pahlawan turun, berarti musuhnya bertambah kuat."
+
+soal:
+  - id: "sg9-1"
+    judul: "Babak Turnamen Kancil"
+    sulit: "mudah"
+    cerita: |
+      Turnamen dimulai! Kancil menantang Macan bertanding beberapa babak.
+      Ketik jumlah babaknya dulu. Lalu mulai dengan random.seed(7), dan
+      setiap babak panggil random.randint(0, 1) satu kali: hasil 0 artinya
+      Kancil menang, hasil 1 artinya Macan menang. Cetak berapa kali Kancil
+      menang dan berapa kali Macan menang. Dadunya bisa diulang, jadi
+      hasilnya selalu sama!
+    input: "Satu baris: jumlah babak."
+    output: "Dua baris: 'Kancil: <kemenangan>' lalu 'Macan: <kemenangan>'."
+    contoh:
+      - input: "5"
+        output: "Kancil: 3\nMacan: 2"
+      - input: "100"
+        output: "Kancil: 51\nMacan: 49"
+    tes:
+      - input: "5"
+        output: "Kancil: 3\nMacan: 2"
+      - input: "100"
+        output: "Kancil: 51\nMacan: 49"
+      - input: "1"
+        output: "Kancil: 0\nMacan: 1"
+      - input: "0"
+        output: "Kancil: 0\nMacan: 0"
+      - input: "3"
+        output: "Kancil: 1\nMacan: 2"
+    solusi: |
+      import random
+      random.seed(7)
+      n = int(input())
+      a = 0
+      b = 0
+      for i in range(n):
+          hasil = random.randint(0, 1)
+          if hasil == 0:
+              a = a + 1
+          else:
+              b = b + 1
+      print("Kancil:", a)
+      print("Macan:", b)
+    petunjuk:
+      - "Tulis import random dan random.seed(7) persis di awal program."
+      - "Siapkan a dan b sebagai penghitung kemenangan, dua-duanya mulai dari 0."
+      - "Di dalam for i in range(n): panggil random.randint(0, 1) satu kali, lalu tambah a kalau hasilnya 0, tambah b kalau hasilnya 1."
+
+  - id: "sg9-2"
+    judul: "Laporan Statistik Turnamen"
+    sulit: "sedang"
+    cerita: |
+      Pelatih minta laporan lengkap! Ketik jumlah pertarungan. Lalu mulai
+      dengan random.seed(3), dan setiap babak panggil random.randint(0, 1)
+      satu kali: 0 artinya Kancil menang, 1 artinya Macan menang. Cetak
+      total pertarungan, kemenangan Kancil, kemenangan Macan, lalu
+      kesimpulannya: siapa yang lebih kuat atau seimbang. Laporan ini
+      dipakai pelatih untuk menyusun strategi.
+    input: "Satu baris: jumlah pertarungan."
+    output: "Empat baris: 'Total pertarungan: <n>', 'Kancil menang: <n>', 'Macan menang: <n>', lalu 'Kesimpulan: Kancil lebih kuat' atau 'Kesimpulan: Macan lebih kuat' atau 'Kesimpulan: Seimbang'."
+    contoh:
+      - input: "100"
+        output: "Total pertarungan: 100\nKancil menang: 45\nMacan menang: 55\nKesimpulan: Macan lebih kuat"
+      - input: "5"
+        output: "Total pertarungan: 5\nKancil menang: 3\nMacan menang: 2\nKesimpulan: Kancil lebih kuat"
+    tes:
+      - input: "100"
+        output: "Total pertarungan: 100\nKancil menang: 45\nMacan menang: 55\nKesimpulan: Macan lebih kuat"
+      - input: "5"
+        output: "Total pertarungan: 5\nKancil menang: 3\nMacan menang: 2\nKesimpulan: Kancil lebih kuat"
+      - input: "0"
+        output: "Total pertarungan: 0\nKancil menang: 0\nMacan menang: 0\nKesimpulan: Seimbang"
+      - input: "9"
+        output: "Total pertarungan: 9\nKancil menang: 5\nMacan menang: 4\nKesimpulan: Kancil lebih kuat"
+      - input: "30"
+        output: "Total pertarungan: 30\nKancil menang: 15\nMacan menang: 15\nKesimpulan: Seimbang"
+    solusi: |
+      import random
+      random.seed(3)
+      n = int(input())
+      a = 0
+      b = 0
+      for i in range(n):
+          hasil = random.randint(0, 1)
+          if hasil == 0:
+              a = a + 1
+          else:
+              b = b + 1
+      print("Total pertarungan:", n)
+      print("Kancil menang:", a)
+      print("Macan menang:", b)
+      if a > b:
+          print("Kesimpulan: Kancil lebih kuat")
+      elif b > a:
+          print("Kesimpulan: Macan lebih kuat")
+      else:
+          print("Kesimpulan: Seimbang")
+    petunjuk:
+      - "Awali dengan import random dan random.seed(3), lalu baca n dengan int(input())."
+      - "Hitung kemenangan a dan b dengan loop, sama seperti simulasi biasa."
+      - "Cetak total lalu kedua kemenangan. Bandingkan a dan b: kalau nilainya sama, hasilnya Seimbang."
+
+  - id: "sg9-3"
+    judul: "Papan Peringkat Musim Baru"
+    sulit: "sedang"
+    cerita: |
+      Musim baru dimulai! Ketik jumlah ronde. Lalu mulai dengan
+      random.seed(8). Setiap ronde, jalankan 3 pertandingan: Kancil lawan
+      Macan, Kancil lawan Bebek, lalu Macan lawan Bebek. Tiap pertandingan
+      panggil random.randint(0, 1) satu kali: 0 artinya petarung pertama
+      menang, 1 artinya petarung kedua menang. Cetak papan peringkatnya!
+      Kalau nilainya sama, yang lebih depan jadi juara.
+    input: "Satu baris: jumlah ronde."
+    output: "Lima baris: 'Papan Peringkat', 'Kancil: <n>', 'Macan: <n>', 'Bebek: <n>', lalu 'Juara: <nama>'."
+    contoh:
+      - input: "3"
+        output: "Papan Peringkat\nKancil: 5\nMacan: 2\nBebek: 2\nJuara: Kancil"
+      - input: "1"
+        output: "Papan Peringkat\nKancil: 1\nMacan: 0\nBebek: 2\nJuara: Bebek"
+    tes:
+      - input: "3"
+        output: "Papan Peringkat\nKancil: 5\nMacan: 2\nBebek: 2\nJuara: Kancil"
+      - input: "1"
+        output: "Papan Peringkat\nKancil: 1\nMacan: 0\nBebek: 2\nJuara: Bebek"
+      - input: "0"
+        output: "Papan Peringkat\nKancil: 0\nMacan: 0\nBebek: 0\nJuara: Kancil"
+      - input: "5"
+        output: "Papan Peringkat\nKancil: 6\nMacan: 4\nBebek: 5\nJuara: Kancil"
+      - input: "2"
+        output: "Papan Peringkat\nKancil: 3\nMacan: 1\nBebek: 2\nJuara: Kancil"
+    solusi: |
+      import random
+      random.seed(8)
+      ronde = int(input())
+      nama = ["Kancil", "Macan", "Bebek"]
+      jadwal = [[0, 1], [0, 2], [1, 2]]
+      menang = [0, 0, 0]
+      for r in range(ronde):
+          for p in jadwal:
+              h = random.randint(0, 1)
+              if h == 0:
+                  menang[p[0]] = menang[p[0]] + 1
+              else:
+                  menang[p[1]] = menang[p[1]] + 1
+      print("Papan Peringkat")
+      for i in range(3):
+          print(nama[i] + ":", menang[i])
+      if menang[0] >= menang[1] and menang[0] >= menang[2]:
+          print("Juara: Kancil")
+      elif menang[1] >= menang[2]:
+          print("Juara: Macan")
+      else:
+          print("Juara: Bebek")
+    petunjuk:
+      - "Awali dengan import random dan random.seed(8), lalu baca jumlah ronde dengan int(input())."
+      - "Siapkan menang = [0, 0, 0] dan jadwal = [[0, 1], [0, 2], [1, 2]]. Ulangi jadwal sebanyak ronde."
+      - "Tiap pertandingan panggil random.randint(0, 1) satu kali. Kalau 0, tambah menang[p[0]]; kalau 1, tambah menang[p[1]]."
+
+  - id: "sg9-4"
+    judul: "Uji Keseimbangan Besar"
+    sulit: "sulit"
+    cerita: |
+      Tukang game mau tahu: apakah Macan sekarang lebih kuat? Ketik jumlah
+      babak. Uji 1: mulai dengan random.seed(9), dan setiap babak panggil
+      random.randint(1, 10) satu kali. Kalau hasilnya 6 ke bawah, Kancil
+      menang. Uji 2: mulai lagi dengan random.seed(9), tapi sekarang Kancil
+      cuma menang kalau hasilnya 4 ke bawah. Cetak hasil kedua uji itu dan
+      kesimpulannya!
+    input: "Satu baris: jumlah babak."
+    output: "Tiga baris: 'Uji 1 - Kancil menang: <n>', 'Uji 2 - Kancil menang: <n>', lalu 'Kesimpulan: Macan lebih kuat sekarang.' atau 'Kesimpulan: Macan belum lebih kuat.'"
+    contoh:
+      - input: "20"
+        output: "Uji 1 - Kancil menang: 10\nUji 2 - Kancil menang: 6\nKesimpulan: Macan lebih kuat sekarang."
+      - input: "100"
+        output: "Uji 1 - Kancil menang: 61\nUji 2 - Kancil menang: 49\nKesimpulan: Macan lebih kuat sekarang."
+    tes:
+      - input: "20"
+        output: "Uji 1 - Kancil menang: 10\nUji 2 - Kancil menang: 6\nKesimpulan: Macan lebih kuat sekarang."
+      - input: "100"
+        output: "Uji 1 - Kancil menang: 61\nUji 2 - Kancil menang: 49\nKesimpulan: Macan lebih kuat sekarang."
+      - input: "5"
+        output: "Uji 1 - Kancil menang: 3\nUji 2 - Kancil menang: 1\nKesimpulan: Macan lebih kuat sekarang."
+      - input: "0"
+        output: "Uji 1 - Kancil menang: 0\nUji 2 - Kancil menang: 0\nKesimpulan: Macan belum lebih kuat."
+      - input: "3"
+        output: "Uji 1 - Kancil menang: 1\nUji 2 - Kancil menang: 0\nKesimpulan: Macan lebih kuat sekarang."
+    solusi: |
+      import random
+      n = int(input())
+      random.seed(9)
+      menang1 = 0
+      for i in range(n):
+          hasil = random.randint(1, 10)
+          if hasil <= 6:
+              menang1 = menang1 + 1
+      random.seed(9)
+      menang2 = 0
+      for i in range(n):
+          hasil = random.randint(1, 10)
+          if hasil <= 4:
+              menang2 = menang2 + 1
+      print("Uji 1 - Kancil menang:", menang1)
+      print("Uji 2 - Kancil menang:", menang2)
+      if menang2 < menang1:
+          print("Kesimpulan: Macan lebih kuat sekarang.")
+      else:
+          print("Kesimpulan: Macan belum lebih kuat.")
+    petunjuk:
+      - "Kedua uji memakai random.seed(9). Jalankan uji 1 sampai selesai dulu, baru uji 2."
+      - "Di uji 1, tambah menang1 kalau hasil random.randint(1, 10) adalah 6 ke bawah."
+      - "Di uji 2 tambah menang2 kalau hasilnya 4 ke bawah. Bandingkan menang2 dengan menang1 untuk kesimpulannya."

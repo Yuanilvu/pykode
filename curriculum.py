@@ -101,8 +101,10 @@ def _load_all():
         ji = jinfo_by_id.get(jid) or {"id": jid, "nama": jid, "emoji": "🎓"}
         for m in mods:
             emo = ji.get("emoji", "🎓")
+            m["tingkat"] = m.get("tingkat", 1)
+            _tl = " · Tingkat 2" if m["tingkat"] >= 2 else ""
             m["nav_label"] = (f"{emo} {ji.get('nama', jid)} · "
-                              f"Modul {m.get('modul', m.get('bab'))}")
+                              f"Modul {m.get('modul', m.get('bab'))}{_tl}")
             m["jurusan_info"] = ji
             for p in (m.get("pelajaran") or []):
                 by_lesson[p["id"]] = {"bab": m, "data": p}

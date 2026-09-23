@@ -1,0 +1,412 @@
+bab: 6
+modul: 6
+jurusan: "qfin"
+tingkat: 2
+judul: "Kelas Saham & Objek"
+emoji: "📦"
+warna: "#0d9488"
+deskripsi: "Naik level: bikin kelas Saham sendiri, lengkap dengan jurus untung()."
+prasyarat: 11
+
+pelajaran:
+  - id: "q6-1"
+    judul: "Cetakan Ajaib Bernama Kelas"
+    menit: 7
+    materi: |
+      Selamat datang di **Tingkat 2**! 🚀 Kali ini kamu belajar jurus yang
+      dipakai programmer sungguhan: **kelas** (class).
+
+      Bayangkan **cetakan kue**. Dari satu cetakan, kamu bisa bikin banyak kue
+      dengan bentuk yang sama. Di Python, kelas itu cetakannya, dan **objek**
+      adalah kue hasil cetakan.
+
+      ```python
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+      ```
+
+      - `class Saham:` artinya bikin cetakan bernama Saham.
+      - `__init__` jalan otomatis saat objek lahir. Tugasnya menyiapkan data.
+      - `self` adalah si objek itu sendiri. `self.nama` menyimpan nama ke dalam objek.
+
+      Membuat objeknya gampang:
+
+      ```python
+      s = Saham("TLKM", 4000)
+      ```
+
+      Sekarang `s.nama` berisi `"TLKM"` dan `s.harga` berisi `4000`.
+      Satu cetakan, bisa jadi banyak objek! Di Modul 2 kamu sudah pakai daftar
+      harga; sekarang tiap saham bisa jadi objek sendiri. Coba di contoh bawah ya.
+    contoh:
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+          s = Saham("TLKM", 4000)
+          print(s.nama)
+          print(s.harga)
+        penjelasan: "Cetakan Saham bikin objek s berisi TLKM dan 4000."
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+          a = Saham("BBRI", 5000)
+          b = Saham("GOTO", 100)
+          print(a.nama, a.harga)
+          print(b.nama, b.harga)
+        penjelasan: "Satu cetakan bisa bikin banyak objek: a dan b."
+    kuis:
+      - soal: "Kelas itu ibarat apa?"
+        pilihan: ["cetakan kue", "kue yang sudah dimakan", "toko kue", "gula pasir"]
+        jawaban: 0
+        penjelasan: "Kelas itu cetakannya. Objek adalah hasil cetakannya."
+      - soal: "Bagian yang jalan otomatis saat objek lahir adalah..."
+        pilihan: ["__init__", "__main__", "__nama__", "__cetak__"]
+        jawaban: 0
+        penjelasan: "__init__ menyiapkan data objek saat objek baru dibuat."
+      - soal: "Apa tugas self di dalam kelas?"
+        pilihan: ["menunjuk objek itu sendiri", "angka ajaib", "menghapus objek", "mencetak layar"]
+        jawaban: 0
+        penjelasan: "self artinya 'objek ini'. self.harga menyimpan harga di objek itu."
+
+  - id: "q6-2"
+    judul: "Jurus Untung (Method)"
+    menit: 7
+    materi: |
+      Masih ingat **fungsi**? Fungsi itu seperti alat. Nah, di dalam kelas kita
+      bisa menaruh fungsi juga. Namanya **method** — anggap saja jurus milik objek.
+
+      Bedanya: method menempel pada objek dan dipanggil pakai titik.
+
+      ```python
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+
+          def untung(self, harga_beli):
+              return self.harga - harga_beli
+      ```
+
+      `untung` adalah jurus milik tiap objek Saham. Cara pakainya:
+
+      ```python
+      s = Saham("BBRI", 5000)
+      print(s.untung(4500))
+      ```
+
+      Kenapa hasilnya 500? Karena `self.harga` = 5000 dan `harga_beli` = 4500,
+      jadi 5000 dikurangi 4500 = 500.
+
+      Kalau harga sekarang lebih murah dari harga beli, hasilnya **minus**.
+      Itu artinya rugi — dan minus itu jawaban yang benar, jangan takut. 😄
+
+      Perhatikan: `def untung(self, harga_beli):` — `self` wajib di paling depan.
+      Coba di contoh bawah!
+    contoh:
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+              def untung(self, harga_beli):
+                  return self.harga - harga_beli
+
+          s = Saham("BBRI", 5000)
+          print(s.untung(4500))
+        penjelasan: "Objek s memakai jurus untung terhadap harga beli 4500: hasilnya 500."
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+              def untung(self, harga_beli):
+                  return self.harga - harga_beli
+
+          s = Saham("GOTO", 100)
+          print(s.untung(150))
+        penjelasan: "Kalau harga beli lebih tinggi, hasilnya minus: -50 (rugi)."
+    kuis:
+      - soal: "Method itu ... yang menempel pada objek."
+        pilihan: ["fungsi", "variabel", "angka", "file"]
+        jawaban: 0
+        penjelasan: "Method adalah fungsi yang tinggal di dalam kelas."
+      - soal: "Bagaimana cara memanggil jurus untung dari objek s?"
+        pilihan: ["s.untung(4500)", "untung(s, 4500)", "s-untung-4500", "print(untung)"]
+        jawaban: 0
+        penjelasan: "Method dipanggil pakai titik: nama_objek.nama_method(...)."
+      - soal: "Harga 5000, harga beli 6000. Hasil untung() adalah..."
+        pilihan: ["-1000", "1000", "0", "500"]
+        jawaban: 0
+        penjelasan: "5000 - 6000 = -1000. Minus berarti rugi."
+
+  - id: "q6-3"
+    judul: "Kumpulan Objek"
+    menit: 7
+    materi: |
+      Sekarang gabungkan dua hal yang sudah kamu kuasai: **daftar** (list) dan **objek**.
+
+      Kamu bisa menyimpan banyak objek dalam satu list, persis seperti daftar
+      harga di Modul 2.
+
+      ```python
+      daftar = []
+      daftar.append(Saham("TLKM", 4000))
+      daftar.append(Saham("BBRI", 5000))
+      ```
+
+      Lalu **loop** untuk mengunjungi satu per satu:
+
+      ```python
+      for s in daftar:
+          print(s.nama, s.harga)
+      ```
+
+      Dan ini yang paling seru: mencari **juara** dengan pola juara sementara.
+
+      ```python
+      terbaik = daftar[0]
+      for s in daftar:
+          if s.harga > terbaik.harga:
+              terbaik = s
+      ```
+
+      Polanya: mulai dari objek pertama sebagai juara sementara, lalu tantang
+      satu-satu. Kalau ada harga yang lebih tinggi, dia jadi juara baru.
+      Kalau harganya sama, juara lama tetap menang. Coba di contoh!
+    contoh:
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+          daftar = []
+          daftar.append(Saham("TLKM", 4000))
+          daftar.append(Saham("BBRI", 5000))
+          daftar.append(Saham("GOTO", 100))
+
+          for s in daftar:
+              print(s.nama, s.harga)
+        penjelasan: "Loop mengunjungi tiap objek dan mencetak nama serta harganya."
+      - kode: |
+          class Saham:
+              def __init__(self, nama, harga):
+                  self.nama = nama
+                  self.harga = harga
+
+          daftar = [Saham("TLKM", 4000), Saham("BBRI", 5000), Saham("GOTO", 100)]
+
+          terbaik = daftar[0]
+          for s in daftar:
+              if s.harga > terbaik.harga:
+                  terbaik = s
+
+          print("Terbaik:", terbaik.nama)
+        penjelasan: "BBRI menang karena harganya paling tinggi: 5000."
+    kuis:
+      - soal: "Cara menaruh objek ke dalam list bernama daftar?"
+        pilihan: ["daftar.append(Saham(\"TLKM\", 4000))", "daftar = Saham", "Saham(daftar)", "daftar = 4000"]
+        jawaban: 0
+        penjelasan: "append() menambahkan sesuatu ke ujung list."
+      - soal: "Kenapa sebelum loop kita tulis terbaik = daftar[0]?"
+        pilihan: ["supaya punya juara sementara", "supaya list kosong", "supaya loop berhenti", "supaya angka bertambah"]
+        jawaban: 0
+        penjelasan: "Kita butuh pembanding awal. Objek pertama dipakai sebagai juara sementara."
+      - soal: "Dua saham harganya sama-sama 5000. Dengan pola di atas, siapa juaranya?"
+        pilihan: ["yang muncul lebih dulu", "yang muncul terakhir", "dua-duanya", "tidak ada"]
+        jawaban: 0
+        penjelasan: "Karena 5000 tidak LEBIH BESAR dari 5000, juara lama tidak tergantikan."
+
+soal:
+  - id: "sq6-1"
+    judul: "Cetak Saham Pertamamu"
+    sulit: "mudah"
+    cerita: |
+      Kancil sedang berlatih membuat kelas. Ia ingin kamu membuat kelas bernama
+      Saham dengan `__init__` yang menyimpan `nama` dan `harga`. Setelah itu,
+      baca nama dan harga dari input, bikin satu objek, lalu cetak datanya
+      seperti contoh. Ayo bantu Kancil!
+    input: "Dua baris: nama saham, lalu harga (angka)."
+    output: "Dua baris: 'Saham: <nama>' lalu 'Harga: <harga>'"
+    contoh:
+      - input: "TLKM\n4000"
+        output: "Saham: TLKM\nHarga: 4000"
+      - input: "BBRI\n5000"
+        output: "Saham: BBRI\nHarga: 5000"
+    tes:
+      - input: "TLKM\n4000"
+        output: "Saham: TLKM\nHarga: 4000"
+      - input: "BBRI\n5000"
+        output: "Saham: BBRI\nHarga: 5000"
+      - input: "GOTO\n100"
+        output: "Saham: GOTO\nHarga: 100"
+      - input: "ASII\n4750"
+        output: "Saham: ASII\nHarga: 4750"
+    solusi: |
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+
+
+      nama = input()
+      harga = int(input())
+      sahamku = Saham(nama, harga)
+      print("Saham:", sahamku.nama)
+      print("Harga:", sahamku.harga)
+    petunjuk:
+      - "Bikin kelas Saham dulu dengan __init__ yang menerima nama dan harga."
+      - "Simpan datanya dengan self.nama = nama dan self.harga = harga."
+      - "Cetak pakai print(\"Saham:\", sahamku.nama) lalu print(\"Harga:\", sahamku.harga)."
+
+  - id: "sq6-2"
+    judul: "Untung atau Rugi"
+    sulit: "sedang"
+    cerita: |
+      Rani punya saham yang sekarang harganya 5000. Dulu ia membelinya 4500.
+      Untung berapa? Bantu Rani membuat kelas Saham dengan jurus `untung()`.
+      Baca harga beli dulu, lalu harga sekarang dari input, dan cetak untungnya.
+      Kalau sedang rugi, hasilnya minus — itu wajar ya!
+    input: "Dua baris: harga beli, lalu harga sekarang."
+    output: "Satu baris: 'Untung: <angka>' (bisa minus)"
+    contoh:
+      - input: "4000\n5000"
+        output: "Untung: 1000"
+      - input: "6000\n5500"
+        output: "Untung: -500"
+    tes:
+      - input: "4000\n5000"
+        output: "Untung: 1000"
+      - input: "6000\n5500"
+        output: "Untung: -500"
+      - input: "3000\n3000"
+        output: "Untung: 0"
+      - input: "1500\n4000"
+        output: "Untung: 2500"
+    solusi: |
+      class Saham:
+          def __init__(self, harga):
+              self.harga = harga
+
+          def untung(self, harga_beli):
+              return self.harga - harga_beli
+
+
+      harga_beli = int(input())
+      harga_kini = int(input())
+      sahamku = Saham(harga_kini)
+      print("Untung:", sahamku.untung(harga_beli))
+    petunjuk:
+      - "Method untung butuh satu parameter: harga_beli."
+      - "Isi methodnya: return self.harga - harga_beli."
+      - "Bikin objek dengan harga sekarang, lalu cetak objek.untung(harga_beli)."
+
+  - id: "sq6-3"
+    judul: "Saham Terbaik"
+    sulit: "sedang"
+    cerita: |
+      Kancil punya tiga saham dan ingin tahu mana yang paling mahal. Baca nama
+      dan harga tiap saham (tiga pasang), bikin objek untuk masing-masing, lalu
+      cari yang harganya paling tinggi. Kalau ada harga yang sama, yang muncul
+      lebih dulu tetap juara.
+    input: "Enam baris: (nama, harga) sebanyak 3 pasang."
+    output: "Dua baris: 'Terbaik: <nama>' lalu 'Harga: <harga>'"
+    contoh:
+      - input: "A\n1000\nB\n3000\nC\n2000"
+        output: "Terbaik: B\nHarga: 3000"
+      - input: "X\n900\nY\n800\nZ\n700"
+        output: "Terbaik: X\nHarga: 900"
+    tes:
+      - input: "A\n1000\nB\n3000\nC\n2000"
+        output: "Terbaik: B\nHarga: 3000"
+      - input: "X\n900\nY\n800\nZ\n700"
+        output: "Terbaik: X\nHarga: 900"
+      - input: "P\n500\nQ\n500\nR\n500"
+        output: "Terbaik: P\nHarga: 500"
+      - input: "K\n1200\nL\n1150\nM\n1300"
+        output: "Terbaik: M\nHarga: 1300"
+    solusi: |
+      class Saham:
+          def __init__(self, nama, harga):
+              self.nama = nama
+              self.harga = harga
+
+
+      daftar = []
+      for i in range(3):
+          nama = input()
+          harga = int(input())
+          daftar.append(Saham(nama, harga))
+
+      terbaik = daftar[0]
+      for s in daftar:
+          if s.harga > terbaik.harga:
+              terbaik = s
+
+      print("Terbaik:", terbaik.nama)
+      print("Harga:", terbaik.harga)
+    petunjuk:
+      - "Kumpulkan dulu ketiga objek ke dalam satu list di dalam loop."
+      - "Mulai dari daftar[0] sebagai juara sementara."
+      - "Tantang satu-satu: kalau harganya LEBIH BESAR, ganti juaranya."
+
+  - id: "sq6-4"
+    judul: "Portofolio Kancil"
+    sulit: "sulit"
+    cerita: |
+      Pak Otong minta laporan portofolio. Baca jumlah saham (n), lalu n baris
+      berisi nama, harga, dan jumlah lembar — dipisah spasi. Bikin objek tiap
+      saham, hitung nilainya (harga dikali jumlah), cetak satu baris per saham,
+      lalu cetak total semua nilai di baris terakhir.
+    input: "Baris pertama n. Lalu n baris: 'nama harga jumlah' (dipisah spasi)."
+    output: "n baris '<nama>: <nilai>', lalu baris 'Total: <jumlah>'"
+    contoh:
+      - input: "2\nTLKM 4000 10\nBBRI 5000 2"
+        output: "TLKM: 40000\nBBRI: 10000\nTotal: 50000"
+      - input: "3\nA 1000 5\nB 2000 1\nC 500 4"
+        output: "A: 5000\nB: 2000\nC: 2000\nTotal: 9000"
+    tes:
+      - input: "2\nTLKM 4000 10\nBBRI 5000 2"
+        output: "TLKM: 40000\nBBRI: 10000\nTotal: 50000"
+      - input: "3\nA 1000 5\nB 2000 1\nC 500 4"
+        output: "A: 5000\nB: 2000\nC: 2000\nTotal: 9000"
+      - input: "1\nSOLO 7000 3"
+        output: "SOLO: 21000\nTotal: 21000"
+      - input: "4\nW 2500 4\nX 1000 6\nY 3000 2\nZ 500 2"
+        output: "W: 10000\nX: 6000\nY: 6000\nZ: 1000\nTotal: 23000"
+    solusi: |
+      class Saham:
+          def __init__(self, nama, harga, jumlah):
+              self.nama = nama
+              self.harga = harga
+              self.jumlah = jumlah
+
+          def nilai(self):
+              return self.harga * self.jumlah
+
+
+      n = int(input())
+      daftar = []
+      for i in range(n):
+          baris = input().split()
+          daftar.append(Saham(baris[0], int(baris[1]), int(baris[2])))
+
+      total = 0
+      for s in daftar:
+          print(s.nama + ":", s.nilai())
+          total = total + s.nilai()
+      print("Total:", total)
+    petunjuk:
+      - "Pecah baris data dengan baris = input().split() — hasilnya daftar 3 kata."
+      - "Ubah angka pakai int(baris[1]) dan int(baris[2])."
+      - "Method nilai() cukup: return self.harga * self.jumlah."

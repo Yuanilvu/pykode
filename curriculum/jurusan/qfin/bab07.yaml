@@ -1,0 +1,471 @@
+bab: 7
+modul: 7
+jurusan: "qfin"
+tingkat: 2
+judul: "Baca Data dari File"
+emoji: "📂"
+warna: "#0e7490"
+deskripsi: "Simpan harga ke file, lalu baca lagi untuk menghitung total."
+prasyarat: 12
+
+pelajaran:
+  - id: "q7-1"
+    judul: "Harga dari File"
+    menit: 7
+    materi: |
+      Selamat datang di **Tingkat 2**! 🚀 Kali ini kamu belajar menyimpan
+      data ke dalam **file**, seperti menyimpan buku catatan.
+
+      Kenapa perlu file? Bayangkan harga sahammu hilang setiap program
+      ditutup. Sedih, kan? Dengan file, datanya tetap ada.
+
+      File itu seperti buku tulis di komputer.
+      Kita bisa **menulis** ke sana, lalu **membaca** lagi kapan saja.
+
+      Cara menulis ke file:
+
+      ```python
+      f = open("harga.txt", "w")
+      f.write("1000\n")
+      f.close()
+      ```
+
+      - `open("harga.txt", "w")` membuka file untuk ditulis. Huruf `w` artinya write.
+      - `f.write("1000\n")` menulis angka ke dalam file. Tanda `\n` artinya pindah baris.
+      - `f.close()` menutup catatan supaya isinya tersimpan rapi.
+
+      Cara membacanya lagi:
+
+      ```python
+      f = open("harga.txt", "r")
+      isi = f.read()
+      f.close()
+      print(isi)
+      ```
+
+      Hasilnya `1000`. Data yang tadi ditulis berhasil dibaca lagi!
+
+      Kalau isi filenya banyak baris, pakai loop:
+
+      ```python
+      f = open("harga.txt", "r")
+      for baris in f:
+          print(baris)
+      f.close()
+      ```
+
+      Ingat: angka yang dibaca dari file masih berupa teks.
+      Ubah dulu jadi angka pakai `int()`.
+
+      Ayo praktik di contoh bawah! 📂
+    contoh:
+      - kode: |
+          f = open("angka.txt", "w")
+          f.write("10\n")
+          f.write("20\n")
+          f.close()
+
+          f = open("angka.txt", "r")
+          total = 0
+          for baris in f:
+              total = total + int(baris)
+          f.close()
+          print("Jumlah:", total)
+        penjelasan: "Dua angka ditulis ke file, lalu dibaca lagi baris per baris. Jumlahnya 30."
+      - kode: |
+          f = open("harga.txt", "w")
+          f.write("1000\n")
+          f.write("1200\n")
+          f.close()
+
+          f = open("harga.txt", "r")
+          harga1 = int(f.readline())
+          harga2 = int(f.readline())
+          f.close()
+          print("Harga pertama:", harga1)
+          print("Harga kedua:", harga2)
+          print("Naik:", harga2 - harga1)
+        penjelasan: "Dua baris dibaca pakai readline(). Harga naik 200."
+    kuis:
+      - soal: "Untuk membuka file supaya bisa ditulis, kita pakai..."
+        pilihan: ['open("harga.txt", "r")', 'open("harga.txt", "w")', 'f.read("harga.txt")', 'f.close("harga.txt")']
+        jawaban: 1
+        penjelasan: 'Huruf "w" artinya write, yaitu mode untuk menulis.'
+      - soal: "Setelah selesai menulis, file sebaiknya..."
+        pilihan: ["dihapus", "dicetak", "ditutup dengan close()", "dibuka ulang"]
+        jawaban: 2
+        penjelasan: "close() menutup file supaya isinya tersimpan rapi."
+      - soal: "Isi file yang dibaca dengan f.read() masih berupa..."
+        pilihan: ["angka siap dihitung", "teks", "daftar angka", "gambar"]
+        jawaban: 1
+        penjelasan: "f.read() memberi teks. Ubah dulu jadi angka pakai int()."
+
+  - id: "q7-2"
+    judul: "Pisah & Jumlahkan"
+    menit: 7
+    materi: |
+      Sekarang isi file-mu banyak baris, bukan cuma satu. 📄
+
+      Kalau tiap baris berisi angka, kita bisa membacanya satu per satu.
+      Caranya pakai loop `for baris in f`.
+      Lalu tiap baris diubah pakai `int()` dan ditambah ke total.
+
+      ```python
+      f = open("angka.txt", "r")
+      total = 0
+      for baris in f:
+          total = total + int(baris)
+      f.close()
+      print("Total:", total)
+      ```
+
+      Perhatikan `int(baris)`. Baris itu berisi angka dengan enter di ujungnya.
+      `int()` pintar, jadi enter-nya dibuang sendiri. Aman!
+
+      Kalau satu baris berisi dua kata, contohnya `TLKM 4000`,
+      kita pecah dulu pakai `.split()`.
+
+      ```python
+      bagian = "TLKM 4000".split()
+      print(bagian[0])
+      print(bagian[1])
+      ```
+
+      Hasilnya `TLKM`, lalu `4000`. `.split()` memotong baris tiap ketemu spasi.
+      Jadi hasilnya sebuah daftar. Bagian pertama nama, bagian kedua harga.
+
+      Harga itu masih teks. Ubah dulu pakai `int(bagian[1])`
+      sebelum dipakai untuk berhitung.
+
+      Ayo baca beberapa baris, jumlahkan, lalu cetak hasilnya!
+    contoh:
+      - kode: |
+          f = open("angka.txt", "w")
+          f.write("100\n")
+          f.write("200\n")
+          f.write("300\n")
+          f.close()
+
+          f = open("angka.txt", "r")
+          total = 0
+          for baris in f:
+              total = total + int(baris)
+          f.close()
+          print("Total:", total)
+        penjelasan: "Tiga angka ditulis, lalu dibaca lagi dan dijumlahkan. Totalnya 600."
+      - kode: |
+          f = open("saham.txt", "w")
+          f.write("TLKM 4000\n")
+          f.write("BBRI 5000\n")
+          f.close()
+
+          f = open("saham.txt", "r")
+          for baris in f:
+              bagian = baris.split()
+              print(bagian[0], "harganya", bagian[1])
+          f.close()
+        penjelasan: "Tiap baris dipecah pakai split(). Nama dan harganya tercetak."
+    kuis:
+      - soal: "Baris 'TLKM 4000' dipecah pakai .split(). Hasilnya..."
+        pilihan: ["satu angka 4000", "daftar berisi TLKM dan 4000", "kata TLKM saja", "dua file baru"]
+        jawaban: 1
+        penjelasan: "split() memotong tiap spasi, jadi hasilnya daftar dua bagian."
+      - soal: "Angka yang dibaca dari file harus diubah dulu pakai..."
+        pilihan: ["str()", "int()", "len()", "split()"]
+        jawaban: 1
+        penjelasan: "Isi file itu teks. int() mengubahnya jadi angka."
+      - soal: "Kode for baris in f artinya..."
+        pilihan: ["mengunjungi tiap baris file", "menghapus file", "menutup file", "menulis satu baris"]
+        jawaban: 0
+        penjelasan: "Loop itu mengunjungi baris file satu per satu."
+
+  - id: "q7-3"
+    judul: "Laporan Tersimpan"
+    menit: 7
+    materi: |
+      Setelah dihitung, hasilnya sebaiknya **disimpan jadi laporan**. 📝
+
+      Kenapa disimpan? Supaya besok kamu bisa membukanya lagi
+      tanpa menghitung ulang dari awal.
+
+      Contoh: kita hitung total, lalu tulis ke file.
+
+      ```python
+      total = 600
+      f = open("laporan.txt", "w")
+      f.write("Total: " + str(total) + "\n")
+      f.close()
+      ```
+
+      `str(total)` mengubah angka jadi teks, karena `write()` hanya mau teks.
+      Tanda `+` menyambung tulisan. Jadi isi filenya `Total: 600`.
+
+      Lalu kita baca lagi untuk membuktikan laporannya tersimpan:
+
+      ```python
+      f = open("laporan.txt", "r")
+      for baris in f:
+          print(baris.strip())
+      f.close()
+      ```
+
+      `.strip()` membuang enter di ujung baris, jadi cetakannya rapi.
+
+      Kalau barisnya banyak, tulis satu per satu.
+      Bisa juga ditulis pakai loop seperti ini:
+
+      ```python
+      data = ["A", "B"]
+      f = open("catatan.txt", "w")
+      for nama in data:
+          f.write(nama + "\n")
+      f.close()
+      ```
+
+      Ayo bikin laporan versimu sendiri di contoh bawah! 📂
+    contoh:
+      - kode: |
+          harga = [100, 200, 300]
+          total = 0
+          for h in harga:
+              total = total + h
+
+          f = open("laporan.txt", "w")
+          f.write("Total: " + str(total))
+          f.close()
+
+          f = open("laporan.txt", "r")
+          isi = f.read()
+          f.close()
+          print(isi)
+        penjelasan: "Total 600 dihitung, disimpan ke file, lalu dibaca lagi."
+      - kode: |
+          modal = 4000
+          hasil = 5000
+          untung = hasil - modal
+
+          f = open("laporan.txt", "w")
+          f.write("Modal: " + str(modal) + "\n")
+          f.write("Untung: " + str(untung) + "\n")
+          f.close()
+
+          f = open("laporan.txt", "r")
+          for baris in f:
+              print(baris.strip())
+          f.close()
+        penjelasan: "Laporan dua baris ditulis, lalu dibaca lagi dan dicetak rapi."
+    kuis:
+      - soal: "Sebelum ditulis ke file, angka harus diubah jadi teks pakai..."
+        pilihan: ["int()", "str()", "len()", "open()"]
+        jawaban: 1
+        penjelasan: "write() butuh teks, jadi angkanya dibungkus str() dulu."
+      - soal: "Kenapa laporan sebaiknya disimpan ke file?"
+        pilihan: ["supaya bisa dibaca lagi nanti", "supaya filenya hilang", "supaya angkanya bertambah", "supaya programnya cepat"]
+        jawaban: 0
+        penjelasan: "Laporan di file bisa dibuka lagi kapan saja."
+      - soal: "Apa gunanya .strip() saat mencetak baris dari file?"
+        pilihan: ["menambah angka", "menghapus enter di ujung baris", "menutup file", "mengubah angka"]
+        jawaban: 1
+        penjelasan: "strip() membuang enter, jadi barisnya tercetak bersih."
+
+soal:
+  - id: "sq7-1"
+    judul: "Dompet Kancil Tersimpan"
+    sulit: "mudah"
+    cerita: |
+      Kancil punya tiga angka tabungan di dompetnya. Ia mau mencatatnya di
+      file dulu, biar tidak lupa. Nanti file itu dibaca lagi untuk berjaga-jaga.
+      Baca tiga angka, tulis ke file, lalu buka lagi file-nya dan jumlahkan.
+      Cetak hasil jumlahnya. Ayo bantu Kancil!
+    input: "Tiga baris: angka pertama, angka kedua, dan angka ketiga."
+    output: "Satu baris: 'Jumlah: <angka>'"
+    contoh:
+      - input: "100\n200\n300"
+        output: "Jumlah: 600"
+      - input: "7\n8\n9"
+        output: "Jumlah: 24"
+    tes:
+      - input: "100\n200\n300"
+        output: "Jumlah: 600"
+      - input: "500\n500\n500"
+        output: "Jumlah: 1500"
+      - input: "1000\n2000\n3000"
+        output: "Jumlah: 6000"
+      - input: "0\n0\n0"
+        output: "Jumlah: 0"
+      - input: "7\n8\n9"
+        output: "Jumlah: 24"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+
+      f = open("angka.txt", "w")
+      f.write(str(a) + "\n")
+      f.write(str(b) + "\n")
+      f.write(str(c) + "\n")
+      f.close()
+
+      f = open("angka.txt", "r")
+      total = 0
+      for baris in f:
+          total = total + int(baris)
+      f.close()
+      print("Jumlah:", total)
+    petunjuk:
+      - "Baca tiga angka dulu, lalu buka file dengan mode 'w' untuk menulis."
+      - "Tulis tiap angka dengan f.write(str(angka) + \"\\n\"), jangan lupa f.close()."
+      - "Buka lagi file-nya dengan mode 'r', jumlahkan tiap baris pakai int(baris)."
+
+  - id: "sq7-2"
+    judul: "Total & Rata-rata Harga"
+    sulit: "sedang"
+    cerita: |
+      Kancil menyimpan harga saham selama beberapa hari ke file. Sekarang ia
+      ingin tahu jumlah dan rata-ratanya. Baca banyak harga (n dulu, lalu
+      harganya), tulis ke file, lalu baca lagi dari file untuk menghitung.
+      Cetak total dan rata-ratanya.
+      Rata-rata itu total dibagi banyaknya harga. Pakai int() ya!
+    input: "Baris pertama n. Lalu n baris: harga tiap hari."
+    output: "Dua baris: 'Total: <angka>' lalu 'Rata-rata: <angka>'"
+    contoh:
+      - input: "3\n1000\n2000\n3000"
+        output: "Total: 6000\nRata-rata: 2000"
+      - input: "5\n100\n200\n300\n400\n500"
+        output: "Total: 1500\nRata-rata: 300"
+    tes:
+      - input: "3\n1000\n2000\n3000"
+        output: "Total: 6000\nRata-rata: 2000"
+      - input: "5\n100\n200\n300\n400\n500"
+        output: "Total: 1500\nRata-rata: 300"
+      - input: "1\n2500"
+        output: "Total: 2500\nRata-rata: 2500"
+      - input: "4\n500\n500\n500\n500"
+        output: "Total: 2000\nRata-rata: 500"
+      - input: "6\n100\n200\n300\n400\n500\n600"
+        output: "Total: 2100\nRata-rata: 350"
+    solusi: |
+      n = int(input())
+
+      f = open("harga.txt", "w")
+      for i in range(n):
+          f.write(input() + "\n")
+      f.close()
+
+      f = open("harga.txt", "r")
+      total = 0
+      for baris in f:
+          total = total + int(baris)
+      f.close()
+
+      print("Total:", total)
+      print("Rata-rata:", int(total / n))
+    petunjuk:
+      - "Baca n dulu. Lalu ulang n kali untuk menulis tiap harga ke file."
+      - "Setelah f.close(), buka lagi file-nya dengan mode 'r'."
+      - "Jumlahkan semua baris pakai loop, lalu rata-ratanya total dibagi n."
+
+  - id: "sq7-3"
+    judul: "Saham Paling Mahal"
+    sulit: "sedang"
+    cerita: |
+      Kancil mencatat harga beberapa saham di bukunya. Setiap baris berisi
+      nama dan harga, dipisah spasi. Ia ingin menyimpannya ke file dulu,
+      lalu membacanya lagi untuk mencari yang paling mahal. Cetak nama dan
+      harganya. Kalau harganya sama, yang muncul lebih dulu tetap juara!
+    input: "Baris pertama n. Lalu n baris: 'nama harga' dipisah spasi."
+    output: "Dua baris: 'Termahal: <nama>' lalu 'Harga: <angka>'"
+    contoh:
+      - input: "3\nTLKM 4000\nBBRI 5000\nGOTO 100"
+        output: "Termahal: BBRI\nHarga: 5000"
+      - input: "4\nA 2500\nB 1000\nC 3000\nD 500"
+        output: "Termahal: C\nHarga: 3000"
+    tes:
+      - input: "3\nTLKM 4000\nBBRI 5000\nGOTO 100"
+        output: "Termahal: BBRI\nHarga: 5000"
+      - input: "4\nA 2500\nB 1000\nC 3000\nD 500"
+        output: "Termahal: C\nHarga: 3000"
+      - input: "1\nSOLO 7000"
+        output: "Termahal: SOLO\nHarga: 7000"
+      - input: "3\nX 1000\nY 1000\nZ 1000"
+        output: "Termahal: X\nHarga: 1000"
+    solusi: |
+      n = int(input())
+
+      f = open("saham.txt", "w")
+      for i in range(n):
+          f.write(input() + "\n")
+      f.close()
+
+      f = open("saham.txt", "r")
+      terbaik = ""
+      tertinggi = 0
+      for baris in f:
+          bagian = baris.split()
+          harga = int(bagian[1])
+          if harga > tertinggi:
+              tertinggi = harga
+              terbaik = bagian[0]
+      f.close()
+
+      print("Termahal:", terbaik)
+      print("Harga:", tertinggi)
+    petunjuk:
+      - "Simpan tiap baris input ke file dulu, baru buka lagi untuk dibaca."
+      - "Pecah tiap baris dengan bagian = baris.split(). Nama di bagian[0], harga di bagian[1]."
+      - "Pakai juara sementara: kalau harganya lebih besar, ganti nama dan harganya."
+
+  - id: "sq7-4"
+    judul: "Laporan Data Tersimpan"
+    sulit: "sulit"
+    cerita: |
+      Pak Otong minta laporan data penjualan. Baca n dulu, lalu n angka
+      satu per satu. Tulis semua angka itu ke file, lalu baca lagi dari
+      file. Setelah itu cetak laporan tiga baris: banyak data, totalnya,
+      dan angka terbesar. Awas, angkanya bisa negatif juga!
+    input: "Baris pertama n. Lalu n baris: satu angka per baris."
+    output: "Tiga baris: 'Data tersimpan: <n> angka', 'Total: <angka>', 'Terbesar: <angka>'"
+    contoh:
+      - input: "3\n100\n200\n300"
+        output: "Data tersimpan: 3 angka\nTotal: 600\nTerbesar: 300"
+      - input: "1\n750"
+        output: "Data tersimpan: 1 angka\nTotal: 750\nTerbesar: 750"
+    tes:
+      - input: "3\n100\n200\n300"
+        output: "Data tersimpan: 3 angka\nTotal: 600\nTerbesar: 300"
+      - input: "4\n500\n500\n900\n100"
+        output: "Data tersimpan: 4 angka\nTotal: 2000\nTerbesar: 900"
+      - input: "1\n750"
+        output: "Data tersimpan: 1 angka\nTotal: 750\nTerbesar: 750"
+      - input: "5\n-5\n-10\n-3\n-8\n-1"
+        output: "Data tersimpan: 5 angka\nTotal: -27\nTerbesar: -1"
+      - input: "2\n1000\n2000"
+        output: "Data tersimpan: 2 angka\nTotal: 3000\nTerbesar: 2000"
+    solusi: |
+      n = int(input())
+
+      f = open("data.txt", "w")
+      for i in range(n):
+          f.write(input() + "\n")
+      f.close()
+
+      f = open("data.txt", "r")
+      data = []
+      for baris in f:
+          data.append(int(baris))
+      f.close()
+
+      total = 0
+      terbesar = data[0]
+      for x in data:
+          total = total + x
+          if x > terbesar:
+              terbesar = x
+
+      print("Data tersimpan:", n, "angka")
+      print("Total:", total)
+      print("Terbesar:", terbesar)
+    petunjuk:
+      - "Tulis semua angka ke file dulu, baru buka lagi dengan mode 'r'."
+      - "Simpan hasil bacaannya ke dalam list, lalu hitung total dan terbesarnya dari list itu."
+      - "Mulai terbesar dari data[0]. Kalau ada angka yang lebih besar, ganti. Ini aman untuk angka negatif."

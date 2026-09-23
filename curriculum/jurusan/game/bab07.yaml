@@ -1,0 +1,494 @@
+bab: 7
+modul: 7
+jurusan: "game"
+tingkat: 2
+judul: "Simpan Petualanganmu"
+emoji: "💾"
+warna: "#f97316"
+deskripsi: "Simpan nyawa dan skormu ke file, lalu muat lagi kapan saja!"
+prasyarat: 12
+
+pelajaran:
+  - id: "g7-1"
+    judul: "Simpan Nyawa & Skor"
+    menit: 6
+    materi: |
+      Petualanganmu makin seru, tapi ada satu masalah. Kalau game ditutup,
+      nyawa dan skormu bisa hilang! 😱 Supaya aman, game menyimpannya ke
+      **file**.
+
+      File itu seperti buku catatan di komputer. Kita menulis di sana, lalu
+      membacanya lagi kapan saja.
+
+      Cara menulis ke file:
+      ```python
+      f = open("simpan.txt", "w")
+      f.write("100")
+      f.close()
+      ```
+
+      - `open("simpan.txt", "w")` membuka file supaya bisa ditulis. Huruf `w`
+        artinya write.
+      - `f.write("100")` menulis isinya ke catatan.
+      - `f.close()` menutup catatan supaya rapi.
+
+      Cara membacanya lagi:
+      ```python
+      f = open("simpan.txt")
+      isi = f.read()
+      f.close()
+      print(isi)
+      ```
+
+      Hasilnya `100`. Isi file berhasil dimuat lagi!
+
+      Kalau menyimpan dua data, akhiri tiap baris dengan `\n`. Saat membaca,
+      ambil satu baris dengan `f.readline()`. Isi file selalu berupa teks.
+      Mau jadi angka? Ubah dulu pakai `int()`.
+
+      File yang kamu tulis barusan bisa langsung dibaca di program yang sama,
+      kok. Ayo coba di contoh bawah! 💾
+    contoh:
+      - kode: |
+          f = open("nyawa.txt", "w")
+          f.write("100")
+          f.close()
+          f = open("nyawa.txt")
+          isi = f.read()
+          f.close()
+          print("Nyawa tersimpan:", isi)
+        penjelasan: "Angka 100 ditulis ke file, lalu dibaca lagi dan dicetak."
+      - kode: |
+          f = open("state.txt", "w")
+          f.write("7\n")
+          f.write("50\n")
+          f.close()
+          f = open("state.txt")
+          nyawa = int(f.readline())
+          skor = int(f.readline())
+          f.close()
+          print("Nyawa:", nyawa)
+          print("Skor:", skor)
+        penjelasan: "Dua nilai disimpan, lalu dimuat lagi jadi angka 7 dan 50."
+    kuis:
+      - soal: "Kalau game ditutup, supaya nyawa dan skor tidak hilang, data disimpan ke..."
+        pilihan:
+          - "file"
+          - "kantong"
+          - "langit"
+          - "layar"
+        jawaban: 0
+        penjelasan: "File itu catatan di komputer. Isinya bisa dibaca lagi nanti."
+      - soal: 'Perintah open("nyawa.txt", "w") dipakai untuk...'
+        pilihan:
+          - "membuka file supaya bisa ditulis"
+          - "membaca isi file"
+          - "menghapus file"
+          - "mengubah warna file"
+        jawaban: 0
+        penjelasan: 'Huruf "w" artinya write, yaitu menulis.'
+      - soal: "Setelah selesai menulis data ke file, langkah terakhir yang benar adalah..."
+        pilihan:
+          - "f.close()"
+          - "f.open()"
+          - "f.print()"
+          - "f.read()"
+        jawaban: 0
+        penjelasan: "close() menutup catatan supaya isinya tersimpan rapi."
+
+  - id: "g7-2"
+    judul: "Muat Game"
+    menit: 7
+    materi: |
+      Sekarang kita pakai cara menyimpan yang lebih hebat: **format
+      nama=nilai**. ✨
+
+      Satu baris catatan isinya nama data, tanda `=`, lalu nilainya:
+
+      ```
+      nyawa=5
+      skor=80
+      ```
+
+      Kenapa begitu? Supaya kita tahu data mana yang sedang dibaca. Pasangan
+      nama dan nilai itu juga mudah diolah komputer.
+
+      Cara membacanya: ambil satu baris, lalu pecah di tanda `=` pakai
+      `split("=")`.
+
+      ```python
+      f = open("profil.txt")
+      b1 = f.readline().strip().split("=")
+      f.close()
+      print(b1[0])
+      print(b1[1])
+      ```
+
+      - `strip()` menghapus enter di ujung baris.
+      - `split("=")` memotong baris jadi beberapa potongan.
+      - Hasilnya daftar: nama ada di posisi 0, nilainya di posisi 1.
+
+      Setelah itu, susun lagi datanya. Nilai yang masih teks diubah jadi angka
+      pakai `int()`. Barulah angka itu bisa dipakai menghitung.
+
+      Muat game artinya: buka file, baca barisnya, pecah tiap baris, lalu
+      hidupkan lagi datanya. Ayo latih di contoh bawah! 🎮
+    contoh:
+      - kode: |
+          f = open("profil.txt", "w")
+          f.write("nyawa=5\n")
+          f.write("skor=80\n")
+          f.close()
+          f = open("profil.txt")
+          b1 = f.readline().strip().split("=")
+          f.close()
+          print("Nama data:", b1[0])
+          print("Nilainya:", b1[1])
+        penjelasan: 'Baris "nyawa=5" dipecah jadi nama "nyawa" dan nilai "5".'
+      - kode: |
+          f = open("profil.txt", "w")
+          f.write("nyawa=5\n")
+          f.write("skor=80\n")
+          f.close()
+          f = open("profil.txt")
+          b1 = f.readline().strip().split("=")
+          b2 = f.readline().strip().split("=")
+          f.close()
+          nyawa = int(b1[1])
+          skor = int(b2[1])
+          print("Nyawa:", nyawa)
+          print("Skor:", skor)
+          print("Total:", nyawa + skor)
+        penjelasan: "Nilai yang sudah diubah jadi angka bisa langsung dijumlahkan."
+    kuis:
+      - soal: "Baris catatan 'skor=80' artinya..."
+        pilihan:
+          - "nama datanya skor, nilainya 80"
+          - "nama datanya 80, nilainya skor"
+          - "ada dua nama data"
+          - "skornya 8080"
+        jawaban: 0
+        penjelasan: "Bagian kiri tanda = adalah nama, bagian kanan nilainya."
+      - soal: 'split("=") memotong satu baris jadi...'
+        pilihan:
+          - "daftar potongan"
+          - "satu angka baru"
+          - "file baru"
+          - "warna baru"
+        jawaban: 0
+        penjelasan: "Potongan itu tersimpan di daftar, misal b1[0] dan b1[1]."
+      - soal: "strip() dipakai untuk..."
+        pilihan:
+          - "menghapus enter di ujung baris"
+          - "menambah spasi di depan"
+          - "membuat huruf jadi besar"
+          - "menghapus file"
+        jawaban: 0
+        penjelasan: "Tanpa strip(), enter ikut terbawa di akhir isi baris."
+
+  - id: "g7-3"
+    judul: "Papan Highscore"
+    menit: 8
+    materi: |
+      Game keren punya **papan highscore**! 🏆 Di situ tertulis skor semua
+      pemain, dan yang tertinggi jadi juara.
+
+      Cara membuatnya: tulis dulu semua skor ke file, satu skor per baris.
+
+      ```python
+      f = open("skor.txt", "w")
+      f.write("70\n")
+      f.write("95\n")
+      f.write("60\n")
+      f.close()
+      ```
+
+      Lalu buka lagi filenya dan baca satu per satu. Untuk mencari yang
+      tertinggi, pakai loop dan satu variabel penjaga:
+
+      ```python
+      tertinggi = 0
+      for i in range(3):
+          s = int(f.readline())
+          if s > tertinggi:
+              tertinggi = s
+      ```
+
+      Cara kerjanya: setiap skor dibandingkan dengan `tertinggi` sekarang.
+      Kalau lebih besar, dia jadi tertinggi baru. Begitu terus sampai skor
+      terakhir.
+
+      Kita mulai dari 0 karena skor game tidak pernah negatif. Kalau belum ada
+      skor sama sekali, papannya masih kosong.
+
+      Skor yang sama tidak apa-apa, hasilnya tetap skor terbesar. Ayo bikin
+      papan highscore-mu! 🎯
+    contoh:
+      - kode: |
+          f = open("skor.txt", "w")
+          f.write("70\n")
+          f.write("95\n")
+          f.write("60\n")
+          f.close()
+          f = open("skor.txt")
+          for i in range(3):
+              s = int(f.readline())
+              print("Skor:", s)
+          f.close()
+        penjelasan: "Tiga skor dibaca dari file satu per satu, lalu dicetak."
+      - kode: |
+          f = open("skor.txt", "w")
+          f.write("70\n")
+          f.write("95\n")
+          f.write("60\n")
+          f.close()
+          f = open("skor.txt")
+          tertinggi = 0
+          for i in range(3):
+              s = int(f.readline())
+              if s > tertinggi:
+                  tertinggi = s
+          f.close()
+          print("Highscore:", tertinggi)
+        penjelasan: "Tiap skor dibandingkan, dan yang terbesar dicetak: 95."
+    kuis:
+      - soal: "Papan highscore berisi..."
+        pilihan:
+          - "skor semua pemain"
+          - "nama semua musuh"
+          - "warna peta"
+          - "jumlah nyawa"
+        jawaban: 0
+        penjelasan: "Dari situ kita tahu skor siapa yang paling tinggi."
+      - soal: "Saat mencari skor tertinggi, variabel penjaganya mulai dari 0 karena..."
+        pilihan:
+          - "skor game tidak pernah negatif"
+          - "angka 0 paling kuat"
+          - "0 lebih besar dari 100"
+          - "biar programnya cepat"
+        jawaban: 0
+        penjelasan: "Semua skor pasti 0 atau lebih, jadi 0 aman sebagai awal."
+      - soal: "Kalau belum ada skor yang disimpan, papan highscore..."
+        pilihan:
+          - "masih kosong"
+          - "otomatis berisi angka 1"
+          - "menunjuk juara"
+          - "penuh dengan skor"
+        jawaban: 0
+        penjelasan: "Belum ada yang dibaca, jadi papannya belum terisi."
+
+soal:
+  - id: "sg7-1"
+    judul: "Catat Tiga Angka"
+    sulit: "mudah"
+    cerita: |
+      Kancil mencatat angka-angka pentingnya di buku besar. Bantu dia, yuk!
+      Ketik tiga angka. Tulis ketiganya ke file, satu angka per baris. Lalu
+      buka lagi filenya, baca ketiga angka itu, jumlahkan, dan cetak
+      hasilnya. Angka yang sudah disimpan di file tidak akan hilang, lho!
+    input: "Tiga baris: tiga angka."
+    output: "Satu baris: 'Jumlah: <total>'"
+    contoh:
+      - input: "1\n2\n3"
+        output: "Jumlah: 6"
+      - input: "10\n20\n30"
+        output: "Jumlah: 60"
+    tes:
+      - input: "1\n2\n3"
+        output: "Jumlah: 6"
+      - input: "10\n20\n30"
+        output: "Jumlah: 60"
+      - input: "0\n0\n0"
+        output: "Jumlah: 0"
+      - input: "5\n5\n5"
+        output: "Jumlah: 15"
+      - input: "100\n200\n300"
+        output: "Jumlah: 600"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      f = open("angka.txt", "w")
+      f.write(f"{a}\n")
+      f.write(f"{b}\n")
+      f.write(f"{c}\n")
+      f.close()
+      f = open("angka.txt")
+      s1 = int(f.readline())
+      s2 = int(f.readline())
+      s3 = int(f.readline())
+      f.close()
+      print("Jumlah:", s1 + s2 + s3)
+    petunjuk:
+      - "Baca dulu tiga angkanya dan simpan di variabel."
+      - 'Tulis ketiganya ke file "angka.txt" dengan mode "w". Akhiri tiap baris dengan \n.'
+      - "Setelah f.close(), buka lagi filenya dan baca tiga barisnya dengan int(f.readline())."
+
+  - id: "sg7-2"
+    judul: "Checkpoint Nyawa, Skor & Harta"
+    sulit: "sedang"
+    cerita: |
+      Kancil membuat game petualangan. Sebelum istirahat, dia menyimpan
+      nyawa, skor, dan harta pemain ke file dengan format nama=nilai. Ketik
+      ketiga nilai itu. Setelah disimpan, pemain mengambil koin: skornya
+      naik 10. Lalu muat lagi isi file itu, dan cetak nyawa, skor, serta
+      harta yang tersimpan.
+    input: "Tiga baris: nyawa, skor, harta."
+    output: "Empat baris: 'Skor sekarang: <skor+10>', 'Nyawa tersimpan: <nyawa>', 'Skor tersimpan: <skor>', lalu 'Harta tersimpan: <harta>'."
+    contoh:
+      - input: "3\n50\n2"
+        output: "Skor sekarang: 60\nNyawa tersimpan: 3\nSkor tersimpan: 50\nHarta tersimpan: 2"
+      - input: "0\n0\n0"
+        output: "Skor sekarang: 10\nNyawa tersimpan: 0\nSkor tersimpan: 0\nHarta tersimpan: 0"
+    tes:
+      - input: "3\n50\n2"
+        output: "Skor sekarang: 60\nNyawa tersimpan: 3\nSkor tersimpan: 50\nHarta tersimpan: 2"
+      - input: "0\n0\n0"
+        output: "Skor sekarang: 10\nNyawa tersimpan: 0\nSkor tersimpan: 0\nHarta tersimpan: 0"
+      - input: "5\n100\n7"
+        output: "Skor sekarang: 110\nNyawa tersimpan: 5\nSkor tersimpan: 100\nHarta tersimpan: 7"
+      - input: "1\n9\n0"
+        output: "Skor sekarang: 19\nNyawa tersimpan: 1\nSkor tersimpan: 9\nHarta tersimpan: 0"
+      - input: "10\n25\n3"
+        output: "Skor sekarang: 35\nNyawa tersimpan: 10\nSkor tersimpan: 25\nHarta tersimpan: 3"
+    solusi: |
+      nyawa = int(input())
+      skor = int(input())
+      harta = int(input())
+      f = open("simpan.txt", "w")
+      f.write(f"nyawa={nyawa}\n")
+      f.write(f"skor={skor}\n")
+      f.write(f"harta={harta}\n")
+      f.close()
+      skor = skor + 10
+      print("Skor sekarang:", skor)
+      f = open("simpan.txt")
+      b1 = f.readline().strip().split("=")
+      b2 = f.readline().strip().split("=")
+      b3 = f.readline().strip().split("=")
+      f.close()
+      print("Nyawa tersimpan:", b1[1])
+      print("Skor tersimpan:", b2[1])
+      print("Harta tersimpan:", b3[1])
+    petunjuk:
+      - 'Tulis file "simpan.txt" berisi tiga baris: nyawa=<n>, skor=<s>, harta=<h>.'
+      - "Setelah file ditutup, skornya naik 10 dulu. Cetak Skor sekarang, lalu baru muat filenya."
+      - 'Saat memuat, pecah tiap baris dengan .strip().split("="). Nilainya ada di potongan posisi 1.'
+
+  - id: "sg7-3"
+    judul: "Papan Highscore Kelas"
+    sulit: "sedang"
+    cerita: |
+      Papan highscore Kancil masih kosong. Ketik jumlah pemain, lalu ketik
+      skor mereka satu per satu. Simpan semua skor ke file, lalu baca lagi
+      dari file untuk mengisi papan. Cetak tiap skor yang tersimpan, dan
+      cari skor tertinggi dengan loop. Kalau belum ada skor sama sekali,
+      cetak pemberitahuan khusus.
+    input: "Baris pertama: jumlah pemain n. Kalau n lebih dari 0, menyusul n baris skor."
+    output: "Kalau n = 0: 'Belum ada skor.'. Kalau tidak: baris 'Skor tersimpan: <skor>' untuk tiap skor, lalu 'Highscore: <skor tertinggi>'."
+    contoh:
+      - input: "3\n70\n95\n60"
+        output: "Skor tersimpan: 70\nSkor tersimpan: 95\nSkor tersimpan: 60\nHighscore: 95"
+      - input: "1\n42"
+        output: "Skor tersimpan: 42\nHighscore: 42"
+    tes:
+      - input: "3\n70\n95\n60"
+        output: "Skor tersimpan: 70\nSkor tersimpan: 95\nSkor tersimpan: 60\nHighscore: 95"
+      - input: "1\n42"
+        output: "Skor tersimpan: 42\nHighscore: 42"
+      - input: "0"
+        output: "Belum ada skor."
+      - input: "4\n10\n10\n10\n10"
+        output: "Skor tersimpan: 10\nSkor tersimpan: 10\nSkor tersimpan: 10\nSkor tersimpan: 10\nHighscore: 10"
+      - input: "5\n0\n7\n0\n3\n0"
+        output: "Skor tersimpan: 0\nSkor tersimpan: 7\nSkor tersimpan: 0\nSkor tersimpan: 3\nSkor tersimpan: 0\nHighscore: 7"
+    solusi: |
+      n = int(input())
+      f = open("skor.txt", "w")
+      for i in range(n):
+          s = int(input())
+          f.write(f"{s}\n")
+      f.close()
+      if n == 0:
+          print("Belum ada skor.")
+      else:
+          f = open("skor.txt")
+          tertinggi = 0
+          for i in range(n):
+              s = int(f.readline())
+              print("Skor tersimpan:", s)
+              if s > tertinggi:
+                  tertinggi = s
+          f.close()
+          print("Highscore:", tertinggi)
+    petunjuk:
+      - "Simpan dulu semua skornya. Loop sebanyak n, baca satu skor, lalu tulis ke file."
+      - "Saat memuat, siapkan tertinggi = 0. Bandingkan tiap skor dengan if s > tertinggi."
+      - "Kalau n = 0, filenya kosong. Cetak 'Belum ada skor.' dan jangan buka papan skornya."
+
+  - id: "sg7-4"
+    judul: "Save Game Lengkap"
+    sulit: "sulit"
+    cerita: |
+      Waktunya menyimpan game secara lengkap! Ketik nama pemain, nyawa,
+      skor, dan harta. Tulis keempat data itu ke file dengan format
+      nama=nilai. Lalu buka lagi filenya, baca, dan pecah tiap baris untuk
+      menyusun kembali datanya. Periksa juga: nyawanya masih ada atau habis,
+      dan skornya sudah tinggi atau belum.
+    input: "Empat baris: nama pemain, nyawa, skor, harta."
+    output: "Enam baris: 'Pemain: <nama>', 'Nyawa: <n>', 'Skor: <n>', 'Harta: <n>', 'Status: Bisa lanjut' atau 'Status: Game Over', lalu 'Peringkat: Jago/Hebat/Pemula'."
+    contoh:
+      - input: "Budi\n3\n120\n2"
+        output: "Pemain: Budi\nNyawa: 3\nSkor: 120\nHarta: 2\nStatus: Bisa lanjut\nPeringkat: Jago"
+      - input: "Sinta\n0\n50\n0"
+        output: "Pemain: Sinta\nNyawa: 0\nSkor: 50\nHarta: 0\nStatus: Game Over\nPeringkat: Hebat"
+    tes:
+      - input: "Budi\n3\n120\n2"
+        output: "Pemain: Budi\nNyawa: 3\nSkor: 120\nHarta: 2\nStatus: Bisa lanjut\nPeringkat: Jago"
+      - input: "Sinta\n0\n50\n0"
+        output: "Pemain: Sinta\nNyawa: 0\nSkor: 50\nHarta: 0\nStatus: Game Over\nPeringkat: Hebat"
+      - input: "Ron\n1\n100\n3"
+        output: "Pemain: Ron\nNyawa: 1\nSkor: 100\nHarta: 3\nStatus: Bisa lanjut\nPeringkat: Jago"
+      - input: "Dodo\n2\n49\n1"
+        output: "Pemain: Dodo\nNyawa: 2\nSkor: 49\nHarta: 1\nStatus: Bisa lanjut\nPeringkat: Pemula"
+      - input: "Kancil\n5\n50\n9"
+        output: "Pemain: Kancil\nNyawa: 5\nSkor: 50\nHarta: 9\nStatus: Bisa lanjut\nPeringkat: Hebat"
+    solusi: |
+      nama = input()
+      nyawa = int(input())
+      skor = int(input())
+      harta = int(input())
+      f = open("game.txt", "w")
+      f.write(f"nama={nama}\n")
+      f.write(f"nyawa={nyawa}\n")
+      f.write(f"skor={skor}\n")
+      f.write(f"harta={harta}\n")
+      f.close()
+      f = open("game.txt")
+      b1 = f.readline().strip().split("=")
+      b2 = f.readline().strip().split("=")
+      b3 = f.readline().strip().split("=")
+      b4 = f.readline().strip().split("=")
+      f.close()
+      nama2 = b1[1]
+      nyawa2 = int(b2[1])
+      skor2 = int(b3[1])
+      harta2 = int(b4[1])
+      print("Pemain:", nama2)
+      print("Nyawa:", nyawa2)
+      print("Skor:", skor2)
+      print("Harta:", harta2)
+      if nyawa2 > 0:
+          print("Status: Bisa lanjut")
+      else:
+          print("Status: Game Over")
+      if skor2 >= 100:
+          print("Peringkat: Jago")
+      elif skor2 >= 50:
+          print("Peringkat: Hebat")
+      else:
+          print("Peringkat: Pemula")
+    petunjuk:
+      - "Tulis empat baris ke file dengan format nama=nilai, satu data per baris."
+      - 'Saat memuat, pecah tiap baris pakai .strip().split("="), lalu ambil bagian posisi 1.'
+      - "Status dicek pakai if nyawa > 0. Peringkat pakai if/elif: 100 ke atas Jago, 50 ke atas Hebat, sisanya Pemula."

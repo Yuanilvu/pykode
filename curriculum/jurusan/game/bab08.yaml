@@ -1,0 +1,457 @@
+bab: 8
+modul: 8
+jurusan: "game"
+tingkat: 2
+judul: "Dunia Acak yang Bisa Diulang"
+emoji: "🎲"
+warna: "#a855f7"
+deskripsi: "Bikin dunia acak yang hasilnya selalu sama tiap dijalankan!"
+prasyarat: 13
+
+pelajaran:
+  - id: "g8-1"
+    judul: "Angka Acak yang Bisa Diulang"
+    menit: 6
+    materi: |
+      Sekarang duniamu makin ajaib: ada **angka acak**! 🎲
+
+      Angka acak bikin dadu, harta, dan cuaca berbeda tiap kali main. Di
+      Python, alatnya bernama `random`.
+
+      ```python
+      import random
+      random.seed(7)
+      print(random.randint(1, 6))
+      ```
+
+      - `import random` memanggil alat angka acaknya.
+      - `random.seed(7)` mengunci acakannya dengan angka 7.
+      - `random.randint(1, 6)` memilih angka acak dari 1 sampai 6. Batasnya
+        ikut, jadi 1 dan 6 bisa muncul.
+
+      Karena dipanggil setelah `seed(7)`, hasilnya selalu 3. Ganti 7 jadi 9,
+      hasilnya berubah, tapi tetap sama setiap kali kamu jalankan.
+
+      Inilah rahasia game yang bisa dites: **hasilnya bisa diulang**.
+      `seed` itu seperti menulis "mulai dari titik ini". Program lain yang
+      memakai seed sama akan mendapat hasil yang sama juga.
+
+      Kalau `randint` dipanggil beberapa kali, urutannya mengikuti aturan.
+      Seed 7 lalu `randint(1, 6)` lima kali memberi: 3, 2, 4, 6, 1.
+
+      Ayo main dadu yang bisa diulang di contoh bawah! 🎲
+    contoh:
+      - kode: |
+          import random
+          random.seed(7)
+          print(random.randint(1, 6))
+        penjelasan: "Seed 7 bikin hasil dadunya selalu 3."
+      - kode: |
+          import random
+          random.seed(7)
+          for i in range(5):
+              print(random.randint(1, 6))
+        penjelasan: "Lima lemparan berurutan: 3, 2, 4, 6, 1."
+    kuis:
+      - soal: "Alat angka acak di Python bernama..."
+        pilihan:
+          - "random"
+          - "dadu"
+          - "acak"
+          - "seed"
+        jawaban: 0
+        penjelasan: "random adalah modul bawaan Python untuk angka acak."
+      - soal: "random.seed(7) dipakai supaya..."
+        pilihan:
+          - "hasil acaknya selalu sama"
+          - "angkanya jadi besar"
+          - "programnya lebih cepat"
+          - "file tersimpan"
+        jawaban: 0
+        penjelasan: "Seed mengunci acakan, jadi hasilnya bisa diulang."
+      - soal: "random.randint(1, 6) memilih angka dari..."
+        pilihan:
+          - "1 sampai 6"
+          - "1 sampai 5"
+          - "6 saja"
+          - "0 sampai 6"
+        jawaban: 0
+        penjelasan: "Batasnya ikut, jadi 1 dan 6 sama-sama mungkin muncul."
+
+  - id: "g8-2"
+    judul: "Peta Harta Acak"
+    menit: 7
+    materi: |
+      Sekarang kita bikin **peta harta acak**! 🗺️ Peta kita berukuran 3x3,
+      jadi ada 3 baris dan 3 kolom.
+
+      Petak kosong ditandai titik. Buat petanya pakai daftar di dalam daftar:
+
+      ```python
+      peta = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
+      ```
+
+      Baris pertama `peta[0]`, baris kedua `peta[1]`, baris ketiga `peta[2]`.
+      Kolomnya juga 0, 1, dan 2.
+
+      Sekarang taruh harta `H` di petak acak:
+
+      ```python
+      import random
+      random.seed(7)
+      b = random.randint(0, 2)
+      k = random.randint(0, 2)
+      peta[b][k] = "H"
+      ```
+
+      Panggilan pertama memilih barisnya, panggilan kedua memilih kolomnya.
+      Kalau diulang 3 kali, petanya berisi 3 harta.
+
+      Hati-hati: dua harta bisa jatuh di petak yang sama. Kalau itu terjadi,
+      H-nya tetap satu, jadi jumlah harta di peta bisa kurang dari 3.
+
+      Cara mencetak petanya: cetak tiap baris dengan menggabungkan ketiga
+      petaknya pakai `+`. Cara menghitung hartanya: telusuri semua petak
+      dengan loop bersarang, lalu tambah satu setiap melihat `H`.
+
+      Ayo susun peta hartamu! 💎
+    contoh:
+      - kode: |
+          import random
+          random.seed(7)
+          b = random.randint(0, 2)
+          k = random.randint(0, 2)
+          print("Harta di baris", b, "kolom", k)
+        penjelasan: "Seed 7 menaruh harta pertama di baris 1, kolom 0."
+      - kode: |
+          import random
+          random.seed(7)
+          peta = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
+          for i in range(3):
+              b = random.randint(0, 2)
+              k = random.randint(0, 2)
+              peta[b][k] = "H"
+          jumlah = 0
+          for baris in peta:
+              for sel in baris:
+                  if sel == "H":
+                      jumlah = jumlah + 1
+          for baris in peta:
+              print(baris[0] + baris[1] + baris[2])
+          print("Jumlah harta:", jumlah)
+        penjelasan: "Tiga harta ditaruh, petanya dicetak, lalu hartanya dihitung: 3."
+    kuis:
+      - soal: "Peta 3x3 punya..."
+        pilihan:
+          - "3 baris dan 3 kolom"
+          - "9 baris dan 1 kolom"
+          - "1 baris dan 9 kolom"
+          - "3 baris dan 9 kolom"
+        jawaban: 0
+        penjelasan: "3 kali 3 petak, jadi ada 9 petak semuanya."
+      - soal: "peta[1][2] artinya petak di..."
+        pilihan:
+          - "baris 2 kolom 3"
+          - "baris 3 kolom 2"
+          - "baris 1 kolom 2"
+          - "baris 2 kolom 2"
+        jawaban: 0
+        penjelasan: "Ingat, posisi daftar mulai dari 0. Jadi 1 artinya baris kedua."
+      - soal: "Dua harta jatuh di petak yang sama. Jumlah H di peta jadi..."
+        pilihan:
+          - "berkurang dari yang diminta"
+          - "bertambah dua"
+          - "selalu sembilan"
+          - "selalu tiga"
+        jawaban: 0
+        penjelasan: "H yang menumpuk tetap satu, jadi hitungannya lebih sedikit."
+
+  - id: "g8-3"
+    judul: "Rumus Dunia"
+    menit: 8
+    materi: |
+      Dunia game yang bagus dibuat dari **rumus** yang menggabungkan beberapa
+      angka acak. 🧙
+
+      Rumusnya bisa seperti ini:
+      - jumlah harta = angka acak 2 sampai 4
+      - cuaca = angka acak 0 atau 1. Angka 0 artinya cerah, 1 artinya hujan
+      - harta ditaruh di petak acak, satu per satu
+
+      ```python
+      import random
+      random.seed(7)
+      harta = random.randint(2, 4)
+      cuaca = random.randint(0, 1)
+      print("Rencana harta:", harta)
+      if cuaca == 0:
+          print("Cuaca: cerah")
+      else:
+          print("Cuaca: hujan")
+      ```
+
+      Urutan panggilannya penting, lho. `randint` yang dipanggil dengan urutan
+      berbeda memberi hasil berbeda. Jadi tulis persis urutannya: harta dulu,
+      lalu cuaca.
+
+      Setelah peta jadi, hitung hartanya. Harta yang diminta dan harta yang
+      benar-benar ada di peta bisa berbeda. Kalau dua harta jatuh di petak
+      yang sama, jumlahnya berkurang.
+
+      Dari hasil hitungan itu, dunia bisa dinilai: kaya atau sederhana. Dunia
+      disebut kaya kalau hartanya 3 atau lebih.
+
+      Ayo rakit duniamu sendiri! 🌍
+    contoh:
+      - kode: |
+          import random
+          random.seed(7)
+          harta = random.randint(2, 4)
+          cuaca = random.randint(0, 1)
+          print("Rencana harta:", harta)
+          if cuaca == 0:
+              print("Cuaca: cerah")
+          else:
+              print("Cuaca: hujan")
+        penjelasan: "Rumus untuk seed 7: 3 harta dan cuaca cerah."
+      - kode: |
+          import random
+          random.seed(7)
+          harta = random.randint(2, 4)
+          peta = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
+          for i in range(harta):
+              b = random.randint(0, 2)
+              k = random.randint(0, 2)
+              peta[b][k] = "H"
+          cuaca = random.randint(0, 1)
+          for baris in peta:
+              print(baris[0] + baris[1] + baris[2])
+          total = 0
+          for baris in peta:
+              for sel in baris:
+                  if sel == "H":
+                      total = total + 1
+          print("Harta diminta:", harta)
+          print("Harta nyata:", total)
+          if cuaca == 0:
+              print("Cuaca: cerah")
+          else:
+              print("Cuaca: hujan")
+        penjelasan: "Dunia lengkap dari rumus: peta, jumlah hartanya, dan cuaca."
+    kuis:
+      - soal: "Angka acak pertama pada rumus dunia dipakai untuk..."
+        pilihan:
+          - "jumlah harta"
+          - "nama pemain"
+          - "warna peta"
+          - "jumlah baris peta"
+        jawaban: 0
+        penjelasan: "harta = random.randint(2, 4) menentukan berapa harta."
+      - soal: "Kalau urutan panggilan randint berbeda, hasilnya..."
+        pilihan:
+          - "ikut berbeda"
+          - "tetap sama"
+          - "selalu nol"
+          - "selalu cerah"
+        jawaban: 0
+        penjelasan: "Setiap panggilan mengambil angka berikutnya dari urutan itu."
+      - soal: "Harta diminta 3, tapi di peta hanya ada 2 H. Itu terjadi karena..."
+        pilihan:
+          - "dua harta jatuh di petak yang sama"
+          - "petanya terlalu besar"
+          - "angka acaknya rusak"
+          - "cuacanya hujan"
+        jawaban: 0
+        penjelasan: "H yang menumpuk di satu petak tetap terhitung satu."
+
+soal:
+  - id: "sg8-1"
+    judul: "Dadu yang Bisa Diulang"
+    sulit: "mudah"
+    cerita: |
+      Kancil bikin dadu ajaib yang hasilnya bisa diulang! Ketik berapa kali
+      dadu dilempar. Lalu mulai dengan random.seed(7), dan diulang sebanyak
+      itu: random.randint(1, 6). Cetak tiap hasilnya di baris sendiri. Dadu
+      yang sama selalu memberi hasil yang sama, jadi mudah dites!
+    input: "Satu baris: jumlah lemparan."
+    output: "Hasil tiap lemparan, satu angka per baris. Kalau lemparannya 0, tidak ada yang dicetak."
+    contoh:
+      - input: "5"
+        output: "3\n2\n4\n6\n1"
+      - input: "1"
+        output: "3"
+    tes:
+      - input: "5"
+        output: "3\n2\n4\n6\n1"
+      - input: "1"
+        output: "3"
+      - input: "3"
+        output: "3\n2\n4"
+      - input: "2"
+        output: "3\n2"
+      - input: "0"
+        output: ""
+    solusi: |
+      import random
+      random.seed(7)
+      n = int(input())
+      for i in range(n):
+          print(random.randint(1, 6))
+    petunjuk:
+      - "Panggil import random dulu, lalu random.seed(7) persis di awal."
+      - "Baca jumlah lemparannya dengan int(input()), lalu pakai for i in range(n)."
+      - "Di dalam loop, cetak random.randint(1, 6) tiap putaran."
+
+  - id: "sg8-2"
+    judul: "Peta Harta Baru"
+    sulit: "sedang"
+    cerita: |
+      Kancil butuh peta harta baru untuk petualangan besok! Ketik satu angka
+      untuk seed. Lalu mulai dengan random.seed(angka yang kamu ketik). Ulang
+      3 kali: baris = random.randint(0, 2), kolom = random.randint(0, 2),
+      lalu isi petak itu dengan H. Terakhir, cetak petanya 3 baris. Hati-hati,
+      dua harta bisa jatuh di petak yang sama!
+    input: "Satu baris: angka seed."
+    output: "Tiga baris peta, masing-masing 3 karakter: 'H' untuk harta dan '.' untuk petak kosong."
+    contoh:
+      - input: "1"
+        output: ".HH\n...\n..."
+      - input: "3"
+        output: "..H\n..H\nH.."
+    tes:
+      - input: "1"
+        output: ".HH\n...\n..."
+      - input: "3"
+        output: "..H\n..H\nH.."
+      - input: "7"
+        output: "H..\nH.H\n..."
+      - input: "20"
+        output: ".H.\n...\n..H"
+      - input: "99"
+        output: "H.H\n.H.\n..."
+    solusi: |
+      import random
+      seed = int(input())
+      random.seed(seed)
+      peta = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
+      for i in range(3):
+          b = random.randint(0, 2)
+          k = random.randint(0, 2)
+          peta[b][k] = "H"
+      for baris in peta:
+          print(baris[0] + baris[1] + baris[2])
+    petunjuk:
+      - "Baca seed dengan int(input()), langsung ikuti dengan random.seed(seed)."
+      - "Ulang 3 kali: ambil b = random.randint(0, 2) untuk baris, lalu k = random.randint(0, 2) untuk kolom."
+      - "Isi petaknya dengan peta[b][k] = \"H\", lalu cetak tiap baris dengan menggabungkan 3 petaknya pakai +."
+
+  - id: "sg8-3"
+    judul: "Menghitung Harta Peta"
+    sulit: "sedang"
+    cerita: |
+      Peta harta Kancil sudah jadi, tapi dia ingin tahu isinya. Ketik satu
+      angka untuk seed. Lalu mulai dengan random.seed(angka yang kamu ketik).
+      Ulang 4 kali: baris = random.randint(0, 2), kolom = random.randint(0, 2),
+      lalu taruh H di petak itu. Hitung harta tiap baris dan totalnya.
+    input: "Satu baris: angka seed."
+    output: "Empat baris: 'Baris 1: <n> harta' sampai 'Baris 3: <n> harta', lalu 'Total harta: <n>'."
+    contoh:
+      - input: "1"
+        output: "Baris 1: 2 harta\nBaris 2: 1 harta\nBaris 3: 0 harta\nTotal harta: 3"
+      - input: "2"
+        output: "Baris 1: 3 harta\nBaris 2: 0 harta\nBaris 3: 1 harta\nTotal harta: 4"
+    tes:
+      - input: "1"
+        output: "Baris 1: 2 harta\nBaris 2: 1 harta\nBaris 3: 0 harta\nTotal harta: 3"
+      - input: "2"
+        output: "Baris 1: 3 harta\nBaris 2: 0 harta\nBaris 3: 1 harta\nTotal harta: 4"
+      - input: "7"
+        output: "Baris 1: 1 harta\nBaris 2: 2 harta\nBaris 3: 1 harta\nTotal harta: 4"
+      - input: "12"
+        output: "Baris 1: 1 harta\nBaris 2: 1 harta\nBaris 3: 2 harta\nTotal harta: 4"
+      - input: "20"
+        output: "Baris 1: 1 harta\nBaris 2: 0 harta\nBaris 3: 1 harta\nTotal harta: 2"
+    solusi: |
+      import random
+      seed = int(input())
+      random.seed(seed)
+      peta = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
+      for i in range(4):
+          b = random.randint(0, 2)
+          k = random.randint(0, 2)
+          peta[b][k] = "H"
+      total = 0
+      for r in range(3):
+          jumlah = 0
+          for k in range(3):
+              if peta[r][k] == "H":
+                  jumlah = jumlah + 1
+          total = total + jumlah
+          print(f"Baris {r + 1}: {jumlah} harta")
+      print(f"Total harta: {total}")
+    petunjuk:
+      - "Sama seperti peta acak, tapi harta ditaruh 4 kali, bukan 3."
+      - "Hitung per baris: loop r dari 0 sampai 2, di dalamnya loop k dari 0 sampai 2."
+      - "Kalau petaknya H, tambah jumlahnya. Total harta adalah jumlah dari ketiga baris."
+
+  - id: "sg8-4"
+    judul: "Rumus Dunia Rahasia"
+    sulit: "sulit"
+    cerita: |
+      Rumus dunia rahasia Kancil dimulai dari satu angka seed. Ketik angka
+      itu. Lalu mulai dengan random.seed(angka yang kamu ketik). Pertama,
+      harta = random.randint(2, 4). Ulang sebanyak harta: baris =
+      random.randint(0, 2), kolom = random.randint(0, 2), taruh H. Terakhir,
+      cuaca = random.randint(0, 1). Cetak peta, total harta, cuaca, dan
+      penilaian dunianya!
+    input: "Satu baris: angka seed."
+    output: "Enam baris: tiga baris peta, lalu 'Total harta: <n>', 'Cuaca: cerah' atau 'Cuaca: hujan', lalu 'Dunia kaya!' atau 'Dunia sederhana.'."
+    contoh:
+      - input: "1"
+        output: "...\nH..\nH..\nTotal harta: 2\nCuaca: hujan\nDunia sederhana."
+      - input: "2"
+        output: "H..\nH..\n...\nTotal harta: 2\nCuaca: hujan\nDunia sederhana."
+    tes:
+      - input: "1"
+        output: "...\nH..\nH..\nTotal harta: 2\nCuaca: hujan\nDunia sederhana."
+      - input: "2"
+        output: "H..\nH..\n...\nTotal harta: 2\nCuaca: hujan\nDunia sederhana."
+      - input: "5"
+        output: "...\n..H\nH.H\nTotal harta: 3\nCuaca: hujan\nDunia kaya!"
+      - input: "7"
+        output: ".HH\n...\nH..\nTotal harta: 3\nCuaca: cerah\nDunia kaya!"
+      - input: "12"
+        output: "...\nH.H\n..H\nTotal harta: 3\nCuaca: hujan\nDunia kaya!"
+      - input: "42"
+        output: "H.H\n...\n.H.\nTotal harta: 3\nCuaca: cerah\nDunia kaya!"
+    solusi: |
+      import random
+      seed = int(input())
+      random.seed(seed)
+      harta = random.randint(2, 4)
+      peta = [[".", ".", "."], [".", ".", "."], [".", ".", "."]]
+      for i in range(harta):
+          b = random.randint(0, 2)
+          k = random.randint(0, 2)
+          peta[b][k] = "H"
+      cuaca = random.randint(0, 1)
+      for baris in peta:
+          print(baris[0] + baris[1] + baris[2])
+      total = 0
+      for baris in peta:
+          for sel in baris:
+              if sel == "H":
+                  total = total + 1
+      print("Total harta:", total)
+      if cuaca == 0:
+          print("Cuaca: cerah")
+      else:
+          print("Cuaca: hujan")
+      if total >= 3:
+          print("Dunia kaya!")
+      else:
+          print("Dunia sederhana.")
+    petunjuk:
+      - "Urutannya wajib begini: seed, lalu randint(2, 4) untuk jumlah harta."
+      - "Baru setelah itu penempatan H: tiap putaran randint(0, 2) untuk baris, lalu randint(0, 2) untuk kolom."
+      - "Terakhir baru cuaca = random.randint(0, 1). Hitung total H dengan loop bersarang, lalu cetak penilaiannya."
