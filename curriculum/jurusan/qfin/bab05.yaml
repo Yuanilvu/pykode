@@ -1,0 +1,431 @@
+bab: 5
+modul: 5
+jurusan: "qfin"
+judul: "Proyek: Simulator Portofolio"
+emoji: "💼"
+warna: "#14b8a6"
+deskripsi: "Rakit simulator portofolio: menu, fungsi hitung, dan laporan."
+prasyarat: 12
+
+pelajaran:
+  - id: "q5-1"
+    judul: "Rancang Menu Simulator"
+    menit: 6
+    materi: |
+      Program yang seru biasanya punya **menu**, seperti game di HP kamu. 🎮
+      Di menu ada pilihan angka. Kita ketik angkanya, program menjawab.
+
+      **Menu itu berulang terus.** Karena itu kita pakai `while`.
+      `while` artinya ulangi terus selama syaratnya masih benar.
+
+      ```python
+      pilih = 0
+      while pilih != 9:
+          print("1. Lihat nilai saham")
+          print("2. Hitung untung")
+          print("9. Keluar")
+          pilih = 9
+      print("Terima kasih!")
+      ```
+
+      Program itu mencetak menu, lalu keluar karena `pilih` sudah 9.
+
+      **Pilihan keluar itu WAJIB.** Kalau tidak ada, programnya berputar terus
+      dan tidak pernah berhenti. Nanti kamu harus menutup jendelanya. 😅
+
+      **Bercabang sesuai pilihan.** Pakai `if`, `elif`, dan `else`:
+
+      ```python
+      pilih = 2
+      if pilih == 1:
+          print("Menu nilai")
+      elif pilih == 2:
+          print("Menu untung")
+      else:
+          print("Pilihan tidak ada")
+      ```
+
+      Hasilnya `Menu untung`, karena pilihannya 2.
+
+      Ayo ubah angka `pilih` jadi 1 atau 3, lalu lihat hasilnya!
+    contoh:
+      - kode: |
+          pilih = 0
+          while pilih != 9:
+              print("1. Lihat nilai saham")
+              print("2. Hitung untung")
+              print("9. Keluar")
+              pilih = 9
+          print("Terima kasih!")
+        penjelasan: "Menu dicetak, lalu langsung keluar karena pilih diisi 9."
+      - kode: |
+          pilih = 1
+          if pilih == 1:
+              print("Menu nilai")
+          elif pilih == 2:
+              print("Menu untung")
+          else:
+              print("Pilihan tidak ada")
+        penjelasan: "Karena pilih = 1, program masuk ke cabang pertama."
+    kuis:
+      - soal: "Kenapa menu simulator sebaiknya pakai while?"
+        pilihan:
+          - "supaya bisa dipilih berulang sampai keluar"
+          - "supaya cepat selesai"
+          - "supaya angkanya besar"
+          - "supaya tidak perlu angka"
+        jawaban: 0
+        penjelasan: "Menu harus muncul lagi dan lagi sampai anak memilih keluar."
+      - soal: "Menu yang tidak punya pilihan keluar akan..."
+        pilihan:
+          - "berhenti sendiri"
+          - "berputar terus dan tidak berhenti"
+          - "hilang"
+          - "berubah jadi game"
+        jawaban: 1
+        penjelasan: "while akan terus mengulang. Tanpa pilihan keluar, programnya tidak pernah selesai."
+      - soal: "Di menu simulator, angka 9 biasanya dipakai untuk..."
+        pilihan:
+          - "menambah saham"
+          - "menghitung untung"
+          - "menghapus semua"
+          - "keluar dari program"
+        jawaban: 3
+        penjelasan: "Pilihan keluar diberi nomor khusus, di contoh kita pakai 9."
+
+  - id: "q5-2"
+    judul: "Fungsi Penghitung Nilai"
+    menit: 7
+    materi: |
+      Program besar sebaiknya dipecah jadi bagian-bagian kecil.
+      Bagian kecil itu namanya **fungsi**. Kamu sudah kenal cara membuatnya
+      dengan `def`. Sekarang kita pakai fungsi untuk menghitung uang! 💼
+
+      ```python
+      def nilai_saham(harga, lot):
+          return harga * lot
+
+      def untung(beli, jual, lot):
+          return (jual - beli) * lot
+
+      print(nilai_saham(1000, 2))
+      print(untung(1000, 1200, 2))
+      ```
+
+      Hasilnya `2000`, lalu `400`.
+
+      **`return` artinya mengirim hasil.** Tanpa `return`, hasilnya tidak bisa
+      dipakai lagi di tempat lain. Bayangkan mesin jajanan: kamu masukkan uang,
+      mesin mengembalikan kue. Kue itulah hasil `return`. 🍪
+
+      **Fungsi bikin kode rapi.** Kita tulis sekali, lalu pakai berkali-kali.
+      Kalau ada yang salah, cukup perbaiki di satu tempat saja.
+
+      Ayo panggil `untung(500, 600, 3)`. Hitung dulu hasilnya, baru cek!
+    contoh:
+      - kode: |
+          def nilai_saham(harga, lot):
+              return harga * lot
+
+          print("Nilai:", nilai_saham(1000, 2))
+          print("Nilai:", nilai_saham(500, 10))
+        penjelasan: "Fungsi dipakai dua kali. Hasilnya 2000 lalu 5000."
+      - kode: |
+          def untung(beli, jual, lot):
+              return (jual - beli) * lot
+
+          print("Untung:", untung(1000, 1200, 2))
+          print("Untung:", untung(500, 600, 3))
+        penjelasan: "Selisih dikali lot. Hasilnya 400 lalu 300."
+    kuis:
+      - soal: "Apa gunanya return di dalam fungsi?"
+        pilihan:
+          - "mengirim hasil keluar dari fungsi"
+          - "mencetak ke layar"
+          - "menghapus variabel"
+          - "mengulang kode"
+        jawaban: 0
+        penjelasan: "return mengirim hasil supaya bisa dipakai di tempat lain."
+      - soal: "Kalau nilai_saham(1000, 3) dipanggil, hasilnya..."
+        pilihan:
+          - "1000"
+          - "3000"
+          - "13000"
+          - "300"
+        jawaban: 1
+        penjelasan: "nilai_saham mengembalikan harga dikali lot. 1000 dikali 3 hasilnya 3000."
+      - soal: "Fungsi untung(beli, jual, lot) menghitung..."
+        pilihan:
+          - "harga beli dikali lot"
+          - "harga jual dikali lot"
+          - "selisih jual dan beli dikali lot"
+          - "harga jual ditambah lot"
+        jawaban: 2
+        penjelasan: "Untung itu selisih harga jual dan harga beli, lalu dikali jumlah lot."
+
+  - id: "q5-3"
+    judul: "Laporan Akhir yang Rapi"
+    menit: 6
+    materi: |
+      Setelah semua dihitung, kita tulis **laporan** yang rapi. 📝
+      Laporan rapi bikin orang langsung paham.
+
+      **Pakai f-string.** Kamu sudah kenal f-string sejak belajar string.
+
+      ```python
+      modal = 2000
+      hasil = 2600
+      untung = hasil - modal
+      print("=== LAPORAN PORTOFOLIO ===")
+      print(f"Modal: {modal}")
+      print(f"Hasil: {hasil}")
+      print(f"Untung: {untung}")
+      ```
+
+      Hasilnya rapi berbaris ke bawah. Angka variabel langsung masuk ke tulisan.
+
+      **Tutup dengan kesimpulan.** Pakai `if` supaya laporannya pintar.
+
+      ```python
+      if untung > 0:
+          print("Kesimpulan: UNTUNG")
+      else:
+          print("Kesimpulan: RUGI")
+      ```
+
+      Kalau untungnya 500, laporannya bilang UNTUNG.
+      Kalau untungnya -500, laporannya bilang RUGI.
+      Tiga baris awalnya selalu sama: modal, hasil, lalu untung atau rugi.
+
+      Ayo susun laporan versimu sendiri di contoh bawah!
+    contoh:
+      - kode: |
+          modal = 2000
+          hasil = 2600
+          untung = hasil - modal
+          print("=== LAPORAN PORTOFOLIO ===")
+          print(f"Modal: {modal}")
+          print(f"Hasil: {hasil}")
+          print(f"Untung: {untung}")
+          if untung > 0:
+              print("Kesimpulan: UNTUNG")
+          else:
+              print("Kesimpulan: RUGI")
+        penjelasan: "Modal 2000, hasil 2600, untungnya 400. Kesimpulannya UNTUNG."
+      - kode: |
+          modal = 3000
+          hasil = 2700
+          untung = hasil - modal
+          print(f"Modal: {modal}")
+          print(f"Hasil: {hasil}")
+          if untung >= 0:
+              print(f"Untung: {untung}")
+          else:
+              print(f"Rugi: {-untung}")
+        penjelasan: "Untungnya -300, jadi yang tercetak 'Rugi: 300'."
+    kuis:
+      - soal: "Supaya angka variabel modal masuk ke dalam tulisan, kita pakai..."
+        pilihan:
+          - "print(f'Modal: {modal}')"
+          - "print('Modal: modal')"
+          - "print(Modal)"
+          - "print(modal + 'Modal')"
+        jawaban: 0
+        penjelasan: "f-string dengan kurung kurawal memasukkan isi variabel ke dalam tulisan."
+      - soal: "Kalau untung = -200, kesimpulannya..."
+        pilihan:
+          - "UNTUNG"
+          - "RUGI"
+          - "IMPAS"
+          - "BELI"
+        jawaban: 1
+        penjelasan: "Angka negatif artinya rugi, jadi kesimpulannya RUGI."
+      - soal: "Laporan sebaiknya diakhiri dengan..."
+        pilihan:
+          - "angka acak"
+          - "komentar biasa"
+          - "kesimpulan singkat"
+          - "kalimat panjang"
+        jawaban: 2
+        penjelasan: "Kesimpulan singkat bikin laporannya jelas dan cepat dibaca."
+
+soal:
+  - id: "sq5-1"
+    judul: "Mesin Untung Pertamamu"
+    sulit: "mudah"
+    cerita: |
+      Kancil punya mesin hitung ajaib untuk untung saham.
+      Kamu bisa memakainya kapan saja. Mesin itu bernama fungsi untung().
+      Dengan fungsi, Kancil tidak perlu menulis ulang rumusnya.
+      Buat fungsinya dulu, lalu pakai untuk menghitung.
+      Ketik harga beli, harga jual, dan jumlah lot. Cetak untungnya. Pakai int()!
+    input: "Tiga baris: harga beli, harga jual, dan jumlah lot."
+    output: "Satu baris: 'Untung: <angka>'."
+    contoh:
+      - input: "1000\n1200\n2"
+        output: "Untung: 400"
+      - input: "500\n600\n1"
+        output: "Untung: 100"
+    tes:
+      - input: "1000\n1200\n2"
+        output: "Untung: 400"
+      - input: "500\n600\n1"
+        output: "Untung: 100"
+      - input: "3000\n3300\n5"
+        output: "Untung: 1500"
+      - input: "1000\n1000\n4"
+        output: "Untung: 0"
+    solusi: |
+      def untung(beli, jual, lot):
+          return (jual - beli) * lot
+
+      a = int(input())
+      b = int(input())
+      c = int(input())
+      print("Untung:", untung(a, b, c))
+    petunjuk:
+      - "Buat fungsi untung dengan tiga isian: beli, jual, dan lot."
+      - "Isi fungsinya: return (jual - beli) * lot."
+      - "Baca tiga angka dulu, baru panggil fungsinya di dalam print."
+
+  - id: "sq5-2"
+    judul: "Nilai Tiga Posisi"
+    sulit: "sedang"
+    cerita: |
+      Kancil punya beberapa posisi saham di portofolionya, seperti kotak mainan.
+      Ia ingin tahu total nilai semua posisinya hari ini.
+      Setiap kotak punya harga dan isinya sendiri.
+      Ketik jumlah posisi, lalu untuk setiap posisi ketik harga dan lotnya.
+      Cetak total nilai portofolionya. Pakai int() ya!
+    input: "Beberapa baris: jumlah posisi, lalu pasangan harga dan lot tiap posisi."
+    output: "Satu baris: 'Total: <angka>'."
+    contoh:
+      - input: "3\n1000\n2\n2000\n1\n500\n10"
+        output: "Total: 9000"
+      - input: "1\n2500\n4"
+        output: "Total: 10000"
+    tes:
+      - input: "3\n1000\n2\n2000\n1\n500\n10"
+        output: "Total: 9000"
+      - input: "1\n2500\n4"
+        output: "Total: 10000"
+      - input: "2\n1000\n1\n1000\n1"
+        output: "Total: 2000"
+      - input: "4\n500\n2\n1500\n2\n2000\n1\n100\n5"
+        output: "Total: 6500"
+      - input: "2\n3000\n3\n1500\n6"
+        output: "Total: 18000"
+      - input: "0"
+        output: "Total: 0"
+    solusi: |
+      n = int(input())
+      harga = []
+      lot = []
+      for i in range(n):
+          harga.append(int(input()))
+          lot.append(int(input()))
+      total = 0
+      for i in range(n):
+          total = total + harga[i] * lot[i]
+      print("Total:", total)
+    petunjuk:
+      - "Simpan harga di satu list, lotnya di list lain."
+      - "Pakai perulangan untuk membaca pasangan harga dan lot."
+      - "Jumlahkan harga[i] dikali lot[i] untuk semua posisi."
+
+  - id: "sq5-3"
+    judul: "Laporan Untung atau Rugi"
+    sulit: "sedang"
+    cerita: |
+      Kancil mencatat satu transaksi: harga beli, harga jual, dan jumlah lot.
+      Kadang untung, kadang rugi. Ia ingin laporan singkat yang jelas.
+      Ketik harga beli, harga jual, dan jumlah lot.
+      Kalau untung, cetak angka untungnya. Kalau rugi, cetak angka ruginya
+      sebagai angka positif. Pakai if ya!
+    input: "Tiga baris: harga beli, harga jual, dan jumlah lot."
+    output: "Satu baris: 'Untung: <angka>' kalau untung, atau 'Rugi: <angka>' kalau rugi."
+    contoh:
+      - input: "1000\n1200\n2"
+        output: "Untung: 400"
+      - input: "1000\n800\n3"
+        output: "Rugi: 600"
+    tes:
+      - input: "1000\n1200\n2"
+        output: "Untung: 400"
+      - input: "1000\n800\n3"
+        output: "Rugi: 600"
+      - input: "500\n500\n5"
+        output: "Untung: 0"
+      - input: "2000\n2500\n4"
+        output: "Untung: 2000"
+      - input: "3000\n3600\n1"
+        output: "Untung: 600"
+    solusi: |
+      beli = int(input())
+      jual = int(input())
+      lot = int(input())
+      untung = (jual - beli) * lot
+      if untung >= 0:
+          print("Untung:", untung)
+      else:
+          print("Rugi:", -untung)
+    petunjuk:
+      - "Hitung dulu untungnya: (jual - beli) dikali lot."
+      - "Kalau untungnya tidak negatif, cetak 'Untung:'."
+      - "Kalau untungnya negatif, cetak 'Rugi:' dengan angka positif, jadi pakai -untung."
+
+  - id: "sq5-4"
+    judul: "Simulator Portofolio Mini"
+    sulit: "sulit"
+    cerita: |
+      Ini proyek kecilmu: simulator portofolio mini!
+      Kancil punya beberapa posisi saham dan mau menjual semuanya di satu harga.
+      Ketik jumlah posisi, lalu untuk setiap posisi ketik harga beli dan lotnya.
+      Terakhir ketik harga jual untuk semua saham. Cetak total modal, total jual,
+      untung atau ruginya, dan kesimpulannya.
+    input: "Beberapa baris: jumlah posisi, pasangan harga beli dan lot, lalu satu harga jual."
+    output: "Empat baris: 'Modal: <angka>', 'Jual: <angka>', 'Untung: <angka>' atau 'Rugi: <angka>', lalu 'Kesimpulan: UNTUNG/RUGI/IMPAS'."
+    contoh:
+      - input: "2\n1000\n2\n2000\n1\n1500"
+        output: "Modal: 4000\nJual: 4500\nUntung: 500\nKesimpulan: UNTUNG"
+      - input: "2\n1000\n2\n2000\n1\n1000"
+        output: "Modal: 4000\nJual: 3000\nRugi: 1000\nKesimpulan: RUGI"
+    tes:
+      - input: "2\n1000\n2\n2000\n1\n1500"
+        output: "Modal: 4000\nJual: 4500\nUntung: 500\nKesimpulan: UNTUNG"
+      - input: "2\n1000\n2\n2000\n1\n1000"
+        output: "Modal: 4000\nJual: 3000\nRugi: 1000\nKesimpulan: RUGI"
+      - input: "1\n2500\n4\n2500"
+        output: "Modal: 10000\nJual: 10000\nUntung: 0\nKesimpulan: IMPAS"
+      - input: "3\n1000\n1\n1000\n1\n1000\n1\n1200"
+        output: "Modal: 3000\nJual: 3600\nUntung: 600\nKesimpulan: UNTUNG"
+      - input: "2\n500\n10\n1500\n2\n2000"
+        output: "Modal: 8000\nJual: 24000\nUntung: 16000\nKesimpulan: UNTUNG"
+    solusi: |
+      n = int(input())
+      modal = 0
+      lot_total = 0
+      for i in range(n):
+          harga = int(input())
+          lot = int(input())
+          modal = modal + harga * lot
+          lot_total = lot_total + lot
+      harga_jual = int(input())
+      jual = harga_jual * lot_total
+      untung = jual - modal
+      print("Modal:", modal)
+      print("Jual:", jual)
+      if untung >= 0:
+          print("Untung:", untung)
+      else:
+          print("Rugi:", -untung)
+      if untung > 0:
+          print("Kesimpulan: UNTUNG")
+      elif untung < 0:
+          print("Kesimpulan: RUGI")
+      else:
+          print("Kesimpulan: IMPAS")
+    petunjuk:
+      - "Jumlahkan modal tiap posisi: harga beli dikali lot. Simpan juga total lotnya."
+      - "Total jual = harga jual dikali total lot yang kamu punya."
+      - "Untung = total jual - modal. Tiga kemungkinan: UNTUNG, RUGI, atau IMPAS."

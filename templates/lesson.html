@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="breadcrumb">
-  <a href="{{ url_for('index') }}">🏠 Beranda</a> › Bab {{ bab.bab }}: {{ bab.judul }}
+  <a href="{{ url_for('index') }}">🏠 Beranda</a> › {{ bab.nav_label or ('Bab ' ~ bab.bab ~ ': ' ~ bab.judul) }}
 </div>
 
 <div class="card">

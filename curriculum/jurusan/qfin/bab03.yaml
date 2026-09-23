@@ -1,0 +1,406 @@
+bab: 3
+modul: 3
+jurusan: "qfin"
+judul: "Peluang & Simulasi"
+emoji: "🎲"
+warna: "#f59e0b"
+deskripsi: "Tebak kemunculan dengan peluang, hitung frekuensi, cek rata-rata."
+prasyarat: 8
+
+pelajaran:
+  - id: "q3-1"
+    judul: "Peluang: Menebak dengan Cerdas"
+    menit: 6
+    materi: |
+      Ayo belajar menebak dengan pintar! 🎲
+      Peluang membantu kita menebak seberapa besar kemungkinan
+      sesuatu terjadi.
+
+      **Peluang itu apa?**
+      Peluang = banyak kejadian yang kita mau dibagi semua kemungkinan.
+      Di Python, tanda bagi ditulis dengan `/`.
+
+      **Contoh koin.**
+      Koin punya 2 sisi: angka dan gambar.
+      Peluang muncul angka adalah 1 dari 2, ditulis `1 / 2`.
+
+      ```python
+      peluang = 1 / 2
+      print("Peluang:", peluang)   # 0.5
+      ```
+
+      Hasilnya `0.5`. Itu artinya setengah, atau 50%.
+
+      **Contoh dadu.**
+      Dadu punya 6 sisi. Berapa peluang muncul angka genap?
+      Angka genap ada 3, yaitu 2, 4, dan 6.
+      Jadi peluangnya `3 / 6`, yang hasilnya juga 0.5.
+
+      **Bilangan desimal.**
+      Hasil peluang bisa berbentuk desimal, seperti `0.25`.
+      Makin besar peluangnya, makin mungkin terjadi.
+      Peluang 1 berarti pasti terjadi!
+
+      Ayo coba ganti angka pembaginya di contoh bawah, lalu amati hasilnya!
+    contoh:
+      - kode: |
+          peluang = 1 / 2
+          print("Peluang koin:", peluang)
+        penjelasan: "Satu sisi dari dua sisi koin. Hasilnya 0.5."
+      - kode: |
+          bagian = 3
+          semua = 6
+          print("Peluang angka genap:", bagian / semua)
+        penjelasan: "Angka genap ada 3 dari 6 sisi dadu. Hasilnya 0.5."
+    kuis:
+      - soal: "Berapa peluang muncul angka pada koin?"
+        pilihan:
+          - "1 / 2"
+          - "1 / 6"
+          - "2 / 1"
+          - "0"
+        jawaban: 0
+        penjelasan: "Ada 1 angka dari 2 sisi koin. Jadi peluangnya 1 / 2."
+      - soal: "Dadu punya 6 sisi. Berapa peluang muncul angka 5?"
+        pilihan:
+          - "5 / 6"
+          - "1 / 6"
+          - "6 / 1"
+          - "1 / 5"
+        jawaban: 1
+        penjelasan: "Angka 5 cuma satu dari 6 sisi, jadi peluangnya 1 / 6."
+      - soal: "Peluang yang nilainya 1 artinya apa?"
+        pilihan:
+          - "tidak mungkin terjadi"
+          - "pasti terjadi"
+          - "setengah mungkin terjadi"
+          - "tidak ada kemungkinan"
+        jawaban: 1
+        penjelasan: "Peluang 1 berarti semua kemungkinan sudah terpenuhi, jadi pasti terjadi."
+
+  - id: "q3-2"
+    judul: "Menghitung Frekuensi dari Data"
+    menit: 6
+    materi: |
+      Kita sudah bisa menebak peluang. Sekarang kita periksa datanya! 📊
+
+      **Frekuensi itu apa?**
+      Frekuensi artinya berapa kali sesuatu muncul.
+      Misalnya "angka 2 muncul 3 kali", berarti frekuensinya 3.
+
+      **Hitung dengan loop.**
+      Simpan hasil lemparan di dalam list.
+      Lalu periksa isinya satu per satu.
+
+      ```python
+      hasil = [2, 5, 2, 3, 2, 6]
+      hitung = 0
+      for x in hasil:
+          if x == 2:
+              hitung = hitung + 1
+      print("Angka 2 muncul", hitung, "kali")
+      ```
+
+      Hasilnya `Angka 2 muncul 3 kali`.
+
+      **Kenapa mulai dari 0?**
+      Karena sebelum diperiksa, belum ada yang terhitung.
+      Setiap kali ketemu angka 2, hitungannya nambah satu.
+      Kalau tidak ketemu sama sekali, hasilnya tetap 0.
+
+      **Bandingkan dengan peluang.**
+      Dari 6 lemparan, angka 2 muncul 3 kali. Itu banyak sekali!
+      Padahal peluangnya cuma 1 dari 6. Kadang keberuntungan datang.
+
+      Ayo ganti angka yang dicari di contoh, lalu hitung lagi bersama-sama!
+    contoh:
+      - kode: |
+          hasil = [2, 5, 2, 3, 2, 6]
+          hitung = 0
+          for x in hasil:
+              if x == 2:
+                  hitung = hitung + 1
+          print("Angka 2 muncul", hitung, "kali")
+        penjelasan: "Angka 2 muncul tiga kali di dalam list."
+      - kode: |
+          hasil = [1, 1, 4, 5, 4]
+          hitung = 0
+          for x in hasil:
+              if x == 4:
+                  hitung = hitung + 1
+          print("Angka 4 muncul:", hitung)
+        penjelasan: "Kali ini pakai tanda titik dua. Hasilnya Angka 4 muncul: 2."
+    kuis:
+      - soal: "Dari data [1, 2, 2, 3], berapa frekuensi angka 2?"
+        pilihan:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+        jawaban: 1
+        penjelasan: "Angka 2 muncul dua kali, jadi frekuensinya 2."
+      - soal: "Kenapa hitungan dimulai dari 0?"
+        pilihan:
+          - "karena sebelum diperiksa belum ada yang terhitung"
+          - "karena angka terkecil itu 0"
+          - "karena list selalu mulai dari 0"
+          - "karena harus pakai angka nol"
+        jawaban: 0
+        penjelasan: "Hitungan mulai dari 0 karena belum ada yang dihitung."
+      - soal: "Apa tugas dari hitung = hitung + 1?"
+        pilihan:
+          - "mengosongkan hitungan"
+          - "menambah hitungan satu"
+          - "menghapus satu data"
+          - "menggandakan hitungan"
+        jawaban: 1
+        penjelasan: "Setiap kali angka ketemu, hitungannya ditambah satu."
+
+  - id: "q3-3"
+    judul: "Rata-rata Banyak Percobaan"
+    menit: 7
+    materi: |
+      Kalau dadu dilempar 100 kali, berapa rata-ratanya? 🎯
+      Ayo cari tahu dengan Python!
+
+      **Rata-rata hasil.**
+      Caranya sama seperti pelajaran harga: jumlahkan, lalu bagi
+      dengan banyaknya data.
+
+      ```python
+      hasil = [1, 2, 3, 4, 5, 6, 2, 5]
+      total = sum(hasil)
+      rata = total / len(hasil)
+      print("Rata-rata:", rata)
+      ```
+
+      Hasilnya `3.5`.
+
+      **Angka ajaib 3.5.**
+      Kalau dadu dilempar sangat banyak, rata-ratanya mendekati 3.5.
+      Kenapa? Karena semua angka 1 sampai 6 sama mungkinnya.
+      Rata-rata dari 1, 2, 3, 4, 5, 6 memang 3.5.
+
+      **Makin banyak makin dekat.**
+      Sedikit lemparan bisa jauh dari 3.5. Itu wajar, namanya
+      keberuntungan. Tapi kalau dilempar ribuan kali, hasilnya
+      makin dekat ke 3.5. Itulah gunanya simulasi.
+
+      **Bandingkan hasilmu.**
+      Kamu bisa bertanya ke Python: rata-ratanya lebih tinggi
+      atau lebih rendah dari 3.5? Cukup pakai `if` sederhana.
+
+      Ayo hitung rata-rata dan bandingkan dengan angka 3.5!
+    contoh:
+      - kode: |
+          hasil = [3, 4, 3, 4]
+          total = sum(hasil)
+          rata = total / len(hasil)
+          print("Rata-rata:", rata)
+        penjelasan: "14 dibagi 4 data, hasilnya 3.5. Sama dengan teoretis dadu."
+      - kode: |
+          hasil = [5, 5, 6, 4]
+          total = sum(hasil)
+          rata = total / len(hasil)
+          print("Rata-rata:", rata)
+          if rata > 3.5:
+              print("Di atas teoretis")
+        penjelasan: "20 dibagi 4 data, hasilnya 5.0. Jadi di atas 3.5."
+    kuis:
+      - soal: "Nilai teoretis rata-rata lemparan dadu 6 sisi adalah..."
+        pilihan:
+          - "3"
+          - "3.5"
+          - "4"
+          - "6"
+        jawaban: 1
+        penjelasan: "Rata-rata dari 1 sampai 6 adalah 3.5."
+      - soal: "Kalau lemparan dadu makin banyak, rata-ratanya..."
+        pilihan:
+          - "makin jauh dari 3.5"
+          - "makin dekat ke 3.5"
+          - "selalu jadi 1"
+          - "makin besar terus"
+        jawaban: 1
+        penjelasan: "Makin banyak percobaan, hasilnya makin dekat ke 3.5."
+      - soal: "Berapa rata-rata dari [4, 4, 4, 4]?"
+        pilihan:
+          - "3"
+          - "3.5"
+          - "4"
+          - "16"
+        jawaban: 2
+        penjelasan: "Totalnya 16 dibagi 4 data, jadi rata-ratanya 4."
+
+soal:
+  - id: "sq3-1"
+    judul: "Hitung Munculnya Angka"
+    sulit: "mudah"
+    cerita: |
+      Kancil melempar dadu berkali-kali dan mencatat hasilnya.
+      Ia ingin tahu berapa kali angka yang ia tebak muncul.
+      Ketik angka yang dicari, lalu banyak lemparan, lalu
+      hasil tiap lemparan. Cetak berapa kali angka itu muncul.
+    input: "Baris 1 angka yang dicari, baris 2 banyak lemparan, lalu hasil tiap lemparan."
+    output: "Satu baris: 'Muncul <angka> kali'."
+    contoh:
+      - input: "3\n4\n4\n3\n3\n3"
+        output: "Muncul 3 kali"
+      - input: "1\n6\n1\n2\n3\n4\n5\n1"
+        output: "Muncul 2 kali"
+    tes:
+      - input: "3\n4\n4\n3\n3\n3"
+        output: "Muncul 3 kali"
+      - input: "1\n6\n1\n2\n3\n4\n5\n1"
+        output: "Muncul 2 kali"
+      - input: "5\n3\n5\n2\n5"
+        output: "Muncul 2 kali"
+      - input: "2\n5\n1\n3\n4\n5\n6"
+        output: "Muncul 0 kali"
+      - input: "4\n6\n2\n4\n6\n4\n2\n4"
+        output: "Muncul 3 kali"
+    solusi: |
+      cari = int(input())
+      n = int(input())
+      hitung = 0
+      for i in range(n):
+          x = int(input())
+          if x == cari:
+              hitung = hitung + 1
+      print("Muncul", hitung, "kali")
+    petunjuk:
+      - "Baca angka yang dicari dulu, baru banyak lemparan."
+      - "Pakai for i in range(n) untuk membaca tiap hasil lemparan."
+      - "Kalau hasilnya sama dengan angka yang dicari, tambahkan hitungan."
+
+  - id: "sq3-2"
+    judul: "Prediksi Dadu Kancil"
+    sulit: "sedang"
+    cerita: |
+      Kancil mau melempar dadu banyak sekali. Sebelum mulai,
+      ia menebak: kira-kira angka 6 muncul berapa kali, ya?
+      Peluang muncul angka 6 adalah 1 dari 6. Ketik banyak
+      lemparan, lalu cetak prediksi kemunculannya.
+      Pilih angka lemparan yang habis dibagi 6, ya.
+    input: "Satu baris: banyak lemparan (habis dibagi 6)."
+    output: "Satu baris: 'Prediksi muncul: <angka> kali'."
+    contoh:
+      - input: "600"
+        output: "Prediksi muncul: 100 kali"
+      - input: "120"
+        output: "Prediksi muncul: 20 kali"
+    tes:
+      - input: "600"
+        output: "Prediksi muncul: 100 kali"
+      - input: "120"
+        output: "Prediksi muncul: 20 kali"
+      - input: "60"
+        output: "Prediksi muncul: 10 kali"
+      - input: "240"
+        output: "Prediksi muncul: 40 kali"
+      - input: "3000"
+        output: "Prediksi muncul: 500 kali"
+    solusi: |
+      n = int(input())
+      prediksi = int(n / 6)
+      print("Prediksi muncul:", prediksi, "kali")
+    petunjuk:
+      - "Peluang muncul angka 6 adalah 1 dari 6, jadi kita bagi 6."
+      - "n / 6 menghasilkan prediksi banyaknya kemunculan."
+      - "Bungkus int() supaya hasilnya bulat tanpa koma."
+
+  - id: "sq3-3"
+    judul: "Rata-rata Lemparan Dadu"
+    sulit: "sedang"
+    cerita: |
+      Kancil mencatat semua hasil lemparan dadunya. Ia ingin
+      tahu rata-ratanya, lalu membandingkannya dengan angka
+      teoretis dadu 3.5. Ketik banyak lemparan, lalu hasil
+      tiap lemparan. Bantu Kancil menghitung rata-ratanya
+      pakai int(), lalu cetak hasilnya.
+    input: "Baris pertama banyak lemparan, lalu hasil tiap lemparan."
+    output: "Dua baris: 'Rata-rata: <angka>' lalu 'Di atas teoretis' / 'Di bawah teoretis' / 'Sama dengan teoretis'."
+    contoh:
+      - input: "4\n5\n5\n5\n5"
+        output: "Rata-rata: 5\nDi atas teoretis"
+      - input: "6\n2\n2\n3\n3\n4\n4"
+        output: "Rata-rata: 3\nDi bawah teoretis"
+    tes:
+      - input: "4\n5\n5\n5\n5"
+        output: "Rata-rata: 5\nDi atas teoretis"
+      - input: "6\n2\n2\n3\n3\n4\n4"
+        output: "Rata-rata: 3\nDi bawah teoretis"
+      - input: "3\n6\n6\n3"
+        output: "Rata-rata: 5\nDi atas teoretis"
+      - input: "4\n1\n1\n2\n4"
+        output: "Rata-rata: 2\nDi bawah teoretis"
+      - input: "5\n4\n4\n4\n4\n4"
+        output: "Rata-rata: 4\nDi atas teoretis"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          total = total + int(input())
+      rata = total / n
+      print("Rata-rata:", int(rata))
+      if rata > 3.5:
+          print("Di atas teoretis")
+      elif rata < 3.5:
+          print("Di bawah teoretis")
+      else:
+          print("Sama dengan teoretis")
+    petunjuk:
+      - "Jumlahkan semua hasil dulu, baru bagi dengan banyak lemparan."
+      - "Pakai int() supaya rata-ratanya tercetak bulat tanpa koma."
+      - "Bandingkan rata-ratanya dengan 3.5 pakai if untuk memilih kalimat."
+
+  - id: "sq3-4"
+    judul: "Analisis Lemparan Dadu"
+    sulit: "sulit"
+    cerita: |
+      Kancil dan teman-temannya bermain dadu di kelas.
+      Semua hasil lemparan dicatat di buku. Sekarang mereka
+      ingin tahu: lebih banyak angka tinggi (5 atau 6) atau
+      angka rendah (1 atau 2)? Ketik banyak lemparan, lalu
+      hasil tiap lemparan. Cetak jumlah kedua kelompok, lalu
+      cetak kesimpulannya.
+    input: "Baris pertama banyak lemparan, lalu hasil tiap lemparan."
+    output: "Tiga baris: 'Tinggi: <angka>', 'Rendah: <angka>', lalu 'LEBIH BANYAK TINGGI' / 'LEBIH BANYAK RENDAH' / 'SEIMBANG'."
+    contoh:
+      - input: "6\n5\n6\n1\n5\n2\n6"
+        output: "Tinggi: 4\nRendah: 2\nLEBIH BANYAK TINGGI"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "Tinggi: 1\nRendah: 2\nLEBIH BANYAK RENDAH"
+    tes:
+      - input: "6\n5\n6\n1\n5\n2\n6"
+        output: "Tinggi: 4\nRendah: 2\nLEBIH BANYAK TINGGI"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "Tinggi: 1\nRendah: 2\nLEBIH BANYAK RENDAH"
+      - input: "4\n1\n5\n2\n6"
+        output: "Tinggi: 2\nRendah: 2\nSEIMBANG"
+      - input: "6\n3\n4\n3\n4\n3\n4"
+        output: "Tinggi: 0\nRendah: 0\nSEIMBANG"
+      - input: "5\n6\n6\n6\n6\n6"
+        output: "Tinggi: 5\nRendah: 0\nLEBIH BANYAK TINGGI"
+    solusi: |
+      n = int(input())
+      tinggi = 0
+      rendah = 0
+      for i in range(n):
+          x = int(input())
+          if x >= 5:
+              tinggi = tinggi + 1
+          if x <= 2:
+              rendah = rendah + 1
+      print("Tinggi:", tinggi)
+      print("Rendah:", rendah)
+      if tinggi > rendah:
+          print("LEBIH BANYAK TINGGI")
+      elif rendah > tinggi:
+          print("LEBIH BANYAK RENDAH")
+      else:
+          print("SEIMBANG")
+    petunjuk:
+      - "Hitung dulu berapa hasil yang 5 atau lebih, dan berapa yang 2 atau kurang."
+      - "Gunakan dua if di dalam loop, satu untuk angka tinggi dan satu untuk angka rendah."
+      - "Terakhir bandingkan kedua hitungan, lalu cetak kesimpulannya."

@@ -142,6 +142,10 @@ BADGES = {
                        "desc": "Perbaiki 10 kode rusak"},
     "penjelajah":     {"nama": "Penjelajah Kode", "emoji": "🧪", "xp": 10,
                        "desc": "Simpan karya pertamamu di Rumah Kode"},
+    "jalur_qfin":     {"nama": "Calon Quant", "emoji": "💰", "xp": 50,
+                       "desc": "Pilih jurusan Quant Finance"},
+    "jalur_game":     {"nama": "Calon Pencipta Dunia", "emoji": "🎮", "xp": 50,
+                       "desc": "Pilih jurusan Pencipta Dunia"},
 }
 
 
@@ -363,6 +367,35 @@ def index():
     active_exam = None
     if user["role"] != "monitor":
         active_exam = db.get_active_exam(user["id"])
+    # ── Penjurusan: section jalur aktif + pop-up "Pilih Jurusan" ──
+    jlist = curriculum.get_jurusan_list()
+    j_enabled = [j for j in jlist if j.get("enabled")]
+    j_coming = [j for j in jlist if not j.get("enabled")]
+    jid_sekarang = user["jurusan"] if "jurusan" in user.keys() else ""
+    j_aktif = curriculum.get_jurusan(jid_sekarang) if jid_sekarang else None
+    if j_aktif and not j_aktif.get("enabled"):
+        j_aktif = None      # jurusan dimatikan sementara → jangan tampilkan jalur
+    j_mods = []
+    if j_aktif:
+        for m in curriculum.get_jurusan_babs(j_aktif["id"]):
+            m_lessons = m.get("pelajaran") or []
+            m_problems = [p for p in (m.get("soal") or []) if not p.get("varian_dari")]
+            m_l = sum(1 for l in m_lessons if l["id"] in done_lessons)
+            m_p = sum(1 for p in m_problems if p["id"] in solved)
+            m_total = len(m_lessons) + len(m_problems)
+            m_done = m_l + m_p
+            j_mods.append({
+                "modul": m.get("modul", m.get("bab")), "judul": m.get("judul"),
+                "emoji": m.get("emoji"), "warna": m.get("warna") or j_aktif.get("warna"),
+                "deskripsi": m.get("deskripsi"), "prasyarat": m.get("prasyarat"),
+                "pelajaran": m_lessons,
+                "n_lessons": len(m_lessons), "n_problems": len(m_problems),
+                "done": m_done, "total": m_total,
+                "pct": round(100 * m_done / m_total) if m_total else 0,
+                "complete": m_total > 0 and m_done == m_total,
+            })
+    show_jurusan_modal = ((not jid_sekarang) and user["role"] != "monitor"
+                          and bool(j_enabled))
     return render_template("index.html", babs=babs, badges=badges,
                            stats=stats, top=top, streak_bonus=bonus,
                            rank=rank, n_bab_done=n_bab_done, project=proyek,
@@ -373,7 +406,10 @@ def index():
                            review_count=review_count, challenge=challenge,
                            chal_solved=chal_solved,
                            pet=pet_for(user), n_badges=len(badges),
-                           total_badges=len(BADGES), active_exam=active_exam)
+                           total_badges=len(BADGES), active_exam=active_exam,
+                           jurusan_list=j_enabled, jurusan_coming=j_coming,
+                           jurusan_aktif=j_aktif, jurusan_mods=j_mods,
+                           show_jurusan_modal=show_jurusan_modal)
 
 
 @app.route("/lesson/<lesson_id>")
@@ -701,6 +737,26 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+
+@app.route("/api/pilih-jurusan", methods=["POST"])
+@login_required
+def api_pilih_jurusan():
+    """Simpan pilihan jurusan user. Body JSON: {jurusan: '<id>'} ('' = kosongkan)."""
+    body = request.get_json(silent=True) or {}
+    jid = (body.get("jurusan") or "").strip()
+    enabled = {j["id"] for j in curriculum.get_jurusan_list() if j.get("enabled")}
+    if jid and jid not in enabled:
+        return jsonify({"ok": False, "pesan": "Jurusan belum dibuka / tidak dikenal."}), 400
+    db.set_jurusan(g.user["id"], jid)
+    if jid:
+        bid = {"qfin": "jalur_qfin", "game": "jalur_game"}.get(jid)
+        if bid:
+            try:
+                db.award_badge(g.user["id"], bid)
+            except Exception:
+                pass
+    return jsonify({"ok": True, "jurusan": jid})
 
 
 # ---------- API ----------

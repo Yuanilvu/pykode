@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     streak INTEGER DEFAULT 0,
     last_active TEXT,
     role TEXT NOT NULL DEFAULT 'siswa',
+    jurusan TEXT NOT NULL DEFAULT '',
     created_at TEXT DEFAULT (datetime('now'))
 );
 CREATE TABLE IF NOT EXISTS lessons_done (
@@ -211,6 +212,12 @@ def init_db():
                 conn.execute("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'siswa'")
             except sqlite3.OperationalError:
                 pass
+        # Migrasi: penjurusan — '' = belum pilih jurusan.
+        if "jurusan" not in cols:
+            try:
+                conn.execute("ALTER TABLE users ADD COLUMN jurusan TEXT NOT NULL DEFAULT ''")
+            except sqlite3.OperationalError:
+                pass
         # Migrasi: submissions sekarang menyimpan kode terakhir (untuk detail monitor).
         scol = [r["name"] for r in conn.execute("PRAGMA table_info(submissions)")]
         if "code" not in scol:
@@ -276,6 +283,13 @@ def get_user_by_username(username):
 def get_user(user_id):
     with get_conn() as conn:
         return conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+
+
+def set_jurusan(user_id, jid):
+    """Simpan pilihan jurusan ('' = kosongkan / pilih ulang)."""
+    with get_conn() as conn:
+        conn.execute("UPDATE users SET jurusan = ? WHERE id = ?",
+                     (jid or "", user_id))
 
 
 def add_xp(user_id, amount):
@@ -349,7 +363,7 @@ def lessons_done_count(user_id):
 def lessons_done_today(user_id):
     with get_conn() as conn:
         row = conn.execute(
-            "SELECT COUNT(*) c FROM lessons_done WHERE user_id = ? AND date(done_at) = date('now')",
+            "SELECT COUNT(*) c FROM lessons_done WHERE user_id = ? AND date(done_at, 'localtime') = date('now', 'localtime')",
             (user_id,)).fetchone()
         return row["c"]
 
@@ -357,7 +371,7 @@ def lessons_done_today(user_id):
 def lessons_done_today_ids(user_id):
     with get_conn() as conn:
         return {r["lesson_id"] for r in conn.execute(
-            "SELECT lesson_id FROM lessons_done WHERE user_id = ? AND date(done_at) = date('now')",
+            "SELECT lesson_id FROM lessons_done WHERE user_id = ? AND date(done_at, 'localtime') = date('now', 'localtime')",
             (user_id,))}
 
 
@@ -494,7 +508,7 @@ def activity_dates(user_id, days=56):
 
 def get_today_duel():
     with get_conn() as conn:
-        return conn.execute("SELECT * FROM duels WHERE duel_date = date('now')").fetchone()
+        return conn.execute("SELECT * FROM duels WHERE duel_date = date('now', 'localtime')").fetchone()
 
 
 def create_duel(duel_date, problem_id):
@@ -955,7 +969,7 @@ def review_due_ids(user_id):
         rows = conn.execute(
             "SELECT r.problem_id FROM reviews r "
             "LEFT JOIN problems_solved p ON p.user_id=r.user_id AND p.problem_id=r.problem_id "
-            "WHERE r.user_id=? AND r.status='waiting' AND r.next_due <= date('now') "
+            "WHERE r.user_id=? AND r.status='waiting' AND r.next_due <= date('now', 'localtime') "
             "AND (p.solved IS NULL OR p.solved=0)",
             (user_id,)).fetchall()
         return [r["problem_id"] for r in rows]
@@ -968,7 +982,7 @@ def review_due_count(user_id):
 def drills_done_today(user_id):
     with get_conn() as conn:
         row = conn.execute(
-            "SELECT COUNT(*) c FROM drills_done WHERE user_id=? AND date(solved_at)=date('now')",
+            "SELECT COUNT(*) c FROM drills_done WHERE user_id=? AND date(solved_at, 'localtime')=date('now', 'localtime')",
             (user_id,)).fetchone()
         return row["c"]
 

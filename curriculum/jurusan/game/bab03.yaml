@@ -1,0 +1,461 @@
+bab: 3
+modul: 3
+jurusan: "game"
+judul: "Aksi & Fungsi"
+emoji: "⚔️"
+warna: "#ef4444"
+deskripsi: "Bungkus jurus jadi fungsi, atur pola musuh, lalu menangkan duel giliran."
+prasyarat: 8
+
+pelajaran:
+  - id: "g3-1"
+    judul: "Bungkus Jurus Jadi Fungsi"
+    menit: 6
+    materi: |
+      Selamat datang di bab jurus! ⚔️
+
+      Di game, petualang punya banyak jurus. Tiap jurus punya aturan sendiri.
+      Supaya kode rapi, kita bungkus tiap jurus jadi **fungsi**.
+
+      Fungsi dibuat pakai kata `def`. Hasilnya diberikan pakai `return`.
+
+      ```python
+      def serang(damage):
+          print("Hantam!")
+          return damage
+      ```
+
+      - `def serang(damage):` artinya kita membuat jurus baru bernama `serang`
+      - `damage` namanya **parameter**, yaitu bahan yang bisa diganti-ganti
+      - `return damage` artinya fungsi memberi hasil balikan `damage`
+
+      Cara memakainya tinggal panggil namanya:
+      ```python
+      hasil = serang(10)
+      print("Damage:", hasil)
+      ```
+
+      `serang(10)` menjalankan fungsinya dengan `damage` berisi 10.
+      Hasil balikannya disimpan di variabel `hasil`.
+      Hasilnya `Hantam!` lalu `Damage: 10`.
+
+      Kenapa repot-repot bikin fungsi? Karena bisa dipakai berkali-kali!
+      ```python
+      total = serang(10) + serang(5)
+      print("Total:", total)
+      ```
+
+      Fungsi itu seperti resep masakan. Ditulis sekali, dipakai di mana saja. 🍜
+      Ayo praktik di contoh bawah!
+    contoh:
+      - kode: |
+          def serang(damage):
+              print("Hantam!")
+              return damage
+
+          hasil = serang(10)
+          print("Damage:", hasil)
+        penjelasan: "Fungsi serang mencetak 'Hantam!' lalu memberi balikan 10. Hasilnya disimpan di variabel hasil."
+      - kode: |
+          def tambah_nyawa(nyawa, obat):
+              return nyawa + obat
+
+          print("Nyawa baru:", tambah_nyawa(70, 30))
+          print("Nyawa baru:", tambah_nyawa(20, 5))
+        penjelasan: "Fungsi dengan dua parameter: nyawa + obat. Hasilnya 100, lalu 25."
+    kuis:
+      - soal: "Kata kunci untuk membuat fungsi di Python adalah..."
+        pilihan:
+          - "def"
+          - "print"
+          - "for"
+          - "return"
+        jawaban: 0
+        penjelasan: "def artinya define, yaitu membuat."
+      - soal: "Apa gunanya return di dalam fungsi?"
+        pilihan:
+          - "menghentikan komputer"
+          - "memberi hasil balikan dari fungsi"
+          - "mencetak ke layar"
+          - "menghapus variabel"
+        jawaban: 1
+        penjelasan: "Hasil balikan itu bisa disimpan atau dihitung lagi."
+      - soal: "Fungsi serang(10) dipanggil. Parameter damage berisi..."
+        pilihan:
+          - "0"
+          - "serang"
+          - "10"
+          - "kosong"
+        jawaban: 2
+        penjelasan: "Angka di dalam tanda kurung masuk ke parameter."
+
+  - id: "g3-2"
+    judul: "Musuh dengan Pola"
+    menit: 7
+    materi: |
+      Musuh di game tidak menyerang sembarangan. Mereka punya **pola**! ♻️
+
+      Contoh: damage musuh selalu berulang 10, 20, 30, lalu 10 lagi.
+      Polanya disimpan di list:
+
+      ```python
+      pola = [10, 20, 30]
+      ```
+
+      Serangan ke-1 pakai `pola[0]`. Serangan ke-2 pakai `pola[1]`.
+      Serangan ke-3 pakai `pola[2]`. Serangan ke-4 kembali ke `pola[0]`.
+
+      Bagaimana caranya kembali ke awal? Pakai **modulo**!
+      Modulo ditulis `%` dan artinya "sisa bagi".
+      - `4 % 3` hasilnya 1, karena 4 dibagi 3 sisa 1
+      - `3 % 3` hasilnya 0
+
+      Rumusnya: serangan ke-n memakai `pola[(n - 1) % 3]`.
+      Ayo cek bareng: n = 4, maka (4 - 1) % 3 = 0.
+      Jadi `pola[0]` berisi 10. Benar! ✅
+
+      Kita bisa bungkus rumus itu jadi fungsi:
+      ```python
+      def damage_musuh(ke):
+          pola = [10, 20, 30]
+          return pola[(ke - 1) % 3]
+
+      print(damage_musuh(4))
+      ```
+
+      Hasilnya `10`. Pola itu berputar terus tanpa henti.
+      Ini rahasia gerakan musuh di game sungguhan, lho! 🎮
+      Ayo praktik di contoh bawah.
+    contoh:
+      - kode: |
+          pola = [10, 20, 30]
+          print(pola[(4 - 1) % 3])
+          print(pola[(5 - 1) % 3])
+        penjelasan: "Serangan ke-4 balik ke pola[0] = 10. Serangan ke-5 pakai pola[1] = 20."
+      - kode: |
+          def damage_musuh(ke):
+              pola = [10, 20, 30]
+              return pola[(ke - 1) % 3]
+
+          for n in range(1, 6):
+              print(f"Serangan {n}: {damage_musuh(n)}")
+        penjelasan: "Polanya berputar: 10, 20, 30, lalu 10, 20 lagi di serangan kelima."
+    kuis:
+      - soal: "Pola [10, 20, 30]. Serangan ke-4 damage-nya..."
+        pilihan:
+          - "10"
+          - "20"
+          - "30"
+          - "40"
+        jawaban: 0
+        penjelasan: "(4 - 1) % 3 = 0, jadi pola[0] berisi 10."
+      - soal: "Hasil dari 8 % 3 adalah..."
+        pilihan:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        jawaban: 2
+        penjelasan: "8 dibagi 3 sisa 2."
+      - soal: "Rumus untuk mengambil damage serangan ke-n dari pola 3 angka adalah..."
+        pilihan:
+          - "pola[n]"
+          - "pola[(n - 1) % 3]"
+          - "pola[n % 3]"
+          - "pola[3]"
+        jawaban: 1
+        penjelasan: "Modulo membuat nomor urut berputar kembali dari 0 setelah angka ke-3."
+
+  - id: "g3-3"
+    judul: "Duel Giliran"
+    menit: 7
+    materi: |
+      Duel! Dua petarung menyerang bergantian sampai salah satu tumbang. 🥊
+
+      Aturannya:
+      - Giliran 1, 3, 5, ... (ganjil): Kancil menyerang
+      - Giliran 2, 4, 6, ... (genap): Buaya menyerang
+
+      Giliran ganjil dicek pakai modulo, tulisnya `giliran % 2 == 1`.
+
+      ```python
+      hp_kancil = 30
+      hp_buaya = 20
+      giliran = 1
+      while hp_kancil > 0 and hp_buaya > 0:
+          if giliran % 2 == 1:
+              hp_buaya = hp_buaya - 10
+          else:
+              hp_kancil = hp_kancil - 15
+          giliran = giliran + 1
+      ```
+
+      Loop jalan selama dua-duanya masih hidup.
+      Kalau satu HP habis (0 atau kurang), loop berhenti.
+      Lalu kita cek siapa yang masih berdiri:
+
+      ```python
+      if hp_kancil > 0:
+          print("Kancil menang!")
+      else:
+          print("Buaya menang!")
+      ```
+
+      Serangan juga bisa dibungkus fungsi supaya rapi:
+      ```python
+      def serang(nyawa, damage):
+          return nyawa - damage
+      ```
+
+      Fungsi itu menerima HP lawan dan damage, lalu memberi balikan HP baru.
+      Duel jadi lebih mudah dibaca. Ayo coba di contoh! 🎮
+    contoh:
+      - kode: |
+          def serang(nyawa, damage):
+              return nyawa - damage
+
+          hp = 50
+          hp = serang(hp, 20)
+          print("HP setelah diserang:", hp)
+        penjelasan: "HP 50 dikurangi damage 20, hasilnya 30."
+      - kode: |
+          def serang(nyawa, damage):
+              return nyawa - damage
+
+          hp_a = 25
+          hp_b = 20
+          giliran = 1
+          while hp_a > 0 and hp_b > 0:
+              if giliran % 2 == 1:
+                  hp_b = serang(hp_b, 10)
+                  print(f"Giliran {giliran}: A menyerang! HP B: {hp_b}")
+              else:
+                  hp_a = serang(hp_a, 15)
+                  print(f"Giliran {giliran}: B menyerang! HP A: {hp_a}")
+              giliran = giliran + 1
+          if hp_a > 0:
+              print("A menang!")
+          else:
+              print("B menang!")
+        penjelasan: "Duel seru 3 giliran. Serangan terakhir membuat HP B jadi 0, jadi A menang."
+    kuis:
+      - soal: "Giliran ke-5 termasuk giliran..."
+        pilihan:
+          - "ganjil"
+          - "genap"
+          - "habis"
+          - "tidak ada"
+        jawaban: 0
+        penjelasan: "5 % 2 = 1, sisa 1 artinya ganjil."
+      - soal: "Loop duel berhenti kalau..."
+        pilihan:
+          - "kedua HP masih penuh"
+          - "salah satu HP habis"
+          - "giliran habis"
+          - "pemain bosan"
+        jawaban: 1
+        penjelasan: "Selama dua-duanya hidup, duel terus jalan."
+      - soal: "Fungsi serang(nyawa, damage) memberi balikan..."
+        pilihan:
+          - "damage"
+          - "nyawa awal"
+          - "nyawa dikurangi damage"
+          - "angka 0"
+        jawaban: 2
+        penjelasan: "nyawa - damage adalah HP baru setelah kena serangan."
+
+soal:
+  - id: "sg3-1"
+    judul: "Tombak Kelinci"
+    sulit: "mudah"
+    cerita: |
+      Kancil menguji senjata baru bernama Tombak Kelinci. Ajaib, satu tusukan
+      selalu memberi 10 damage! Kancil ingin kamu membuat fungsi bernama
+      serang() untuk tusukan itu. Fungsi itu mengembalikan angka 10 setiap
+      dipanggil. Ketik jumlah tusukan, lalu cetak damage tiap tusukan dan
+      total damage semuanya.
+    input: "Satu baris: jumlah tusukan (angka bulat)."
+    output: "Baris per tusukan: 'Tusukan <ke->: 10 damage', lalu 'Total damage: <total>'."
+    contoh:
+      - input: "3"
+        output: "Tusukan 1: 10 damage\nTusukan 2: 10 damage\nTusukan 3: 10 damage\nTotal damage: 30"
+      - input: "1"
+        output: "Tusukan 1: 10 damage\nTotal damage: 10"
+    tes:
+      - input: "3"
+        output: "Tusukan 1: 10 damage\nTusukan 2: 10 damage\nTusukan 3: 10 damage\nTotal damage: 30"
+      - input: "1"
+        output: "Tusukan 1: 10 damage\nTotal damage: 10"
+      - input: "0"
+        output: "Total damage: 0"
+      - input: "4"
+        output: "Tusukan 1: 10 damage\nTusukan 2: 10 damage\nTusukan 3: 10 damage\nTusukan 4: 10 damage\nTotal damage: 40"
+      - input: "2"
+        output: "Tusukan 1: 10 damage\nTusukan 2: 10 damage\nTotal damage: 20"
+    solusi: |
+      def serang():
+          return 10
+
+      n = int(input())
+      total = 0
+      i = 1
+      while i <= n:
+          d = serang()
+          print(f"Tusukan {i}: {d} damage")
+          total = total + d
+          i = i + 1
+      print(f"Total damage: {total}")
+    petunjuk:
+      - "Buat fungsi dulu: def serang(): lalu isinya cuma return 10."
+      - "Pakai pencatat i mulai dari 1. Selama i <= n, panggil d = serang() dan cetak barisnya."
+      - "Jangan lupa total ditambah d tiap putaran, lalu i = i + 1."
+
+  - id: "sg3-2"
+    judul: "Duel Kancil vs Buaya"
+    sulit: "sedang"
+    cerita: |
+      Duel dimulai! Kancil menyerang tiap giliran ganjil dengan damage 10.
+      Buaya menyerang tiap giliran genap dengan damage 15. Duel berjalan
+      terus sampai salah satu HP habis (0 atau kurang). Ketik HP Kancil
+      dan HP Buaya, lalu cetak jumlah giliran, pemenang, dan sisa HP-nya.
+    input: "Dua baris: HP Kancil, lalu HP Buaya (angka bulat)."
+    output: "Tiga baris: 'Giliran: <jumlah>', 'Pemenang: <Kancil/Buaya>', 'Sisa HP: <sisa>'."
+    contoh:
+      - input: "20\n10"
+        output: "Giliran: 1\nPemenang: Kancil\nSisa HP: 20"
+      - input: "10\n20"
+        output: "Giliran: 2\nPemenang: Buaya\nSisa HP: 10"
+    tes:
+      - input: "20\n10"
+        output: "Giliran: 1\nPemenang: Kancil\nSisa HP: 20"
+      - input: "10\n20"
+        output: "Giliran: 2\nPemenang: Buaya\nSisa HP: 10"
+      - input: "40\n40"
+        output: "Giliran: 6\nPemenang: Buaya\nSisa HP: 10"
+      - input: "50\n40"
+        output: "Giliran: 7\nPemenang: Kancil\nSisa HP: 5"
+      - input: "16\n15"
+        output: "Giliran: 3\nPemenang: Kancil\nSisa HP: 1"
+    solusi: |
+      def serang(nyawa_lawan, damage):
+          return nyawa_lawan - damage
+
+      hp_kancil = int(input())
+      hp_buaya = int(input())
+      giliran = 0
+      while hp_kancil > 0 and hp_buaya > 0:
+          giliran = giliran + 1
+          if giliran % 2 == 1:
+              hp_buaya = serang(hp_buaya, 10)
+          else:
+              hp_kancil = serang(hp_kancil, 15)
+      if hp_kancil > 0:
+          print(f"Giliran: {giliran}")
+          print("Pemenang: Kancil")
+          print(f"Sisa HP: {hp_kancil}")
+      else:
+          print(f"Giliran: {giliran}")
+          print("Pemenang: Buaya")
+          print(f"Sisa HP: {hp_buaya}")
+    petunjuk:
+      - "Loop pakai while selama HP Kancil dan HP Buaya masih lebih dari 0."
+      - "Giliran ganjil: HP Buaya dikurangi 10. Giliran genap: HP Kancil dikurangi 15."
+      - "Setelah loop, cek HP siapa yang masih positif. Itu pemenangnya. Cetak giliran, pemenang, dan sisa HP."
+
+  - id: "sg3-3"
+    judul: "Pola Serangan Naga"
+    sulit: "sedang"
+    cerita: |
+      Naga punya pola serangan berulang: 10, 20, 30, lalu kembali ke 10 lagi.
+      Polanya berputar terus tanpa henti. Pola itu disimpan di dalam list:
+      [10, 20, 30]. Ketik jumlah serangan, lalu cetak damage serangan ke-1
+      sampai ke-n dan total damage semuanya. Hati-hati, pola itu berputar terus!
+    input: "Satu baris: jumlah serangan (0 sampai 7)."
+    output: "Baris per serangan: 'Damage ke-<ke->: <damage>', lalu 'Total damage: <total>'."
+    contoh:
+      - input: "4"
+        output: "Damage ke-1: 10\nDamage ke-2: 20\nDamage ke-3: 30\nDamage ke-4: 10\nTotal damage: 70"
+      - input: "3"
+        output: "Damage ke-1: 10\nDamage ke-2: 20\nDamage ke-3: 30\nTotal damage: 60"
+    tes:
+      - input: "4"
+        output: "Damage ke-1: 10\nDamage ke-2: 20\nDamage ke-3: 30\nDamage ke-4: 10\nTotal damage: 70"
+      - input: "3"
+        output: "Damage ke-1: 10\nDamage ke-2: 20\nDamage ke-3: 30\nTotal damage: 60"
+      - input: "1"
+        output: "Damage ke-1: 10\nTotal damage: 10"
+      - input: "6"
+        output: "Damage ke-1: 10\nDamage ke-2: 20\nDamage ke-3: 30\nDamage ke-4: 10\nDamage ke-5: 20\nDamage ke-6: 30\nTotal damage: 120"
+      - input: "0"
+        output: "Total damage: 0"
+    solusi: |
+      def damage_serangan(ke):
+          pola = [10, 20, 30]
+          return pola[(ke - 1) % 3]
+
+      n = int(input())
+      total = 0
+      i = 1
+      while i <= n:
+          d = damage_serangan(i)
+          print(f"Damage ke-{i}: {d}")
+          total = total + d
+          i = i + 1
+      print(f"Total damage: {total}")
+    petunjuk:
+      - "Bikin fungsi damage_serangan(ke) yang mengembalikan pola[(ke - 1) % 3]."
+      - "Modulo membuat pola berputar kembali ke awal setelah angka ke-3."
+      - "Pakai while dari i = 1 sampai n. Jumlahkan semua damage untuk totalnya."
+
+  - id: "sg3-4"
+    judul: "Duel Penuh: Pahlawan vs Naga"
+    sulit: "sulit"
+    cerita: |
+      Pertarungan akhir! Pahlawan menyerang tiap giliran ganjil dengan damage
+      12. Naga menyerang tiap giliran genap, tapi polanya berubah-ubah: 5, 10,
+      20, lalu berulang lagi. Duel berjalan sampai salah satu HP habis.
+      Ketik HP Pahlawan dan HP Naga, lalu cetak pemenang dan sisa HP-nya.
+    input: "Dua baris: HP Pahlawan, lalu HP Naga (angka bulat)."
+    output: "Dua baris: 'Pemenang: <Pahlawan/Naga>', lalu 'Sisa HP: <sisa>'."
+    contoh:
+      - input: "50\n40"
+        output: "Pemenang: Pahlawan\nSisa HP: 15"
+      - input: "10\n100"
+        output: "Pemenang: Naga\nSisa HP: 76"
+    tes:
+      - input: "50\n40"
+        output: "Pemenang: Pahlawan\nSisa HP: 15"
+      - input: "10\n100"
+        output: "Pemenang: Naga\nSisa HP: 76"
+      - input: "100\n8"
+        output: "Pemenang: Pahlawan\nSisa HP: 100"
+      - input: "5\n13"
+        output: "Pemenang: Naga\nSisa HP: 1"
+      - input: "30\n30"
+        output: "Pemenang: Pahlawan\nSisa HP: 15"
+    solusi: |
+      def damage_naga(ke):
+          pola = [5, 10, 20]
+          return pola[(ke - 1) % 3]
+
+      hp_pahlawan = int(input())
+      hp_naga = int(input())
+      giliran = 0
+      serangan_naga = 0
+      while hp_pahlawan > 0 and hp_naga > 0:
+          giliran = giliran + 1
+          if giliran % 2 == 1:
+              hp_naga = hp_naga - 12
+          else:
+              serangan_naga = serangan_naga + 1
+              hp_pahlawan = hp_pahlawan - damage_naga(serangan_naga)
+      if hp_pahlawan > 0:
+          print("Pemenang: Pahlawan")
+          print(f"Sisa HP: {hp_pahlawan}")
+      else:
+          print("Pemenang: Naga")
+          print(f"Sisa HP: {hp_naga}")
+    petunjuk:
+      - "Pahlawan menyerang di giliran ganjil dengan damage 12."
+      - "Naga menyerang di giliran genap. Hitung serangan Naga pakai pencatat mulai 0, naik 1 tiap Naga menyerang, lalu pakai fungsinya."
+      - "Duel berhenti saat salah satu HP 0 atau kurang. Cetak pemenang lalu sisa HP-nya."

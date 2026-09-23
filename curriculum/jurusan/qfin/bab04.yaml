@@ -1,0 +1,413 @@
+bab: 4
+modul: 4
+jurusan: "qfin"
+judul: "Strategi & Backtest Mini"
+emoji: "📈"
+warna: "#0ea5e9"
+deskripsi: "Bikin aturan beli dan jual, lalu uji dulu pakai data harga lama."
+prasyarat: 10
+
+pelajaran:
+  - id: "q4-1"
+    judul: "Rata-rata Bergerak (Moving Average)"
+    menit: 6
+    materi: |
+      Kamu pernah lihat grafik harga saham? Garisnya naik turun, ramai sekali!
+      Tapi kadang kita mau garis yang lebih **halus**. Caranya pakai
+      **rata-rata bergerak**. 📈
+
+      **Apa itu rata-rata bergerak?**
+      Kita ambil beberapa harga TERAKHIR, lalu dihitung rata-ratanya.
+      Kalau `n = 2`, artinya pakai 2 harga terakhir saja.
+
+      ```python
+      harga = [1000, 1200, 1100, 1300]
+      n = 2
+      ekor = harga[-n:]
+      jumlah = 0
+      for h in ekor:
+          jumlah = jumlah + h
+      print("Rata-rata:", jumlah / n)
+      ```
+
+      Hasilnya `1200.0`. Jadi harga 2 hari terakhir rata-ratanya 1200.
+
+      **Kenapa disebut bergerak?**
+      Besok ada harga baru masuk. Jendelanya bergeser satu langkah.
+      Yang ikut dihitung jadi hari ke-2 dan ke-3, bukan hari ke-1 lagi.
+
+      **Ingat:** tulisan `harga[-n:]` artinya ambil `n` angka terakhir dari list.
+      Kamu sudah kenal list sejak bab sebelumnya, jadi ini gampang. 😎
+
+      Ayo ubah `n` jadi 3 di contoh bawah, lalu lihat hasilnya berubah!
+    contoh:
+      - kode: |
+          harga = [1000, 1200, 1100, 1300]
+          n = 3
+          ekor = harga[-n:]
+          jumlah = 0
+          for h in ekor:
+              jumlah = jumlah + h
+          print("Rata-rata 3 harga terakhir:", int(jumlah / n))
+        penjelasan: "1200 + 1100 + 1300 = 3600. Dibagi 3 hasilnya 1200."
+      - kode: |
+          harga = [500, 700, 600, 800]
+          n = 2
+          jumlah = 0
+          for h in harga[-n:]:
+              jumlah = jumlah + h
+          print("Rata-rata:", int(jumlah / n))
+        penjelasan: "700 + 800 = 1500. Dibagi 2 hasilnya 750."
+    kuis:
+      - soal: "Rata-rata bergerak 3 hari memakai harga apa saja?"
+        pilihan:
+          - "tiga harga terbaru"
+          - "tiga harga paling lama"
+          - "harga termahal"
+          - "harga termurah"
+        jawaban: 0
+        penjelasan: "Rata-rata bergerak selalu memakai harga TERBARU, lalu jendelanya bergeser."
+      - soal: "Harga [100, 200, 300, 400] dengan n = 2. Rata-ratanya berapa?"
+        pilihan:
+          - "250"
+          - "300"
+          - "350"
+          - "400"
+        jawaban: 2
+        penjelasan: "Dua harga terakhir 300 dan 400. Jumlahnya 700, dibagi 2 hasilnya 350."
+      - soal: "Besok ada harga baru masuk. Jendela rata-rata bergerak jadi..."
+        pilihan:
+          - "tetap di tempat"
+          - "bergeser satu langkah"
+          - "hilang semua"
+          - "jadi dua kali lipat"
+        jawaban: 1
+        penjelasan: "Harga baru masuk, harga paling lama keluar. Jendelanya bergeser satu langkah."
+
+  - id: "q4-2"
+    judul: "Aturan Beli & Jual"
+    menit: 6
+    materi: |
+      Rata-rata bergerak bisa jadi **aturan main** beli dan jual. 🛒
+      Aturannya sederhana sekali:
+
+      - Harga **lebih murah** dari rata-rata? Beli!
+      - Harga **lebih mahal** dari rata-rata? Jual!
+      - Harganya **sama**? Tahan dulu.
+
+      ```python
+      harga = 900
+      rata = 1000
+      if harga < rata:
+          print("BELI")
+      elif harga > rata:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      ```
+
+      Hasilnya `BELI`, karena 900 lebih murah dari 1000.
+
+      **Analogi jajan:** kalau permen di kantin sedang murah, kamu beli.
+      Kalau harganya sedang mahal, kamu jual punyamu. 😄
+
+      Tanda `<` artinya lebih kecil. Tanda `>` artinya lebih besar.
+      Kalau sama dengan, kita pakai `==`. Ingat, dua tanda sama!
+
+      Aturan ini harus dicoba dulu dengan data lama sebelum dipakai.
+      Pelajaran berikutnya kita belajar mengujinya.
+      Ayo praktik dulu di contoh bawah!
+    contoh:
+      - kode: |
+          harga = 1200
+          rata = 1000
+          if harga < rata:
+              print("BELI")
+          elif harga > rata:
+              print("JUAL")
+          else:
+              print("TAHAN")
+        penjelasan: "1200 lebih mahal dari 1000, jadi sinyalnya JUAL."
+      - kode: |
+          harga = 500
+          rata = 500
+          if harga < rata:
+              print("BELI")
+          elif harga > rata:
+              print("JUAL")
+          else:
+              print("TAHAN")
+        penjelasan: "Harganya sama dengan rata-rata, jadi sinyalnya TAHAN."
+    kuis:
+      - soal: "Harga 800 dan rata-ratanya 1000. Sinyalnya apa?"
+        pilihan:
+          - "BELI"
+          - "JUAL"
+          - "TAHAN"
+          - "RUGI"
+        jawaban: 0
+        penjelasan: "800 lebih murah dari 1000, jadi sinyalnya BELI."
+      - soal: "Harga 1500 dan rata-ratanya 1200. Sinyalnya apa?"
+        pilihan:
+          - "BELI"
+          - "JUAL"
+          - "TAHAN"
+          - "SALAH"
+        jawaban: 1
+        penjelasan: "1500 lebih mahal dari 1200, jadi sinyalnya JUAL."
+      - soal: "Sinyal TAHAN keluar saat..."
+        pilihan:
+          - "harga naik"
+          - "harga turun"
+          - "harga sama dengan rata-rata"
+          - "tidak ada harga"
+        jawaban: 2
+        penjelasan: "Kalau harganya sama dengan rata-rata, kita tahan dulu. Tidak beli, tidak jual."
+
+  - id: "q4-3"
+    judul: "Uji Strategi: Hitung Untung"
+    menit: 7
+    materi: |
+      Pemain bola berlatih dulu sebelum bertanding. ⚽
+      Di dunia saham, latihan itu bernama **backtest**.
+      Backtest artinya menguji aturan kita pakai data harga lama.
+
+      **Cara menghitung untung satu transaksi:**
+      contohnya beli 2 lot di harga 1000, lalu jual di harga 1200.
+
+      ```python
+      beli = 1000
+      jual = 1200
+      lot = 2
+      untung = (jual - beli) * lot
+      print("Untung:", untung)
+      print("Persen:", int(untung / (beli * lot) * 100))
+      ```
+
+      Hasilnya `400` dan `20`. Jadi untungnya 400 rupiah, atau 20 persen.
+
+      **Modal** artinya harga beli dikali jumlah lot. Di contoh itu modalnya 2000.
+      Persen untung itu untung dibagi modal, lalu dikali 100.
+      Persen dipakai supaya adil. Untung 400 dari modal 2000 itu 20 persen.
+      Untung 400 dari modal 40000 cuma 1 persen. Jauh berbeda, kan?
+
+      Ayo coba ganti harga jualnya, lalu lihat untungnya berubah!
+    contoh:
+      - kode: |
+          beli = 1000
+          jual = 1200
+          lot = 2
+          untung = (jual - beli) * lot
+          print("Untung:", untung)
+          print("Persen:", int(untung / (beli * lot) * 100))
+        penjelasan: "Selisih 200 dikali 2 lot jadi 400. Modal 2000, jadi untungnya 20 persen."
+      - kode: |
+          beli = 2000
+          jual = 2500
+          lot = 2
+          untung = (jual - beli) * lot
+          print("Untung:", untung)
+          print("Persen:", int(untung / (beli * lot) * 100))
+        penjelasan: "Selisih 500 dikali 2 lot jadi 1000. Modal 4000, jadi untungnya 25 persen."
+    kuis:
+      - soal: "Beli di harga 500, jual di harga 600, untuk 1 lot. Untungnya berapa?"
+        pilihan:
+          - "100"
+          - "50"
+          - "600"
+          - "1100"
+        jawaban: 0
+        penjelasan: "Selisih 600 - 500 = 100. Dikali 1 lot hasilnya 100."
+      - soal: "Backtest artinya..."
+        pilihan:
+          - "membeli saham asli"
+          - "menghitung uang di bank"
+          - "menghapus data lama"
+          - "menguji aturan pakai data harga lama"
+        jawaban: 3
+        penjelasan: "Backtest itu latihan: aturan kita dicoba dulu dengan data harga lama."
+      - soal: "Modal untuk 3 lot di harga 1000 adalah..."
+        pilihan:
+          - "1000"
+          - "1300"
+          - "3000"
+          - "30000"
+        jawaban: 2
+        penjelasan: "Modal = harga beli dikali lot. 1000 dikali 3 hasilnya 3000."
+
+soal:
+  - id: "sq4-1"
+    judul: "Rata-rata 3 Harga Terakhir"
+    sulit: "mudah"
+    cerita: |
+      Kancil punya saham dan mencatat 4 harga terakhir: 1000, 1100, 1200, 1300.
+      Ia ingin tahu rata-rata 3 harga TERAKHIR, karena harga paling lama
+      sudah tidak penting. Ketik empat harga itu satu per satu.
+      Lalu cetak rata-rata 3 harga terakhir. Pakai int() ya!
+    input: "Empat baris: empat harga saham terakhir (angka bulat)."
+    output: "Satu baris: 'Rata-rata 3 terakhir: <angka>'."
+    contoh:
+      - input: "1000\n1100\n1200\n1300"
+        output: "Rata-rata 3 terakhir: 1200"
+      - input: "200\n400\n600\n800"
+        output: "Rata-rata 3 terakhir: 600"
+    tes:
+      - input: "1000\n1100\n1200\n1300"
+        output: "Rata-rata 3 terakhir: 1200"
+      - input: "200\n400\n600\n800"
+        output: "Rata-rata 3 terakhir: 600"
+      - input: "3000\n3000\n3000\n3000"
+        output: "Rata-rata 3 terakhir: 3000"
+      - input: "1500\n1200\n900\n600"
+        output: "Rata-rata 3 terakhir: 900"
+      - input: "100\n200\n300\n700"
+        output: "Rata-rata 3 terakhir: 400"
+    solusi: |
+      harga = []
+      for i in range(4):
+          harga.append(int(input()))
+      ekor = harga[-3:]
+      jumlah = 0
+      for h in ekor:
+          jumlah = jumlah + h
+      print("Rata-rata 3 terakhir:", int(jumlah / 3))
+    petunjuk:
+      - "Simpan empat harga ke dalam list dulu pakai append."
+      - "Ambil 3 harga terakhir dengan harga[-3:]."
+      - "Jumlahkan pakai loop, bagi 3, lalu bungkus hasilnya dengan int()."
+
+  - id: "sq4-2"
+    judul: "Sinyal dari Rata-rata"
+    sulit: "sedang"
+    cerita: |
+      Paman Kancil suka mengamati harga saham sambil jajan di kantin.
+      Ia punya catatan beberapa harga, lalu ingin tahu sinyalnya hari ini.
+      Ketik jumlah harga, lalu harganya satu per satu, lalu harga sekarang.
+      Hitung rata-ratanya, lalu cetak sinyalnya: BELI, JUAL, atau TAHAN.
+    input: "Beberapa baris: jumlah harga, lalu harganya, lalu satu harga sekarang."
+    output: "Dua baris: 'Rata-rata: <angka>' lalu 'Sinyal: BELI/JUAL/TAHAN'."
+    contoh:
+      - input: "3\n100\n200\n300\n150"
+        output: "Rata-rata: 200\nSinyal: BELI"
+      - input: "3\n100\n200\n300\n250"
+        output: "Rata-rata: 200\nSinyal: JUAL"
+    tes:
+      - input: "3\n100\n200\n300\n150"
+        output: "Rata-rata: 200\nSinyal: BELI"
+      - input: "3\n100\n200\n300\n250"
+        output: "Rata-rata: 200\nSinyal: JUAL"
+      - input: "3\n100\n200\n300\n200"
+        output: "Rata-rata: 200\nSinyal: TAHAN"
+      - input: "4\n100\n200\n300\n400\n200"
+        output: "Rata-rata: 250\nSinyal: BELI"
+      - input: "2\n400\n600\n700"
+        output: "Rata-rata: 500\nSinyal: JUAL"
+    solusi: |
+      n = int(input())
+      harga = []
+      for i in range(n):
+          harga.append(int(input()))
+      sekarang = int(input())
+      jumlah = 0
+      for h in harga:
+          jumlah = jumlah + h
+      rata = int(jumlah / n)
+      print("Rata-rata:", rata)
+      if sekarang < rata:
+          print("Sinyal: BELI")
+      elif sekarang > rata:
+          print("Sinyal: JUAL")
+      else:
+          print("Sinyal: TAHAN")
+    petunjuk:
+      - "Baca semua harga dulu, simpan ke list."
+      - "Jumlahkan isi list pakai loop, lalu bagi dengan n."
+      - "Bandingkan harga sekarang dengan rata-rata: lebih kecil BELI, lebih besar JUAL, sama TAHAN."
+
+  - id: "sq4-3"
+    judul: "Untung Satu Transaksi"
+    sulit: "sedang"
+    cerita: |
+      Kancil membeli 2 lot saham di harga 1000. Besoknya harga naik jadi 1200.
+      Kancil penasaran, berapa untungnya dan berapa persen untungnya?
+      Ia ingin jadi trader yang teliti. Ketik harga beli, harga jual,
+      dan jumlah lot. Cetak untungnya dalam rupiah, lalu cetak persen
+      untungnya pakai int().
+    input: "Tiga baris: harga beli, harga jual, dan jumlah lot."
+    output: "Dua baris: 'Untung: <angka>' lalu 'Persen: <angka>'."
+    contoh:
+      - input: "1000\n1200\n2"
+        output: "Untung: 400\nPersen: 20"
+      - input: "2000\n2500\n4"
+        output: "Untung: 2000\nPersen: 25"
+    tes:
+      - input: "1000\n1200\n2"
+        output: "Untung: 400\nPersen: 20"
+      - input: "2000\n2500\n4"
+        output: "Untung: 2000\nPersen: 25"
+      - input: "500\n600\n1"
+        output: "Untung: 100\nPersen: 20"
+      - input: "1000\n1500\n2"
+        output: "Untung: 1000\nPersen: 50"
+      - input: "3000\n3300\n5"
+        output: "Untung: 1500\nPersen: 10"
+    solusi: |
+      beli = int(input())
+      jual = int(input())
+      lot = int(input())
+      modal = beli * lot
+      untung = (jual - beli) * lot
+      persen = int(untung / modal * 100)
+      print("Untung:", untung)
+      print("Persen:", persen)
+    petunjuk:
+      - "Untung = (harga jual - harga beli) dikali jumlah lot."
+      - "Modal = harga beli dikali jumlah lot."
+      - "Persen = untung dibagi modal, dikali 100, lalu bungkus int()."
+
+  - id: "sq4-4"
+    judul: "Hitung Sinyal BELI"
+    sulit: "sulit"
+    cerita: |
+      Kancil mau menguji aturan beli-jualnya dengan data lama.
+      Ia mengumpulkan deret harga saham selama beberapa hari.
+      Hitung dulu rata-rata semua harga itu. Lalu hitung berapa kali
+      harga turun di bawah rata-rata, karena itu sinyal BELI.
+      Cetak rata-ratanya dan jumlah sinyal BELI. Pakai int() untuk rata-ratanya.
+    input: "Beberapa baris: jumlah hari, lalu harga tiap hari."
+    output: "Dua baris: 'Rata-rata: <angka>' lalu 'Sinyal BELI: <angka>'."
+    contoh:
+      - input: "5\n100\n200\n300\n400\n500"
+        output: "Rata-rata: 300\nSinyal BELI: 2"
+      - input: "3\n100\n200\n300"
+        output: "Rata-rata: 200\nSinyal BELI: 1"
+    tes:
+      - input: "5\n100\n200\n300\n400\n500"
+        output: "Rata-rata: 300\nSinyal BELI: 2"
+      - input: "3\n100\n200\n300"
+        output: "Rata-rata: 200\nSinyal BELI: 1"
+      - input: "4\n500\n500\n500\n500"
+        output: "Rata-rata: 500\nSinyal BELI: 0"
+      - input: "6\n600\n200\n400\n100\n300\n500"
+        output: "Rata-rata: 350\nSinyal BELI: 3"
+      - input: "2\n1000\n2000"
+        output: "Rata-rata: 1500\nSinyal BELI: 1"
+    solusi: |
+      n = int(input())
+      harga = []
+      for i in range(n):
+          harga.append(int(input()))
+      jumlah = 0
+      for h in harga:
+          jumlah = jumlah + h
+      rata = jumlah / n
+      beli = 0
+      for h in harga:
+          if h < rata:
+              beli = beli + 1
+      print("Rata-rata:", int(rata))
+      print("Sinyal BELI:", beli)
+    petunjuk:
+      - "Baca semua harga dulu, simpan ke list."
+      - "Hitung rata-rata semua harga: jumlah dibagi banyaknya harga."
+      - "Putar lagi list-nya satu per satu. Tambah hitungan tiap harga yang lebih kecil dari rata-rata."

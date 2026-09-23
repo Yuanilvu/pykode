@@ -1,0 +1,78 @@
+# ============================================================
+# REGISTRI JURUSAN PYKODE — dipakai pop-up "Pilih Jurusan" & section jalur.
+# Modul belajar tiap jurusan ada di: curriculum/jurusan/<id>/babNN.yaml
+# enabled: true  = sudah bisa dipilih anak.
+# enabled: false = tampil "segera hadir" di pop-up.
+# ============================================================
+jurusan:
+  - id: "qfin"
+    nama: "Quant Finance"
+    emoji: "💰"
+    warna: "#0ea5e9"
+    tagline: "Coding × Uang & Pasar"
+    deskripsi: "Bikin program soal uang: bunga, tabungan, saham, sampai simulasi investasi."
+    sorotan:
+      - "Rahasia bunga majemuk & tabungan"
+      - "Baca data harga & tren"
+      - "Backtest strategi pertamamu"
+    enabled: true
+
+  - id: "game"
+    nama: "Pencipta Dunia"
+    emoji: "🎮"
+    warna: "#8b5cf6"
+    tagline: "Coding × Game & Kreativitas"
+    deskripsi: "Rakit mesin game, bikin peta & petualangan, sampai game duel punyamu sendiri."
+    sorotan:
+      - "Upgrade Tebak Angka jadi pro"
+      - "Bikin peta, labirin & teka-teki"
+      - "Game petualangan buatanmu"
+    enabled: true
+
+  - id: "data"
+    nama: "Detektif Data"
+    emoji: "📊"
+    tagline: "Coding × Bisnis & Angka"
+    enabled: false
+
+  - id: "ai_bahasa"
+    nama: "Peramal Kata"
+    emoji: "🤖"
+    tagline: "Coding × Bahasa"
+    enabled: false
+
+  - id: "dna"
+    nama: "Detektif DNA"
+    emoji: "🧬"
+    tagline: "Coding × Biologi"
+    enabled: false
+
+  - id: "bumi"
+    nama: "Pahlawan Bumi"
+    emoji: "🌍"
+    tagline: "Coding × Lingkungan"
+    enabled: false
+
+  - id: "cyber"
+    nama: "Penjaga Sandi"
+    emoji: "🛡️"
+    tagline: "Coding × Keamanan"
+    enabled: false
+
+  - id: "bola"
+    nama: "Analis Bola"
+    emoji: "⚽"
+    tagline: "Coding × Olahraga"
+    enabled: false
+
+  - id: "antariksa"
+    nama: "Penjelajah Antariksa"
+    emoji: "🚀"
+    tagline: "Coding × Astronomi"
+    enabled: false
+
+  - id: "musik"
+    nama: "Maestro Musik"
+    emoji: "🎵"
+    tagline: "Coding × Musik"
+    enabled: false

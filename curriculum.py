@@ -4,6 +4,7 @@ import re
 import yaml
 
 CURRICULUM_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "curriculum", "levels")
+JURUSAN_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "curriculum", "jurusan")
 
 MARKDOWN_TEMPLATE = re.compile(r"^[\w\s-]+$")
 
@@ -15,10 +16,15 @@ _project = None
 _project2 = None
 _bugs = None
 _bug_by_id = None
+_jurusan_info = None       # [info], termasuk yang belum dibuka (enabled False)
+_jurusan_babs = None       # {jid: [modul dict]}
+_jurusan_lesson = None     # {lesson_id: jid}
+_jurusan_problem = None    # {problem_id: jid}
 
 
 def _load_all():
     global _babs, _by_lesson, _by_problem, _drills, _project, _project2, _bugs, _bug_by_id
+    global _jurusan_info, _jurusan_babs, _jurusan_lesson, _jurusan_problem
     if _babs is not None:
         return
     babs = []
@@ -56,6 +62,57 @@ def _load_all():
         misi2 = sorted(project2.get("misi") or [], key=lambda m: m.get("bab", 999))
         project2["misi"] = misi2
     bugs.sort(key=lambda b: (b.get("bab", 99), b["id"]))
+
+    # ── Jurusan (penjurusan): konten di curriculum/jurusan/<id>/babNN.yaml ──
+    # Modul TIDAK masuk jalur utama (_babs) — punya daftar sendiri per jurusan.
+    # Pelajaran & soalnya TETAP didaftarkan ke by_lesson/by_problem supaya
+    # route /lesson & /problem jalan tanpa perubahan.
+    jinfo = []
+    meta_p = os.path.join(JURUSAN_DIR, "jurusan.yaml")
+    if os.path.isfile(meta_p):
+        try:
+            with open(meta_p, encoding="utf-8") as f:
+                jinfo = (yaml.safe_load(f) or {}).get("jurusan") or []
+        except Exception:
+            jinfo = []
+    jbabs, jles, jpro = {}, {}, {}
+    jinfo_by_id = {j.get("id"): j for j in jinfo}
+    if os.path.isdir(JURUSAN_DIR):
+        for jid in sorted(os.listdir(JURUSAN_DIR)):
+            jdir = os.path.join(JURUSAN_DIR, jid)
+            if not os.path.isdir(jdir):
+                continue
+            mods = jbabs.setdefault(jid, [])
+            for fn in sorted(os.listdir(jdir)):
+                if not fn.endswith(".yaml"):
+                    continue
+                try:
+                    with open(os.path.join(jdir, fn), encoding="utf-8") as f:
+                        data = yaml.safe_load(f) or {}
+                except Exception:
+                    continue
+                if not isinstance(data, dict) or "bab" not in data:
+                    continue
+                data["jurusan"] = jid
+                mods.append(data)
+            mods.sort(key=lambda b: (b.get("modul", b.get("bab", 999)),
+                                     b.get("bab", 999)))
+    for jid, mods in jbabs.items():
+        ji = jinfo_by_id.get(jid) or {"id": jid, "nama": jid, "emoji": "🎓"}
+        for m in mods:
+            emo = ji.get("emoji", "🎓")
+            m["nav_label"] = (f"{emo} {ji.get('nama', jid)} · "
+                              f"Modul {m.get('modul', m.get('bab'))}")
+            m["jurusan_info"] = ji
+            for p in (m.get("pelajaran") or []):
+                by_lesson[p["id"]] = {"bab": m, "data": p}
+                jles[p["id"]] = jid
+            for s in (m.get("soal") or []):
+                by_problem[s["id"]] = {"bab": m, "data": s}
+                jpro[s["id"]] = jid
+    _jurusan_info, _jurusan_babs = jinfo, jbabs
+    _jurusan_lesson, _jurusan_problem = jles, jpro
+
     _babs, _by_lesson, _by_problem, _drills, _project = babs, by_lesson, by_problem, drills, project
     _project2 = project2
     _bugs, _bug_by_id = bugs, bug_by_id
@@ -142,6 +199,36 @@ def get_problems_by_bab(bab_num):
     if 0 < bab_num <= len(_babs):
         return list(_babs[bab_num - 1].get("soal") or [])
     return []
+
+
+def get_jurusan_list():
+    """Daftar info jurusan (termasuk yang belum dibuka / enabled False)."""
+    _load_all()
+    return list(_jurusan_info or [])
+
+
+def get_jurusan(jid):
+    _load_all()
+    for j in (_jurusan_info or []):
+        if j.get("id") == jid:
+            return j
+    return None
+
+
+def get_jurusan_babs(jid):
+    """Modul (bab) milik satu jurusan, terurut."""
+    _load_all()
+    return list((_jurusan_babs or {}).get(jid) or [])
+
+
+def jurusan_of_lesson(lesson_id):
+    _load_all()
+    return (_jurusan_lesson or {}).get(lesson_id)
+
+
+def jurusan_of_problem(problem_id):
+    _load_all()
+    return (_jurusan_problem or {}).get(problem_id)
 
 
 def stats():

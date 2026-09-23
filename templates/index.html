@@ -106,6 +106,38 @@
   {% endfor %}
 </div>
 
+{% if jurusan_aktif %}
+<div class="section-title" id="jalur">🎓 Jalur Spesialisasimu: {{ jurusan_aktif.emoji }} {{ jurusan_aktif.nama }}</div>
+<div class="jalur-box" style="--jc: {{ jurusan_aktif.warna or '#6366f1' }}">
+  <div class="jalur-top">
+    <div>
+      <strong>{{ jurusan_aktif.tagline }}</strong>
+      <div style="color:var(--muted);font-size:.85rem">{{ jurusan_aktif.deskripsi }}</div>
+    </div>
+    <button class="btn btn-outline btn-sm" onclick="gantiJurusan()">🔄 Ganti jalur</button>
+  </div>
+  <div class="bab-grid">
+    {% for m in jurusan_mods %}
+    <a class="bab-card {% if m.complete %}bab-done{% endif %}" href="{{ url_for('lesson', lesson_id=m.pelajaran[0].id) if m.pelajaran else '#' }}">
+      <div class="bab-head">
+        <span class="bab-emoji">{{ m.emoji }}</span>
+        <div>
+          <div class="bab-title">Modul {{ m.modul }}: {{ m.judul }}</div>
+          <div class="bab-sub">{{ m.deskripsi }}</div>
+        </div>
+      </div>
+      <div class="bab-meta">
+        <span>{{ m.n_lessons }} pelajaran · {{ m.n_problems }} soal</span>
+        <span>{{ m.done }}/{{ m.total }}</span>
+      </div>
+      <div class="progress"><i style="width:{{ m.pct }}%; background:{{ m.warna or jurusan_aktif.warna }}"></i></div>
+      {% if m.prasyarat %}<div style="color:var(--muted);font-size:.75rem;margin-top:6px">💡 Paling pas setelah Bab {{ m.prasyarat }}</div>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 <div class="section-title">🏆 Papan Skor Top 5</div>
 <div class="card">
   <div class="table-wrap">
@@ -137,5 +169,66 @@
   <p class="flash flash-info">Belum ada badge. Selesaikan pelajaran & soal pertamamu untuk dapat badge! 🦁</p>
   {% endif %}
 </div>
+
+{% if show_jurusan_modal %}
+<div class="modal-overlay" id="jurusanModal">
+  <div class="modal-card">
+    <div class="modal-head">🎓</div>
+    <h2 style="margin:0 0 6px;text-align:center">Saatnya Pilih Jurusan!</h2>
+    <p style="margin:0 0 14px;color:var(--muted);text-align:center">
+      Kamu sudah belajar Python dasar. Sekarang pilih jalur spesialisasimu —
+      pelajaran khusus akan terbuka dan menemani belajarmu!
+    </p>
+    <div class="jurusan-grid">
+      {% for j in jurusan_list %}
+      <button class="jurusan-card" data-jid="{{ j.id }}" style="--jc: {{ j.warna or '#6366f1' }}">
+        <span class="j-emoji">{{ j.emoji }}</span>
+        <span class="j-nama">{{ j.nama }}</span>
+        <span class="j-tag">{{ j.tagline }}</span>
+        {% for s in j.sorotan or [] %}<span class="j-item">✔ {{ s }}</span>{% endfor %}
+        <span class="j-cta">Mulai jalur ini 🚀</span>
+      </button>
+      {% endfor %}
+    </div>
+    {% if jurusan_coming %}
+    <div class="j-soon">
+      <strong>Segera hadir:</strong>
+      {% for j in jurusan_coming %}<span class="soon-chip">{{ j.emoji }} {{ j.nama }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    <button class="modal-nanti" onclick="document.getElementById('jurusanModal').style.display='none'">Nanti dulu 🙈</button>
+  </div>
+</div>
+{% endif %}
+
+<script>
+(function () {
+  async function pilihJurusan(jid) {
+    const r = await fetch(PYKODE_BASE + '/api/pilih-jurusan', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({jurusan: jid})
+    });
+    return r.json();
+  }
+  document.querySelectorAll('.jurusan-card').forEach(function (b) {
+    b.addEventListener('click', async function () {
+      b.disabled = true;
+      try {
+        const j = await pilihJurusan(b.dataset.jid);
+        if (j.ok) { location.reload(); return; }
+        alert(j.pesan || 'Gagal memilih jurusan.');
+      } catch (e) {}
+      b.disabled = false;
+    });
+  });
+  window.gantiJurusan = async function () {
+    if (!confirm('Ganti jalur jurusan? Progressmu tidak hilang kok, aman! 👍')) return;
+    try {
+      const j = await pilihJurusan('');
+      if (j.ok) location.reload();
+    } catch (e) {}
+  };
+})();
+</script>
 
 {% endblock %}

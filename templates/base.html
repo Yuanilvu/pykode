@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}PyKode — Belajar Python{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='vendor/codemirror/codemirror.min.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=5">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=6">
 <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
 <meta name="theme-color" content="#6366f1">
 <meta name="mobile-web-app-capable" content="yes">
@@ -17,6 +17,7 @@
   <a class="logo" href="{{ url_for('index') }}">🐍 PyKode</a>
   <div class="navlinks">
     <a href="{{ url_for('index') }}">Belajar</a>
+    <a href="{{ url_for('index') }}#jalur">Jurusan 🎓</a>
     <a href="{{ url_for('pet') }}">Kode 🤖</a>
     <a href="{{ url_for('project') }}">Proyek 🏗️</a>
     <a href="{{ url_for('project2') }}">Game 🎮</a>

@@ -333,3 +333,46 @@ textarea.stdin { width: 100%; min-height: 70px; border: 1px solid var(--border);
 .badge-desc { font-size: .8rem; color: var(--muted); margin-top: 4px; min-height: 32px; }
 .badge-xp { font-size: .8rem; color: var(--success); font-weight: 700; margin-top: 6px; }
 .badge-locked { opacity: .55; filter: grayscale(.6); }
+
+/* ── Penjurusan (23 Sep 2026): pop-up pilih jurusan & box jalur ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, .55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; z-index: 50; backdrop-filter: blur(3px);
+}
+.modal-card {
+  background: #fff; border-radius: 20px; padding: 22px;
+  max-width: 640px; width: 100%; max-height: 92vh; overflow: auto;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .35);
+  animation: jpop .25s ease;
+}
+@keyframes jpop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-head { font-size: 2.2rem; text-align: center; }
+.jurusan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .jurusan-grid { grid-template-columns: 1fr; } }
+.jurusan-card {
+  border: 2px solid var(--jc, var(--primary)); border-radius: 16px;
+  background: linear-gradient(160deg, #fff, rgba(99, 102, 241, .06));
+  padding: 14px; text-align: left; cursor: pointer; font: inherit;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.jurusan-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(79, 70, 229, .18); }
+.jurusan-card:disabled { opacity: .6; cursor: wait; }
+.j-emoji { font-size: 1.8rem; }
+.j-nama { font-weight: 800; font-size: 1.05rem; }
+.j-tag { color: var(--muted); font-size: .85rem; }
+.j-item { font-size: .82rem; color: #334155; }
+.j-cta { margin-top: 6px; font-weight: 800; color: var(--jc, var(--primary-dark)); }
+.modal-nanti {
+  display: block; margin: 14px auto 0; background: none; border: none;
+  color: var(--muted); font: inherit; font-size: .85rem; cursor: pointer;
+  text-decoration: underline;
+}
+.j-soon { margin-top: 12px; font-size: .8rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.soon-chip { background: #f1f5f9; border-radius: 999px; padding: 3px 10px; }
+.jalur-box {
+  border: 2px solid var(--jc, var(--primary)); border-radius: 18px;
+  padding: 14px; background: linear-gradient(160deg, rgba(255, 255, 255, .9), rgba(99, 102, 241, .05));
+}
+.jalur-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }

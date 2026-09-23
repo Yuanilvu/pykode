@@ -1,0 +1,386 @@
+bab: 1
+modul: 1
+jurusan: "game"
+judul: "Mesin Game Pertamamu"
+emoji: "🕹️"
+warna: "#8b5cf6"
+deskripsi: "Bongkar rahasia game: loop, nyawa, skor, dan jurus pemain."
+prasyarat: 5
+
+pelajaran:
+  - id: "g1-1"
+    judul: "Rahasia Game: Loop yang Terus Jalan"
+    menit: 6
+    materi: |
+      Selamat datang di jalur **Pencipta Dunia**! 🎮
+      Di jalur ini kamu akan merakit game pakai kode.
+
+      **Rahasia pertama:** semua game itu jalan berulang-ulang.
+      Layar game mengecek jurusmu, mengubah dunia, lalu gambar lagi.
+      Ulang terus sampai game selesai. Namanya **game loop**.
+
+      Di Python, loop kayak gini ditulis dengan `while`.
+      ```python
+      nyawa = 3
+      while nyawa > 0:
+          print("Nyawa:", nyawa)
+          nyawa = nyawa - 1
+      print("Game over!")
+      ```
+      Selama nyawa masih lebih dari 0, baris di dalamnya diulang.
+      Setelah nyawa habis, loop berhenti. 🔁
+
+      Kadang kita ingin loop berhenti di tengah jalan.
+      Caranya pakai `break`:
+      ```python
+      while True:
+          print("Jalan...")
+          break
+      ```
+
+      `while True` artinya "ulang selamanya". `break` yang menghentikannya.
+      Keren kan? Ini jantung semua game!
+    contoh:
+      - kode: |
+          nyawa = 3
+          while nyawa > 0:
+              print("Nyawa:", nyawa)
+              nyawa = nyawa - 1
+          print("Game over!")
+        penjelasan: "Nyawa dicetak 3, 2, 1. Lalu loop berhenti dan 'Game over!' muncul."
+      - kode: |
+          langkah = 0
+          while True:
+              langkah = langkah + 1
+              print("Langkah ke-", langkah)
+              if langkah == 3:
+                  break
+        penjelasan: "Loop jalan terus, tapi break menghentikannya di langkah ke-3."
+    kuis:
+      - soal: "Apa yang membuat loop 'while True' akhirnya berhenti?"
+        pilihan:
+          - "break"
+          - "print"
+          - "while"
+          - "tidak bisa berhenti"
+        jawaban: 0
+        penjelasan: "break adalah tombol berhenti di tengah loop."
+      - soal: "Game loop itu gunanya untuk apa?"
+        pilihan:
+          - "mengulang proses game terus-menerus"
+          - "mematikan komputer"
+          - "menggambar satu kali saja"
+          - "menghapus kode"
+        jawaban: 0
+        penjelasan: "Game selalu mengecek jurusmu dan mengubah dunia, berulang terus."
+      - soal: "Berapa kali 'Nyawa: 3, 2, 1' tercetak di contoh pertama?"
+        pilihan:
+          - "2 kali"
+          - "3 kali"
+          - "4 kali"
+          - "selamanya"
+        jawaban: 1
+        penjelasan: "Nyawa mulai 3, berkurang sampai 0. Total 3 kali cetak."
+
+  - id: "g1-2"
+    judul: "Nyawa, Skor & Level"
+    menit: 6
+    materi: |
+      Semua game punya **keadaan** (state). Contohnya:
+      - **nyawa** ❤️: kalau habis, game selesai
+      - **skor** ⭐: makin besar makin hebat
+      - **level**: menunjukkan seberapa jauh kamu
+
+      Di kode, keadaan itu cuma variabel biasa!
+      ```python
+      skor = 0
+      skor = skor + 10
+      print("Dapat 10 poin! Skor:", skor)
+      ```
+
+      Setiap kali pemain melakukan sesuatu, kita ubah variabelnya.
+      Lalu kita cek pakai `if`. Contoh: kalau nyawa habis...
+      ```python
+      nyawa = 1
+      if nyawa > 0:
+          print("Lanjut main!")
+      else:
+          print("Game Over!")
+      ```
+
+      Gabungkan loop + keadaan + if, jadilah mesin game! ⚙️
+      Di soal nanti kamu akan menghitung skor serangan pemain.
+    contoh:
+      - kode: |
+          skor = 0
+          skor = skor + 10
+          print("Skor sekarang:", skor)
+          skor = skor + 20
+          print("Skor sekarang:", skor)
+        penjelasan: "Skor bertambah dari 0 jadi 10, lalu jadi 30."
+      - kode: |
+          nyawa = 1
+          if nyawa > 0:
+              print("Lanjut main!")
+          else:
+              print("Game Over!")
+        penjelasan: "Karena nyawa masih 1, pemain boleh lanjut main."
+    kuis:
+      - soal: "Di game, variabel 'skor' dipakai untuk apa?"
+        pilihan:
+          - "menyimpan keadaan skor pemain"
+          - "menggambar pemain"
+          - "mematikan game"
+          - "mengubah warna"
+        jawaban: 0
+        penjelasan: "Skor adalah keadaan yang tersimpan di variabel."
+      - soal: "Skor awal 0, lalu skor = skor + 15. Skor sekarang..."
+        pilihan:
+          - "0"
+          - "15"
+          - "150"
+          - "1"
+        jawaban: 1
+        penjelasan: "0 + 15 = 15."
+      - soal: "Kalau nyawa sudah 0, biasanya game..."
+        pilihan:
+          - "terus main"
+          - "Game Over"
+          - "tambah level"
+          - "tambah skor"
+        jawaban: 1
+        penjelasan: "Nyawa habis berarti permainan selesai."
+
+  - id: "g1-3"
+    judul: "Tebak Angka Pro"
+    menit: 7
+    materi: |
+      Saatnya menggabungkan semua! Kita bikin **Tebak Angka** ala game pro.
+      Kamu sudah pernah bikin versi simpelnya di proyek PyKode.
+      Sekarang versi dengan nyawa dan loop!
+
+      **Aturannya:**
+      1. Game menyimpan angka rahasia
+      2. Pemain mengetik tebakan
+      3. Benar? Menang! Salah? Nyawa berkurang
+      4. Nyawa habis? Game over!
+
+      ```python
+      rahasia = 7
+      tebakan_list = [3, 9, 7]
+      for t in tebakan_list:
+          if t == rahasia:
+              print("BENAR! Kamu menang!")
+              break
+          print("Salah, coba lagi")
+      ```
+
+      Versi aslinya pakai `while` + `input()` supaya pemain bisa
+      mengetik terus sampai menang atau nyawa habis. Itu tugasmu di soal!
+
+      **Tips pro:** selalu pikirkan "apa yang terjadi kalau nyawa habis?" 🤔
+    contoh:
+      - kode: |
+          rahasia = 7
+          tebakan = 3
+          if tebakan == rahasia:
+              print("BENAR!")
+          else:
+              print("Salah!")
+        penjelasan: "3 tidak sama dengan 7, jadi hasilnya 'Salah!'."
+      - kode: |
+          rahasia = 7
+          tebakan_list = [3, 9, 7]
+          for t in tebakan_list:
+              if t == rahasia:
+                  print("BENAR! Kamu menang!")
+                  break
+              print("Salah, coba lagi")
+        penjelasan: "Tebakan 3 salah, 9 salah, 7 benar! Loop berhenti karena break."
+    kuis:
+      - soal: "Kenapa 'break' dipakai setelah pemain menebak dengan benar?"
+        pilihan:
+          - "supaya game langsung selesai dan tidak lanjut bertanya"
+          - "supaya nyawa bertambah"
+          - "supaya angka berubah"
+          - "supaya skor berkurang"
+        jawaban: 0
+        penjelasan: "Setelah menang, kita berhenti bertanya lagi."
+      - soal: "Rahasia 4, tebakan berurutan: 2, 4. Apa yang terjadi?"
+        pilihan:
+          - "salah dulu, lalu menang"
+          - "menang dulu, lalu salah"
+          - "dua-duanya salah"
+          - "game tidak jalan"
+        jawaban: 0
+        penjelasan: "Tebakan 2 salah, lalu 4 benar."
+      - soal: "Di game Tebak Angka, nyawa berkurang saat..."
+        pilihan:
+          - "pemain menebak salah"
+          - "pemain menebak benar"
+          - "game dimulai"
+          - "pemain diam"
+        jawaban: 0
+        penjelasan: "Salah tebak = kehilangan nyawa."
+
+soal:
+  - id: "sg1-1"
+    judul: "Simulasi Serangan"
+    sulit: "mudah"
+    cerita: |
+      Kancil sedang menguji game barunya. Setiap serangan memberi 10 skor.
+      Ia ingin melihat skor menumpuk di setiap serangan! Ketik jumlah
+      serangan, lalu cetak skor setelah tiap serangan dan skor akhirnya.
+    input: "Satu baris: jumlah serangan (angka bulat)."
+    output: "Baris per serangan: 'Serangan <ke->: skor <skor>', lalu 'Total skor: <skor>'."
+    contoh:
+      - input: "1"
+        output: "Serangan 1: skor 10\nTotal skor: 10"
+      - input: "3"
+        output: "Serangan 1: skor 10\nSerangan 2: skor 20\nSerangan 3: skor 30\nTotal skor: 30"
+    tes:
+      - input: "1"
+        output: "Serangan 1: skor 10\nTotal skor: 10"
+      - input: "3"
+        output: "Serangan 1: skor 10\nSerangan 2: skor 20\nSerangan 3: skor 30\nTotal skor: 30"
+      - input: "2"
+        output: "Serangan 1: skor 10\nSerangan 2: skor 20\nTotal skor: 20"
+      - input: "4"
+        output: "Serangan 1: skor 10\nSerangan 2: skor 20\nSerangan 3: skor 30\nSerangan 4: skor 40\nTotal skor: 40"
+    solusi: |
+      n = int(input())
+      skor = 0
+      i = 1
+      while i <= n:
+          skor = skor + 10
+          print(f"Serangan {i}: skor {skor}")
+          i = i + 1
+      print("Total skor:", skor)
+    petunjuk:
+      - "Pakai while dengan pencatat: i mulai dari 1, naik sampai n."
+      - "Setiap putaran: skor = skor + 10, lalu cetak."
+      - "Jangan lupa i = i + 1 supaya loopnya berhenti."
+
+  - id: "sg1-2"
+    judul: "Tebak Angka dengan Nyawa"
+    sulit: "sedang"
+    cerita: |
+      Game Tebak Angka Kancil punya 3 nyawa! Pemain mengetik tebakan
+      satu per satu. Kalau benar, game berhenti dan menang. Kalau salah,
+      nyawa berkurang. Baris pertama adalah angka rahasianya, baris
+      berikutnya adalah tebakan pemain.
+    input: "Baris pertama: angka rahasia. Baris berikutnya: tebakan (satu per baris)."
+    output: "Tiap salah: 'Salah! Nyawa: <sisa>'. Kalau benar: 'BENAR! Kamu menang!'. Kalau nyawa habis: 'Game Over! Nyawamu habis.'"
+    contoh:
+      - input: "7\n3\n7"
+        output: "Salah! Nyawa: 2\nBENAR! Kamu menang!"
+      - input: "5\n1\n2\n3\n4"
+        output: "Salah! Nyawa: 2\nSalah! Nyawa: 1\nSalah! Nyawa: 0\nGame Over! Nyawamu habis."
+    tes:
+      - input: "7\n3\n7"
+        output: "Salah! Nyawa: 2\nBENAR! Kamu menang!"
+      - input: "5\n1\n2\n3\n4"
+        output: "Salah! Nyawa: 2\nSalah! Nyawa: 1\nSalah! Nyawa: 0\nGame Over! Nyawamu habis."
+      - input: "10\n10"
+        output: "BENAR! Kamu menang!"
+      - input: "6\n1\n2\n6"
+        output: "Salah! Nyawa: 2\nSalah! Nyawa: 1\nBENAR! Kamu menang!"
+    solusi: |
+      rahasia = int(input())
+      nyawa = 3
+      menang = False
+      while nyawa > 0:
+          tebakan = int(input())
+          if tebakan == rahasia:
+              print("BENAR! Kamu menang!")
+              menang = True
+              break
+          nyawa = nyawa - 1
+          print("Salah! Nyawa:", nyawa)
+      if not menang:
+          print("Game Over! Nyawamu habis.")
+    petunjuk:
+      - "Simpan dulu: nyawa = 3 dan penanda menang = False."
+      - "Di dalam while: baca tebakan. Kalau sama dengan rahasia → cetak BENAR dan break."
+      - "Kalau salah: nyawa dikurangi 1, lalu cetak nyawanya. Setelah loop, cek apakah pemain menang."
+
+  - id: "sg1-3"
+    judul: "Combo Bertubi-tubi"
+    sulit: "sedang"
+    cerita: |
+      Di game Kancil, serangan combo makin lama makin kuat!
+      Serangan ke-1 dapat 10 poin, serangan ke-2 dapat 20 poin,
+      serangan ke-3 dapat 30 poin, dan seterusnya. Ketik jumlah
+      serangan, lalu cetak poin tiap serangan dan total semuanya.
+    input: "Satu baris: jumlah serangan (angka bulat)."
+    output: "Baris per serangan: 'Serangan <ke->: <poin> poin', lalu 'Total: <total>'."
+    contoh:
+      - input: "3"
+        output: "Serangan 1: 10 poin\nSerangan 2: 20 poin\nSerangan 3: 30 poin\nTotal: 60"
+      - input: "1"
+        output: "Serangan 1: 10 poin\nTotal: 10"
+    tes:
+      - input: "3"
+        output: "Serangan 1: 10 poin\nSerangan 2: 20 poin\nSerangan 3: 30 poin\nTotal: 60"
+      - input: "1"
+        output: "Serangan 1: 10 poin\nTotal: 10"
+      - input: "5"
+        output: "Serangan 1: 10 poin\nSerangan 2: 20 poin\nSerangan 3: 30 poin\nSerangan 4: 40 poin\nSerangan 5: 50 poin\nTotal: 150"
+      - input: "0"
+        output: "Total: 0"
+    solusi: |
+      n = int(input())
+      total = 0
+      i = 1
+      while i <= n:
+          poin = i * 10
+          total = total + poin
+          print(f"Serangan {i}: {poin} poin")
+          i = i + 1
+      print("Total:", total)
+    petunjuk:
+      - "Poin tiap serangan = nomor serangan dikali 10."
+      - "Simpan total di variabel, tambahkan poin setiap putaran."
+      - "Kalau jumlahnya 0, loop tidak jalan dan total tetap 0."
+
+  - id: "sg1-4"
+    judul: "Bertahan dari Serangan Naga"
+    sulit: "sulit"
+    cerita: |
+      Naga menyerang! Setiap serangan mengurangi 1 nyawa pemain.
+      Pemain bertahan sampai serangan habis. Ketik nyawa awal dan
+      jumlah serangan. Cetak tiap serangan dan sisa nyawanya.
+      Kalau nyawa masih ada setelah semua serangan, pemain bertahan!
+      Kalau nyawa habis di tengah jalan, game over.
+    input: "Dua baris: nyawa awal, lalu jumlah serangan."
+    output: "Tiap serangan: 'Serangan <ke->! Nyawa: <sisa>'. Akhir: 'Kamu bertahan!' atau 'Game Over!'"
+    contoh:
+      - input: "3\n5"
+        output: "Serangan 1! Nyawa: 2\nSerangan 2! Nyawa: 1\nSerangan 3! Nyawa: 0\nGame Over!"
+      - input: "5\n2"
+        output: "Serangan 1! Nyawa: 4\nSerangan 2! Nyawa: 3\nKamu bertahan!"
+    tes:
+      - input: "3\n5"
+        output: "Serangan 1! Nyawa: 2\nSerangan 2! Nyawa: 1\nSerangan 3! Nyawa: 0\nGame Over!"
+      - input: "5\n2"
+        output: "Serangan 1! Nyawa: 4\nSerangan 2! Nyawa: 3\nKamu bertahan!"
+      - input: "2\n2"
+        output: "Serangan 1! Nyawa: 1\nSerangan 2! Nyawa: 0\nGame Over!"
+      - input: "4\n0"
+        output: "Kamu bertahan!"
+    solusi: |
+      nyawa = int(input())
+      serangan = int(input())
+      i = 1
+      while nyawa > 0 and i <= serangan:
+          nyawa = nyawa - 1
+          print(f"Serangan {i}! Nyawa: {nyawa}")
+          i = i + 1
+      if nyawa > 0:
+          print("Kamu bertahan!")
+      else:
+          print("Game Over!")
+    petunjuk:
+      - "Loop jalan selama DUA syarat: nyawa masih ada DAN serangan belum habis."
+      - "Pakai and untuk menggabungkan dua syarat itu."
+      - "Setelah loop, cek nyawa: masih ada artinya bertahan, habis artinya game over."

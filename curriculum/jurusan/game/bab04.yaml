@@ -1,0 +1,478 @@
+bab: 4
+modul: 4
+jurusan: "game"
+judul: "Teka-teki & Level"
+emoji: "🧩"
+warna: "#8b5cf6"
+deskripsi: "Pecahkan kode rahasia, tembus labirin, dan rakit level buatanmu."
+prasyarat: 10
+
+pelajaran:
+  - id: "g4-1"
+    judul: "Teka-teki Kode Rahasia"
+    menit: 6
+    materi: |
+      Game petualangan selalu penuh teka-teki! 🧩
+      Pintu rahasia hanya terbuka kalau kamu tahu polanya.
+
+      **Pola** artinya aturan tetap. Contoh pola "tambah 5":
+      tiap angka ditambah 5 dari angka sebelumnya.
+      Jadi deretnya: 5, 10, 15, 20, dan seterusnya.
+
+      Pola lain: "kali 2". Tiap angka dikali 2.
+      Jadi deretnya: 2, 4, 8, 16, dan seterusnya.
+
+      Di Python, pola dicek pakai `for` dan `if`.
+      ```python
+      kode = [5, 10, 15, 20]
+      for angka in kode:
+          if angka % 10 == 0:
+              print("Kunci:", angka)
+      ```
+      Loop `for` memeriksa angka satu per satu.
+      Tanda `%` artinya **sisa bagi**.
+      `angka % 10 == 0` artinya angka habis dibagi 10.
+
+      Hasilnya `Kunci: 10` dan `Kunci: 20`.
+      Dua angka itu yang jadi kunci pintu rahasia.
+
+      Kode rahasia juga bisa disusun dari pola yang berjalan.
+      ```python
+      kode = [3, 6, 12, 24]
+      sekarang = 3
+      for angka in kode:
+          if angka == sekarang:
+              print("Cocok:", angka)
+              sekarang = sekarang * 2
+      ```
+      Angka 3 cocok, lalu pencarinya naik jadi 6, 12, dan 24.
+      Semuanya cocok, jadi pintunya terbuka.
+
+      Ayo pecahkan kodenya di contoh bawah!
+      Ubah angkanya dan lihat kunci mana yang muncul. 🎮
+    contoh:
+      - kode: |
+          kode = [5, 10, 15, 20, 25]
+          for angka in kode:
+              if angka % 10 == 0:
+                  print("Kunci:", angka)
+        penjelasan: "Angka 10 dan 20 habis dibagi 10, jadi keduanya menjadi kunci."
+      - kode: |
+          kode = [3, 6, 12, 24]
+          sekarang = 3
+          for angka in kode:
+              if angka == sekarang:
+                  print("Cocok:", angka)
+                  sekarang = sekarang * 2
+        penjelasan: "Angka dicocokkan dengan pola kali 2. Cocok semua: 3, 6, 12, lalu 24."
+    kuis:
+      - soal: "Pola 5, 10, 15, 20 memakai aturan..."
+        pilihan:
+          - "tambah 5"
+          - "kali 5"
+          - "tambah 10"
+          - "bagi 5"
+        jawaban: 0
+        penjelasan: "Tiap angka naik 5 dari angka sebelumnya."
+      - soal: "Pola 2, 4, 8, 16. Angka berikutnya adalah..."
+        pilihan:
+          - "18"
+          - "20"
+          - "32"
+          - "24"
+        jawaban: 2
+        penjelasan: "Tiap angka dikali 2. Jadi 16 dikali 2 hasilnya 32."
+      - soal: "Untuk memeriksa setiap angka kode satu per satu, kita pakai..."
+        pilihan:
+          - "for"
+          - "print"
+          - "input"
+          - "satu if saja"
+        jawaban: 0
+        penjelasan: "for menyusuri semua angka di dalam list satu per satu."
+
+  - id: "g4-2"
+    judul: "Labirin & Jalan Keluar"
+    menit: 7
+    materi: |
+      Labirin di game itu peta kotak-kotak. 🗺️
+      Ada jalan, dinding, dan pintu keluar.
+
+      Huruf `S` adalah posisi awal petualang.
+      Huruf `X` adalah pintu keluar. Titik `.` adalah jalan.
+
+      Sekarang kamu akan menghitung **langkah** menuju pintu keluar.
+      Caranya pakai **loop bersarang**, yaitu loop di dalam loop.
+      ```python
+      peta = [
+          ["S", ".", "."],
+          [".", "#", "."],
+          [".", ".", "X"],
+      ]
+      jumlah = 0
+      for baris in peta:
+          for kotak in baris:
+              if kotak == ".":
+                  jumlah = jumlah + 1
+      print("Jalan bebas:", jumlah)
+      ```
+      Loop luar menyusuri baris. Loop dalam menyusuri kotak.
+      Setiap kotak dicek: kalau isinya titik, hitungannya naik 1.
+      Hasilnya `Jalan bebas: 6`.
+
+      Untuk tahu **letak** sebuah kotak, kita pakai nomor baris dan kolom.
+      ```python
+      peta = [["S", ".", "X"]]
+      for i in range(1):
+          for j in range(3):
+              if peta[i][j] == "X":
+                  print("Keluar di kolom", j)
+      ```
+      Hasilnya `Keluar di kolom 2`. Ingat, nomor kotak mulai dari 0.
+
+      Jarak ke pintu keluar dihitung dari selisih baris dan kolom.
+      Ayo hitung langkah keluarmu di contoh bawah! 🎮
+    contoh:
+      - kode: |
+          peta = [
+              ["S", ".", "."],
+              [".", "#", "."],
+              [".", ".", "X"],
+          ]
+          langkah = 0
+          for baris in peta:
+              for kotak in baris:
+                  if kotak == ".":
+                      langkah = langkah + 1
+          print("Jalan bebas:", langkah)
+        penjelasan: "Ada 6 kotak titik di peta. Jadi jalan bebasnya 6."
+      - kode: |
+          peta = [
+              ["S", ".", "."],
+              ["#", ".", "."],
+              ["#", ".", "X"],
+          ]
+          baris_s = 0
+          kolom_s = 0
+          baris_x = 0
+          kolom_x = 0
+          for i in range(3):
+              for j in range(3):
+                  if peta[i][j] == "S":
+                      baris_s = i
+                      kolom_s = j
+                  if peta[i][j] == "X":
+                      baris_x = i
+                      kolom_x = j
+          langkah = (baris_x - baris_s) + (kolom_x - kolom_s)
+          print("Langkah ke keluar:", langkah)
+        penjelasan: "S ada di baris 0 kolom 0. X ada di baris 2 kolom 2. Jadi 2 + 2 = 4 langkah."
+    kuis:
+      - soal: "Kotak 'X' di peta artinya..."
+        pilihan:
+          - "pintu keluar"
+          - "dinding"
+          - "jalan biasa"
+          - "harta karun"
+        jawaban: 0
+        penjelasan: "X adalah tanda pintu keluar labirin."
+      - soal: "Untuk menyusuri baris DAN kotak peta, kita pakai..."
+        pilihan:
+          - "loop di dalam loop"
+          - "satu print"
+          - "satu input"
+          - "if sekali"
+        jawaban: 0
+        penjelasan: "Loop luar untuk baris, loop dalam untuk kotak."
+      - soal: "S ada di baris 0 kolom 0. X ada di baris 2 kolom 0. Jaraknya..."
+        pilihan:
+          - "1 langkah"
+          - "2 langkah"
+          - "3 langkah"
+          - "4 langkah"
+        jawaban: 1
+        penjelasan: "(2 - 0) + (0 - 0) hasilnya 2 langkah."
+
+  - id: "g4-3"
+    judul: "Bikin Level Sendiri"
+    menit: 6
+    materi: |
+      Sejauh ini kamu memainkan level orang lain.
+      Sekarang giliranmu jadi perancang level! 🏗️
+
+      Level itu sebenarnya cuma pola kotak.
+      Kita tentukan **aturan**, lalu kode mencetak polanya.
+
+      Contoh aturan: baris paling atas dinding semua.
+      ```python
+      for i in range(2):
+          teks = ""
+          for j in range(3):
+              if i == 0:
+                  teks = teks + "#"
+              else:
+                  teks = teks + "."
+          print(teks)
+      ```
+      Hasilnya baris pertama `###` dan baris kedua `...`.
+
+      Rahasianya ada di `if i == 0`. Nomor baris 0 yang kena aturan.
+
+      Kamu juga bisa **menghitung** simbol.
+      Misalnya: berapa banyak dinding yang sudah kamu buat.
+      Caranya tambah variabel `total`, lalu naikkan saat ada dinding.
+      ```python
+      total = 0
+      teks = ""
+      for j in range(4):
+          if j % 2 == 0:
+              teks = teks + "#"
+              total = total + 1
+          else:
+              teks = teks + "."
+      print(teks)
+      print("Dinding:", total)
+      ```
+      Hasilnya `#.#.` lalu `Dinding: 2`.
+
+      Aturan levelmu bisa apa saja: dinding di kiri, pintu di tengah,
+      atau harta di pojok. Ayo rakit level pertamamu di contoh bawah! 🎮
+    contoh:
+      - kode: |
+          for baris in range(3):
+              teks = ""
+              for kolom in range(3):
+                  if baris == 1 and kolom == 1:
+                      teks = teks + "X"
+                  else:
+                      teks = teks + "."
+              print(teks)
+        penjelasan: "Pintu keluar X ditaruh di baris 1 kolom 1. Kotak lain berisi jalan."
+      - kode: |
+          total = 0
+          for baris in range(4):
+              teks = ""
+              for kolom in range(4):
+                  if kolom % 2 == 0:
+                      teks = teks + "#"
+                      total = total + 1
+                  else:
+                      teks = teks + "."
+              print(teks)
+          print("Jumlah dinding:", total)
+        penjelasan: "Dinding muncul di kolom genap, yaitu kolom 0 dan 2. Empat baris jadi 8 dinding."
+    kuis:
+      - soal: "Level di game dibuat dari..."
+        pilihan:
+          - "pola kotak"
+          - "foto"
+          - "suara"
+          - "angka undian"
+        jawaban: 0
+        penjelasan: "Level adalah pola kotak yang diatur oleh aturan."
+      - soal: "Kode range(3) membuat loop jalan sebanyak..."
+        pilihan:
+          - "3 kali"
+          - "2 kali"
+          - "0 kali"
+          - "tak terbatas"
+        jawaban: 0
+        penjelasan: "range(3) menghasilkan 0, 1, 2. Jadi loopnya jalan 3 kali."
+      - soal: "Aturan 'kolom % 2 == 0' membuat dinding di kolom..."
+        pilihan:
+          - "0 dan 2"
+          - "1 dan 3"
+          - "0 dan 1"
+          - "semua kolom"
+        jawaban: 0
+        penjelasan: "Kolom genap sampai angka 3 adalah 0 dan 2."
+
+soal:
+  - id: "sg4-1"
+    judul: "Pintu Rahasia Deret Ajaib"
+    sulit: "mudah"
+    cerita: |
+      Kancil menemukan pintu rahasia di dalam gua. Pintunya punya deret
+      angka ajaib! Angka pertama 2, lalu tiap angka dikali 2: 2, 4, 8,
+      16, dan seterusnya. Kancil butuh angka berikutnya untuk membuka
+      pintu. Ketik banyaknya angka yang muncul, lalu cetak deretnya dan
+      angka berikutnya. Ayo bantu Kancil!
+    input: "Satu baris: banyak angka deret (1 sampai 6)."
+    output: "Baris per angka: 'Kode <ke->: <angka>', lalu 'Kode berikutnya: <angka>'."
+    contoh:
+      - input: "3"
+        output: "Kode 1: 2\nKode 2: 4\nKode 3: 8\nKode berikutnya: 16"
+      - input: "1"
+        output: "Kode 1: 2\nKode berikutnya: 4"
+    tes:
+      - input: "3"
+        output: "Kode 1: 2\nKode 2: 4\nKode 3: 8\nKode berikutnya: 16"
+      - input: "1"
+        output: "Kode 1: 2\nKode berikutnya: 4"
+      - input: "2"
+        output: "Kode 1: 2\nKode 2: 4\nKode berikutnya: 8"
+      - input: "4"
+        output: "Kode 1: 2\nKode 2: 4\nKode 3: 8\nKode 4: 16\nKode berikutnya: 32"
+      - input: "5"
+        output: "Kode 1: 2\nKode 2: 4\nKode 3: 8\nKode 4: 16\nKode 5: 32\nKode berikutnya: 64"
+    solusi: |
+      n = int(input())
+      kode = 2
+      i = 1
+      while i <= n:
+          print(f"Kode {i}: {kode}")
+          kode = kode * 2
+          i = i + 1
+      print(f"Kode berikutnya: {kode}")
+    petunjuk:
+      - "Mulai dari kode = 2. Tiap putaran, kode dikali 2."
+      - "Cetak barisnya dulu, baru kalikan, lalu naikkan pencatat i."
+      - "Setelah loop selesai, variabel kode berisi angka berikutnya. Cetak di baris terakhir."
+
+  - id: "sg4-2"
+    judul: "Jalan Keluar Labirin"
+    sulit: "sedang"
+    cerita: |
+      Petualang Kancil tersesat di labirin! Di peta, huruf S adalah
+      posisi awal dan huruf X adalah pintu keluar. Petualang hanya bisa
+      berjalan ke kanan dan ke bawah. Ketik peta tiga baris, lalu cetak
+      letak pintu keluar dan jumlah langkah dari posisi awal.
+    input: 'Tiga baris: peta 3x3 berisi ".", "S", dan "X".'
+    output: "Dua baris: 'Pintu keluar: baris <baris> kolom <kolom>', lalu 'Langkah: <jumlah>'."
+    contoh:
+      - input: "S..\n...\n..X"
+        output: "Pintu keluar: baris 2 kolom 2\nLangkah: 4"
+      - input: "S.X\n...\n..."
+        output: "Pintu keluar: baris 0 kolom 2\nLangkah: 2"
+    tes:
+      - input: "S..\n...\n..X"
+        output: "Pintu keluar: baris 2 kolom 2\nLangkah: 4"
+      - input: "S.X\n...\n..."
+        output: "Pintu keluar: baris 0 kolom 2\nLangkah: 2"
+      - input: "S..\n...\nX.."
+        output: "Pintu keluar: baris 2 kolom 0\nLangkah: 2"
+      - input: ".S.\n...\n..X"
+        output: "Pintu keluar: baris 2 kolom 2\nLangkah: 3"
+      - input: "...\nS..\n.X."
+        output: "Pintu keluar: baris 2 kolom 1\nLangkah: 2"
+    solusi: |
+      peta = []
+      for i in range(3):
+          peta.append(input())
+      baris_s = 0
+      kolom_s = 0
+      baris_x = 0
+      kolom_x = 0
+      for i in range(3):
+          for j in range(3):
+              if peta[i][j] == "S":
+                  baris_s = i
+                  kolom_s = j
+              if peta[i][j] == "X":
+                  baris_x = i
+                  kolom_x = j
+      langkah = (baris_x - baris_s) + (kolom_x - kolom_s)
+      print(f"Pintu keluar: baris {baris_x} kolom {kolom_x}")
+      print(f"Langkah: {langkah}")
+    petunjuk:
+      - "Baca 3 baris peta dulu, simpan di list peta."
+      - "Cari huruf S dan X pakai loop bersarang. Simpan nomor baris dan kolomnya."
+      - "Langkah = (baris X - baris S) + (kolom X - kolom S). Cetak letak keluar dulu, lalu langkahnya."
+
+  - id: "sg4-3"
+    judul: "Pabrik Level Kancil"
+    sulit: "sedang"
+    cerita: |
+      Kancil sedang merancang level buatannya sendiri. Aturannya begini:
+      tiap baris punya 4 kotak. Kotak paling kiri dan paling kanan
+      dinding '#', dua kotak tengah jalan '.'. Baris paling atas dinding
+      semua. Ketik jumlah barisnya, lalu cetak levelnya dan jumlah
+      dindingnya.
+    input: "Satu baris: jumlah baris level (1 sampai 5)."
+    output: "Baris-baris level, lalu baris terakhir: 'Jumlah dinding: <jumlah>'."
+    contoh:
+      - input: "2"
+        output: "####\n#..#\nJumlah dinding: 6"
+      - input: "4"
+        output: "####\n#..#\n#..#\n#..#\nJumlah dinding: 10"
+    tes:
+      - input: "2"
+        output: "####\n#..#\nJumlah dinding: 6"
+      - input: "4"
+        output: "####\n#..#\n#..#\n#..#\nJumlah dinding: 10"
+      - input: "1"
+        output: "####\nJumlah dinding: 4"
+      - input: "3"
+        output: "####\n#..#\n#..#\nJumlah dinding: 8"
+      - input: "5"
+        output: "####\n#..#\n#..#\n#..#\n#..#\nJumlah dinding: 12"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          teks = ""
+          for j in range(4):
+              if i == 0 or j == 0 or j == 3:
+                  teks = teks + "#"
+                  total = total + 1
+              else:
+                  teks = teks + "."
+          print(teks)
+      print("Jumlah dinding:", total)
+    petunjuk:
+      - "Loop luar untuk baris, loop dalam untuk 4 kotak tiap baris."
+      - "Kotak jadi dinding '#' kalau barisnya 0, atau kolomnya 0, atau kolomnya 3."
+      - "Setiap dinding yang dicetak, total ditambah 1. Cetak total setelah semua baris."
+
+  - id: "sg4-4"
+    judul: "Teka-teki Brankas Ajaib"
+    sulit: "sulit"
+    cerita: |
+      Kancil menemukan brankas kuno di ruang rahasia. Di pintunya ada
+      deret angka ajaib dengan pola tambah 6: 12, 18, 24, dan seterusnya.
+      Kode brankas adalah angka yang habis dibagi 5. Ketik banyaknya
+      angka, lalu cetak deretnya, jumlah kode, dan kode pertamanya.
+      Ayo pecahkan brankasnya!
+    input: "Satu baris: banyak angka pada deret (1 sampai 9)."
+    output: "Tiga baris: 'Deret: <angka> <angka> ...', 'Jumlah kode: <jumlah>', lalu 'Kode pertama: <angka>' atau 'Kode pertama: tidak ada'."
+    contoh:
+      - input: "4"
+        output: "Deret: 12 18 24 30\nJumlah kode: 1\nKode pertama: 30"
+      - input: "9"
+        output: "Deret: 12 18 24 30 36 42 48 54 60\nJumlah kode: 2\nKode pertama: 30"
+    tes:
+      - input: "4"
+        output: "Deret: 12 18 24 30\nJumlah kode: 1\nKode pertama: 30"
+      - input: "9"
+        output: "Deret: 12 18 24 30 36 42 48 54 60\nJumlah kode: 2\nKode pertama: 30"
+      - input: "1"
+        output: "Deret: 12\nJumlah kode: 0\nKode pertama: tidak ada"
+      - input: "6"
+        output: "Deret: 12 18 24 30 36 42\nJumlah kode: 1\nKode pertama: 30"
+      - input: "5"
+        output: "Deret: 12 18 24 30 36\nJumlah kode: 1\nKode pertama: 30"
+    solusi: |
+      n = int(input())
+      deret = ""
+      angka = 12
+      jumlah = 0
+      pertama = 0
+      i = 1
+      while i <= n:
+          deret = deret + str(angka) + " "
+          if angka % 5 == 0:
+              jumlah = jumlah + 1
+              if pertama == 0:
+                  pertama = angka
+          angka = angka + 6
+          i = i + 1
+      print("Deret:", deret)
+      print("Jumlah kode:", jumlah)
+      if pertama == 0:
+          print("Kode pertama: tidak ada")
+      else:
+          print("Kode pertama:", pertama)
+    petunjuk:
+      - "Deret mulai dari 12, lalu tiap putaran ditambah 6. Simpan deretnya di satu teks."
+      - "Angka habis dibagi 5 kalau angka % 5 == 0. Kalau begitu, hitungan kode naik 1."
+      - "Simpan kode pertama yang kamu temukan. Kalau tidak ada, cetak 'tidak ada'."

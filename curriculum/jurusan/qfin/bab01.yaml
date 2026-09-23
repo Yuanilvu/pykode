@@ -1,0 +1,404 @@
+bab: 1
+modul: 1
+jurusan: "qfin"
+judul: "Uang & Bunga Ajaib"
+emoji: "🪙"
+warna: "#0ea5e9"
+deskripsi: "Kenalan dengan jalur Quant: uang, persen, dan rahasia bunga majemuk."
+prasyarat: 3
+
+pelajaran:
+  - id: "q1-1"
+    judul: "Kenalan: Uang Bisa Tumbuh?"
+    menit: 6
+    materi: |
+      Selamat datang di jalur **Quant Finance**! 💰
+      Di jalur ini kita belajar mengurus uang pakai kode.
+
+      **Persen itu apa?**
+      Persen artinya "per seratus". `10%` sama dengan `10 / 100`.
+      Hasilnya `0.1`. Ingat pelajaran persen di sekolah? Sama persis!
+
+      **Uang bisa tumbuh?**
+      Bisa! Kalau kamu menabung di bank, bank memberi hadiah.
+      Hadiahnya bernama **bunga**. Bunga ditulis dalam persen per tahun.
+      Misalnya bank memberi bunga **5% per tahun**.
+
+      **Cara menghitungnya di Python:**
+      ```python
+      uang = 200000
+      bunga = 0.05 * uang
+      print(bunga)
+      ```
+      Hasilnya `10000.0`. Jadi 5% dari Rp200.000 adalah Rp10.000.
+
+      Di Python, tanda `*` artinya **kali**. Tanda `/` artinya **bagi**.
+      Coba ubah-ubah angkanya di contoh bawah, lihat hasilnya! 🎉
+    contoh:
+      - kode: |
+          uang = 200000
+          bunga = 0.05 * uang
+          print("Bunga setahun:", bunga)
+        penjelasan: "Bunga 5% dari uang 200 ribu. Hasilnya 10000.0."
+      - kode: |
+          uang = 50000
+          persen = 10 / 100
+          print("10% dari uang:", persen * uang)
+        penjelasan: "10 / 100 hasilnya 0.1. Dikali 50000 hasilnya 5000.0."
+    kuis:
+      - soal: "Berapa hasil dari 20% dikali 50000?"
+        pilihan:
+          - "1000"
+          - "10000"
+          - "100000"
+          - "500"
+        jawaban: 1
+        penjelasan: "20% = 0.2. Lalu 0.2 * 50000 = 10000."
+      - soal: "Kalau uang 200000 tumbuh 5%, berapa nilai tambahnya?"
+        pilihan:
+          - "1000"
+          - "5000"
+          - "10000"
+          - "20000"
+        jawaban: 2
+        penjelasan: "5% dari 200000 adalah 0.05 * 200000 = 10000."
+      - soal: "Angka 0.25 sama dengan berapa persen?"
+        pilihan:
+          - "2.5%"
+          - "25%"
+          - "250%"
+          - "0.25%"
+        jawaban: 1
+        penjelasan: "0.25 artinya 25 per seratus, jadi 25%."
+
+  - id: "q1-2"
+    judul: "Bunga Sederhana: Hadiah Tetap"
+    menit: 6
+    materi: |
+      Bank memberi bunga setiap tahun. Bentuk paling gampang namanya
+      **bunga sederhana**. Bunganya selalu dihitung dari uang AWAL saja.
+
+      **Rumusnya:** bunga = uang awal × persen × jumlah tahun.
+
+      Contoh: uang Rp100.000 ditabung 3 tahun, bunga 10% per tahun.
+      ```python
+      uang = 100000
+      bunga_total = uang * 0.10 * 3
+      print("Bunga:", bunga_total)          # 30000.0
+      print("Total:", uang + bunga_total)   # 130000.0
+      ```
+
+      Setiap tahun kamu dapat Rp10.000. Tiga tahun jadi Rp30.000.
+      Uangmu sekarang jadi Rp130.000. Lumayan, kan? 😄
+
+      **Ingat:** ubah persen dulu jadi desimal. 10% jadi `0.10`.
+
+      Di pelajaran soal nanti kamu akan mengetik uang, persen, dan tahun.
+      Pakai `int()` supaya hasilnya bilangan bulat tanpa koma.
+    contoh:
+      - kode: |
+          uang = 100000
+          bunga_total = uang * 0.10 * 3
+          print("Bunga:", bunga_total)
+          print("Total:", uang + bunga_total)
+        penjelasan: "Bunga 3 tahun 30000.0, total uang jadi 130000.0."
+      - kode: |
+          uang = 500000
+          bunga_total = uang * 0.06 * 2
+          print("Total akhir:", uang + bunga_total)
+        penjelasan: "Bunga 6% selama 2 tahun. Total akhir 560000.0."
+    kuis:
+      - soal: "Rp100.000 dengan bunga sederhana 10% per tahun. Setelah 2 tahun, bunganya berapa?"
+        pilihan:
+          - "10000"
+          - "20000"
+          - "21000"
+          - "110000"
+        jawaban: 1
+        penjelasan: "100000 * 0.10 * 2 = 20000."
+      - soal: "Di rumus bunga sederhana, angka persen dikali dengan apa?"
+        pilihan:
+          - "uang awal dan jumlah tahun"
+          - "jumlah tahun saja"
+          - "uang awal saja"
+          - "bunga tahun lalu"
+        jawaban: 0
+        penjelasan: "Bunga sederhana = uang awal × persen × jumlah tahun."
+      - soal: "6% ditulis dalam Python menjadi..."
+        pilihan:
+          - "6.0"
+          - "0.6"
+          - "0.06"
+          - "60"
+        jawaban: 2
+        penjelasan: "6% artinya 6 / 100, hasilnya 0.06."
+
+  - id: "q1-3"
+    judul: "Bunga Majemuk: Bola Salju"
+    menit: 7
+    materi: |
+      Ini rahasia paling seru di jalur Quant: **bunga majemuk**.
+      Bunganya dihitung dari uang TERBARU, bukan uang awal.
+      Jadi uangmu bertumbuh seperti bola salju! ❄️
+
+      **Cara menghitungnya:** setiap tahun, uang dikali `1 + bunga`.
+      ```python
+      uang = 100000
+      uang = uang * 1.1   # akhir tahun 1
+      uang = uang * 1.1   # akhir tahun 2
+      uang = uang * 1.1   # akhir tahun 3
+      print("Setelah 3 tahun:", uang)
+      ```
+
+      **Kenapa 1.1?** Karena uang lama 100% ditambah bunga 10%,
+      jadi totalnya 110% = `1.1`. Kalau bunganya 5%, pengalinya `1.05`.
+
+      Bandingkan dengan bunga sederhana tadi:
+      - Sederhana 3 tahun: Rp130.000
+      - Majemuk 3 tahun: Rp133.100
+
+      Bedanya Rp3.100! Makin lama, bedanya makin besar.
+      Itulah keajaiban bola salju uang. 🌨️
+    contoh:
+      - kode: |
+          uang = 100000
+          uang = uang * 1.1
+          uang = uang * 1.1
+          print("2 tahun majemuk:", uang)
+        penjelasan: "Tahun pertama jadi 110000.0, tahun kedua jadi 121000.0."
+      - kode: |
+          uang = 200000
+          uang = uang * 1.05
+          uang = uang * 1.05
+          uang = uang * 1.05
+          print("3 tahun dengan 5%:", uang)
+        penjelasan: "Hasil kira-kira 231525.0. Angka komanya abaikan dulu, ya."
+    kuis:
+      - soal: "Rp100.000 dengan bunga majemuk 10% per tahun. Setelah 2 tahun jadi berapa?"
+        pilihan:
+          - "120000"
+          - "121000"
+          - "110000"
+          - "130000"
+        jawaban: 1
+        penjelasan: "Tahun 1: 110000. Tahun 2: 110000 * 1.1 = 121000."
+      - soal: "Kenapa bunga majemuk tahun kedua lebih besar dari tahun pertama?"
+        pilihan:
+          - "karena bunganya dihitung dari uang yang sudah bertambah"
+          - "karena banknya baik hati"
+          - "karena tahunnya lebih panjang"
+          - "karena uang awalnya diubah"
+        jawaban: 0
+        penjelasan: "Bunga dihitung dari saldo terbaru, jadi makin besar tiap tahun."
+      - soal: "Untuk bunga 5% per tahun, angka pengalinya adalah..."
+        pilihan:
+          - "0.5"
+          - "5.0"
+          - "1.05"
+          - "1.5"
+        jawaban: 2
+        penjelasan: "Uang lama 100% ditambah bunga 5% jadi 105% = 1.05."
+
+  - id: "q1-4"
+    judul: "Diskon & Hemat"
+    menit: 5
+    materi: |
+      Persen juga dipakai saat belanja! Saat ada **diskon 30%**,
+      harga jadi lebih murah. Kita pakai persen yang sama.
+
+      **Cara menghitung diskon:**
+      potongan = harga × diskon
+      bayar = harga − potongan
+
+      ```python
+      harga = 80000
+      potongan = harga * 0.30
+      bayar = harga - potongan
+      print("Potongan:", potongan)   # 24000.0
+      print("Bayar:", bayar)         # 56000.0
+      ```
+
+      Ada cara singkat! Diskon 30% berarti kamu membayar 70% harga.
+      Jadi `bayar = harga * 0.70`. Hasilnya sama, lebih cepat. 😎
+
+      **Menghemat itu keren.** Selisih harga bisa kamu tabung,
+      dan tabungan bisa dapat bunga. Lingkaran uang yang pintar!
+    contoh:
+      - kode: |
+          harga = 80000
+          bayar = harga * 0.70
+          print("Bayar sesudah diskon 30%:", bayar)
+        penjelasan: "Diskon 30% berarti bayar 70%. Hasilnya 56000.0."
+      - kode: |
+          harga = 150000
+          potongan = harga * 0.5
+          print("Potongan setengah harga:", potongan)
+        penjelasan: "Diskon 50% dari 150 ribu. Potongannya 75000.0."
+    kuis:
+      - soal: "Diskon 25% berarti kamu membayar berapa persen dari harga?"
+        pilihan:
+          - "25%"
+          - "50%"
+          - "75%"
+          - "100%"
+        jawaban: 2
+        penjelasan: "Yang dibayar = 100% - 25% = 75%, jadi harga dikali 0.75."
+      - soal: "Harga Rp80.000 diskon 50%. Harga bayarnya..."
+        pilihan:
+          - "160000"
+          - "40000"
+          - "80000"
+          - "50000"
+        jawaban: 1
+        penjelasan: "Bayar setengahnya saja. 80000 * 0.5 = 40000."
+      - soal: "Potongan dari harga Rp200.000 dengan diskon 10% adalah..."
+        pilihan:
+          - "2000"
+          - "20000"
+          - "180000"
+          - "10000"
+        jawaban: 1
+        penjelasan: "0.10 * 200000 = 20000."
+
+soal:
+  - id: "sq1-1"
+    judul: "Diskon Sepatu Kece"
+    sulit: "mudah"
+    cerita: |
+      Kancil melihat sepatu olahraga seharga Rp240.000 di toko dekat sekolah.
+      Hari ini ada diskon 25%! Kancil bingung: berapa potongan harganya,
+      dan berapa yang harus dibayar? Bantu Kancil menghitung.
+      Cetak dua baris. Pakai int() ya supaya tidak ada koma.
+    input: "Satu baris: harga sepatu (angka bulat)."
+    output: "Dua baris: 'Potongan: <angka>' lalu 'Bayar: <angka>'."
+    contoh:
+      - input: "240000"
+        output: "Potongan: 60000\nBayar: 180000"
+      - input: "100000"
+        output: "Potongan: 25000\nBayar: 75000"
+    tes:
+      - input: "240000"
+        output: "Potongan: 60000\nBayar: 180000"
+      - input: "100000"
+        output: "Potongan: 25000\nBayar: 75000"
+      - input: "320000"
+        output: "Potongan: 80000\nBayar: 240000"
+      - input: "40000"
+        output: "Potongan: 10000\nBayar: 30000"
+    solusi: |
+      harga = int(input())
+      potongan = int(harga * 0.25)
+      print("Potongan:", potongan)
+      print("Bayar:", harga - potongan)
+    petunjuk:
+      - "Diskon 25% sama dengan 0.25."
+      - "Potongan = harga dikali 0.25. Uang yang dibayar = harga - potongan."
+      - "Bungkus hasilnya dengan int() supaya tidak ada .0 di akhir."
+
+  - id: "sq1-2"
+    judul: "Bunga Tabungan Kancil"
+    sulit: "sedang"
+    cerita: |
+      Uang Kancil Rp200.000 ditaruh di bank. Bank memberi bunga sederhana
+      setiap tahun. Kancil mau tahu: berapa bunga totalnya dan berapa
+      uangnya sekarang? Ketik uang, persen bunga per tahun, dan lamanya
+      menabung (tahun). Cetak bunga dan total akhir. Pakai int().
+    input: "Tiga baris: uang awal, persen bunga per tahun, jumlah tahun."
+    output: "Dua baris: 'Bunga: <angka>' lalu 'Total: <angka>'."
+    contoh:
+      - input: "100000\n10\n3"
+        output: "Bunga: 30000\nTotal: 130000"
+      - input: "200000\n5\n2"
+        output: "Bunga: 20000\nTotal: 220000"
+    tes:
+      - input: "100000\n10\n3"
+        output: "Bunga: 30000\nTotal: 130000"
+      - input: "200000\n5\n2"
+        output: "Bunga: 20000\nTotal: 220000"
+      - input: "500000\n6\n1"
+        output: "Bunga: 30000\nTotal: 530000"
+      - input: "40000\n25\n2"
+        output: "Bunga: 20000\nTotal: 60000"
+    solusi: |
+      uang = int(input())
+      persen = int(input())
+      tahun = int(input())
+      bunga = int(uang * (persen / 100) * tahun)
+      print("Bunga:", bunga)
+      print("Total:", uang + bunga)
+    petunjuk:
+      - "Ubah persen jadi desimal dulu: persen / 100."
+      - "Bunga = uang * (persen / 100) * tahun."
+      - "Total = uang + bunga. Jangan lupa int() di bunganya."
+
+  - id: "sq1-3"
+    judul: "Bola Salju Uang Kancil"
+    sulit: "sedang"
+    cerita: |
+      Kancil menabung dengan BUNGA MAJEMUK 10% per tahun.
+      Bunganya ikut berbunga seperti bola salju! Setelah 3 tahun,
+      berapa uangnya? Ketik uang awalnya, lalu cetak uang akhir.
+      Bulatkan pakai int() setiap tahun ya.
+    input: "Satu baris: uang awal (angka bulat)."
+    output: "Satu baris: 'Setelah 3 tahun: <angka>'."
+    contoh:
+      - input: "100000"
+        output: "Setelah 3 tahun: 133100"
+      - input: "200000"
+        output: "Setelah 3 tahun: 266200"
+    tes:
+      - input: "100000"
+        output: "Setelah 3 tahun: 133100"
+      - input: "200000"
+        output: "Setelah 3 tahun: 266200"
+      - input: "50000"
+        output: "Setelah 3 tahun: 66550"
+      - input: "300000"
+        output: "Setelah 3 tahun: 399300"
+    solusi: |
+      uang = int(input())
+      uang = int(uang * 1.1)
+      uang = int(uang * 1.1)
+      uang = int(uang * 1.1)
+      print("Setelah 3 tahun:", uang)
+    petunjuk:
+      - "Bunga majemuk 10% berarti uang dikali 1.1."
+      - "Kalikan tiga kali untuk tiga tahun. Bulatkan dengan int() tiap kali."
+      - "Jangan pakai koma di hasil akhir — bungkus dengan int()."
+
+  - id: "sq1-4"
+    judul: "Tabungan Tiga Tahun"
+    sulit: "sulit"
+    cerita: |
+      Paman Kancil menabung dengan bunga majemuk 10% per tahun.
+      Ia ingin melihat uangnya di akhir tahun ke-1, ke-2, dan ke-3.
+      Ketik uang awalnya, lalu cetak tiga baris: 'Tahun 1: ...',
+      'Tahun 2: ...', dan 'Tahun 3: ...'. Pakai int() setiap tahun.
+    input: "Satu baris: uang awal (angka bulat)."
+    output: "Tiga baris: 'Tahun 1: <angka>', 'Tahun 2: <angka>', 'Tahun 3: <angka>'."
+    contoh:
+      - input: "100000"
+        output: "Tahun 1: 110000\nTahun 2: 121000\nTahun 3: 133100"
+      - input: "50000"
+        output: "Tahun 1: 55000\nTahun 2: 60500\nTahun 3: 66550"
+    tes:
+      - input: "100000"
+        output: "Tahun 1: 110000\nTahun 2: 121000\nTahun 3: 133100"
+      - input: "50000"
+        output: "Tahun 1: 55000\nTahun 2: 60500\nTahun 3: 66550"
+      - input: "200000"
+        output: "Tahun 1: 220000\nTahun 2: 242000\nTahun 3: 266200"
+      - input: "300000"
+        output: "Tahun 1: 330000\nTahun 2: 363000\nTahun 3: 399300"
+    solusi: |
+      uang = int(input())
+      uang = int(uang * 1.1)
+      print("Tahun 1:", uang)
+      uang = int(uang * 1.1)
+      print("Tahun 2:", uang)
+      uang = int(uang * 1.1)
+      print("Tahun 3:", uang)
+    petunjuk:
+      - "Hitung tahun 1 dulu, cetak. Baru hitung tahun 2, cetak. Lalu tahun 3."
+      - "Setiap tahun: uang = int(uang * 1.1)."
+      - "Urutan cetaknya harus Tahun 1, Tahun 2, Tahun 3."

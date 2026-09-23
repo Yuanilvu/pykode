@@ -1,0 +1,458 @@
+bab: 2
+modul: 2
+jurusan: "game"
+judul: "Dunia & Peta"
+emoji: "🗺️"
+warna: "#22c55e"
+deskripsi: "Rancang peta pulau harta dan gerakkan petualangmu langkah demi langkah."
+prasyarat: 7
+
+pelajaran:
+  - id: "g2-1"
+    judul: "Peta = List di dalam List"
+    menit: 6
+    materi: |
+      Selamat datang di dunia game! 🗺️
+
+      Semua game petualangan punya **peta**. Peta itu kotak-kotak kecil.
+      Ada kotak yang bisa dilewati, ada dinding, dan ada harta karun.
+
+      Di Python, peta disimpan pakai **list di dalam list**.
+      List luar berisi baris-baris peta. List dalam berisi kotak tiap baris.
+
+      ```python
+      peta = [
+          ["#", "#", "#"],
+          [".", ".", "H"],
+          ["#", ".", "#"],
+      ]
+      ```
+
+      Kotak `#` artinya dinding. Titik `.` artinya jalan.
+      Huruf `H` artinya harta. 💎
+
+      Cara mengambil satu kotak: tulis `peta[baris][kolom]`.
+      Ingat, hitungan kotak mulai dari 0, ya!
+      - `peta[0][1]` artinya baris ke-0, kolom ke-1
+      - `peta[1][2]` artinya baris ke-1, kolom ke-2
+
+      Kalau mau mencetak seluruh peta, pakai **loop di dalam loop**:
+
+      ```python
+      for baris in peta:
+          teks = ""
+          for kotak in baris:
+              teks = teks + kotak
+          print(teks)
+      ```
+
+      Loop luar jalan sekali per baris. Loop dalam jalan per kotak.
+      Tiap kotak ditempel ke variabel `teks`, lalu dicetak.
+
+      Hasilnya peta rapi tiga baris. Keren, kan? 🎮
+      Ayo coba ubah-ubah isi petanya di contoh!
+    contoh:
+      - kode: |
+          peta = [
+              ["#", "#", "#"],
+              ["#", ".", "H"],
+              ["#", "#", "#"],
+          ]
+          print(peta[1][2])
+          print(peta[0][1])
+        penjelasan: "peta[1][2] ada di baris 1 kolom 2, isinya 'H'. peta[0][1] isinya '#'."
+      - kode: |
+          peta = [
+              [".", ".", "#"],
+              [".", "H", "#"],
+              ["#", ".", "."],
+          ]
+          for baris in peta:
+              teks = ""
+              for kotak in baris:
+                  teks = teks + kotak
+              print(teks)
+        penjelasan: "Loop dalam menempel kotak jadi satu teks. Hasilnya peta tiga baris: ..#, .H#, #.."
+    kuis:
+      - soal: "Peta di Python disimpan pakai apa?"
+        pilihan:
+          - "list di dalam list"
+          - "satu angka saja"
+          - "gambar"
+          - "suara"
+        jawaban: 0
+        penjelasan: "Peta itu list besar yang isinya list baris."
+      - soal: "peta[2][1] artinya kotak di..."
+        pilihan:
+          - "kotak ke-21"
+          - "baris ke-2, kolom ke-1"
+          - "baris ke-1, kolom ke-2"
+          - "kolom ke-2 saja"
+        jawaban: 1
+        penjelasan: "Angka pertama untuk baris, angka kedua untuk kolom."
+      - soal: "Supaya peta tercetak baris demi baris, kita pakai..."
+        pilihan:
+          - "satu print biasa"
+          - "input()"
+          - "loop di dalam loop"
+          - "if satu kali"
+        jawaban: 2
+        penjelasan: "Loop luar untuk baris, loop dalam untuk kotak."
+
+  - id: "g2-2"
+    judul: "Posisi & Gerak Petualang"
+    menit: 7
+    materi: |
+      Petualang di game selalu punya **posisi**: baris dan kolom.
+      Contoh: `baris = 1` dan `kolom = 1` artinya dia di tengah peta.
+
+      Mau bergerak? Tinggal ubah angkanya:
+      - ke **atas**: baris dikurangi 1
+      - ke **bawah**: baris ditambah 1
+      - ke **kiri**: kolom dikurangi 1
+      - ke **kanan**: kolom ditambah 1
+
+      ```python
+      baris = 1
+      kolom = 1
+      arah = "kanan"
+      if arah == "kanan":
+          kolom = kolom + 1
+      print("Posisi baru:", baris, kolom)
+      ```
+
+      Hasilnya `Posisi baru: 1 2`. Petualang pindah satu kotak ke kanan.
+
+      Tapi hati-hati, peta punya **batas**!
+      Kalau petualang di tepi kiri lalu disuruh ke kiri, dia keluar peta.
+      Kotak peta cuma bernomor 0, 1, dan 2. Tidak ada nomor -1 atau 3.
+
+      ```python
+      baris = 0
+      kolom = 0
+      arah = "kiri"
+      if arah == "kiri":
+          if kolom > 0:
+              kolom = kolom - 1
+      print("Posisi baru:", baris, kolom)
+      ```
+
+      Karena kolom sudah 0, gerakannya dibatalkan.
+      Petualang tetap di tempat. Aman! ✅
+
+      Di soal nanti kamu jadi penjaga batas peta.
+      Hanya langkah yang masih di dalam peta yang boleh jalan.
+    contoh:
+      - kode: |
+          baris = 0
+          kolom = 0
+          for arah in ["kanan", "bawah", "kanan"]:
+              if arah == "kanan":
+                  kolom = kolom + 1
+              elif arah == "bawah":
+                  baris = baris + 1
+          print("Posisi akhir:", baris, kolom)
+        penjelasan: "Kanan dulu, lalu bawah, lalu kanan lagi. Posisi akhirnya baris 1, kolom 2."
+      - kode: |
+          baris = 2
+          kolom = 2
+          arah = "bawah"
+          if arah == "bawah" and baris < 2:
+              baris = baris + 1
+          print("Posisi:", baris, kolom)
+        penjelasan: "Posisi sudah di tepi bawah. Syarat baris < 2 salah, jadi gerakan batal."
+    kuis:
+      - soal: "Gerak ke atas artinya..."
+        pilihan:
+          - "baris dikurangi 1"
+          - "baris ditambah 1"
+          - "kolom dikurangi 1"
+          - "kolom ditambah 1"
+        jawaban: 0
+        penjelasan: "Atas itu baris yang mengecil."
+      - soal: "Kolom bernilai 2 di tepi kanan. Pemain disuruh ke kanan. Hasilnya..."
+        pilihan:
+          - "kolom jadi 3"
+          - "kolom jadi 1"
+          - "tetap di tempat"
+          - "peta hilang"
+        jawaban: 2
+        penjelasan: "Langkah keluar peta tidak boleh, jadi pemain diam."
+      - soal: "Kenapa gerakan harus dicek batas peta dulu?"
+        pilihan:
+          - "supaya petualang tidak keluar peta"
+          - "supaya skor naik"
+          - "supaya cepat"
+          - "supaya warna berubah"
+        jawaban: 0
+        penjelasan: "Kotak peta hanya bernomor 0 sampai 2."
+
+  - id: "g2-3"
+    judul: "Tas Petualang (Dictionary)"
+    menit: 6
+    materi: |
+      Petualang butuh **tas** untuk membawa barang: pedang, ramuan, dan lain-lain.
+      Supaya rapi, kita pakai **dictionary**. Nama pendeknya **dict**. 🎒
+
+      Dict menyimpan pasangan **nama barang : jumlahnya**.
+
+      ```python
+      tas = {"pedang": 1, "ramuan": 3}
+      print(tas["pedang"])
+      print(tas["ramuan"])
+      ```
+
+      Cara mengambil jumlah barang: tulis `tas["nama barang"]`.
+      Hasilnya 1 dan 3.
+
+      **Menambah atau mengubah barang:**
+      ```python
+      tas = {"pedang": 1}
+      tas["ramuan"] = 2
+      print(tas["ramuan"])
+      ```
+
+      Kalau kuncinya belum ada, barang itu ditambahkan. Hasilnya 2.
+
+      **Menghitung total barang:**
+      ```python
+      tas = {"pedang": 1, "ramuan": 3}
+      total = 0
+      for barang in tas:
+          total = total + tas[barang]
+      print("Total item:", total)
+      ```
+
+      Loop `for barang in tas` jalan melewati semua NAMA barang.
+      Lalu `tas[barang]` mengambil jumlahnya satu per satu.
+      Hasilnya `Total item: 4`.
+
+      **Mengecek barang ada atau tidak:**
+      ```python
+      if "peta" in tas:
+          print("Ada peta!")
+      ```
+
+      Kata `in` artinya "ada di dalam".
+      Ayo isi tasmu di contoh bawah! 🎒
+    contoh:
+      - kode: |
+          tas = {"pedang": 1, "ramuan": 2}
+          tas["ramuan"] = tas["ramuan"] + 1
+          print("Ramuan:", tas["ramuan"])
+          print("Jenis barang:", len(tas))
+        penjelasan: "Ramuan 2 ditambah 1 jadi 3. Tas berisi 2 jenis barang."
+      - kode: |
+          tas = {"pedang": 1, "ramuan": 3}
+          total = 0
+          for barang in tas:
+              total = total + tas[barang]
+          print("Total item:", total)
+          if "peta" in tas:
+              print("Peta ada di tas")
+          else:
+              print("Peta belum dibeli")
+        penjelasan: "Total item 4. Peta belum ada, jadi hasilnya 'Peta belum dibeli'."
+    kuis:
+      - soal: "Tas menyimpan pedang berjumlah 1 dan ramuan berjumlah 2. Cara mengambil jumlah ramuan adalah..."
+        pilihan:
+          - "tas[1]"
+          - 'tas["ramuan"]'
+          - "tas(ramuan)"
+          - "ramuan.tas"
+        jawaban: 1
+        penjelasan: "Tulis nama kuncinya di dalam tanda kurung siku."
+      - soal: 'Kode tas["ramuan"] = 5 membuat apa berubah?'
+        pilihan:
+          - "jumlah ramuan jadi 5"
+          - "tas terhapus"
+          - "ramuan jadi 0"
+          - "lima tas baru"
+        jawaban: 0
+        penjelasan: "Kalau kuncinya sudah ada, nilainya langsung diganti 5."
+      - soal: "Untuk mengecek ada tidaknya peta di dalam tas, kita pakai..."
+        pilihan:
+          - "if tas == peta"
+          - "if tas + peta"
+          - 'if "peta" in tas'
+          - "if tas[9]"
+        jawaban: 2
+        penjelasan: "Kata in mengecek apakah kunci itu ada di dalam dict."
+
+soal:
+  - id: "sg2-1"
+    judul: "Gambar Peta dari Angka"
+    sulit: "mudah"
+    cerita: |
+      Kancil sedang membuat peta pulau harta. Ajaibnya, petanya masih kosong!
+      Setiap angka mewakili satu kotak: 0 jadi jalan '.', 1 jadi dinding '#',
+      dan 2 jadi harta 'H'. Ketik 9 angka satu per baris. Cetak peta 3 baris,
+      tiap baris berisi 3 kotak!
+    input: "Sembilan baris: angka 0, 1, atau 2."
+    output: "Tiga baris: peta 3x3 berisi '.', '#', atau 'H'."
+    contoh:
+      - input: "0\n0\n0\n1\n2\n1\n0\n0\n0"
+        output: "...\n#H#\n..."
+      - input: "2\n0\n0\n0\n2\n0\n0\n0\n2"
+        output: "H..\n.H.\n..H"
+    tes:
+      - input: "0\n0\n0\n1\n2\n1\n0\n0\n0"
+        output: "...\n#H#\n..."
+      - input: "2\n0\n0\n0\n2\n0\n0\n0\n2"
+        output: "H..\n.H.\n..H"
+      - input: "1\n1\n1\n1\n1\n1\n1\n1\n1"
+        output: "###\n###\n###"
+      - input: "0\n0\n0\n0\n0\n0\n0\n0\n0"
+        output: "...\n...\n..."
+      - input: "0\n1\n0\n1\n2\n1\n0\n1\n0"
+        output: ".#.\n#H#\n.#."
+    solusi: |
+      kode = []
+      for i in range(9):
+          kode.append(input())
+      peta = ""
+      for n in kode:
+          if n == "0":
+              peta = peta + "."
+          elif n == "1":
+              peta = peta + "#"
+          else:
+              peta = peta + "H"
+      print(peta[0:3])
+      print(peta[3:6])
+      print(peta[6:9])
+    petunjuk:
+      - "Simpan 9 angka dulu di list: kode = [], lalu kode.append(input())."
+      - 'Ubah tiap angka jadi kotak pakai if/elif: "0" jadi titik, "1" jadi pagar, sisanya H.'
+      - "Gabungan kotaknya panjangnya 9. Cetak potongannya: peta[0:3], peta[3:6], peta[6:9]."
+
+  - id: "sg2-2"
+    judul: "Langkah Aman"
+    sulit: "sedang"
+    cerita: |
+      Pemain di game Kancil berdiri di sebuah kotak peta 3x3. Kotak peta
+      bernomor 0 sampai 2. Ketik nomor baris dan nomor kolom posisinya,
+      lalu satu arah gerak: atas, bawah, kiri, atau kanan. Kalau langkahnya
+      keluar dari peta, pemain tetap di tempat. Cetak posisi akhirnya.
+    input: "Tiga ketikan: nomor baris (0-2), nomor kolom (0-2), lalu arah (atas/bawah/kiri/kanan)."
+    output: "Satu baris: 'Posisi: <baris> <kolom>'."
+    contoh:
+      - input: "1\n1\nkanan"
+        output: "Posisi: 1 2"
+      - input: "0\n0\nkiri"
+        output: "Posisi: 0 0"
+    tes:
+      - input: "1\n1\nkanan"
+        output: "Posisi: 1 2"
+      - input: "0\n0\nkiri"
+        output: "Posisi: 0 0"
+      - input: "2\n2\nbawah"
+        output: "Posisi: 2 2"
+      - input: "0\n1\nbawah"
+        output: "Posisi: 1 1"
+      - input: "2\n1\nkanan"
+        output: "Posisi: 2 2"
+    solusi: |
+      b = int(input())
+      k = int(input())
+      arah = input()
+      if arah == "atas" and b > 0:
+          b = b - 1
+      elif arah == "bawah" and b < 2:
+          b = b + 1
+      elif arah == "kiri" and k > 0:
+          k = k - 1
+      elif arah == "kanan" and k < 2:
+          k = k + 1
+      print(f"Posisi: {b} {k}")
+    petunjuk:
+      - "Atas = baris - 1, bawah = baris + 1, kiri = kolom - 1, kanan = kolom + 1."
+      - "Gerakan hanya boleh kalau hasilnya masih 0 sampai 2. Gabungkan syaratnya pakai and."
+      - "Pilih arah pakai if/elif, lalu cetak posisinya dengan f-string."
+
+  - id: "sg2-3"
+    judul: "Hitung Harta"
+    sulit: "sedang"
+    cerita: |
+      Peta pulau harta sudah tergambar! Isinya tiga baris, tiap baris tiga
+      kotak. Tanda '#' adalah dinding, '.' adalah jalan, dan 'H' adalah
+      harta karun. Ketik 3 baris peta, lalu hitung ada berapa banyak harta
+      'H' di dalam peta itu. Kancil butuh angka yang tepat!
+    input: "Tiga baris: peta 3x3 (tiap baris 3 karakter)."
+    output: "Satu baris: 'Jumlah harta: <jumlah>'."
+    contoh:
+      - input: "H..\n.H.\n..H"
+        output: "Jumlah harta: 3"
+      - input: "###\n###\n###"
+        output: "Jumlah harta: 0"
+    tes:
+      - input: "H..\n.H.\n..H"
+        output: "Jumlah harta: 3"
+      - input: "###\n###\n###"
+        output: "Jumlah harta: 0"
+      - input: "HHH\nHHH\nHHH"
+        output: "Jumlah harta: 9"
+      - input: "#H#\n.#.\n#H#"
+        output: "Jumlah harta: 2"
+      - input: "H#.\n.#H\n..#"
+        output: "Jumlah harta: 2"
+    solusi: |
+      peta = []
+      for i in range(3):
+          peta.append(input())
+      jumlah = 0
+      for baris in peta:
+          for kotak in baris:
+              if kotak == "H":
+                  jumlah = jumlah + 1
+      print("Jumlah harta:", jumlah)
+    petunjuk:
+      - "Baca 3 baris dulu dan simpan di list peta."
+      - "Pakai loop di dalam loop: loop luar menyusuri baris, loop dalam menyusuri tiap kotak."
+      - "Tiap kotak dicek: kalau isinya 'H', jumlah ditambah 1."
+
+  - id: "sg2-4"
+    judul: "Deteksi Harta Pertama"
+    sulit: "sulit"
+    cerita: |
+      Peta misterius ini menyembunyikan satu harta karun! Harta itu bisa ada
+      di mana saja, bahkan di pojok. Ketik peta 3 baris, lalu temukan letak
+      harta 'H' yang pertama. Ingat, baris dan kolom mulai dari 0.
+      Cetak: Harta di <baris> <kolom>. Ayo jadi detektif peta!
+    input: "Tiga baris: peta 3x3. Pasti ada minimal satu 'H'."
+    output: "Satu baris: 'Harta di <baris> <kolom>'."
+    contoh:
+      - input: ".#.\n#H#\n.#."
+        output: "Harta di 1 1"
+      - input: "H..\n...\n..."
+        output: "Harta di 0 0"
+    tes:
+      - input: ".#.\n#H#\n.#."
+        output: "Harta di 1 1"
+      - input: "H..\n...\n..."
+        output: "Harta di 0 0"
+      - input: "...\n...\n..H"
+        output: "Harta di 2 2"
+      - input: "#.#\n.##\nH##"
+        output: "Harta di 2 0"
+      - input: "#H#\nH##\n###"
+        output: "Harta di 0 1"
+    solusi: |
+      peta = []
+      for i in range(3):
+          peta.append(input())
+      baris_h = -1
+      kolom_h = -1
+      for i in range(3):
+          for j in range(3):
+              if peta[i][j] == "H":
+                  baris_h = i
+                  kolom_h = j
+                  break
+          if baris_h != -1:
+              break
+      print(f"Harta di {baris_h} {kolom_h}")
+    petunjuk:
+      - "Isi posisi awal baris_h = -1 dan kolom_h = -1. Angka -1 artinya belum ketemu."
+      - "Pakai loop di dalam loop dari baris 0 sampai 2 dan kolom 0 sampai 2. Begitu ketemu 'H', simpan posisinya lalu break."
+      - "Setelah loop dalam berhenti, cek baris_h. Kalau bukan -1, hentikan juga loop luar dengan break."

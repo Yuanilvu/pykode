@@ -1,0 +1,480 @@
+bab: 5
+modul: 5
+jurusan: "game"
+judul: "Bikin Game Sendiri (Proyek)"
+emoji: "🏰"
+warna: "#8b5cf6"
+deskripsi: "Rakit game petualanganmu sendiri: cerita, simpan posisi, lalu pamer."
+prasyarat: 12
+
+pelajaran:
+  - id: "g5-1"
+    judul: "Cerita Bercabang = Kamus Dunia"
+    menit: 7
+    materi: |
+      Game petualangan hebat punya cerita yang bisa dipilih pemain. 🏰
+      Bagaimana caranya menyimpan cerita itu di dalam kode?
+      Pakai **kamus dunia**!
+
+      Kamus itu **dict**. Isinya pasangan: nama tempat lalu tujuan berikutnya.
+      Kamu sudah kenal dict dari bab tas petualang dulu.
+
+      ```python
+      dunia = {
+          "gerbang": "hutan",
+          "hutan": "danau",
+          "danau": "selesai",
+      }
+      tempat = "gerbang"
+      while tempat != "selesai":
+          print("Kamu di:", tempat)
+          tempat = dunia[tempat]
+      print("Selesai!")
+      ```
+
+      Loop menyusuri cerita: dari gerbang ke hutan, ke danau, lalu tamat.
+      Kata "selesai" adalah **tanda cerita berakhir**.
+
+      Tiap tempat juga bisa punya teks cerita sendiri.
+      Simpan teks dan tujuannya berpasangan:
+      ```python
+      cerita = {
+          "gerbang": ("Gerbang terbuka lebar.", "hutan"),
+          "hutan": ("Kamu menemukan harta!", "selesai"),
+      }
+      print(cerita["gerbang"][0])
+      print(cerita["gerbang"][1])
+      ```
+
+      `cerita["gerbang"][0]` isinya teks. `cerita["gerbang"][1]` isinya tujuan.
+
+      Jadi satu tempat punya cerita dan jalan keluarnya sendiri.
+      Ayo susun duniamu di contoh bawah! 🎮
+    contoh:
+      - kode: |
+          dunia = {
+              "gerbang": "hutan",
+              "hutan": "danau",
+              "danau": "selesai",
+          }
+          tempat = "gerbang"
+          while tempat != "selesai":
+              print("Kamu di:", tempat)
+              tempat = dunia[tempat]
+          print("Selesai!")
+        penjelasan: "Cerita berjalan dari gerbang ke hutan, lalu ke danau, dan tamat."
+      - kode: |
+          cerita = {
+              "gerbang": ("Gerbang istana terbuka lebar.", "hutan"),
+              "hutan": ("Kamu menemukan harta!", "selesai"),
+          }
+          tempat = "gerbang"
+          while tempat != "selesai":
+              print(cerita[tempat][0])
+              tempat = cerita[tempat][1]
+          print("Selesai!")
+        penjelasan: "Tiap tempat mencetak teksnya, lalu pindah ke tujuan berikutnya."
+    kuis:
+      - soal: "Di kamus dunia, satu nama tempat menunjuk ke..."
+        pilihan:
+          - "tempat tujuan berikutnya"
+          - "warna peta"
+          - "nyawa pemain"
+          - "jumlah skor"
+        jawaban: 0
+        penjelasan: "Isi kamus adalah tujuan berikutnya dari tempat itu."
+      - soal: 'Kata "selesai" di kamus dunia dipakai sebagai...'
+        pilihan:
+          - "tanda cerita sudah tamat"
+          - "nama pemain"
+          - "angka skor"
+          - "dinding peta"
+        jawaban: 0
+        penjelasan: "Kalau tempatnya sudah 'selesai', loopnya berhenti."
+      - soal: 'cerita["hutan"][1] isinya...'
+        pilihan:
+          - "teks cerita"
+          - "tujuan berikutnya"
+          - "jumlah harta"
+          - "nyawa pemain"
+        jawaban: 1
+        penjelasan: "Bagian [0] isinya teks, bagian [1] isinya tujuan berikutnya."
+
+  - id: "g5-2"
+    judul: "Simpan & Muat Posisi Game"
+    menit: 7
+    materi: |
+      Pemain biasanya berhenti di tengah game, lalu lanjut lagi besok. 💾
+      Supaya posisinya tidak hilang, game menyimpannya ke **file**.
+
+      File itu seperti buku catatan di komputer.
+      Kita tulis posisi pemain ke sana, lalu baca lagi kapan saja.
+
+      Cara menulis ke file:
+      ```python
+      f = open("posisi.txt", "w")
+      f.write("3")
+      f.close()
+      ```
+
+      - `open("posisi.txt", "w")` membuka file untuk ditulis
+      - `f.write("3")` menulis angka 3 ke dalam file
+      - `f.close()` menutup catatannya
+
+      Cara membaca isi file:
+      ```python
+      f = open("posisi.txt")
+      isi = f.read()
+      f.close()
+      print("Posisi:", isi)
+      ```
+
+      Hasilnya `Posisi: 3`. Posisi lama berhasil dimuat lagi!
+
+      Kalau menulis beberapa baris, akhiri tiap baris dengan `\n`.
+      Saat membaca baris, pakai `f.readline()`.
+      Angka yang dibaca dari file masih berupa teks.
+      Ubah dulu jadi angka pakai `int()`.
+
+      Ayo simpan dan muat posisi game di contoh bawah! 🎮
+    contoh:
+      - kode: |
+          f = open("posisi.txt", "w")
+          f.write("3")
+          f.close()
+          f = open("posisi.txt")
+          isi = f.read()
+          f.close()
+          print("Posisi tersimpan:", isi)
+        penjelasan: "Angka 3 ditulis ke file, lalu dibaca lagi dan dicetak."
+      - kode: |
+          f = open("simpan.txt", "w")
+          f.write("7\n")
+          f.write("2\n")
+          f.close()
+          f = open("simpan.txt")
+          baris = int(f.readline())
+          kolom = int(f.readline())
+          f.close()
+          print("Baris:", baris)
+          print("Kolom:", kolom)
+        penjelasan: "Dua baris disimpan, lalu dimuat lagi. Angkanya dibaca jadi 7 dan 2."
+    kuis:
+      - soal: "Untuk membuka file supaya bisa ditulis, kita pakai..."
+        pilihan:
+          - 'open("posisi.txt", "w")'
+          - 'open("posisi.txt")'
+          - 'close("posisi.txt")'
+          - 'print("posisi.txt")'
+        jawaban: 0
+        penjelasan: 'Huruf "w" artinya mode tulis (write).'
+      - soal: "Setelah selesai menulis ke file, yang wajib dilakukan adalah..."
+        pilihan:
+          - "menutupnya dengan close()"
+          - "menghapus file"
+          - "mencetak isinya"
+          - "menambah angka"
+        jawaban: 0
+        penjelasan: "close() menyimpan dan menutup catatan dengan rapi."
+      - soal: "Angka yang dibaca dari file masih berupa teks. Supaya jadi angka, ubah pakai..."
+        pilihan:
+          - "int()"
+          - "print()"
+          - "input()"
+          - "len()"
+        jawaban: 0
+        penjelasan: "int() mengubah teks angka jadi angka sungguhan."
+
+  - id: "g5-3"
+    judul: "Pamer & Uji Game-mu"
+    menit: 6
+    materi: |
+      Game-mu sudah jadi! Sekarang bagian paling penting: **menguji** dulu sebelum pamer. 🏆
+
+      Menguji artinya mencoba game dengan beberapa **skenario**.
+      Skenario itu cerita singkat: kalau pemain begini, hasilnya harus begitu.
+
+      Contoh skenario game kecil:
+      ```python
+      nyawa = 2
+      skor = 0
+      for aksi in ["maju", "mundur", "mundur"]:
+          if aksi == "maju":
+              skor = skor + 10
+          else:
+              nyawa = nyawa - 1
+          if nyawa == 0:
+              break
+      print("Skor:", skor)
+      print("Nyawa:", nyawa)
+      ```
+
+      Hasilnya `Skor: 10`, lalu `Nyawa: 0`. Ceritanya berhenti di tengah.
+
+      Kamu juga bisa membuat **alat penguji** sendiri.
+      Alat itu membandingkan hasil dengan harapan:
+      ```python
+      def cek(nama, hasil, harapan):
+          if hasil == harapan:
+              print(nama, "LULUS")
+          else:
+              print(nama, "GAGAL")
+      ```
+
+      Tulis beberapa skenario: menang cepat, kalah, dan seri.
+      Kalau ada yang GAGAL, perbaiki kodenya.
+      Ulangi sampai semua skenario LULUS.
+
+      Ayo coba di contoh bawah, lalu pamerkan game-mu! 🎮
+    contoh:
+      - kode: |
+          nyawa = 2
+          skor = 0
+          for aksi in ["maju", "mundur", "mundur"]:
+              if aksi == "maju":
+                  skor = skor + 10
+              else:
+                  nyawa = nyawa - 1
+              if nyawa == 0:
+                  break
+          print("Skor:", skor)
+          print("Nyawa:", nyawa)
+          if nyawa == 0:
+              print("Game Over!")
+        penjelasan: "Maju menambah skor 10. Dua kali mundur membuat nyawa habis, jadi Game Over."
+      - kode: |
+          def cek(nama, hasil, harapan):
+              if hasil == harapan:
+                  print(nama, "LULUS")
+              else:
+                  print(nama, "GAGAL")
+
+          cek("nyawa habis", 0, 0)
+          cek("nyawa aman", 1, 2)
+        penjelasan: "Skenario pertama sesuai harapan. Skenario kedua tidak, jadi hasilnya GAGAL."
+    kuis:
+      - soal: "Sebelum dipamerkan, game sebaiknya..."
+        pilihan:
+          - "diuji dengan beberapa skenario"
+          - "langsung dihapus"
+          - "diganti warnanya"
+          - "disimpan di lemari"
+        jawaban: 0
+        penjelasan: "Uji dulu supaya tidak malu saat pamer."
+      - soal: "Skenario uji yang bagus berisi..."
+        pilihan:
+          - "ketikan pemain dan hasil yang diharapkan"
+          - "hanya judul game"
+          - "hanya warna peta"
+          - "nama hewan peliharaan"
+        jawaban: 0
+        penjelasan: "Dengan keduanya, hasil bisa dibandingkan."
+      - soal: "Kalau hasil uji berbeda dengan harapan, artinya..."
+        pilihan:
+          - "ada bagian kode yang perlu diperbaiki"
+          - "game sudah sempurna"
+          - "komputernya rusak"
+          - "boleh langsung pamer"
+        jawaban: 0
+        penjelasan: "Perbaiki kodenya, lalu uji lagi sampai LULUS."
+
+soal:
+  - id: "sg5-1"
+    judul: "Susuri Cerita Dunia"
+    sulit: "mudah"
+    cerita: |
+      Kancil membuat game cerita ajaib. Di dalam kodenya sudah ada kamus
+      dunia: dari gerbang ke lorong, dari lorong ke gua, dari gua ke
+      ruang_harta, lalu selesai. Ketik nama tempat awalmu, lalu program
+      menyusuri ceritanya sampai tamat. Cetak setiap tempat yang dilewati.
+    input: "Satu baris: nama tempat awal (gerbang/lorong/gua/ruang_harta)."
+    output: "Baris per tempat: 'Kamu di: <tempat>', lalu baris terakhir 'Selesai!'."
+    contoh:
+      - input: "gerbang"
+        output: "Kamu di: gerbang\nKamu di: lorong\nKamu di: gua\nKamu di: ruang_harta\nSelesai!"
+      - input: "gua"
+        output: "Kamu di: gua\nKamu di: ruang_harta\nSelesai!"
+    tes:
+      - input: "gerbang"
+        output: "Kamu di: gerbang\nKamu di: lorong\nKamu di: gua\nKamu di: ruang_harta\nSelesai!"
+      - input: "gua"
+        output: "Kamu di: gua\nKamu di: ruang_harta\nSelesai!"
+      - input: "lorong"
+        output: "Kamu di: lorong\nKamu di: gua\nKamu di: ruang_harta\nSelesai!"
+      - input: "ruang_harta"
+        output: "Kamu di: ruang_harta\nSelesai!"
+    solusi: |
+      dunia = {
+          "gerbang": "lorong",
+          "lorong": "gua",
+          "gua": "ruang_harta",
+          "ruang_harta": "selesai",
+      }
+      tempat = input()
+      while tempat != "selesai":
+          print("Kamu di:", tempat)
+          tempat = dunia[tempat]
+      print("Selesai!")
+    petunjuk:
+      - "Simpan dulu kamus dunianya, persis seperti di cerita."
+      - "Baca tempat awal dengan input(), lalu pakai while selama tempatnya belum 'selesai'."
+      - "Di dalam loop: cetak tempatnya, lalu pindah dengan tempat = dunia[tempat]."
+
+  - id: "sg5-2"
+    judul: "Checkpoint Posisi Pemain"
+    sulit: "sedang"
+    cerita: |
+      Kancil ingin game-nya bisa menyimpan posisi pemain. Ketik posisi
+      baris, posisi kolom, dan skor pemain. Simpan dulu ketiganya ke file.
+      Lalu pemain berpindah: baris dan kolom naik 1, skor naik 10.
+      Terakhir, muat lagi isi file itu dan cetak posisi serta skor yang
+      tersimpan.
+    input: "Tiga baris: posisi baris, posisi kolom, dan skor."
+    output: "Empat baris: 'Posisi sekarang: <baris> <kolom>', 'Skor sekarang: <skor>', 'Posisi tersimpan: <baris> <kolom>', lalu 'Skor tersimpan: <skor>'."
+    contoh:
+      - input: "1\n2\n100"
+        output: "Posisi sekarang: 2 3\nSkor sekarang: 110\nPosisi tersimpan: 1 2\nSkor tersimpan: 100"
+      - input: "0\n0\n0"
+        output: "Posisi sekarang: 1 1\nSkor sekarang: 10\nPosisi tersimpan: 0 0\nSkor tersimpan: 0"
+    tes:
+      - input: "1\n2\n100"
+        output: "Posisi sekarang: 2 3\nSkor sekarang: 110\nPosisi tersimpan: 1 2\nSkor tersimpan: 100"
+      - input: "0\n0\n0"
+        output: "Posisi sekarang: 1 1\nSkor sekarang: 10\nPosisi tersimpan: 0 0\nSkor tersimpan: 0"
+      - input: "2\n1\n500"
+        output: "Posisi sekarang: 3 2\nSkor sekarang: 510\nPosisi tersimpan: 2 1\nSkor tersimpan: 500"
+      - input: "3\n3\n1000"
+        output: "Posisi sekarang: 4 4\nSkor sekarang: 1010\nPosisi tersimpan: 3 3\nSkor tersimpan: 1000"
+    solusi: |
+      baris = int(input())
+      kolom = int(input())
+      skor = int(input())
+      f = open("checkpoint.txt", "w")
+      f.write(str(baris) + "\n")
+      f.write(str(kolom) + "\n")
+      f.write(str(skor) + "\n")
+      f.close()
+      baris = baris + 1
+      kolom = kolom + 1
+      skor = skor + 10
+      print("Posisi sekarang:", baris, kolom)
+      print("Skor sekarang:", skor)
+      f = open("checkpoint.txt")
+      b2 = int(f.readline())
+      k2 = int(f.readline())
+      s2 = int(f.readline())
+      f.close()
+      print("Posisi tersimpan:", b2, k2)
+      print("Skor tersimpan:", s2)
+    petunjuk:
+      - "Baca tiga angka dulu: baris, kolom, dan skor."
+      - "Tulis ketiganya ke file pakai open(..., 'w') dan f.write(). Jangan lupa f.close()."
+      - "Cetak posisi baru sesudah pindah. Lalu buka lagi filenya dan baca tiap baris pakai int(f.readline())."
+
+  - id: "sg5-3"
+    judul: "Hitung Jalur Cerita"
+    sulit: "sedang"
+    cerita: |
+      Kancil sedang menguji jalur cerita game-nya. Peta ceritanya sudah
+      ada di kode: desa, gua, sungai, lalu pasar, dan selesai. Ketik
+      tempat awal dan batas langkah. Kalau pemain sampai ke tempat
+      selesai, cetak Selesai! Kalau langkahnya habis di tengah jalan,
+      cetak Kehabisan langkah!
+    input: "Dua baris: tempat awal (desa/gua/sungai/pasar), lalu batas langkah."
+    output: "Baris per langkah: 'Langkah <ke->: <tempat>', lalu 'Selesai!' atau 'Kehabisan langkah!'."
+    contoh:
+      - input: "desa\n2"
+        output: "Langkah 1: desa\nLangkah 2: gua\nKehabisan langkah!"
+      - input: "gua\n5"
+        output: "Langkah 1: gua\nLangkah 2: sungai\nLangkah 3: pasar\nSelesai!"
+    tes:
+      - input: "desa\n2"
+        output: "Langkah 1: desa\nLangkah 2: gua\nKehabisan langkah!"
+      - input: "gua\n5"
+        output: "Langkah 1: gua\nLangkah 2: sungai\nLangkah 3: pasar\nSelesai!"
+      - input: "desa\n4"
+        output: "Langkah 1: desa\nLangkah 2: gua\nLangkah 3: sungai\nLangkah 4: pasar\nSelesai!"
+      - input: "desa\n0"
+        output: "Kehabisan langkah!"
+      - input: "pasar\n1"
+        output: "Langkah 1: pasar\nSelesai!"
+    solusi: |
+      tempat = input()
+      batas = int(input())
+      peta = {
+          "desa": "gua",
+          "gua": "sungai",
+          "sungai": "pasar",
+          "pasar": "selesai",
+      }
+      i = 0
+      while tempat != "selesai" and i < batas:
+          i = i + 1
+          print(f"Langkah {i}: {tempat}")
+          tempat = peta[tempat]
+      if tempat == "selesai":
+          print("Selesai!")
+      else:
+          print("Kehabisan langkah!")
+    petunjuk:
+      - "Simpan peta ceritanya di dict: desa ke gua, gua ke sungai, sungai ke pasar, pasar ke selesai."
+      - "Pakai while dengan dua syarat: tempatnya belum 'selesai' DAN langkah masih di bawah batas."
+      - "Tiap putaran: naikkan nomor langkah, cetak tempatnya, lalu pindah ke tempat berikutnya. Setelah loop, cek tempat terakhirnya."
+
+  - id: "sg5-4"
+    judul: "Game Petualangan Mini"
+    sulit: "sulit"
+    cerita: |
+      Ini proyek akhirmu: game petualangan mini! Pemain mulai dengan 3
+      nyawa, skor 0, dan 0 harta. Setiap aksi dibaca satu per satu:
+      maju menambah skor 10, ambil menambah 1 harta dan 5 skor, serang
+      mengurangi 1 nyawa. Kalau nyawa habis, permainan berhenti. Ketik
+      jumlah aksi dan semua aksinya, lalu cetak hasil akhirnya.
+    input: "Beberapa baris: jumlah aksi, lalu aksi (maju/ambil/serang) satu per baris."
+    output: "Baris per aksi: 'Aksi <ke->: <aksi>'. Kalau nyawa habis: 'Game Over!'. Kalau tidak: 'Skor: <skor>', 'Harta: <harta>', lalu 'Selamat, kamu menang!'."
+    contoh:
+      - input: "3\nmaju\nambil\nmaju"
+        output: "Aksi 1: maju\nAksi 2: ambil\nAksi 3: maju\nSkor: 25\nHarta: 1\nSelamat, kamu menang!"
+      - input: "3\nserang\nserang\nserang"
+        output: "Aksi 1: serang\nAksi 2: serang\nAksi 3: serang\nGame Over!"
+    tes:
+      - input: "3\nmaju\nambil\nmaju"
+        output: "Aksi 1: maju\nAksi 2: ambil\nAksi 3: maju\nSkor: 25\nHarta: 1\nSelamat, kamu menang!"
+      - input: "3\nserang\nserang\nserang"
+        output: "Aksi 1: serang\nAksi 2: serang\nAksi 3: serang\nGame Over!"
+      - input: "5\nambil\nambil\nmaju\nmaju\nmaju"
+        output: "Aksi 1: ambil\nAksi 2: ambil\nAksi 3: maju\nAksi 4: maju\nAksi 5: maju\nSkor: 40\nHarta: 2\nSelamat, kamu menang!"
+      - input: "4\nserang\nmaju\nserang\nambil"
+        output: "Aksi 1: serang\nAksi 2: maju\nAksi 3: serang\nAksi 4: ambil\nSkor: 15\nHarta: 1\nSelamat, kamu menang!"
+      - input: "5\nserang\nserang\nserang\nmaju\nmaju"
+        output: "Aksi 1: serang\nAksi 2: serang\nAksi 3: serang\nGame Over!"
+    solusi: |
+      n = int(input())
+      nyawa = 3
+      skor = 0
+      harta = 0
+      kalah = False
+      i = 1
+      while i <= n and not kalah:
+          aksi = input()
+          print(f"Aksi {i}: {aksi}")
+          if aksi == "maju":
+              skor = skor + 10
+          elif aksi == "ambil":
+              harta = harta + 1
+              skor = skor + 5
+          elif aksi == "serang":
+              nyawa = nyawa - 1
+              if nyawa == 0:
+                  kalah = True
+          i = i + 1
+      if kalah:
+          print("Game Over!")
+      else:
+          print(f"Skor: {skor}")
+          print(f"Harta: {harta}")
+          print("Selamat, kamu menang!")
+    petunjuk:
+      - "Siapkan nyawa = 3, skor = 0, harta = 0 sebelum membaca aksinya."
+      - "Pakai while i <= n. Baca aksinya, cetak nomornya, lalu cek pakai if dan elif."
+      - "Aksi serang mengurangi nyawa. Kalau nyawanya jadi 0, hentikan permainan dan cetak Game Over!"

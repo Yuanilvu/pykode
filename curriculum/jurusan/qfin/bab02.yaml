@@ -1,0 +1,396 @@
+bab: 2
+modul: 2
+jurusan: "qfin"
+judul: "Data Harga & Tren"
+emoji: "📈"
+warna: "#22c55e"
+deskripsi: "Kumpulkan harga di daftar, lihat naik-turun, cari hari terbaik."
+prasyarat: 6
+
+pelajaran:
+  - id: "q2-1"
+    judul: "Daftar Harga: List Keren"
+    menit: 6
+    materi: |
+      Bayangkan kamu punya buku catatan harga jajan di kantin. 📓
+      Di Python, catatan seperti itu namanya **list**.
+
+      **List itu apa?**
+      List adalah deretan angka yang disimpan berurutan.
+      Cara membuatnya pakai tanda kurung siku `[ ]`.
+
+      ```python
+      harga = [2000, 3000, 4000]
+      ```
+
+      **Ambil satu harga pakai index.**
+      Index itu nomor posisi. Tapi hati-hati: nomor mulai dari 0!
+      Jadi `harga[0]` isinya 2000, dan `harga[1]` isinya 3000.
+
+      **Hitung isinya.**
+      - `len(harga)` menghitung banyaknya barang. Hasilnya 3.
+      - `sum(harga)` menjumlahkan semua harga. Hasilnya 9000.
+
+      ```python
+      print(len(harga))   # 3
+      print(sum(harga))   # 9000
+      ```
+
+      **Contoh nyata:** kamu bisa menyimpan harga 5 mainan sekaligus,
+      lalu menjumlahkannya hanya dengan satu baris. Praktis!
+
+      Angka harga biasanya kelipatan 1000, jadi hasilnya rapi.
+      Ayo coba contoh di bawah. Ubah angkanya, lalu lihat hasilnya!
+    contoh:
+      - kode: |
+          harga = [2000, 3000, 4000]
+          print("Harga pertama:", harga[0])
+        penjelasan: "Index 0 berarti barang pertama, jadi yang muncul 2000."
+      - kode: |
+          harga = [2000, 3000, 4000]
+          print("Banyak barang:", len(harga))
+          print("Total harga:", sum(harga))
+        penjelasan: "len() menghitung barang, sum() menjumlahkan semua harganya."
+    kuis:
+      - soal: "Harga [5000, 6000, 7000]. Berapa isi harga[1]?"
+        pilihan:
+          - "5000"
+          - "6000"
+          - "7000"
+          - "3"
+        jawaban: 1
+        penjelasan: "Index mulai dari 0. harga[0] isinya 5000, jadi harga[1] isinya 6000."
+      - soal: "Apa hasil dari len([1000, 2000, 3000, 4000])?"
+        pilihan:
+          - "1000"
+          - "4000"
+          - "4"
+          - "10000"
+        jawaban: 2
+        penjelasan: "len() menghitung banyaknya isi list, jadi hasilnya 4."
+      - soal: "Harga beras 10000, telur 5000, minyak 15000. Berapa hasil sum()-nya?"
+        pilihan:
+          - "30000"
+          - "20000"
+          - "10000"
+          - "15000"
+        jawaban: 0
+        penjelasan: "10000 + 5000 + 15000 = 30000. sum() menjumlahkan semuanya."
+
+  - id: "q2-2"
+    judul: "Naik atau Turun?"
+    menit: 6
+    materi: |
+      Harga tidak pernah diam. Kadang naik, kadang turun. 🎢
+      Kita bisa menyuruh Python mengeceknya untuk kita.
+
+      **Bandingkan dua harga.**
+      Pakai `if` untuk memilih. Tanda `>` artinya lebih besar.
+      Tanda `<` artinya lebih kecil.
+
+      ```python
+      harga_lama = 4000
+      harga_baru = 6000
+      if harga_baru > harga_lama:
+          print("NAIK")
+      elif harga_baru < harga_lama:
+          print("TURUN")
+      else:
+          print("TETAP")
+      ```
+
+      **Hitung selisihnya.**
+      Selisih = harga baru dikurangi harga lama.
+      Kalau harganya naik, `6000 - 4000 = 2000`.
+
+      **Ukur pakai persen.**
+      Naik 2000 dari 4000 itu besar sekali, lho: 50%!
+      Caranya: `selisih * 100 / harga_lama`.
+      Bungkus dengan `int()` supaya hasilnya bulat.
+
+      Ayo coba ganti-ganti angkanya di contoh bawah.
+      Kira-kira harganya naik atau turun, ya?
+    contoh:
+      - kode: |
+          harga_lama = 4000
+          harga_baru = 6000
+          if harga_baru > harga_lama:
+              print("Naik", harga_baru - harga_lama)
+        penjelasan: "Karena 6000 lebih besar dari 4000, hasilnya Naik 2000."
+      - kode: |
+          harga_lama = 10000
+          harga_baru = 8000
+          selisih = harga_lama - harga_baru
+          persen = int(selisih * 100 / harga_lama)
+          print("Turun", selisih)
+          print("Turunnya", persen, "persen")
+        penjelasan: "Selisihnya 2000. Kalau jadi persen, turunnya 20 persen."
+    kuis:
+      - soal: "Harga 5000 berubah jadi 7000. Apa yang tercetak?"
+        pilihan:
+          - "Turun 2000"
+          - "Naik 2000"
+          - "Tetap"
+          - "Naik 7000"
+        jawaban: 1
+        penjelasan: "7000 lebih besar dari 5000, jadi harganya naik 2000."
+      - soal: "Harga lama 8000 dan harga baru 8000. Statusnya apa?"
+        pilihan:
+          - "NAIK"
+          - "TURUN"
+          - "TETAP"
+          - "SALAH"
+        jawaban: 2
+        penjelasan: "Dua harganya sama, jadi statusnya TETAP."
+      - soal: "Harga naik dari 10000 ke 12000. Naiknya berapa persen?"
+        pilihan:
+          - "2 persen"
+          - "12 persen"
+          - "20 persen"
+          - "120 persen"
+        jawaban: 2
+        penjelasan: "Selisih 2000. Lalu 2000 * 100 / 10000 = 20 persen."
+
+  - id: "q2-3"
+    judul: "Rata-rata & Harga Terbaik"
+    menit: 7
+    materi: |
+      Kalau kamu punya banyak harga, mana yang paling mahal? 🤔
+      Dan berapa rata-ratanya? Python bisa menjawab semuanya!
+
+      **Rata-rata itu gampang.**
+      Rata-rata = total dibagi banyaknya data.
+      Pakai `sum()` dan `len()` yang sudah kamu kenal.
+
+      ```python
+      harga = [5000, 7000, 6000]
+      rata = int(sum(harga) / len(harga))
+      print("Rata-rata:", rata)
+      ```
+
+      Hasilnya 6000. Bungkus `int()` supaya angkanya bulat.
+
+      **Cari yang paling mahal.**
+      Mulai dari harga pertama sebagai juara sementara.
+      Lalu bandingkan satu per satu pakai `for` dan `if`.
+      Kalau ada yang lebih besar, juaranya diganti.
+
+      ```python
+      juara = harga[0]
+      for x in harga:
+          if x > juara:
+              juara = x
+      ```
+
+      **Ingat nomor harinya juga!**
+      Kalau kamu mau tahu hari keberapa harga itu mahal,
+      simpan nomor posisinya. Ingat, index mulai dari 0.
+
+      Ayo praktik: cari rata-rata dan harga termahal dari daftar jajanmu!
+    contoh:
+      - kode: |
+          harga = [5000, 7000, 6000]
+          rata = int(sum(harga) / len(harga))
+          print("Rata-rata:", rata)
+        penjelasan: "Total 18000 dibagi 3 data, jadi rata-ratanya 6000."
+      - kode: |
+          harga = [5000, 7000, 6000]
+          juara = harga[0]
+          for x in harga:
+              if x > juara:
+                  juara = x
+          print("Termahal:", juara)
+        penjelasan: "7000 lebih besar dari yang lain, jadi itulah juaranya."
+    kuis:
+      - soal: "Berapa rata-rata dari [2000, 4000, 6000]?"
+        pilihan:
+          - "3000"
+          - "4000"
+          - "6000"
+          - "12000"
+        jawaban: 1
+        penjelasan: "Totalnya 12000 dibagi 3 data, hasilnya 4000."
+      - soal: "List harga [3000, 9000, 5000]. Harga termahal ada di index berapa?"
+        pilihan:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        jawaban: 1
+        penjelasan: "9000 adalah yang termahal, dan posisinya di index 1."
+      - soal: "Di rumus rata-rata, apa tugas len()?"
+        pilihan:
+          - "menghitung banyaknya data"
+          - "menjumlahkan semua harga"
+          - "mencari harga termahal"
+          - "mengurutkan harga"
+        jawaban: 0
+        penjelasan: "len() menghitung banyak data, lalu total dibagi angka itu."
+
+soal:
+  - id: "sq2-1"
+    judul: "Total Jualan Es Teh"
+    sulit: "mudah"
+    cerita: |
+      Kancil jualan es teh di kantin sekolah. Ia mencatat harga
+      es teh yang terjual setiap hari. Sekarang Kancil mau tahu
+      total dan rata-rata catatannya. Bantu Kancil ya!
+      Ketik banyak hari dulu, lalu harga tiap hari.
+      Cetak total dan rata-ratanya. Pakai int() supaya bulat.
+    input: "Baris pertama banyak hari, lalu satu harga per baris."
+    output: "Dua baris: 'Total: <angka>' lalu 'Rata-rata: <angka>'."
+    contoh:
+      - input: "3\n3000\n4000\n5000"
+        output: "Total: 12000\nRata-rata: 4000"
+      - input: "4\n2000\n4000\n6000\n8000"
+        output: "Total: 20000\nRata-rata: 5000"
+    tes:
+      - input: "3\n3000\n4000\n5000"
+        output: "Total: 12000\nRata-rata: 4000"
+      - input: "4\n2000\n4000\n6000\n8000"
+        output: "Total: 20000\nRata-rata: 5000"
+      - input: "5\n2000\n2000\n2000\n2000\n2000"
+        output: "Total: 10000\nRata-rata: 2000"
+      - input: "2\n7000\n9000"
+        output: "Total: 16000\nRata-rata: 8000"
+      - input: "3\n6000\n6000\n6000"
+        output: "Total: 18000\nRata-rata: 6000"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          harga = int(input())
+          total = total + harga
+      print("Total:", total)
+      print("Rata-rata:", int(total / n))
+    petunjuk:
+      - "Baca banyak hari dulu dengan n = int(input())."
+      - "Pakai for i in range(n) untuk membaca tiap harga, lalu tambahkan ke total."
+      - "Rata-rata = total dibagi n. Bungkus int() supaya tidak ada koma."
+
+  - id: "sq2-2"
+    judul: "Harga Cabai Naik atau Turun?"
+    sulit: "sedang"
+    cerita: |
+      Bu Rina mencatat harga cabai di pasar setiap minggu.
+      Minggu ini harganya berubah. Bu Rina mau tahu:
+      naik, turun, atau tetap? Ketik harga minggu kemarin,
+      lalu harga minggu ini. Cetak selisih dan statusnya.
+    input: "Dua baris: harga lama, lalu harga baru."
+    output: "Dua baris: 'Naik <angka>' / 'Turun <angka>' / 'Tetap', lalu 'Status: NAIK' / 'Status: TURUN' / 'Status: TETAP'."
+    contoh:
+      - input: "4000\n6000"
+        output: "Naik 2000\nStatus: NAIK"
+      - input: "9000\n7500"
+        output: "Turun 1500\nStatus: TURUN"
+    tes:
+      - input: "4000\n6000"
+        output: "Naik 2000\nStatus: NAIK"
+      - input: "9000\n7500"
+        output: "Turun 1500\nStatus: TURUN"
+      - input: "5000\n5000"
+        output: "Tetap\nStatus: TETAP"
+      - input: "12000\n15000"
+        output: "Naik 3000\nStatus: NAIK"
+      - input: "20000\n17000"
+        output: "Turun 3000\nStatus: TURUN"
+    solusi: |
+      lama = int(input())
+      baru = int(input())
+      if baru > lama:
+          print("Naik", baru - lama)
+          print("Status: NAIK")
+      elif baru < lama:
+          print("Turun", lama - baru)
+          print("Status: TURUN")
+      else:
+          print("Tetap")
+          print("Status: TETAP")
+    petunjuk:
+      - "Bandingkan harga baru dengan harga lama pakai if."
+      - "Kalau harga baru lebih besar, cetak Naik dan selisihnya."
+      - "Jangan lupa baris kedua: Status: NAIK, TURUN, atau TETAP."
+
+  - id: "sq2-3"
+    judul: "Hitung Hari Harga Naik"
+    sulit: "sedang"
+    cerita: |
+      Kancil mengamati harga mainan di toko dekat rumah
+      selama beberapa hari. Ia penasaran: berapa hari harga
+      naik dibanding hari sebelumnya? Hari pertama tidak
+      dihitung karena belum ada pembanding. Bantu Kancil
+      menghitung, lalu cetak hasilnya.
+    input: "Baris pertama banyak hari, lalu satu harga per baris."
+    output: "Satu baris: 'Hari naik: <angka>'."
+    contoh:
+      - input: "4\n1000\n2000\n1500\n3000"
+        output: "Hari naik: 2"
+      - input: "5\n2000\n3000\n4000\n5000\n6000"
+        output: "Hari naik: 4"
+    tes:
+      - input: "4\n1000\n2000\n1500\n3000"
+        output: "Hari naik: 2"
+      - input: "5\n2000\n3000\n4000\n5000\n6000"
+        output: "Hari naik: 4"
+      - input: "3\n5000\n4000\n3000"
+        output: "Hari naik: 0"
+      - input: "1\n7000"
+        output: "Hari naik: 0"
+      - input: "6\n1000\n1000\n2000\n2000\n3000\n2500"
+        output: "Hari naik: 2"
+    solusi: |
+      n = int(input())
+      lama = int(input())
+      naik = 0
+      for i in range(n - 1):
+          baru = int(input())
+          if baru > lama:
+              naik = naik + 1
+          lama = baru
+      print("Hari naik:", naik)
+    petunjuk:
+      - "Baca harga pertama dulu, simpan sebagai harga kemarin."
+      - "Pakai for i in range(n - 1) untuk membaca hari berikutnya."
+      - "Kalau harga baru lebih besar dari harga lama, tambahkan hitungan naik."
+
+  - id: "sq2-4"
+    judul: "Hari Harga Terbaik"
+    sulit: "sulit"
+    cerita: |
+      Toko mainan mencatat harga robot setiap hari selama sepekan.
+      Kancil ingin menjual robotnya di hari paling mahal!
+      Cari harga tertinggi dan hari keberapa harga itu muncul.
+      Kalau ada harga yang sama, pilih yang lebih dulu muncul.
+    input: "Baris pertama banyak hari, lalu satu harga per baris."
+    output: "Dua baris: 'Harga terbaik: <angka>' lalu 'Hari ke-<angka>'."
+    contoh:
+      - input: "3\n5000\n9000\n7000"
+        output: "Harga terbaik: 9000\nHari ke-2"
+      - input: "4\n3000\n3000\n8000\n8000"
+        output: "Harga terbaik: 8000\nHari ke-3"
+    tes:
+      - input: "3\n5000\n9000\n7000"
+        output: "Harga terbaik: 9000\nHari ke-2"
+      - input: "4\n3000\n3000\n8000\n8000"
+        output: "Harga terbaik: 8000\nHari ke-3"
+      - input: "5\n1000\n2000\n3000\n4000\n6000"
+        output: "Harga terbaik: 6000\nHari ke-5"
+      - input: "3\n9000\n8000\n7000"
+        output: "Harga terbaik: 9000\nHari ke-1"
+      - input: "6\n4000\n7000\n7000\n7000\n7000\n2000"
+        output: "Harga terbaik: 7000\nHari ke-2"
+    solusi: |
+      n = int(input())
+      terbaik = int(input())
+      hari_terbaik = 1
+      for hari in range(2, n + 1):
+          harga = int(input())
+          if harga > terbaik:
+              terbaik = harga
+              hari_terbaik = hari
+      print(f"Harga terbaik: {terbaik}")
+      print(f"Hari ke-{hari_terbaik}")
+    petunjuk:
+      - "Mulai dari hari pertama sebagai juara sementara."
+      - "Pakai for hari in range(2, n + 1) untuk hari berikutnya."
+      - "Kalau harga lebih besar dari juara, simpan harganya dan nomor harinya."
