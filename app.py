@@ -7,7 +7,7 @@ import hmac
 import os
 import re
 import time
-from datetime import date
+from datetime import date, timedelta
 
 from flask import (Flask, flash, g, jsonify, redirect, render_template,
                    request, session, url_for)
@@ -22,6 +22,7 @@ from judge import judge, run_code
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 app.secret_key = os.environ.get("PYKODE_SECRET", "pykode-dev-secret-ganti-ini")
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=395)  # login awet — jangan login mulu
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
 app.jinja_env.globals["render_markdown"] = curriculum.render_markdown
 
@@ -685,6 +686,7 @@ def login():
         user = db.get_user_by_username(username)
         if user and check_password_hash(user["password_hash"], password):
             session.clear()
+            session.permanent = True
             session["user_id"] = user["id"]
             db.login_failures_reset(ip)
             nxt = request.args.get("next", "")
