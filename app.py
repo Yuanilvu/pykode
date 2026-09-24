@@ -3,6 +3,7 @@
 Materi ala Mimo + Online Judge + Drill logika + gamifikasi.
 """
 import functools
+import gzip
 import hmac
 import os
 import re
@@ -17,6 +18,7 @@ import curriculum
 import db
 import detective
 import explainer
+from flask_compress import Compress
 from judge import judge, run_code
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -26,7 +28,13 @@ app.secret_key = os.environ.get("PYKODE_SECRET", "pykode-dev-secret-ganti-ini")
 app.config["SESSION_COOKIE_NAME"] = "pk_session"
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=395)  # login awet — jangan login mulu
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 86400  # static cukup sekali unduh (codemirror 166 KB!)
 app.jinja_env.globals["render_markdown"] = curriculum.render_markdown
+
+# Static file = respons "stream" — flask-compress default TIDAK gzip-kan stream (zstd/br saja).
+# Tambah gzip supaya codemirror/style.css ikut ter-gzip di kabel.
+app.config["COMPRESS_ALGORITHM_STREAMING"] = ["gzip", "deflate"]
+Compress(app)  # gzip respons — penting lewat funnel (±200 KB/s)
 
 # Kode undangan registrasi (env PYKODE_KODE) — dibandingkan "santai":
 # huruf besar/kecil & spasi diabaikan. Kosong = registrasi ditolak total.
@@ -55,30 +63,54 @@ class SubPathMiddleware:
                 environ["SCRIPT_NAME"] = (environ.get("SCRIPT_NAME", "") + self.prefix).rstrip("/")
                 environ["PATH_INFO"] = path[len(self.prefix):] or "/"
 
-        content_type = [None]
+        tangkap = {}
 
         def start_response_wrapper(status, headers, exc_info=None):
-            for k, v in headers:
-                if k.lower() == "content-type" and content_type[0] is None:
-                    content_type[0] = v
-            if via_funnel:
-                headers = [
-                    (k, self.prefix + v)
-                    if (k.lower() == "location" and v.startswith("/") and not v.startswith(self.prefix))
-                    else (k, v)
-                    for k, v in headers
-                ]
-            return start_response(status, headers, exc_info)
+            # Tunda start_response asli — header masih bisa berubah (rewrite/gzip/Content-Length).
+            tangkap["status"] = status
+            tangkap["headers"] = list(headers)
+            tangkap["exc_info"] = exc_info
+            return lambda _b: None  # stub write() — Flask tidak memakainya
 
         app_iter = self.app(environ, start_response_wrapper)
-        if via_funnel and content_type[0] and "text/html" in content_type[0]:
-            # Buffer + rewrite path absolut hardcoded (fetch, href, src, action)
+        status = tangkap.get("status", "500 Internal Server Error")
+        headers = tangkap.get("headers", [])
+        ctype = next((v for k, v in headers if k.lower() == "content-type"), "") or ""
+        cenc = next((v for k, v in headers if k.lower() == "content-encoding"), "") or ""
+
+        if (via_funnel and "text/html" in ctype and cenc.lower() in ("", "gzip")
+                and environ.get("REQUEST_METHOD", "GET") != "HEAD"):
+            # Buffer + rewrite path absolut hardcoded (fetch, href, src, action).
+            # NB: badan bisa datang ter-gzip (flask-compress) → buka dulu, bungkus ulang.
             body = b"".join(app_iter)
+            if "gzip" in cenc.lower():
+                try:
+                    body = gzip.decompress(body)
+                except Exception:
+                    pass
             text = body.decode("utf-8", "replace")
             text = re.sub(r"""(fetch\(\s*['"])/""", r"\g<1>" + self.prefix + "/", text)
             text = re.sub(r"""(href|src|action)="/(?!pykode/|buku-kas/)""",
                           r"\g<1>=\"" + self.prefix + "/", text)
-            return [text.encode("utf-8")]
+            body = text.encode("utf-8")
+            headers = [(k, v) for k, v in headers if k.lower() != "content-length"]
+            if "gzip" in cenc.lower():
+                body = gzip.compress(body, 6)
+                headers = [(k, v) for k, v in headers if k.lower() != "content-encoding"]
+                headers.append(("Content-Encoding", "gzip"))
+            headers.append(("Content-Length", str(len(body))))
+            start_response(status, headers, tangkap.get("exc_info"))
+            return [body]
+
+        # Bukan HTML-funnel: teruskan apa adanya (redirect/static/JSON), Location di-prefix bila perlu.
+        if via_funnel:
+            headers = [
+                (k, self.prefix + v)
+                if (k.lower() == "location" and v.startswith("/") and not v.startswith(self.prefix))
+                else (k, v)
+                for k, v in headers
+            ]
+        start_response(status, headers, tangkap.get("exc_info"))
         return app_iter
 
 app.wsgi_app = SubPathMiddleware(app.wsgi_app)
