@@ -37,6 +37,10 @@ def main():
     for f in files[:-BACKUP_KEEP]:
         os.remove(os.path.join(BACKUP_DIR, f))
         removed += 1
+    # Bersihkan file -wal/-shm yatim (sisa proses lain membuka file backup dlm mode WAL)
+    for f in os.listdir(BACKUP_DIR):
+        if f.startswith("pykode-") and (f.endswith("-wal") or f.endswith("-shm")):
+            os.remove(os.path.join(BACKUP_DIR, f))
     print(f"✅ backup: {dest} ({size} bytes), hapus lama: {removed}, total: {len(files) - removed}")
 
 
