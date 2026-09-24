@@ -22,6 +22,8 @@ from judge import judge, run_code
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 app.secret_key = os.environ.get("PYKODE_SECRET", "pykode-dev-secret-ganti-ini")
+# Nama cookie unik per app (host funnel sama dgn app keluarga lain — cegah "session" saling menimpa).
+app.config["SESSION_COOKIE_NAME"] = "pk_session"
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=395)  # login awet — jangan login mulu
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
 app.jinja_env.globals["render_markdown"] = curriculum.render_markdown
